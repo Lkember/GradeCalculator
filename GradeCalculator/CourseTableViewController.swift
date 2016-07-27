@@ -35,7 +35,14 @@ class CourseTableViewController: UITableViewController {
         // Load sample data
         loadSampleCourses()
     }
-
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier=="addNewCourseSegue" {
+            let destinationViewController = segue.destinationViewController as? NewCoursesViewController
+            destinationViewController?.courses = courses;
+        }
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

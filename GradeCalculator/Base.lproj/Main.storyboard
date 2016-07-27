@@ -15,7 +15,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="CourseTableViewCell" rowHeight="60" id="k0a-xq-zfK" customClass="CourseTableViewCell" customModule="GradeCalculator" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="92" width="600" height="60"/>
+                                <rect key="frame" x="0.0" y="28" width="600" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="k0a-xq-zfK" id="f6X-Gv-eQS">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="59"/>
@@ -49,7 +49,7 @@
                     <navigationItem key="navigationItem" title="Courses" id="b0C-xC-6G3">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="wv1-Bq-N1c">
                             <connections>
-                                <segue destination="aDf-rG-vqE" kind="show" id="i5v-GY-bBr"/>
+                                <segue destination="aDf-rG-vqE" kind="presentation" identifier="addNewCourseSegue" modalPresentationStyle="fullScreen" id="i5v-GY-bBr"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -79,13 +79,19 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="You must enter a course name..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TfP-JG-j0D">
+                                <rect key="frame" x="20" y="139" width="560" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="1" green="0.11242632745804704" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Course Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="a6p-QG-Fx3">
                                 <rect key="frame" x="20" y="101" width="560" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="hPB-hL-jhc"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                             </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -101,11 +107,15 @@
                     <size key="freeformSize" width="600" height="600"/>
                     <connections>
                         <outlet property="courseName" destination="a6p-QG-Fx3" id="lMo-oo-io7"/>
+                        <outlet property="navBar" destination="E3a-8j-QRs" id="6mz-DZ-t8b"/>
+                        <outlet property="saveButton" destination="Gw6-PU-GRl" id="pCu-Is-rou"/>
+                        <outlet property="warningLabel" destination="TfP-JG-j0D" id="2Ua-QJ-hPh"/>
+                        <segue destination="2px-Qq-uIr" kind="presentation" identifier="backToCourseView" id="FBz-nf-MkE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4MY-72-Bjw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2480" y="-66"/>
+            <point key="canvasLocation" x="2502" y="-66"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="w2i-83-Snx">
@@ -128,7 +138,6 @@
         <!--Navigation Controller-->
         <scene sceneID="ivv-02-ZRa">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="BJC-Gs-Gzb" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="MOG-He-4h1" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="BLi-B0-3YD">
@@ -140,11 +149,13 @@
                         <segue destination="aDf-rG-vqE" kind="relationship" relationship="rootViewController" id="3lG-Dy-cHM"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BJC-Gs-Gzb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2480" y="-819"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="i5v-GY-bBr"/>
+        <segue reference="FBz-nf-MkE"/>
+        <segue reference="3lG-Dy-cHM"/>
     </inferredMetricsTieBreakers>
 </document>
