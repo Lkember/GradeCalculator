@@ -15,68 +15,87 @@ class NewCoursesViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var courseName: UITextField!
     @IBOutlet weak var warningLabel: UILabel!
     @IBOutlet weak var saveButton: UIBarButtonItem!
-    @IBOutlet weak var navBar: UINavigationItem!
+    @IBOutlet weak var cancelButton: UIBarButtonItem!
     
-    
-    // MARK: Actions
-    @IBAction func addCourse(sender: UIBarButtonItem) {
-        if courseName.text != "" {
-            print("Value of input: \(courseName.text)")
-            print("Number of courses: \(courses.count)")
+     // MARK: - Navigation
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if saveButton === sender {
             var check = false
-            // check if course name already exists
+            let courseInput = self.courseName.text ?? ""
             for courseName in self.courses {
-                // If the input is the same as
-                print("Checking: \(courseName) == \(self.courseName.text)")
-                if courseName.courseName == self.courseName.text {
-                    print("true")
+                if courseName.courseName == courseInput {
                     check = true
                     break
                 }
             }
             if check {
-                print("Course already exists")
                 warningLabel.text = "A course with that name already exists."
-                warningLabel.hidden = false
+                warningLabel.hidden = false;
             }
             else {
-                print("Adding Course")
-                let newCourse = Course.init(courseName: self.courseName.text!)
-                courses.append(newCourse!)
+                courses.append(Course(courseName: courseInput)!)
                 warningLabel.hidden = true
-                
-                // change views
-                performSegueWithIdentifier("backToCourseView", sender: nil)
             }
+            
         }
-        else {
-            print("User did not enter anything")
-            // tell the user to input a course name
-            warningLabel.hidden = false
-        }
+//        if segue.identifier == "backToCourseView" {
+//            let destinationViewController = segue.destinationViewController as? CourseTableViewController
+//            destinationViewController?.courses = self.courses;
+//        }
     }
     
+    // MARK: Actions
+//    @IBAction func addCourse(sender: UIBarButtonItem) {
+//        if courseName.text != "" {
+//            print("Value of input: \(courseName.text)")
+//            print("Number of courses: \(courses.count)")
+//            var check = false
+//            // check if course name already exists
+//            for courseName in self.courses {
+//                // If the input is the same as
+//                print("Checking: \(courseName) == \(self.courseName.text)")
+//                if courseName.courseName == self.courseName.text {
+//                    print("true")
+//                    check = true
+//                    break
+//                }
+//            }
+//            if check {
+//                print("Course already exists")
+//                warningLabel.text = "A course with that name already exists."
+//                warningLabel.hidden = false
+//            }
+//            else {
+//                print("Adding Course")
+//                let newCourse = Course.init(courseName: self.courseName.text!)
+//                courses.append(newCourse!)
+//                warningLabel.hidden = true
+//                
+//                // change views
+//                performSegueWithIdentifier("backToCourseView", sender: nil)
+//            }
+//        }
+//        else {
+//            print("User did not enter anything")
+//            // tell the user to input a course name
+//            warningLabel.hidden = false
+//        }
+//    }
+    
     // When return button is pressed
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        courseName.resignFirstResponder()
-        addCourse(saveButton)
-        return true
-    }
+//    func textFieldShouldReturn(textField: UITextField) -> Bool {
+//        courseName.resignFirstResponder()
+//        addCourse(saveButton)
+//        return true
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.courseName.delegate = self
         warningLabel.hidden = true
-        navBar.title = "New Course"
-        navBar.setRightBarButtonItem(saveButton, animated: true)
-        // Do any additional setup after loading the view.
-    }
-
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "backToCourseView" {
-            let destinationViewController = segue.destinationViewController as? CourseTableViewController
-            destinationViewController?.courses = self.courses;
-        }
+        courseName.addTarget(self, action: #selector(NewCoursesViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
+        saveButton.enabled = false
     }
     
     override func didReceiveMemoryWarning() {
@@ -84,15 +103,17 @@ class NewCoursesViewController: UIViewController, UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    // Mark: UITextFieldDelegate
+    
+    func textFieldDidChange(textField: UITextField) {
+        let text = textField.text ?? ""
+        print("Here")
+        if text == "" {
+            saveButton.enabled = false
+        }
+        else {
+            saveButton.enabled = true
+        }
     }
-    */
 
 }

@@ -76,6 +76,14 @@ class CourseTableViewController: UITableViewController {
         return cell
     }
     
+    
+    @IBAction func unwindToCourseList(sender: UIStoryboardSegue) {
+        if let sourceViewController = sender.sourceViewController as? NewCoursesViewController, course = sourceViewController.course {
+            let newIndexPath = NSIndexPath(forRow: courses.count, inSection: 0)
+            courses.append(course)
+            tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Bottom)
+        }
+    }
 
     /*
     // Override to support conditional editing of the table view.

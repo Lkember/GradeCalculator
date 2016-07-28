@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Courses-->
@@ -15,7 +16,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="CourseTableViewCell" rowHeight="60" id="k0a-xq-zfK" customClass="CourseTableViewCell" customModule="GradeCalculator" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="600" height="60"/>
+                                <rect key="frame" x="0.0" y="92" width="600" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="k0a-xq-zfK" id="f6X-Gv-eQS">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="59"/>
@@ -49,7 +50,7 @@
                     <navigationItem key="navigationItem" title="Courses" id="b0C-xC-6G3">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="wv1-Bq-N1c">
                             <connections>
-                                <segue destination="aDf-rG-vqE" kind="presentation" identifier="addNewCourseSegue" modalPresentationStyle="fullScreen" id="i5v-GY-bBr"/>
+                                <segue destination="jkC-7R-4MB" kind="presentation" identifier="AddItem" id="sZv-YU-Ysj"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -70,7 +71,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Course Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HZq-pD-X6G">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Course Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HZq-pD-X6G">
                                 <rect key="frame" x="20" y="72" width="560" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="25" id="qRV-aW-s9I"/>
@@ -79,13 +80,13 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="You must enter a course name..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TfP-JG-j0D">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="You must enter a course name..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TfP-JG-j0D">
                                 <rect key="frame" x="20" y="139" width="560" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="1" green="0.11242632745804704" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Course Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="a6p-QG-Fx3">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Course Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="a6p-QG-Fx3">
                                 <rect key="frame" x="20" y="101" width="560" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="hPB-hL-jhc"/>
@@ -95,27 +96,39 @@
                             </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="HZq-pD-X6G" firstAttribute="trailing" secondItem="lox-3j-gVc" secondAttribute="trailingMargin" id="1JK-lM-LVH"/>
+                            <constraint firstItem="HZq-pD-X6G" firstAttribute="leading" secondItem="lox-3j-gVc" secondAttribute="leadingMargin" id="Ctf-07-GWI"/>
+                            <constraint firstItem="HZq-pD-X6G" firstAttribute="leading" secondItem="a6p-QG-Fx3" secondAttribute="leading" id="I4G-aK-3Ma"/>
+                            <constraint firstItem="a6p-QG-Fx3" firstAttribute="leading" secondItem="TfP-JG-j0D" secondAttribute="leading" id="JV3-7e-fxK"/>
+                            <constraint firstItem="TfP-JG-j0D" firstAttribute="top" secondItem="a6p-QG-Fx3" secondAttribute="bottom" constant="8" symbolic="YES" id="QUk-2H-flP"/>
+                            <constraint firstItem="HZq-pD-X6G" firstAttribute="trailing" secondItem="a6p-QG-Fx3" secondAttribute="trailing" id="fjs-Xq-XY7"/>
+                            <constraint firstItem="a6p-QG-Fx3" firstAttribute="trailing" secondItem="TfP-JG-j0D" secondAttribute="trailing" id="k4W-tB-28h"/>
+                            <constraint firstItem="a6p-QG-Fx3" firstAttribute="top" secondItem="HZq-pD-X6G" secondAttribute="bottom" constant="8" symbolic="YES" id="xrV-gL-qrk"/>
+                            <constraint firstItem="HZq-pD-X6G" firstAttribute="top" secondItem="64p-kz-eJX" secondAttribute="bottom" constant="8" symbolic="YES" id="zfZ-kf-ldD"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="New Course" id="E3a-8j-QRs">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="rt0-Pz-3WJ"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="Gw6-PU-GRl">
                             <connections>
-                                <action selector="addCourse:" destination="aDf-rG-vqE" id="TNk-XG-rKH"/>
+                                <segue destination="z3Z-LI-P0o" kind="unwind" unwindAction="unwindToCourseList:" id="1gM-KV-FNb"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="600" height="600"/>
                     <connections>
+                        <outlet property="cancelButton" destination="rt0-Pz-3WJ" id="buE-Kv-4mO"/>
                         <outlet property="courseName" destination="a6p-QG-Fx3" id="lMo-oo-io7"/>
-                        <outlet property="navBar" destination="E3a-8j-QRs" id="6mz-DZ-t8b"/>
-                        <outlet property="saveButton" destination="Gw6-PU-GRl" id="pCu-Is-rou"/>
+                        <outlet property="saveButton" destination="Gw6-PU-GRl" id="kkh-G0-Eyn"/>
                         <outlet property="warningLabel" destination="TfP-JG-j0D" id="2Ua-QJ-hPh"/>
-                        <segue destination="2px-Qq-uIr" kind="presentation" identifier="backToCourseView" id="FBz-nf-MkE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4MY-72-Bjw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="z3Z-LI-P0o" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2502" y="-66"/>
+            <point key="canvasLocation" x="3188" y="-66"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="w2i-83-Snx">
@@ -136,26 +149,22 @@
             <point key="canvasLocation" x="1002" y="-66"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="ivv-02-ZRa">
+        <scene sceneID="WYU-Xx-H9e">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="MOG-He-4h1" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="jkC-7R-4MB" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="BLi-B0-3YD">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="I1n-du-C0u">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="aDf-rG-vqE" kind="relationship" relationship="rootViewController" id="3lG-Dy-cHM"/>
+                        <segue destination="aDf-rG-vqE" kind="relationship" relationship="rootViewController" id="sEZ-Jp-e3r"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="BJC-Gs-Gzb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pQ4-AD-8La" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2480" y="-819"/>
+            <point key="canvasLocation" x="2480" y="-66"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="FBz-nf-MkE"/>
-        <segue reference="3lG-Dy-cHM"/>
-    </inferredMetricsTieBreakers>
 </document>
