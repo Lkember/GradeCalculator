@@ -26,39 +26,11 @@ class NewCoursesViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: - Navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-//        if sender === saveButton {
-//            print("Adding course")
-//            let destinationView = segue.destinationViewController as? CourseTableViewController
-//            destinationView?.courses = self.courses
-//        }
+
     }
     
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
-        if saveButton === sender {
-            var check = false
-            let courseInput = self.courseName.text ?? ""
-            for courseName in self.courses {
-                if courseName.courseName == courseInput {
-                    check = true
-                    break
-                }
-            }
-            if check {
-                warningLabel.text = "A course with that name already exists."
-                warningLabel.hidden = false;
-                return false
-            }
-            else {
-                course = Course(courseName: courseInput)
-                courses.append(course!)
-                warningLabel.hidden = true
-                return true
-            }
-        }
-        if cancelButton === sender {
-            return true
-        }
-        return false
+        return checkInput()
     }
     
     override func viewDidLoad() {
@@ -92,4 +64,28 @@ class NewCoursesViewController: UIViewController, UITextFieldDelegate {
         }
     }
 
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        courseName.resignFirstResponder()
+        return true
+    }
+    
+    func checkInput() -> Bool {
+        var check = false
+        let courseInput = self.courseName.text ?? ""
+        for courseName in self.courses {
+            if courseName.courseName == courseInput {
+                check = true
+                break
+            }
+        }
+        if check {
+            warningLabel.text = "A course with that name already exists."
+            warningLabel.hidden = false;
+            return false
+        }
+        course = Course(courseName: courseInput)
+        courses.append(course!)
+        warningLabel.hidden = true
+        return true
+    }
 }
