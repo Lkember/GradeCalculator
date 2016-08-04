@@ -37,8 +37,9 @@ class CourseTableViewController: UITableViewController {
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier=="addNewCourseSegue" {
-            let destinationViewController = segue.destinationViewController as? NewCoursesViewController
+        if segue.identifier=="AddItem" {
+            print("Setting courses to view.")
+            let destinationViewController = segue.destinationViewController.childViewControllers[0] as? NewCoursesViewController
             destinationViewController?.courses = courses;
         }
     }
@@ -78,10 +79,15 @@ class CourseTableViewController: UITableViewController {
     
     
     @IBAction func unwindToCourseList(sender: UIStoryboardSegue) {
+        print("Adding course to course list.")
         if let sourceViewController = sender.sourceViewController as? NewCoursesViewController, course = sourceViewController.course {
+            print("New course: \(course.courseName)")
             let newIndexPath = NSIndexPath(forRow: courses.count, inSection: 0)
-            courses.append(course)
+            self.courses.append(course)
             tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Bottom)
+        }
+        else {
+            print("Failed to add course.")
         }
     }
 
