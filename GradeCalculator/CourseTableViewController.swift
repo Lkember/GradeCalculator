@@ -18,12 +18,12 @@ class CourseTableViewController: UITableViewController {
         let calculus = Course(courseName: "Calculus 1000")
         let physics = Course(courseName: "Physics 1026")
         let compSci = Course(courseName: "CompSci 1027")
-        calculus?.addProject("Midterm", grade: 0.86)
-        calculus?.addProject("Assignment 1", grade: 0.95)
-        calculus?.addProject("Assignment 2", grade: 0.82)
-        physics?.addProject("Midterm", grade: 0.78)
-        physics?.addProject("Assignment 1", grade: 0.67)
-        physics?.addProject("Assignment 2", grade: 1.0)
+        calculus?.addProject("Midterm", grade: 0.86, weight: 0.25)
+        calculus?.addProject("Assignment 1", grade: 0.95, weight: 0.12)
+        calculus?.addProject("Assignment 2", grade: 0.82, weight: 0.13)
+        physics?.addProject("Midterm", grade: 0.78, weight: 0.35)
+        physics?.addProject("Assignment 1", grade: 0.67, weight: 0.1)
+        physics?.addProject("Assignment 2", grade: 1.0, weight: 0.1)
         courses.append(calculus!)
         courses.append(physics!)
         courses.append(compSci!)
@@ -41,6 +41,13 @@ class CourseTableViewController: UITableViewController {
             print("Setting courses to view.")
             let destinationViewController = segue.destinationViewController.childViewControllers[0] as? NewCoursesViewController
             destinationViewController?.courses = courses;
+        }
+        else if segue.identifier=="CourseView" {
+            print("Setting courses to courseView")
+            let selectedCourse = sender as? CourseTableViewCell
+            let destVC = segue.destinationViewController as? MarksTableViewController
+            destVC?.courses = self.courses
+            destVC?.courseName = (selectedCourse?.courseName.text)!
         }
     }
     

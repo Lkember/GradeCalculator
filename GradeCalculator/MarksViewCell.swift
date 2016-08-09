@@ -9,7 +9,13 @@
 import UIKit
 
 class MarksViewCell: UITableViewCell {
-
+    
+    // MARK: Attributes
+    @IBOutlet weak var projectNameLabel: UILabel!
+    @IBOutlet weak var markLabel: UILabel!
+    @IBOutlet weak var weightLabel: UILabel!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

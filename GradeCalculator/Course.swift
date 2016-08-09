@@ -12,13 +12,19 @@ class Course: NSObject {
     
     // MARK: Properties
     var courseName : String
-    var project : Dictionary<String, Double>
+    var projects : [String]
+    var projectMarks : [Double]
+    var projectWeights : [Double]
+//    var project : Dictionary<String, Double>
     
     // MARK: Initilization
     init?(courseName: String) {
         // Initialize stored properties.
         self.courseName = courseName
-        project = [:]
+//        project = [:]
+        projects = []
+        projectMarks = []
+        projectWeights = []
         
         // Initialization should fail if there is no name or if the rating is negative.
         if courseName.isEmpty {
@@ -27,15 +33,15 @@ class Course: NSObject {
     }
     
     func getAverage() -> Double {
-        if project.count != 0 {
-            var sum : Double = 0
-            sum = 0.0
-        
-            for (_, grade) in project {
-                sum += grade
+        if projects.count != 0 {
+            var mark = 0.0
+            var weightSum = 0.0
+            for i in 0..<projectMarks.count {
+                mark += projectMarks[i] * projectWeights[i]
+                weightSum += projectWeights[i]
             }
-        
-            return sum/Double(project.count)
+            mark = mark/weightSum
+            return mark
         }
         else {
             return -1.0
@@ -43,13 +49,9 @@ class Course: NSObject {
     }
     
     // Mark: Actions
-    func addProject(projectName: String, grade: Double) -> Bool {
-        if (project[projectName] == nil) {
-            project[projectName] = grade
-            return true
-        }
-        else {
-            return false
-        }
+    func addProject(projectName: String, grade: Double, weight: Double) {
+        projects.append(projectName)
+        projectMarks.append(grade)
+        projectWeights.append(weight)
     }
 }

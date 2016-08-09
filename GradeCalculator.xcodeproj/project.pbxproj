@@ -7,10 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B242F7FB1D47C03400B2CFF8 /* NewCoursesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B242F7FA1D47C03400B2CFF8 /* NewCoursesViewController.swift */; };
 		B26FBB561D54D2360024DB9B /* MarksViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FBB551D54D2360024DB9B /* MarksViewCell.swift */; };
 		B274AE911D46A5B100E732FD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B274AE901D46A5B100E732FD /* AppDelegate.swift */; };
-		B274AE981D46A5B100E732FD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B274AE961D46A5B100E732FD /* Main.storyboard */; };
 		B274AE9A1D46A5B100E732FD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B274AE991D46A5B100E732FD /* Assets.xcassets */; };
 		B274AE9D1D46A5B100E732FD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B274AE9B1D46A5B100E732FD /* LaunchScreen.storyboard */; };
 		B274AEA81D46A5B200E732FD /* GradeCalculatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B274AEA71D46A5B200E732FD /* GradeCalculatorTests.swift */; };
@@ -18,6 +16,9 @@
 		B274AEC11D46A9ED00E732FD /* CourseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B274AEC01D46A9ED00E732FD /* CourseTableViewCell.swift */; };
 		B274AEC31D46AEE500E732FD /* CourseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B274AEC21D46AEE500E732FD /* CourseTableViewController.swift */; };
 		B274AEC51D46AFB600E732FD /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = B274AEC41D46AFB600E732FD /* Course.swift */; };
+		B28A7E0F1D5A55C800C2ADEB /* MarksTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28A7E0E1D5A55C800C2ADEB /* MarksTableViewController.swift */; };
+		B28A7E111D5A7F9800C2ADEB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B28A7E101D5A7F9800C2ADEB /* Main.storyboard */; };
+		B28A7E151D5A823500C2ADEB /* NewCoursesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28A7E141D5A823500C2ADEB /* NewCoursesViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,11 +39,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		B242F7FA1D47C03400B2CFF8 /* NewCoursesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewCoursesViewController.swift; sourceTree = "<group>"; };
 		B26FBB551D54D2360024DB9B /* MarksViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarksViewCell.swift; sourceTree = "<group>"; };
 		B274AE8D1D46A5B100E732FD /* GradeCalculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GradeCalculator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B274AE901D46A5B100E732FD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		B274AE971D46A5B100E732FD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B274AE991D46A5B100E732FD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B274AE9C1D46A5B100E732FD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B274AE9E1D46A5B100E732FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -55,6 +54,9 @@
 		B274AEC01D46A9ED00E732FD /* CourseTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseTableViewCell.swift; sourceTree = "<group>"; };
 		B274AEC21D46AEE500E732FD /* CourseTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseTableViewController.swift; sourceTree = "<group>"; };
 		B274AEC41D46AFB600E732FD /* Course.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
+		B28A7E0E1D5A55C800C2ADEB /* MarksTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarksTableViewController.swift; sourceTree = "<group>"; };
+		B28A7E101D5A7F9800C2ADEB /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = ../../../../.Trash/Main.storyboard; sourceTree = "<group>"; };
+		B28A7E141D5A823500C2ADEB /* NewCoursesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewCoursesViewController.swift; path = ../../../../.Trash/NewCoursesViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,8 +110,9 @@
 				B274AE901D46A5B100E732FD /* AppDelegate.swift */,
 				B274AEC41D46AFB600E732FD /* Course.swift */,
 				B26FBB551D54D2360024DB9B /* MarksViewCell.swift */,
-				B242F7FA1D47C03400B2CFF8 /* NewCoursesViewController.swift */,
-				B274AE961D46A5B100E732FD /* Main.storyboard */,
+				B28A7E141D5A823500C2ADEB /* NewCoursesViewController.swift */,
+				B28A7E101D5A7F9800C2ADEB /* Main.storyboard */,
+				B28A7E0E1D5A55C800C2ADEB /* MarksTableViewController.swift */,
 				B274AEC21D46AEE500E732FD /* CourseTableViewController.swift */,
 				B274AEC01D46A9ED00E732FD /* CourseTableViewCell.swift */,
 				B274AE991D46A5B100E732FD /* Assets.xcassets */,
@@ -241,9 +244,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B28A7E111D5A7F9800C2ADEB /* Main.storyboard in Resources */,
 				B274AE9D1D46A5B100E732FD /* LaunchScreen.storyboard in Resources */,
 				B274AE9A1D46A5B100E732FD /* Assets.xcassets in Resources */,
-				B274AE981D46A5B100E732FD /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -269,9 +272,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				B274AEC51D46AFB600E732FD /* Course.swift in Sources */,
-				B242F7FB1D47C03400B2CFF8 /* NewCoursesViewController.swift in Sources */,
 				B274AEC31D46AEE500E732FD /* CourseTableViewController.swift in Sources */,
 				B26FBB561D54D2360024DB9B /* MarksViewCell.swift in Sources */,
+				B28A7E151D5A823500C2ADEB /* NewCoursesViewController.swift in Sources */,
+				B28A7E0F1D5A55C800C2ADEB /* MarksTableViewController.swift in Sources */,
 				B274AEC11D46A9ED00E732FD /* CourseTableViewCell.swift in Sources */,
 				B274AE911D46A5B100E732FD /* AppDelegate.swift in Sources */,
 			);
@@ -309,14 +313,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		B274AE961D46A5B100E732FD /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				B274AE971D46A5B100E732FD /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		B274AE9B1D46A5B100E732FD /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
