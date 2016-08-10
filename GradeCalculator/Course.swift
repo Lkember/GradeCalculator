@@ -8,14 +8,28 @@
 
 import UIKit
 
-class Course: NSObject {
+class Course: NSObject, NSCoding {
     
     // MARK: Properties
     var courseName : String
     var projects : [String]
     var projectMarks : [Double]
     var projectWeights : [Double]
-//    var project : Dictionary<String, Double>
+    
+    // MARK: Archiving Paths
+    
+    static let DocumentsDirectory = NSFileManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!
+    static let ArchiveURL = DocumentsDirectory.URLByAppendingPathComponent("courses")
+    
+    
+    // MARK: Types
+    
+    struct PropertyKey {
+        static let courseNameKey = "courseName"
+        static let projectsKey = "projects"
+        static let projectMarksKey = "projectMarks"
+        static let projectWeightsKey = "projectWeights"
+    }
     
     // MARK: Initilization
     init?(courseName: String) {
@@ -26,10 +40,16 @@ class Course: NSObject {
         projectMarks = []
         projectWeights = []
         
-        // Initialization should fail if there is no name or if the rating is negative.
-        if courseName.isEmpty {
-            return nil
-        }
+        super.init()
+    }
+    
+    init?(courseName: String, projects: [String], projectMarks: [Double], projectWeights: [Double]) {
+        self.courseName = courseName
+        self.projects = projects
+        self.projectMarks = projectMarks
+        self.projectWeights = projectWeights
+        
+        super.init()
     }
     
     func getAverage() -> Double {
@@ -54,4 +74,22 @@ class Course: NSObject {
         projectMarks.append(grade)
         projectWeights.append(weight)
     }
+    
+    // MARK: NSCoding
+    func encodeWithCoder(aCoder: NSCoder) {
+        aCoder.encodeObject(courseName, forKey: PropertyKey.courseNameKey)
+        aCoder.encodeObject(projects, forKey: PropertyKey.projectsKey)
+        aCoder.encodeObject(projectMarks, forKey: PropertyKey.projectMarksKey)
+        aCoder.encodeObject(projectWeights, forKey: PropertyKey.projectWeightsKey)
+    }
+    
+    required convenience init?(coder aDecoder: NSCoder) {
+        let courseName = aDecoder.decodeObjectForKey(PropertyKey.courseNameKey) as! String
+        let projects = aDecoder.decodeObjectForKey(PropertyKey.projectsKey) as? [String]
+        let projectMarks = aDecoder.decodeObjectForKey(PropertyKey.projectMarksKey) as? [Double]
+        let projectWeights = aDecoder.decodeObjectForKey(PropertyKey.projectWeightsKey) as? [Double]
+        
+        self.init(courseName: courseName, projects: projects!, projectMarks: projectMarks!, projectWeights: projectWeights!)
+    }
+    
 }

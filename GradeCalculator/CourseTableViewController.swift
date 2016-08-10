@@ -32,8 +32,17 @@ class CourseTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Load sample data
-        loadSampleCourses()
+        //Add an edit button
+        navigationItem.leftBarButtonItem = editButtonItem()
+        
+        loadCourses()
+//        if let savedCourses = loadCourses() {
+//            courses += savedCourses
+//        }
+//        else {
+            // Load sample data
+//            loadSampleCourses()
+//        }
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -92,32 +101,50 @@ class CourseTableViewController: UITableViewController {
             let newIndexPath = NSIndexPath(forRow: courses.count, inSection: 0)
             self.courses.append(course)
             tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Bottom)
+            
+            // save courses
+            saveCourses()
         }
         else {
             print("Failed to add course.")
         }
     }
 
-    /*
+    
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
         return true
     }
-    */
 
-    /*
+    
     // Override to support editing the table view.
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
             // Delete the row from the data source
+            courses.removeAtIndex(indexPath.row)
+            saveCourses()
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
         } else if editingStyle == .Insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
     }
-    */
 
+    
+    // MARK: NSCoding
+    func saveCourses() {
+        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(courses, toFile: Course.ArchiveURL.path!)
+        if !isSuccessfulSave {
+            print("Failed to save meals...")
+        }
+    }
+    
+    func loadCourses() -> [Course] {
+        print("Loading courses.")
+        print("\(NSKeyedUnarchiver.unarchiveObjectWithFile(Course.ArchiveURL.path!))")	
+        return (NSKeyedUnarchiver.unarchiveObjectWithFile(Course.ArchiveURL.path!) as? [Course])!
+    }
+    
     /*
     // Override to support rearranging the table view.
     override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {

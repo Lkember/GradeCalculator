@@ -16,14 +16,14 @@ class MarksTableViewController: UITableViewController {
     var course = Course(courseName: "")
     var courseName = ""
     
-    
+    // When the view loads, perform the following
     override func viewDidLoad() {
         super.viewDidLoad()
         
         print("Starting.. Courses.count=\(courses.count)")
         for course in courses {
-            print("Course: \(course.projects) == \(courseName)")
             if course.courseName == courseName {
+                print("Found. User clicked \(course.courseName)")
                 self.course = course
             }
         }
@@ -35,8 +35,6 @@ class MarksTableViewController: UITableViewController {
         else {
             averageLabel.text = "Unavailable"
         }
-        print("1")
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
