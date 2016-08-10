@@ -11,7 +11,7 @@ import UIKit
 class MarksTableViewController: UITableViewController {
 
     // MARK: Attributes
-    @IBOutlet weak var average: UILabel!
+    @IBOutlet weak var averageLabel: UILabel!
     var courses = [Course]()
     var course = Course(courseName: "")
     var courseName = ""
@@ -20,18 +20,20 @@ class MarksTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        print("Starting.. Courses.count=\(courses.count)")
         for course in courses {
+            print("Course: \(course.projects) == \(courseName)")
             if course.courseName == courseName {
                 self.course = course
             }
         }
         
-        let averageMark = round(10*course!.getAverage()*10)
-        if averageMark != -1.0 {
-            average.text = String(averageMark)
+        let averageMark = round(10*(course?.getAverage())!*10)
+        if averageMark != -100.0 {
+            averageLabel.text = String(averageMark)
         }
         else {
-            average.text = "Unavailable"
+            averageLabel.text = "Unavailable"
         }
         print("1")
         // Do any additional setup after loading the view.
@@ -49,19 +51,38 @@ class MarksTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("Number of rows: \((course?.projects.count)!/2)")
-        return (course?.projects.count)!/2
+        if (course?.projects.count != 0) {
+            return (course?.projects.count)!
+        }
+        else {
+            return 1
+        }
     }
     
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+//        tableView.registerClass(MarksViewCell.self, forCellReuseIdentifier: "MarksViewCell")
         let cellIdentifier = "MarksViewCell"
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! MarksViewCell
         
-        cell.projectNameLabel.text = course?.projects[indexPath.row]
-        cell.markLabel.text = String(course?.projectMarks[indexPath.row])
-        cell.weightLabel.text = String(course?.projectWeights[indexPath.row])
-        
+        if (course?.projects.count != 0) {
+            cell.projectNameLabel.text = course?.projects[indexPath.row]
+            cell.markLabel.text = String(course!.projectMarks[indexPath.row])
+            cell.weightLabel.text = String(course!.projectWeights[indexPath.row])
+            if (cell.markLabel.hidden) {
+                cell.markLabel.hidden = false
+                cell.weightLabel.hidden = false
+                cell.staticWeightLabel.hidden = false
+                cell.staticMarkLabel.hidden = false
+            }
+        }
+        else {
+            cell.projectNameLabel.text = "Not enough information."
+            cell.markLabel.hidden = true
+            cell.weightLabel.hidden = true
+            cell.staticMarkLabel.hidden = true
+            cell.staticWeightLabel.hidden = true
+        }
         
         return cell
     }

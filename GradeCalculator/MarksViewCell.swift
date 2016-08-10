@@ -14,6 +14,8 @@ class MarksViewCell: UITableViewCell {
     @IBOutlet weak var projectNameLabel: UILabel!
     @IBOutlet weak var markLabel: UILabel!
     @IBOutlet weak var weightLabel: UILabel!
+    @IBOutlet weak var staticMarkLabel: UILabel!
+    @IBOutlet weak var staticWeightLabel: UILabel!
     
     
     override func awakeFromNib() {
