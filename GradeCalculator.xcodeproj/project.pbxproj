@@ -109,15 +109,15 @@
 		B274AE8F1D46A5B100E732FD /* GradeCalculator */ = {
 			isa = PBXGroup;
 			children = (
+				B28A7E161D5BA2BE00C2ADEB /* AddProjectViewController.swift */,
 				B274AE901D46A5B100E732FD /* AppDelegate.swift */,
 				B274AEC41D46AFB600E732FD /* Course.swift */,
+				B274AEC21D46AEE500E732FD /* CourseTableViewController.swift */,
+				B274AEC01D46A9ED00E732FD /* CourseTableViewCell.swift */,
 				B26FBB551D54D2360024DB9B /* MarksViewCell.swift */,
 				B28A7E0E1D5A55C800C2ADEB /* MarksTableViewController.swift */,
 				B28A7E141D5A823500C2ADEB /* NewCoursesViewController.swift */,
 				B28A7E101D5A7F9800C2ADEB /* Main.storyboard */,
-				B28A7E161D5BA2BE00C2ADEB /* AddProjectViewController.swift */,
-				B274AEC21D46AEE500E732FD /* CourseTableViewController.swift */,
-				B274AEC01D46A9ED00E732FD /* CourseTableViewCell.swift */,
 				B274AE991D46A5B100E732FD /* Assets.xcassets */,
 				B274AE9B1D46A5B100E732FD /* LaunchScreen.storyboard */,
 				B274AE9E1D46A5B100E732FD /* Info.plist */,

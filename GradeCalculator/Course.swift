@@ -32,15 +32,19 @@ class Course: NSObject, NSCoding {
     }
     
     // MARK: Initilization
+    
     init?(courseName: String) {
         // Initialize stored properties.
         self.courseName = courseName
-//        project = [:]
         projects = []
         projectMarks = []
         projectWeights = []
         
         super.init()
+        
+        if courseName.isEmpty {
+            return nil
+        }
     }
     
     init?(courseName: String, projects: [String], projectMarks: [Double], projectWeights: [Double]) {
@@ -57,8 +61,10 @@ class Course: NSObject, NSCoding {
             var mark = 0.0
             var weightSum = 0.0
             for i in 0..<projectMarks.count {
-                mark += projectMarks[i] * projectWeights[i]
-                weightSum += projectWeights[i]
+                if (projectMarks[i] != -1.0) {
+                    mark += projectMarks[i] * projectWeights[i]
+                    weightSum += projectWeights[i]
+                }
             }
             mark = mark/weightSum
             return mark
@@ -76,6 +82,7 @@ class Course: NSObject, NSCoding {
     }
     
     // MARK: NSCoding
+    
     func encodeWithCoder(aCoder: NSCoder) {
         aCoder.encodeObject(courseName, forKey: PropertyKey.courseNameKey)
         aCoder.encodeObject(projects, forKey: PropertyKey.projectsKey)
@@ -85,11 +92,11 @@ class Course: NSObject, NSCoding {
     
     required convenience init?(coder aDecoder: NSCoder) {
         let courseName = aDecoder.decodeObjectForKey(PropertyKey.courseNameKey) as! String
-        let projects = aDecoder.decodeObjectForKey(PropertyKey.projectsKey) as? [String]
-        let projectMarks = aDecoder.decodeObjectForKey(PropertyKey.projectMarksKey) as? [Double]
-        let projectWeights = aDecoder.decodeObjectForKey(PropertyKey.projectWeightsKey) as? [Double]
+        let projects = aDecoder.decodeObjectForKey(PropertyKey.projectsKey) as! [String]
+        let projectMarks = aDecoder.decodeObjectForKey(PropertyKey.projectMarksKey) as! [Double]
+        let projectWeights = aDecoder.decodeObjectForKey(PropertyKey.projectWeightsKey) as! [Double]
         
-        self.init(courseName: courseName, projects: projects!, projectMarks: projectMarks!, projectWeights: projectWeights!)
+        self.init(courseName: courseName, projects: projects, projectMarks: projectMarks, projectWeights: projectWeights)
     }
     
 }

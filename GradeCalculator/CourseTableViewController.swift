@@ -31,18 +31,20 @@ class CourseTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         //Add an edit button
         navigationItem.leftBarButtonItem = editButtonItem()
-        
-        loadCourses()
-//        if let savedCourses = loadCourses() {
-//            courses += savedCourses
-//        }
-//        else {
-            // Load sample data
-//            loadSampleCourses()
-//        }
+        if let savedCourses = loadCourses() {
+            courses += savedCourses
+        }
+        else {
+            loadSampleCourses()
+        }
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        tableView.reloadData()
+        saveCourses()
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -102,6 +104,8 @@ class CourseTableViewController: UITableViewController {
             self.courses.append(course)
             tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Bottom)
             
+            tableView.reloadData()
+            
             // save courses
             saveCourses()
         }
@@ -132,17 +136,16 @@ class CourseTableViewController: UITableViewController {
 
     
     // MARK: NSCoding
+    // Save user information
     func saveCourses() {
-        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(courses, toFile: Course.ArchiveURL.path!)
-        if !isSuccessfulSave {
+        
+        if (!NSKeyedArchiver.archiveRootObject(courses, toFile: Course.ArchiveURL.path!)) {
             print("Failed to save meals...")
         }
     }
     
-    func loadCourses() -> [Course] {
-        print("Loading courses.")
-        print("\(NSKeyedUnarchiver.unarchiveObjectWithFile(Course.ArchiveURL.path!))")	
-        return (NSKeyedUnarchiver.unarchiveObjectWithFile(Course.ArchiveURL.path!) as? [Course])!
+    func loadCourses() -> [Course]? {
+        return (NSKeyedUnarchiver.unarchiveObjectWithFile(Course.ArchiveURL.path!) as? [Course])
     }
     
     /*
