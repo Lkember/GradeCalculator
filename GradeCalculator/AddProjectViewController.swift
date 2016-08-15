@@ -18,6 +18,7 @@ class AddProjectViewController: UIViewController {
     @IBOutlet weak var gradeField: UITextField!
     @IBOutlet weak var gradeOutOfField: UITextField!
     @IBOutlet weak var incorrectInfoLabel: UILabel!
+    @IBOutlet weak var saveButton: UIBarButtonItem!
     var projectName = ""
     var projectWeight = -1.0
     var projectGrade = -1.0
@@ -37,6 +38,11 @@ class AddProjectViewController: UIViewController {
     
     
     // MARK: - Actions
+    @IBAction func cancelView(sender: UIBarButtonItem) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    
     // When the user specifies they have a mark, then show grade else hide
     @IBAction func isComplete(sender: UISwitch) {
         if sender.on {
@@ -49,10 +55,6 @@ class AddProjectViewController: UIViewController {
                 self.gradeView.alpha = 0.0
                 }, completion: nil)
         }
-    }
-    
-    @IBAction func cancelView(sender: UIBarButtonItem) {
-        dismissViewControllerAnimated(true, completion: nil)
     }
 
     // MARK: - Function
@@ -85,13 +87,15 @@ class AddProjectViewController: UIViewController {
     // MARK: - Navigation
 
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+        print("Checking... \(checkInput())")
         return checkInput()
     }
     
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
+//    // In a storyboard-based application, you will often want to do a little preparation before navigation
+//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+//        // Get the new view controller using segue.destinationViewController.
+//        // Pass the selected object to the new view controller.
+//        print("prepareForSegue")
+//    }
 
 }

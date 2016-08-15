@@ -18,6 +18,7 @@ class MarksTableViewController: UITableViewController {
     
     // MARK: Actions
     @IBAction func unwindToProjectList(sender: UIStoryboardSegue) {
+        print("Here")
         if let svc = sender.sourceViewController as? AddProjectViewController {
             
             let newIndexPath = NSIndexPath(forRow: course!.projects.count, inSection: 0)
@@ -44,6 +45,7 @@ class MarksTableViewController: UITableViewController {
                 self.course = course
             }
         }
+        tableView.rowHeight = 60.0
         
         updateAverageLabel()
     }
@@ -89,7 +91,7 @@ class MarksTableViewController: UITableViewController {
             cell.projectNameLabel.text = course?.projects[indexPath.row]
             
             if (course!.projectMarks[indexPath.row] != -1.0) {
-                cell.markLabel.text = "\(round(10*course!.projectMarks[indexPath.row])*100/10)%"
+                cell.markLabel.text = "\(round(10*course!.projectMarks[indexPath.row]*100)/10)%"
             }
             else {
                 cell.markLabel.text = "Incomplete"

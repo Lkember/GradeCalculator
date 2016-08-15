@@ -17,9 +17,9 @@
 		B274AEC31D46AEE500E732FD /* CourseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B274AEC21D46AEE500E732FD /* CourseTableViewController.swift */; };
 		B274AEC51D46AFB600E732FD /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = B274AEC41D46AFB600E732FD /* Course.swift */; };
 		B28A7E0F1D5A55C800C2ADEB /* MarksTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28A7E0E1D5A55C800C2ADEB /* MarksTableViewController.swift */; };
-		B28A7E111D5A7F9800C2ADEB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B28A7E101D5A7F9800C2ADEB /* Main.storyboard */; };
 		B28A7E151D5A823500C2ADEB /* NewCoursesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28A7E141D5A823500C2ADEB /* NewCoursesViewController.swift */; };
 		B28A7E171D5BA2BE00C2ADEB /* AddProjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28A7E161D5BA2BE00C2ADEB /* AddProjectViewController.swift */; };
+		B28A7E2E1D61FF0300C2ADEB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B28A7E2D1D61FF0300C2ADEB /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,9 +56,9 @@
 		B274AEC21D46AEE500E732FD /* CourseTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseTableViewController.swift; sourceTree = "<group>"; };
 		B274AEC41D46AFB600E732FD /* Course.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
 		B28A7E0E1D5A55C800C2ADEB /* MarksTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarksTableViewController.swift; sourceTree = "<group>"; };
-		B28A7E101D5A7F9800C2ADEB /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = ../../../../.Trash/Main.storyboard; sourceTree = "<group>"; };
 		B28A7E141D5A823500C2ADEB /* NewCoursesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewCoursesViewController.swift; path = ../../../../.Trash/NewCoursesViewController.swift; sourceTree = "<group>"; };
 		B28A7E161D5BA2BE00C2ADEB /* AddProjectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddProjectViewController.swift; sourceTree = "<group>"; };
+		B28A7E2D1D61FF0300C2ADEB /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,8 +117,8 @@
 				B26FBB551D54D2360024DB9B /* MarksViewCell.swift */,
 				B28A7E0E1D5A55C800C2ADEB /* MarksTableViewController.swift */,
 				B28A7E141D5A823500C2ADEB /* NewCoursesViewController.swift */,
-				B28A7E101D5A7F9800C2ADEB /* Main.storyboard */,
 				B274AE991D46A5B100E732FD /* Assets.xcassets */,
+				B28A7E2D1D61FF0300C2ADEB /* Main.storyboard */,
 				B274AE9B1D46A5B100E732FD /* LaunchScreen.storyboard */,
 				B274AE9E1D46A5B100E732FD /* Info.plist */,
 			);
@@ -247,7 +247,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B28A7E111D5A7F9800C2ADEB /* Main.storyboard in Resources */,
+				B28A7E2E1D61FF0300C2ADEB /* Main.storyboard in Resources */,
 				B274AE9D1D46A5B100E732FD /* LaunchScreen.storyboard in Resources */,
 				B274AE9A1D46A5B100E732FD /* Assets.xcassets in Resources */,
 			);
@@ -416,6 +416,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = GradeCalculator/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.logankember.GradeCalculator;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -427,6 +428,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = GradeCalculator/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.logankember.GradeCalculator;
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -49,12 +49,12 @@ class CourseTableViewController: UITableViewController {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier=="AddItem" {
-            print("Setting courses to view.")
+            print("CourseTable: Setting courses to view.")
             let destinationViewController = segue.destinationViewController.childViewControllers[0] as? NewCoursesViewController
             destinationViewController?.courses = courses;
         }
         else if segue.identifier=="CourseView" {
-            print("Setting courses to courseView")
+            print("CourseTable: Setting courses to courseView")
             let selectedCourse = sender as? CourseTableViewCell
             let destVC = segue.destinationViewController as? MarksTableViewController
             destVC?.courses = self.courses
@@ -97,9 +97,9 @@ class CourseTableViewController: UITableViewController {
     
     
     @IBAction func unwindToCourseList(sender: UIStoryboardSegue) {
-        print("Adding course to course list.")
+        print("CourseTable: Adding course to course list.")
         if let sourceViewController = sender.sourceViewController as? NewCoursesViewController, course = sourceViewController.course {
-            print("New course: \(course.courseName)")
+            print("CourseTable: New course: \(course.courseName)")
             let newIndexPath = NSIndexPath(forRow: courses.count, inSection: 0)
             self.courses.append(course)
             tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Bottom)
@@ -110,7 +110,7 @@ class CourseTableViewController: UITableViewController {
             saveCourses()
         }
         else {
-            print("Failed to add course.")
+            print("CourseTable: Failed to add course.")
         }
     }
 
@@ -138,13 +138,14 @@ class CourseTableViewController: UITableViewController {
     // MARK: NSCoding
     // Save user information
     func saveCourses() {
-        
+        print("CourseTable: Saving meals...")
         if (!NSKeyedArchiver.archiveRootObject(courses, toFile: Course.ArchiveURL.path!)) {
-            print("Failed to save meals...")
+            print("CourseTable: Failed to save meals...")
         }
     }
     
     func loadCourses() -> [Course]? {
+        print("CourseTable: Loading meals...")
         return (NSKeyedUnarchiver.unarchiveObjectWithFile(Course.ArchiveURL.path!) as? [Course])
     }
     
