@@ -176,12 +176,6 @@
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="59"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ProjectName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tva-bv-jfo">
-                                            <rect key="frame" x="8" y="8" width="584" height="21"/>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mark:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q16-4t-WYk">
                                             <rect key="frame" x="8" y="30" width="49" height="21"/>
                                             <constraints>
@@ -215,6 +209,12 @@
                                             <color key="textColor" red="0.41406298120000001" green="0.41406298120000001" blue="0.41406298120000001" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ProjectName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tva-bv-jfo">
+                                            <rect key="frame" x="8" y="8" width="584" height="21"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="QxH-MI-G4g" firstAttribute="width" secondItem="cZ4-NH-nf7" secondAttribute="width" id="0rz-MZ-n2g"/>
@@ -246,6 +246,7 @@
                                     <outlet property="staticMarkLabel" destination="q16-4t-WYk" id="MeW-Mj-JdR"/>
                                     <outlet property="staticWeightLabel" destination="uy7-rr-bjE" id="GJL-nC-dc6"/>
                                     <outlet property="weightLabel" destination="QxH-MI-G4g" id="BJe-qo-sHo"/>
+                                    <segue destination="RKN-Dz-eSo" kind="show" identifier="AddItem" id="883-gk-HxU"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -257,7 +258,7 @@
                     <navigationItem key="navigationItem" id="lJd-jm-lvM">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="dWV-z9-3MA">
                             <connections>
-                                <segue destination="5m2-iN-jfU" kind="presentation" id="mkP-Vp-qu1"/>
+                                <segue destination="5m2-iN-jfU" kind="presentation" identifier="EditItem" id="mkP-Vp-qu1"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -523,10 +524,11 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dfr-JP-1u2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3703" y="-306"/>
+            <point key="canvasLocation" x="3748" y="-619"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="XHZ-Lz-icb"/>
+        <segue reference="883-gk-HxU"/>
     </inferredMetricsTieBreakers>
 </document>
