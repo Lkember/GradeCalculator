@@ -246,7 +246,7 @@
                                     <outlet property="staticMarkLabel" destination="q16-4t-WYk" id="MeW-Mj-JdR"/>
                                     <outlet property="staticWeightLabel" destination="uy7-rr-bjE" id="GJL-nC-dc6"/>
                                     <outlet property="weightLabel" destination="QxH-MI-G4g" id="BJe-qo-sHo"/>
-                                    <segue destination="RKN-Dz-eSo" kind="show" identifier="AddItem" id="883-gk-HxU"/>
+                                    <segue destination="RKN-Dz-eSo" kind="show" identifier="EditItem" id="883-gk-HxU"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -258,7 +258,7 @@
                     <navigationItem key="navigationItem" id="lJd-jm-lvM">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="dWV-z9-3MA">
                             <connections>
-                                <segue destination="5m2-iN-jfU" kind="presentation" identifier="EditItem" id="mkP-Vp-qu1"/>
+                                <segue destination="5m2-iN-jfU" kind="presentation" identifier="AddItem" id="mkP-Vp-qu1"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -384,6 +384,15 @@
                                 <color key="textColor" red="0.41406298120000001" green="0.41406298120000001" blue="0.41406298120000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="STh-6q-IRj">
+                                <rect key="frame" x="20" y="448" width="560" height="30"/>
+                                <state key="normal" title="Delete Project">
+                                    <color key="titleColor" red="1" green="0.0" blue="0.028078071959999999" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="deleteProject:" destination="RKN-Dz-eSo" eventType="touchUpInside" id="bra-O8-yW5"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -392,7 +401,9 @@
                             <constraint firstItem="F7A-1E-4tQ" firstAttribute="top" secondItem="gXM-Fo-HiE" secondAttribute="bottom" constant="14" id="3g1-6Q-M8b"/>
                             <constraint firstItem="v3h-29-hQI" firstAttribute="trailing" secondItem="iQQ-Q5-Ksx" secondAttribute="trailingMargin" id="589-Ud-ZDE"/>
                             <constraint firstItem="ov9-S2-mK4" firstAttribute="trailing" secondItem="iQQ-Q5-Ksx" secondAttribute="trailingMargin" id="6Cf-F5-lYe"/>
+                            <constraint firstItem="STh-6q-IRj" firstAttribute="trailing" secondItem="iQQ-Q5-Ksx" secondAttribute="trailingMargin" id="6d1-5Q-2J2"/>
                             <constraint firstItem="ov9-S2-mK4" firstAttribute="top" secondItem="rmy-xw-IVT" secondAttribute="bottom" constant="18" id="7fC-Em-9kc"/>
+                            <constraint firstItem="STh-6q-IRj" firstAttribute="top" secondItem="ov9-S2-mK4" secondAttribute="bottom" constant="8" id="7sr-eD-KSU"/>
                             <constraint firstItem="rmy-xw-IVT" firstAttribute="trailing" secondItem="iQQ-Q5-Ksx" secondAttribute="trailingMargin" id="9ZY-cD-y4R"/>
                             <constraint firstItem="gXM-Fo-HiE" firstAttribute="top" secondItem="VPI-DT-ZXV" secondAttribute="bottom" constant="17" id="AZ9-78-2hG"/>
                             <constraint firstItem="rLy-FK-VVa" firstAttribute="leading" secondItem="WlM-Ur-ZLx" secondAttribute="trailing" constant="15" id="B56-U6-yyY"/>
@@ -416,6 +427,7 @@
                             <constraint firstItem="VPI-DT-ZXV" firstAttribute="trailing" secondItem="iQQ-Q5-Ksx" secondAttribute="trailingMargin" id="cgZ-vz-cl6"/>
                             <constraint firstItem="WlM-Ur-ZLx" firstAttribute="top" secondItem="v3h-29-hQI" secondAttribute="bottom" constant="21" id="fB5-w3-yjt"/>
                             <constraint firstItem="4Pf-d0-nE6" firstAttribute="leading" secondItem="iQQ-Q5-Ksx" secondAttribute="leadingMargin" id="fbn-hT-kZY"/>
+                            <constraint firstItem="STh-6q-IRj" firstAttribute="leading" secondItem="iQQ-Q5-Ksx" secondAttribute="leadingMargin" id="flZ-21-zMr"/>
                             <constraint firstItem="74y-Pw-38Y" firstAttribute="width" secondItem="rLy-FK-VVa" secondAttribute="width" constant="64" id="kGp-CH-3sZ"/>
                             <constraint firstItem="ov9-S2-mK4" firstAttribute="leading" secondItem="iQQ-Q5-Ksx" secondAttribute="leadingMargin" id="mbb-te-CSd"/>
                             <constraint firstItem="rmy-xw-IVT" firstAttribute="top" secondItem="gXM-Fo-HiE" secondAttribute="bottom" constant="18" id="p4s-5j-YKe"/>
@@ -434,19 +446,22 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="ta1-ZG-6UZ">
                             <connections>
-                                <segue destination="BDV-8h-3Xu" kind="unwind" unwindAction="unwindToProjectList:" id="dtT-oi-aax"/>
+                                <segue destination="BDV-8h-3Xu" kind="unwind" identifier="deleteProject" unwindAction="deleteFromProjectList:" id="dtT-oi-aax"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="deleteProjectButton" destination="STh-6q-IRj" id="70x-XL-6qW"/>
                         <outlet property="gradeField" destination="RoM-5p-hld" id="lLg-7T-ZNu"/>
                         <outlet property="gradeOutOfField" destination="Plr-rq-NKI" id="R1G-h2-w7v"/>
                         <outlet property="gradeView" destination="ov9-S2-mK4" id="MmT-wa-qH4"/>
                         <outlet property="incorrectInfoLabel" destination="VPI-DT-ZXV" id="lM7-ip-ZuN"/>
+                        <outlet property="outOfLabel" destination="PBY-ZZ-xky" id="Dzc-9T-ahm"/>
                         <outlet property="projectIsComplete" destination="WlM-Ur-ZLx" id="apq-h9-ZEY"/>
                         <outlet property="projectNameField" destination="v3h-29-hQI" id="CQu-ES-SU7"/>
                         <outlet property="saveButton" destination="ta1-ZG-6UZ" id="Gib-bE-OCD"/>
                         <outlet property="weightField" destination="F7A-1E-4tQ" id="gvM-7w-K6H"/>
+                        <segue destination="BDV-8h-3Xu" kind="unwind" unwindAction="unwindToProjectList:" id="GzG-vQ-TkH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hMY-Po-bvB" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -18,21 +18,47 @@ class MarksTableViewController: UITableViewController {
     
     // MARK: Actions
     @IBAction func unwindToProjectList(sender: UIStoryboardSegue) {
-        print("Here")
+        
         if let svc = sender.sourceViewController as? AddProjectViewController {
             
-            let newIndexPath = NSIndexPath(forRow: course!.projects.count, inSection: 0)
-            
-            if svc.projectGrade == -1.0 {
-                course?.addProject(svc.projectName, grade: -1.0, weight: svc.projectWeight)
+            // If user is editing a row
+            if let selectedIndexPath = tableView.indexPathForSelectedRow {
+                
+                print("MarksTable: Editing a row")
+                
+                course!.projects[selectedIndexPath.row] = svc.projectName
+                course!.projectMarks[selectedIndexPath.row] = svc.projectGrade
+                course!.projectWeights[selectedIndexPath.row] = svc.projectWeight
+                tableView.reloadRowsAtIndexPaths([selectedIndexPath], withRowAnimation: .Fade)
+                
             }
+            // If user is adding a new row
             else {
-                course?.addProject(svc.projectName, grade: svc.projectGrade/svc.projectOutOf, weight: svc.projectWeight)
+                print("MarksTable: Adding a new row")
+                
+                let newIndexPath = NSIndexPath(forRow: course!.projects.count, inSection: 0)
+                
+                if svc.projectGrade == -1.0 {
+                    course?.addProject(svc.projectName, grade: -1.0, weight: svc.projectWeight)
+                }
+                else {
+                    course?.addProject(svc.projectName, grade: svc.projectGrade/svc.projectOutOf, weight: svc.projectWeight)
+                }
+                tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Bottom)
             }
-            tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Bottom)
         }
         updateAverageLabel()
     }
+    
+    @IBAction func deleteFromProjectList(sender: UIStoryboardSegue) {
+        if let selectedIndexPath = tableView.indexPathForSelectedRow {
+            course!.projects.removeAtIndex(selectedIndexPath.row)
+            course!.projectWeights.removeAtIndex(selectedIndexPath.row)
+            course!.projectMarks.removeAtIndex(selectedIndexPath.row)
+        }
+        tableView.reloadData()
+    }
+    
     
     // When the view loads, perform the following
     override func viewDidLoad() {
@@ -123,10 +149,22 @@ class MarksTableViewController: UITableViewController {
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == "EditItem") {
+            print("MarksTable: User selected a cell.")
+            let courseDVC = segue.destinationViewController as! AddProjectViewController
             
+            if let selectedCell = sender as? MarksViewCell {
+                let indexPath = tableView.indexPathForCell(selectedCell)!
+                let selectedCourse = course?.projects[indexPath.row]
+                
+                print("MarksTable: User selected \(selectedCourse)")
+                
+                courseDVC.projectName = selectedCourse!
+                courseDVC.projectWeight = (course?.projectWeights[indexPath.row])!
+                courseDVC.projectGrade = (course?.projectMarks[indexPath.row])!
+            }
             
         } else if (segue.identifier == "AddItem") {
-            
+            print("MarksTable: User selected add button.")
             
         }
         
