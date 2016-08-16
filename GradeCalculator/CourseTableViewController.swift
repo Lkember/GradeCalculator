@@ -138,14 +138,14 @@ class CourseTableViewController: UITableViewController {
     // MARK: NSCoding
     // Save user information
     func saveCourses() {
-        print("CourseTable: Saving meals...")
+        print("CourseTable: Saving courses...")
         if (!NSKeyedArchiver.archiveRootObject(courses, toFile: Course.ArchiveURL.path!)) {
             print("CourseTable: Failed to save meals...")
         }
     }
     
     func loadCourses() -> [Course]? {
-        print("CourseTable: Loading meals...")
+        print("CourseTable: Loading courses...")
         return (NSKeyedUnarchiver.unarchiveObjectWithFile(Course.ArchiveURL.path!) as? [Course])
     }
     

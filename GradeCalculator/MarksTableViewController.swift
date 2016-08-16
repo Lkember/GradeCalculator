@@ -18,7 +18,7 @@ class MarksTableViewController: UITableViewController {
     
     // MARK: Actions
     @IBAction func unwindToProjectList(sender: UIStoryboardSegue) {
-        
+        print("MarksTable: Starting unwind to project list method.")
         if let svc = sender.sourceViewController as? AddProjectViewController {
             
             // If user is editing a row

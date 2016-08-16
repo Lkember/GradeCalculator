@@ -446,7 +446,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="ta1-ZG-6UZ">
                             <connections>
-                                <segue destination="BDV-8h-3Xu" kind="unwind" identifier="deleteProject" unwindAction="deleteFromProjectList:" id="dtT-oi-aax"/>
+                                <segue destination="BDV-8h-3Xu" kind="unwind" unwindAction="unwindToProjectList:" id="4OR-mg-RFf"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -461,7 +461,7 @@
                         <outlet property="projectNameField" destination="v3h-29-hQI" id="CQu-ES-SU7"/>
                         <outlet property="saveButton" destination="ta1-ZG-6UZ" id="Gib-bE-OCD"/>
                         <outlet property="weightField" destination="F7A-1E-4tQ" id="gvM-7w-K6H"/>
-                        <segue destination="BDV-8h-3Xu" kind="unwind" unwindAction="unwindToProjectList:" id="GzG-vQ-TkH"/>
+                        <segue destination="BDV-8h-3Xu" kind="unwind" identifier="deleteProject" unwindAction="deleteFromProjectList:" id="Uxf-ri-Hld"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hMY-Po-bvB" userLabel="First Responder" sceneMemberID="firstResponder"/>
