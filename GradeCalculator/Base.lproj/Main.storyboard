@@ -147,19 +147,22 @@
                             <rect key="frame" x="0.0" y="64" width="600" height="80"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Average: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IRa-pl-6nG">
-                                    <rect key="frame" x="8" y="8" width="75" height="21"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current Mark: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IRa-pl-6nG">
+                                    <rect key="frame" x="8" y="8" width="113" height="21"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="113" id="O1E-9U-HdW"/>
+                                    </constraints>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="30o-GC-dpm">
-                                    <rect key="frame" x="91" y="8" width="501" height="21"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="30o-GC-dpm">
+                                    <rect key="frame" x="129" y="8" width="463" height="21"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Mark List" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5gz-xM-oZ4">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mark List" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5gz-xM-oZ4">
                                     <rect key="frame" x="8" y="37" width="584" height="35"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -167,6 +170,20 @@
                                 </label>
                             </subviews>
                             <color key="backgroundColor" red="0.84443157094358978" green="0.84443157094358978" blue="0.84443157094358978" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstItem="5gz-xM-oZ4" firstAttribute="top" secondItem="30o-GC-dpm" secondAttribute="bottom" constant="8" id="Ex6-pQ-D7n"/>
+                                <constraint firstAttribute="bottom" secondItem="5gz-xM-oZ4" secondAttribute="bottom" constant="8" id="F9U-MK-SVe"/>
+                                <constraint firstAttribute="trailing" secondItem="5gz-xM-oZ4" secondAttribute="trailing" constant="8" id="H1l-kx-o3N"/>
+                                <constraint firstItem="30o-GC-dpm" firstAttribute="top" secondItem="vI6-I2-iV8" secondAttribute="top" constant="8" id="Vze-0Y-qxl"/>
+                                <constraint firstItem="5gz-xM-oZ4" firstAttribute="top" secondItem="IRa-pl-6nG" secondAttribute="bottom" constant="8" id="W1M-E0-vbE"/>
+                                <constraint firstItem="30o-GC-dpm" firstAttribute="leading" secondItem="IRa-pl-6nG" secondAttribute="trailing" constant="8" id="XiS-1p-ze6"/>
+                                <constraint firstItem="5gz-xM-oZ4" firstAttribute="leading" secondItem="vI6-I2-iV8" secondAttribute="leading" constant="8" id="ZtF-g5-u1M"/>
+                                <constraint firstItem="5gz-xM-oZ4" firstAttribute="top" secondItem="30o-GC-dpm" secondAttribute="bottom" constant="8" id="er4-iq-JBi"/>
+                                <constraint firstItem="IRa-pl-6nG" firstAttribute="leading" secondItem="vI6-I2-iV8" secondAttribute="leading" constant="8" id="era-aW-n3t"/>
+                                <constraint firstItem="IRa-pl-6nG" firstAttribute="top" secondItem="vI6-I2-iV8" secondAttribute="top" constant="8" id="hGW-zo-V5S"/>
+                                <constraint firstAttribute="trailing" secondItem="30o-GC-dpm" secondAttribute="trailing" constant="8" id="uh8-e4-mFK"/>
+                                <constraint firstItem="30o-GC-dpm" firstAttribute="leading" secondItem="IRa-pl-6nG" secondAttribute="trailing" constant="8" id="yPw-bi-vVr"/>
+                            </constraints>
                         </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MarksViewCell" rowHeight="60" id="Cg1-s5-LB5" customClass="MarksViewCell" customModule="GradeCalculator" customModuleProvider="target">

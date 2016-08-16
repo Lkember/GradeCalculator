@@ -17,9 +17,9 @@
 		B274AEC31D46AEE500E732FD /* CourseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B274AEC21D46AEE500E732FD /* CourseTableViewController.swift */; };
 		B274AEC51D46AFB600E732FD /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = B274AEC41D46AFB600E732FD /* Course.swift */; };
 		B28A7E0F1D5A55C800C2ADEB /* MarksTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28A7E0E1D5A55C800C2ADEB /* MarksTableViewController.swift */; };
-		B28A7E151D5A823500C2ADEB /* NewCoursesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28A7E141D5A823500C2ADEB /* NewCoursesViewController.swift */; };
 		B28A7E171D5BA2BE00C2ADEB /* AddProjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28A7E161D5BA2BE00C2ADEB /* AddProjectViewController.swift */; };
 		B28A7E2E1D61FF0300C2ADEB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B28A7E2D1D61FF0300C2ADEB /* Main.storyboard */; };
+		B28A7E331D63852600C2ADEB /* NewCoursesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28A7E321D63852600C2ADEB /* NewCoursesViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,9 +56,9 @@
 		B274AEC21D46AEE500E732FD /* CourseTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseTableViewController.swift; sourceTree = "<group>"; };
 		B274AEC41D46AFB600E732FD /* Course.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
 		B28A7E0E1D5A55C800C2ADEB /* MarksTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarksTableViewController.swift; sourceTree = "<group>"; };
-		B28A7E141D5A823500C2ADEB /* NewCoursesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewCoursesViewController.swift; path = ../../../../.Trash/NewCoursesViewController.swift; sourceTree = "<group>"; };
 		B28A7E161D5BA2BE00C2ADEB /* AddProjectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddProjectViewController.swift; sourceTree = "<group>"; };
 		B28A7E2D1D61FF0300C2ADEB /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		B28A7E321D63852600C2ADEB /* NewCoursesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewCoursesViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,7 +116,7 @@
 				B274AEC01D46A9ED00E732FD /* CourseTableViewCell.swift */,
 				B26FBB551D54D2360024DB9B /* MarksViewCell.swift */,
 				B28A7E0E1D5A55C800C2ADEB /* MarksTableViewController.swift */,
-				B28A7E141D5A823500C2ADEB /* NewCoursesViewController.swift */,
+				B28A7E321D63852600C2ADEB /* NewCoursesViewController.swift */,
 				B274AE991D46A5B100E732FD /* Assets.xcassets */,
 				B28A7E2D1D61FF0300C2ADEB /* Main.storyboard */,
 				B274AE9B1D46A5B100E732FD /* LaunchScreen.storyboard */,
@@ -275,10 +275,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				B28A7E171D5BA2BE00C2ADEB /* AddProjectViewController.swift in Sources */,
+				B28A7E331D63852600C2ADEB /* NewCoursesViewController.swift in Sources */,
 				B274AEC51D46AFB600E732FD /* Course.swift in Sources */,
 				B274AEC31D46AEE500E732FD /* CourseTableViewController.swift in Sources */,
 				B26FBB561D54D2360024DB9B /* MarksViewCell.swift in Sources */,
-				B28A7E151D5A823500C2ADEB /* NewCoursesViewController.swift in Sources */,
 				B28A7E0F1D5A55C800C2ADEB /* MarksTableViewController.swift in Sources */,
 				B274AEC11D46A9ED00E732FD /* CourseTableViewCell.swift in Sources */,
 				B274AE911D46A5B100E732FD /* AppDelegate.swift in Sources */,

@@ -67,10 +67,12 @@ class MarksTableViewController: UITableViewController {
         print("Starting.. Courses.count=\(courses.count)")
         for course in courses {
             if course.courseName == courseName {
-                print("Found. User clicked \(course.courseName)")
+                print("MarksTable: Found. User clicked \(course.courseName)")
                 self.course = course
             }
         }
+        print("MarksTable: Setting title to \(course!.courseName)")
+        self.navigationItem.title = course!.courseName
         tableView.rowHeight = 60.0
         
         updateAverageLabel()
