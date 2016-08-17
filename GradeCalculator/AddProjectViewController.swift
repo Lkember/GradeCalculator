@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddProjectViewController: UIViewController {
+class AddProjectViewController: UIViewController, UITextFieldDelegate {
 
     // MARK - Attributes
     @IBOutlet weak var projectNameField: UITextField!
@@ -33,6 +33,11 @@ class AddProjectViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.projectNameField.delegate = self
+        self.weightField.delegate = self
+        self.gradeField.delegate = self
+        self.gradeOutOfField.delegate = self
         
         incorrectInfoLabel.hidden = true
         // Do any additional setup after loading the view.
@@ -154,6 +159,13 @@ class AddProjectViewController: UIViewController {
             incorrectInfoLabel.hidden = true
             return true
         }
+    }
+    
+    
+    // MARK: - TextField
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
     
     
