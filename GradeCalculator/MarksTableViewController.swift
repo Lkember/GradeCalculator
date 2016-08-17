@@ -46,7 +46,8 @@ class MarksTableViewController: UITableViewController {
                 }
                 tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Bottom)
             }
-        }
+        }	
+        saveCourses()
         updateAverageLabel()
     }
     
@@ -76,6 +77,7 @@ class MarksTableViewController: UITableViewController {
         tableView.rowHeight = 60.0
         
         updateAverageLabel()
+        saveCourses()
     }
 
     override func didReceiveMemoryWarning() {
@@ -91,6 +93,14 @@ class MarksTableViewController: UITableViewController {
         }
         else {
             averageLabel.text = "Unavailable"
+        }
+    }
+    
+    // save course information
+    func saveCourses() {
+        print("MarksTable: Saving courses...")
+        if (!NSKeyedArchiver.archiveRootObject(courses, toFile: Course.ArchiveURL.path!)) {
+            print("MarksTable: Failed to save meals...")
         }
     }
     
