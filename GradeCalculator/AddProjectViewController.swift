@@ -42,8 +42,8 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
         self.gradeOutOfField.delegate = self
         
         // Adding listeners for when the keyboard shows or hides
-//        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AddProjectViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
-//        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AddProjectViewController.keyboardWillShow(_:)), name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AddProjectViewController.keyboardToggle(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AddProjectViewController.keyboardToggle(_:)), name: UIKeyboardWillHideNotification, object: nil)
         
         incorrectInfoLabel.hidden = true
         // Do any additional setup after loading the view.
@@ -190,34 +190,19 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
 //    }
 
     // MARK: - Listeners
-//    func keyboardWillShow(notification: NSNotification) {
-//        let userInfo = notification.userInfo!
-//        
-//        let keyboardScreenEndFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
-//        let keyboardViewEndFrame = view.convertRect(keyboardScreenEndFrame, fromView: scrollView)
-//        
-//        if notification.name == UIKeyboardWillHideNotification {
-//            scrollView.contentInset = UIEdgeInsetsZero
-//            print("AddProject: Keyboard is hidden.")
-//        } else {
-//            scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height, right: 0)
-//            print("AddProject: Keyboard is showing.")
-//        }
-//        
-//        scrollView.scrollIndicatorInsets = scrollView.contentInset
+    func keyboardToggle(notification: NSNotification) {
+        let userInfo = notification.userInfo!
         
-//        var keyboardFrame:CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).CGRectValue()
-//        keyboardFrame = self.view.convertRect(keyboardFrame, fromView: nil)
+        let keyboardScreenEndFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
+        let keyboardViewEndFrame = view.convertRect(keyboardScreenEndFrame, fromView: scrollView)
         
-//        var contentInset:UIEdgeInsets = self.scrollView.contentInset
-//        contentInset.bottom = keyboardFrame.size.height
-//        self.scrollView.contentInset = contentInset
-//    }
-    
-//    func keyboardWillHide(notification: NSNotification) {
-//        print("AddProject: Keyboard is hidden")
-//        let contentInset :UIEdgeInsets = UIEdgeInsetsZero
-//        self.scrollView.contentInset = contentInset
-//    }
+        if notification.name == UIKeyboardWillHideNotification {
+            scrollView.contentInset = UIEdgeInsetsZero
+            print("AddProject: Keyboard is hidden.")
+        } else {
+            scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height, right: 0)
+            print("AddProject: Keyboard is showing.")
+        }
+    }
     
 }
