@@ -29,8 +29,8 @@ class MarksTableViewController: UITableViewController {
                 course!.projects[selectedIndexPath.row] = svc.projectName
                 course!.projectMarks[selectedIndexPath.row] = svc.projectGrade
                 course!.projectWeights[selectedIndexPath.row] = svc.projectWeight
+                course!.projectOutOf[selectedIndexPath.row] = svc.projectOutOf
                 tableView.reloadRowsAtIndexPaths([selectedIndexPath], withRowAnimation: .Fade)
-                
             }
             // If user is adding a new row
             else {
@@ -39,10 +39,10 @@ class MarksTableViewController: UITableViewController {
                 let newIndexPath = NSIndexPath(forRow: course!.projects.count, inSection: 0)
                 
                 if svc.projectGrade == -1.0 {
-                    course?.addProject(svc.projectName, grade: -1.0, weight: svc.projectWeight)
+                    course?.addProject(svc.projectName, grade: -1.0, outOf: -1.0, weight: svc.projectWeight)
                 }
                 else {
-                    course?.addProject(svc.projectName, grade: svc.projectGrade/svc.projectOutOf, weight: svc.projectWeight)
+                    course?.addProject(svc.projectName, grade: svc.projectGrade, outOf: svc.projectOutOf, weight: svc.projectWeight)
                 }
                 tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Bottom)
             }

@@ -51,23 +51,19 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
         if (self.projectWeight != -1.0 || self.projectName != "") {
             editorMode = true
             
-            print("AddProject: Updating projectName \(projectName), grade: \(projectGrade), weight: \(projectWeight)")
+            print("AddProject: Updating projectName \(projectName), grade: \(projectGrade), outOf: \(projectOutOf) weight: \(projectWeight)")
             self.projectNameField?.text = "\(self.projectName)"
             self.weightField?.text = "\(self.projectWeight)"
             
             if (projectGrade != -1.0) {
                 self.gradeField?.text = "\(self.projectGrade)"
-                
+                self.gradeOutOfField?.text = "\(self.projectOutOf)"
             }
             else {
                 projectIsComplete.on = false
                 isComplete(projectIsComplete)
             }
-            
-            self.outOfLabel.hidden = true
-            self.gradeOutOfField.hidden = true
-            self.deleteProjectButton.hidden = false
-        }
+        }    
         else {
             self.deleteProjectButton.hidden = true
         }
