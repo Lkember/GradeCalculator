@@ -25,12 +25,25 @@ class MarksTableViewController: UITableViewController {
             if let selectedIndexPath = tableView.indexPathForSelectedRow {
                 
                 print("MarksTable: Editing a row")
-                print("MarksTable: projectName: \(svc.projectName), grade: \(svc.projectGrade), out of: \(svc.projectOutOf), weight: \(svc.projectWeight)")
-                course!.projects[selectedIndexPath.row] = svc.projectName
-                course!.projectMarks[selectedIndexPath.row] = svc.projectGrade
-                course!.projectWeights[selectedIndexPath.row] = svc.projectWeight
-                course!.projectOutOf[selectedIndexPath.row] = svc.projectOutOf
-                tableView.reloadRowsAtIndexPaths([selectedIndexPath], withRowAnimation: .Fade)
+                let i = selectedIndexPath.row
+                
+                if svc.projectIsComplete.on == true {
+                
+                    print("MarksTable: projectName: \(svc.projectName), grade: \(svc.projectGrade), out of: \(svc.projectOutOf), weight: \(svc.projectWeight)")
+                    course!.projects[i] = svc.projectName
+                    course!.projectMarks[i] = svc.projectGrade
+                    course!.projectWeights[i] = svc.projectWeight
+                    course!.projectOutOf[i] = svc.projectOutOf
+                    tableView.reloadRowsAtIndexPaths([selectedIndexPath], withRowAnimation: .Fade)
+                }
+                else {
+                    print("MarksTable: projectName: \(svc.projectName), grade: -1.0, out of: -1.0, weight: \(svc.projectWeight)")
+                    course!.projects[i] = svc.projectName
+                    course!.projectMarks[i] = -1.0
+                    course!.projectWeights[i] = svc.projectWeight
+                    course!.projectOutOf[i] = -1.0
+                    tableView.reloadRowsAtIndexPaths([selectedIndexPath], withRowAnimation: .Fade)
+                }
             }
             // If user is adding a new row
             else {
