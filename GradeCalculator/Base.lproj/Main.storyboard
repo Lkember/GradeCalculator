@@ -467,7 +467,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="ta1-ZG-6UZ">
                             <connections>
-                                <segue destination="BDV-8h-3Xu" kind="unwind" unwindAction="unwindToProjectList:" id="4OR-mg-RFf"/>
+                                <segue destination="BDV-8h-3Xu" kind="unwind" unwindAction="unwindToProjectList:" id="Wn4-Vb-XWd"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

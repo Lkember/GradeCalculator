@@ -25,7 +25,7 @@ class MarksTableViewController: UITableViewController {
             if let selectedIndexPath = tableView.indexPathForSelectedRow {
                 
                 print("MarksTable: Editing a row")
-                
+                print("MarksTable: projectName: \(svc.projectName), grade: \(svc.projectGrade), out of: \(svc.projectOutOf), weight: \(svc.projectWeight)")
                 course!.projects[selectedIndexPath.row] = svc.projectName
                 course!.projectMarks[selectedIndexPath.row] = svc.projectGrade
                 course!.projectWeights[selectedIndexPath.row] = svc.projectWeight
@@ -39,9 +39,11 @@ class MarksTableViewController: UITableViewController {
                 let newIndexPath = NSIndexPath(forRow: course!.projects.count, inSection: 0)
                 
                 if svc.projectGrade == -1.0 {
+                    print("MarksTable: Adding project \(svc.projectName), grade: -1.0, outOf: -1.0, weight: \(svc.projectWeight)")
                     course?.addProject(svc.projectName, grade: -1.0, outOf: -1.0, weight: svc.projectWeight)
                 }
                 else {
+                    print("MarksTable: Adding project \(svc.projectName), grade \(svc.projectGrade), outOf \(svc.projectOutOf), weight \(svc.projectWeight)")
                     course?.addProject(svc.projectName, grade: svc.projectGrade, outOf: svc.projectOutOf, weight: svc.projectWeight)
                 }
                 tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Bottom)
@@ -129,7 +131,8 @@ class MarksTableViewController: UITableViewController {
             cell.projectNameLabel.text = course?.projects[indexPath.row]
             
             if (course!.projectMarks[indexPath.row] != -1.0) {
-                cell.markLabel.text = "\(round(10*course!.projectMarks[indexPath.row]*100)/10)%"
+                let mark = course!.projectMarks[indexPath.row]/course!.projectOutOf[indexPath.row]
+                cell.markLabel.text = "\(round(10*(mark)*100)/10)%"
             }
             else {
                 cell.markLabel.text = "Incomplete"
@@ -166,18 +169,19 @@ class MarksTableViewController: UITableViewController {
             
             if let selectedCell = sender as? MarksViewCell {
                 let indexPath = tableView.indexPathForCell(selectedCell)!
-                let selectedCourse = course?.projects[indexPath.row]
+                let selectedProject = course?.projects[indexPath.row]
                 
-                print("MarksTable: User selected \(selectedCourse)")
+                print("MarksTable: User selected \(selectedProject!)")
+                print("MarksTable: project grade: \(course?.projectMarks[indexPath.row]) out of \(course?.projectOutOf[indexPath.row])")
                 
-                courseDVC.projectName = selectedCourse!
+                courseDVC.projectName = selectedProject!
                 courseDVC.projectWeight = (course?.projectWeights[indexPath.row])!
                 courseDVC.projectGrade = (course?.projectMarks[indexPath.row])!
+                courseDVC.projectOutOf = (course?.projectOutOf[indexPath.row])!
             }
             
         } else if (segue.identifier == "AddItem") {
             print("MarksTable: User selected add button.")
-            
         }
         
         // Get the new view controller using segue.destinationViewController.

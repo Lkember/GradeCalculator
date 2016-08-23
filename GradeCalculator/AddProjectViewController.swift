@@ -31,7 +31,6 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
     var course = Course?()
     
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -118,6 +117,7 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
     
     // Function which checks the to make sure all fields are completed
     func checkInput() -> Bool {
+        // if user is adding a new project
         if (!editorMode) {
             if (projectNameField.text == "" || weightField.text == "") {
                 incorrectInfoLabel.hidden = false
@@ -140,6 +140,7 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
             incorrectInfoLabel.hidden = true
             return true
         }
+            // if user is editing a project
         else {
             if (projectNameField.text == "" || weightField.text == "") {
                 incorrectInfoLabel.hidden = false
@@ -150,12 +151,13 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
                 projectWeight = Double(weightField.text!)!
             }
             if (projectIsComplete.on) {
-                if (gradeField.text == "") {
+                if (gradeField.text == "" || gradeOutOfField.text == "" || Double(gradeOutOfField.text!) == 0.0) {
                     incorrectInfoLabel.hidden = false
                     return false
                 }
                 else {
                     projectGrade = Double(gradeField.text!)!
+                    projectOutOf = Double(gradeOutOfField.text!)!
                 }
             }
             incorrectInfoLabel.hidden = true
