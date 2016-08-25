@@ -128,7 +128,7 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
                 projectWeight = Double(weightField.text!)!
             }
             if (projectIsComplete.on) {
-                if (gradeField.text == "" || gradeOutOfField.text == "") {
+                if (gradeField.text == "" || gradeOutOfField.text == "" || !checkMarkInput()) {
                     incorrectInfoLabel.hidden = false
                     return false
                 }
@@ -151,7 +151,7 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
                 projectWeight = Double(weightField.text!)!
             }
             if (projectIsComplete.on) {
-                if (gradeField.text == "" || gradeOutOfField.text == "" || Double(gradeOutOfField.text!) == 0.0) {
+                if (gradeField.text == "" || gradeOutOfField.text == "" || Double(gradeOutOfField.text!) == 0.0 || !checkMarkInput()) {
                     incorrectInfoLabel.hidden = false
                     return false
                 }
@@ -163,6 +163,33 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
             incorrectInfoLabel.hidden = true
             return true
         }
+    }
+    
+    func checkMarkInput() -> Bool {
+        print("AddProject: Checking mark input")
+        let grade = gradeField.text
+        let weight = weightField.text
+        var numDecimals = 0
+        var numDecimals2 = 0
+        
+        for char in (grade?.characters)! {
+            if (char == ".") {
+                numDecimals += 1
+            }
+        }
+        print("AddProject: number of decimals in grade: \(numDecimals)")
+        
+        for char in (weight?.characters)! {
+            if (char == ".") {
+                numDecimals2 += 1
+            }
+        }
+        print("AddProject: number of decimals in weight: \(numDecimals2)")
+        
+        if (numDecimals < 2 && numDecimals2 < 2) {
+            return true
+        }
+        return false
     }
     
     
