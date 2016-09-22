@@ -60,6 +60,7 @@ class Course: NSObject, NSCoding {
         super.init()
     }
     
+    // Returns the average of all completed projects
     func getAverage() -> Double {
         print("Course.swift: projects.count = \(projects.count)")
         if projects.count != 0 {
@@ -83,6 +84,18 @@ class Course: NSObject, NSCoding {
             return mark
         }
         return -1.0
+    }
+    
+    // Returns the number of grades that have been inputted
+    func getNumMarks() -> Int {
+        var markCount = 0
+        print("Course.swift: projects.count = \(projects.count)");
+        for i in 0..<projects.count {
+            if (projectMarks[i] != -1.0) {
+                markCount+=1
+            }
+        }
+        return markCount
     }
     
     // Mark: Actions

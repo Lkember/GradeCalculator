@@ -12,6 +12,7 @@ class MarksTableViewController: UITableViewController {
 
     // MARK: Attributes
     @IBOutlet weak var averageLabel: UILabel!
+    @IBOutlet weak var numMarks: UILabel!
     var courses = [Course]()
     var course = Course(courseName: "")
     var courseName = ""
@@ -63,7 +64,7 @@ class MarksTableViewController: UITableViewController {
             }
         }	
         saveCourses()
-        updateAverageLabel()
+        updateLabels()
     }
     
     @IBAction func deleteFromProjectList(sender: UIStoryboardSegue) {
@@ -91,7 +92,7 @@ class MarksTableViewController: UITableViewController {
         self.navigationItem.title = course!.courseName
         tableView.rowHeight = 60.0
         
-        updateAverageLabel()
+        updateLabels()
         saveCourses()
     }
 
@@ -102,13 +103,15 @@ class MarksTableViewController: UITableViewController {
     
     
     // MARK: - Functions
-    func updateAverageLabel() {
+    func updateLabels() {
         if ((10*course!.getAverage()*100)/10 != -100.0) {
             averageLabel.text = "\(round(10*course!.getAverage()*100)/10)%"
         }
         else {
-            averageLabel.text = "Unavailable"
+            averageLabel.text = "N/A"
         }
+        
+        numMarks.text = "\(course!.getNumMarks())"
     }
     
     // save course information
