@@ -19,8 +19,8 @@ class Course: NSObject, NSCoding {
     
     // MARK: Archiving Paths
     
-    static let DocumentsDirectory = NSFileManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!
-    static let ArchiveURL = DocumentsDirectory.URLByAppendingPathComponent("courses")
+    static let DocumentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
+    static let ArchiveURL = DocumentsDirectory.appendingPathComponent("courses")
     
     
     // MARK: Types
@@ -99,7 +99,7 @@ class Course: NSObject, NSCoding {
     }
     
     // Mark: Actions
-    func addProject(projectName: String, grade: Double, outOf: Double, weight: Double) {
+    func addProject(_ projectName: String, grade: Double, outOf: Double, weight: Double) {
         projects.append(projectName)
         projectMarks.append(grade)
         projectWeights.append(weight)
@@ -108,20 +108,20 @@ class Course: NSObject, NSCoding {
     
     // MARK: NSCoding
     
-    func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeObject(courseName, forKey: PropertyKey.courseNameKey)
-        aCoder.encodeObject(projects, forKey: PropertyKey.projectsKey)
-        aCoder.encodeObject(projectMarks, forKey: PropertyKey.projectMarksKey)
-        aCoder.encodeObject(projectOutOf, forKey: PropertyKey.projectOutOfKey)
-        aCoder.encodeObject(projectWeights, forKey: PropertyKey.projectWeightsKey)
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(courseName, forKey: PropertyKey.courseNameKey)
+        aCoder.encode(projects, forKey: PropertyKey.projectsKey)
+        aCoder.encode(projectMarks, forKey: PropertyKey.projectMarksKey)
+        aCoder.encode(projectOutOf, forKey: PropertyKey.projectOutOfKey)
+        aCoder.encode(projectWeights, forKey: PropertyKey.projectWeightsKey)
     }
     
     required convenience init?(coder aDecoder: NSCoder) {
-        let courseName = aDecoder.decodeObjectForKey(PropertyKey.courseNameKey) as! String
-        let projects = aDecoder.decodeObjectForKey(PropertyKey.projectsKey) as! [String]
-        let projectMarks = aDecoder.decodeObjectForKey(PropertyKey.projectMarksKey) as! [Double]
-        let projectOutOf = aDecoder.decodeObjectForKey(PropertyKey.projectOutOfKey) as! [Double]
-        let projectWeights = aDecoder.decodeObjectForKey(PropertyKey.projectWeightsKey) as! [Double]
+        let courseName = aDecoder.decodeObject(forKey: PropertyKey.courseNameKey) as! String
+        let projects = aDecoder.decodeObject(forKey: PropertyKey.projectsKey) as! [String]
+        let projectMarks = aDecoder.decodeObject(forKey: PropertyKey.projectMarksKey) as! [Double]
+        let projectOutOf = aDecoder.decodeObject(forKey: PropertyKey.projectOutOfKey) as! [Double]
+        let projectWeights = aDecoder.decodeObject(forKey: PropertyKey.projectWeightsKey) as! [Double]
         
         self.init(courseName: courseName, projects: projects, projectMarks: projectMarks, projectOutOf: projectOutOf, projectWeights: projectWeights)
     }

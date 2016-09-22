@@ -18,24 +18,24 @@ class MarksTableViewController: UITableViewController {
     var courseName = ""
     
     // MARK: Actions
-    @IBAction func unwindToProjectList(sender: UIStoryboardSegue) {
+    @IBAction func unwindToProjectList(_ sender: UIStoryboardSegue) {
         print("MarksTable: Starting unwind to project list method.")
-        if let svc = sender.sourceViewController as? AddProjectViewController {
+        if let svc = sender.source as? AddProjectViewController {
             
             // If user is editing a row
             if let selectedIndexPath = tableView.indexPathForSelectedRow {
                 
                 print("MarksTable: Editing a row")
-                let i = selectedIndexPath.row
+                let i = (selectedIndexPath as NSIndexPath).row
                 
-                if svc.projectIsComplete.on == true {
+                if svc.projectIsComplete.isOn == true {
                 
                     print("MarksTable: projectName: \(svc.projectName), grade: \(svc.projectGrade), out of: \(svc.projectOutOf), weight: \(svc.projectWeight)")
                     course!.projects[i] = svc.projectName
                     course!.projectMarks[i] = svc.projectGrade
                     course!.projectWeights[i] = svc.projectWeight
                     course!.projectOutOf[i] = svc.projectOutOf
-                    tableView.reloadRowsAtIndexPaths([selectedIndexPath], withRowAnimation: .Fade)
+                    tableView.reloadRows(at: [selectedIndexPath], with: .fade)
                 }
                 else {
                     print("MarksTable: projectName: \(svc.projectName), grade: -1.0, out of: -1.0, weight: \(svc.projectWeight)")
@@ -43,14 +43,14 @@ class MarksTableViewController: UITableViewController {
                     course!.projectMarks[i] = -1.0
                     course!.projectWeights[i] = svc.projectWeight
                     course!.projectOutOf[i] = -1.0
-                    tableView.reloadRowsAtIndexPaths([selectedIndexPath], withRowAnimation: .Fade)
+                    tableView.reloadRows(at: [selectedIndexPath], with: .fade)
                 }
             }
             // If user is adding a new row
             else {
                 print("MarksTable: Adding a new row")
                 
-                let newIndexPath = NSIndexPath(forRow: course!.projects.count, inSection: 0)
+                let newIndexPath = IndexPath(row: course!.projects.count, section: 0)
                 
                 if svc.projectGrade == -1.0 {
                     print("MarksTable: Adding project \(svc.projectName), grade: -1.0, outOf: -1.0, weight: \(svc.projectWeight)")
@@ -60,18 +60,18 @@ class MarksTableViewController: UITableViewController {
                     print("MarksTable: Adding project \(svc.projectName), grade \(svc.projectGrade), outOf \(svc.projectOutOf), weight \(svc.projectWeight)")
                     course?.addProject(svc.projectName, grade: svc.projectGrade, outOf: svc.projectOutOf, weight: svc.projectWeight)
                 }
-                tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Bottom)
+                tableView.insertRows(at: [newIndexPath], with: .bottom)
             }
         }	
         saveCourses()
         updateLabels()
     }
     
-    @IBAction func deleteFromProjectList(sender: UIStoryboardSegue) {
+    @IBAction func deleteFromProjectList(_ sender: UIStoryboardSegue) {
         if let selectedIndexPath = tableView.indexPathForSelectedRow {
-            course!.projects.removeAtIndex(selectedIndexPath.row)
-            course!.projectWeights.removeAtIndex(selectedIndexPath.row)
-            course!.projectMarks.removeAtIndex(selectedIndexPath.row)
+            course!.projects.remove(at: (selectedIndexPath as NSIndexPath).row)
+            course!.projectWeights.remove(at: (selectedIndexPath as NSIndexPath).row)
+            course!.projectMarks.remove(at: (selectedIndexPath as NSIndexPath).row)
         }
         tableView.reloadData()
     }
@@ -117,18 +117,18 @@ class MarksTableViewController: UITableViewController {
     // save course information
     func saveCourses() {
         print("MarksTable: Saving courses...")
-        if (!NSKeyedArchiver.archiveRootObject(courses, toFile: Course.ArchiveURL.path!)) {
+        if (!NSKeyedArchiver.archiveRootObject(courses, toFile: Course.ArchiveURL.path)) {
             print("MarksTable: Failed to save meals...")
         }
     }
     
     
     // MARK: - Table view data source
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if (course?.projects.count != 0) {
             return (course?.projects.count)!
         }
@@ -137,30 +137,30 @@ class MarksTableViewController: UITableViewController {
         }
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 //        tableView.registerClass(MarksViewCell.self, forCellReuseIdentifier: "MarksViewCell")
         let cellIdentifier = "MarksViewCell"
-        let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! MarksViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! MarksViewCell
         
         if (course?.projects.count != 0) {
             
-            cell.projectNameLabel.text = course?.projects[indexPath.row]
+            cell.projectNameLabel.text = course?.projects[(indexPath as NSIndexPath).row]
             
-            if (course!.projectMarks[indexPath.row] != -1.0) {
-                let mark = course!.projectMarks[indexPath.row]/course!.projectOutOf[indexPath.row]
+            if (course!.projectMarks[(indexPath as NSIndexPath).row] != -1.0) {
+                let mark = course!.projectMarks[(indexPath as NSIndexPath).row]/course!.projectOutOf[(indexPath as NSIndexPath).row]
                 cell.markLabel.text = "\(round(10*(mark)*100)/10)%"
             }
             else {
                 cell.markLabel.text = "Incomplete"
             }
             
-            cell.weightLabel.text = "\(round(10*course!.projectWeights[indexPath.row])*100/1000)%"
+            cell.weightLabel.text = "\(round(10*course!.projectWeights[(indexPath as NSIndexPath).row])*100/1000)%"
             
-            if (cell.markLabel.hidden) {
-                cell.markLabel.hidden = false
-                cell.weightLabel.hidden = false
-                cell.staticWeightLabel.hidden = false
-                cell.staticMarkLabel.hidden = false
+            if (cell.markLabel.isHidden) {
+                cell.markLabel.isHidden = false
+                cell.weightLabel.isHidden = false
+                cell.staticWeightLabel.isHidden = false
+                cell.staticMarkLabel.isHidden = false
             }
         }
 //        else {
@@ -178,22 +178,22 @@ class MarksTableViewController: UITableViewController {
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "EditItem") {
             print("MarksTable: User selected a cell.")
-            let courseDVC = segue.destinationViewController as! AddProjectViewController
+            let courseDVC = segue.destination as! AddProjectViewController
             
             if let selectedCell = sender as? MarksViewCell {
-                let indexPath = tableView.indexPathForCell(selectedCell)!
-                let selectedProject = course?.projects[indexPath.row]
+                let indexPath = tableView.indexPath(for: selectedCell)!
+                let selectedProject = course?.projects[(indexPath as NSIndexPath).row]
                 
                 print("MarksTable: User selected \(selectedProject!)")
-                print("MarksTable: project grade: \(course?.projectMarks[indexPath.row]) out of \(course?.projectOutOf[indexPath.row])")
+                print("MarksTable: project grade: \(course?.projectMarks[(indexPath as NSIndexPath).row]) out of \(course?.projectOutOf[(indexPath as NSIndexPath).row])")
                 
                 courseDVC.projectName = selectedProject!
-                courseDVC.projectWeight = (course?.projectWeights[indexPath.row])!
-                courseDVC.projectGrade = (course?.projectMarks[indexPath.row])!
-                courseDVC.projectOutOf = (course?.projectOutOf[indexPath.row])!
+                courseDVC.projectWeight = (course?.projectWeights[(indexPath as NSIndexPath).row])!
+                courseDVC.projectGrade = (course?.projectMarks[(indexPath as NSIndexPath).row])!
+                courseDVC.projectOutOf = (course?.projectOutOf[(indexPath as NSIndexPath).row])!
             }
             
         } else if (segue.identifier == "AddItem") {

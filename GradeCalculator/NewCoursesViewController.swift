@@ -12,21 +12,21 @@ class NewCoursesViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: Properties
     var courses = [Course]()
-    var course = Course?()
+    var course: Course?
     @IBOutlet weak var courseName: UITextField!
     @IBOutlet weak var warningLabel: UILabel!
     @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var cancelButton: UIBarButtonItem!
     
     // MARK: Actions
-    @IBAction func cancel(sender: UIBarButtonItem) {
-        dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func cancel(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
     }
     
     
     // MARK: - Navigation
     
-    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         return checkInput()
     }
     
@@ -34,9 +34,9 @@ class NewCoursesViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         
         self.courseName.delegate = self
-        warningLabel.hidden = true
-        courseName.addTarget(self, action: #selector(NewCoursesViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
-        saveButton.enabled = false
+        warningLabel.isHidden = true
+        courseName.addTarget(self, action: #selector(NewCoursesViewController.textFieldDidChange(_:)), for: UIControlEvents.editingChanged)
+        saveButton.isEnabled = false
         
         print("num courses: \(courses.count)")
         for course in courses {
@@ -51,17 +51,17 @@ class NewCoursesViewController: UIViewController, UITextFieldDelegate {
     
     // Mark: UITextFieldDelegate
     
-    func textFieldDidChange(textField: UITextField) {
+    func textFieldDidChange(_ textField: UITextField) {
         let text = textField.text ?? ""
         if text == "" {
-            saveButton.enabled = false
+            saveButton.isEnabled = false
         }
         else {
-            saveButton.enabled = true
+            saveButton.isEnabled = true
         }
     }
 
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         courseName.resignFirstResponder()
         return true
     }
@@ -77,12 +77,12 @@ class NewCoursesViewController: UIViewController, UITextFieldDelegate {
         }
         if check {
             warningLabel.text = "A course with that name already exists."
-            warningLabel.hidden = false;
+            warningLabel.isHidden = false;
             return false
         }
         course = Course(courseName: courseInput)
         courses.append(course!)
-        warningLabel.hidden = true
+        warningLabel.isHidden = true
         return true
     }
 }

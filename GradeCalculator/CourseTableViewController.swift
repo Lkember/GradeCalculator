@@ -33,7 +33,7 @@ class CourseTableViewController: UITableViewController {
         super.viewDidLoad()
 
         //Add an edit button
-        navigationItem.leftBarButtonItem = editButtonItem()
+        navigationItem.leftBarButtonItem = editButtonItem
         if let savedCourses = loadCourses() {
             courses += savedCourses
         }
@@ -42,21 +42,21 @@ class CourseTableViewController: UITableViewController {
         }
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         tableView.reloadData()
         saveCourses()
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier=="AddItem" {
             print("CourseTable: Setting courses to view.")
-            let destinationViewController = segue.destinationViewController.childViewControllers[0] as? NewCoursesViewController
+            let destinationViewController = segue.destination.childViewControllers[0] as? NewCoursesViewController
             destinationViewController?.courses = courses;
         }
         else if segue.identifier=="CourseView" {
             print("CourseTable: Setting courses to courseView")
             let selectedCourse = sender as? CourseTableViewCell
-            let destVC = segue.destinationViewController as? MarksTableViewController
+            let destVC = segue.destination as? MarksTableViewController
             destVC?.courses = self.courses
             destVC?.courseName = (selectedCourse?.courseName.text)!
         }
@@ -69,20 +69,20 @@ class CourseTableViewController: UITableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return courses.count
     }
 
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentifier = "CourseTableViewCell"
-        let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! CourseTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! CourseTableViewCell
         
-        let course = courses[indexPath.row]
+        let course = courses[(indexPath as NSIndexPath).row]
         cell.courseName.text = course.courseName
         
         if course.getAverage() != -1.0 {
@@ -96,13 +96,13 @@ class CourseTableViewController: UITableViewController {
     }
     
     
-    @IBAction func unwindToCourseList(sender: UIStoryboardSegue) {
+    @IBAction func unwindToCourseList(_ sender: UIStoryboardSegue) {
         print("CourseTable: Adding course to course list.")
-        if let sourceViewController = sender.sourceViewController as? NewCoursesViewController, course = sourceViewController.course {
+        if let sourceViewController = sender.source as? NewCoursesViewController, let course = sourceViewController.course {
             print("CourseTable: New course: \(course.courseName)")
-            let newIndexPath = NSIndexPath(forRow: courses.count, inSection: 0)
+            let newIndexPath = IndexPath(row: courses.count, section: 0)
             self.courses.append(course)
-            tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Bottom)
+            tableView.insertRows(at: [newIndexPath], with: .bottom)
             
             tableView.reloadData()
             
@@ -116,20 +116,20 @@ class CourseTableViewController: UITableViewController {
 
     
     // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
         return true
     }
 
     
     // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
             // Delete the row from the data source
-            courses.removeAtIndex(indexPath.row)
+            courses.remove(at: (indexPath as NSIndexPath).row)
             saveCourses()
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
     }
@@ -139,14 +139,14 @@ class CourseTableViewController: UITableViewController {
     // Save user information
     func saveCourses() {
         print("CourseTable: Saving courses...")
-        if (!NSKeyedArchiver.archiveRootObject(courses, toFile: Course.ArchiveURL.path!)) {
+        if (!NSKeyedArchiver.archiveRootObject(courses, toFile: Course.ArchiveURL.path)) {
             print("CourseTable: Failed to save meals...")
         }
     }
     
     func loadCourses() -> [Course]? {
         print("CourseTable: Loading courses...")
-        return (NSKeyedUnarchiver.unarchiveObjectWithFile(Course.ArchiveURL.path!) as? [Course])
+        return (NSKeyedUnarchiver.unarchiveObject(withFile: Course.ArchiveURL.path) as? [Course])
     }
     
     /*

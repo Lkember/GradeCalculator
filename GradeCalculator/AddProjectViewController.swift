@@ -28,7 +28,7 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
     var projectGrade = -1.0
     var projectOutOf = -1.0
     var editorMode = false
-    var course = Course?()
+    var course: Course?
     
     
     override func viewDidLoad() {
@@ -41,10 +41,10 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
         self.gradeOutOfField.delegate = self
         
         // Adding listeners for when the keyboard shows or hides
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AddProjectViewController.keyboardToggle(_:)), name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AddProjectViewController.keyboardToggle(_:)), name: UIKeyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(AddProjectViewController.keyboardToggle(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(AddProjectViewController.keyboardToggle(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
-        incorrectInfoLabel.hidden = true
+        incorrectInfoLabel.isHidden = true
         // Do any additional setup after loading the view.
         
         if (self.projectWeight != -1.0 || self.projectName != "") {
@@ -59,12 +59,12 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
                 self.gradeOutOfField?.text = "\(self.projectOutOf)"
             }
             else {
-                projectIsComplete.on = false
+                projectIsComplete.isOn = false
                 isComplete(projectIsComplete)
             }
         }    
         else {
-            self.deleteProjectButton.hidden = true
+            self.deleteProjectButton.isHidden = true
         }
     }
 
@@ -75,41 +75,41 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
     
     
     // MARK: - Actions
-    @IBAction func cancelView(sender: UIBarButtonItem) {
+    @IBAction func cancelView(_ sender: UIBarButtonItem) {
         print("AddProject: Ending view")
         if (!editorMode) {
-            dismissViewControllerAnimated(true, completion: nil)
+            dismiss(animated: true, completion: nil)
         }
         else {
-            self.navigationController?.popViewControllerAnimated(true)
+            self.navigationController?.popViewController(animated: true)
         }
     }
     
     
     // When the user specifies they have a mark, then show grade else hide
-    @IBAction func isComplete(sender: UISwitch) {
-        if sender.on {
-            UIView.animateWithDuration(0.3, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+    @IBAction func isComplete(_ sender: UISwitch) {
+        if sender.isOn {
+            UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveEaseOut, animations: {
                 self.gradeView.alpha = 1.0
                 }, completion: nil)
         }
         else {
-            UIView.animateWithDuration(0.3, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+            UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveEaseOut, animations: {
                 self.gradeView.alpha = 0.0
                 }, completion: nil)
         }
     }
     
-    @IBAction func deleteProject(sender: UIButton) {
-        let alertController = UIAlertController(title: "Delete Project", message: "Are you sure you want to delete this project?", preferredStyle: UIAlertControllerStyle.Alert)
-        alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
+    @IBAction func deleteProject(_ sender: UIButton) {
+        let alertController = UIAlertController(title: "Delete Project", message: "Are you sure you want to delete this project?", preferredStyle: UIAlertControllerStyle.alert)
+        alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
         
-        alertController.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default, handler: { action in
+        alertController.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.default, handler: { action in
             // TODO
-            self.performSegueWithIdentifier("deleteProject", sender: self)
+            self.performSegue(withIdentifier: "deleteProject", sender: self)
         }))
         
-        self.presentViewController(alertController, animated: true, completion: nil)
+        self.present(alertController, animated: true, completion: nil)
     }
     
 
@@ -120,16 +120,16 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
         // if user is adding a new project
         if (!editorMode) {
             if (projectNameField.text == "" || weightField.text == "") {
-                incorrectInfoLabel.hidden = false
+                incorrectInfoLabel.isHidden = false
                 return false
             }
             else {
                 projectName = projectNameField.text!
                 projectWeight = Double(weightField.text!)!
             }
-            if (projectIsComplete.on) {
+            if (projectIsComplete.isOn) {
                 if (gradeField.text == "" || gradeOutOfField.text == "" || !checkMarkInput()) {
-                    incorrectInfoLabel.hidden = false
+                    incorrectInfoLabel.isHidden = false
                     return false
                 }
                 else {
@@ -137,22 +137,22 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
                     projectOutOf = Double(gradeOutOfField.text!)!
                 }
             }
-            incorrectInfoLabel.hidden = true
+            incorrectInfoLabel.isHidden = true
             return true
         }
             // if user is editing a project
         else {
             if (projectNameField.text == "" || weightField.text == "") {
-                incorrectInfoLabel.hidden = false
+                incorrectInfoLabel.isHidden = false
                 return false
             }
             else {
                 projectName = projectNameField.text!
                 projectWeight = Double(weightField.text!)!
             }
-            if (projectIsComplete.on) {
+            if (projectIsComplete.isOn) {
                 if (gradeField.text == "" || gradeOutOfField.text == "" || Double(gradeOutOfField.text!) == 0.0 || !checkMarkInput()) {
-                    incorrectInfoLabel.hidden = false
+                    incorrectInfoLabel.isHidden = false
                     return false
                 }
                 else {
@@ -160,7 +160,7 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
                     projectOutOf = Double(gradeOutOfField.text!)!
                 }
             }
-            incorrectInfoLabel.hidden = true
+            incorrectInfoLabel.isHidden = true
             return true
         }
     }
@@ -194,7 +194,7 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
     
     
     // MARK: - TextField
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
@@ -202,7 +202,7 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: - Navigation
 
-    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         print("AddProject: Checking input... \(checkInput())")
         return checkInput()
     }
@@ -215,14 +215,14 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
 //    }
 
     // MARK: - Listeners
-    func keyboardToggle(notification: NSNotification) {
-        let userInfo = notification.userInfo!
+    func keyboardToggle(_ notification: Notification) {
+        let userInfo = (notification as NSNotification).userInfo!
         
-        let keyboardScreenEndFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
-        let keyboardViewEndFrame = view.convertRect(keyboardScreenEndFrame, fromView: scrollView)
+        let keyboardScreenEndFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+        let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: scrollView)
         
-        if notification.name == UIKeyboardWillHideNotification {
-            scrollView.contentInset = UIEdgeInsetsZero
+        if notification.name == NSNotification.Name.UIKeyboardWillHide {
+            scrollView.contentInset = UIEdgeInsets.zero
             print("AddProject: Keyboard is hidden.")
         } else {
             scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height, right: 0)
