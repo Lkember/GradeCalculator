@@ -13,6 +13,7 @@ class MarksTableViewController: UITableViewController {
     // MARK: Attributes
     @IBOutlet weak var averageLabel: UILabel!
     @IBOutlet weak var numMarks: UILabel!
+    @IBOutlet weak var remainingWeight: UILabel!
     var courses = [Course]()
     var course = Course(courseName: "")
     var courseName = ""
@@ -68,12 +69,15 @@ class MarksTableViewController: UITableViewController {
     }
     
     @IBAction func deleteFromProjectList(_ sender: UIStoryboardSegue) {
+        print("MarksTable: deleteFromProjectList start")
         if let selectedIndexPath = tableView.indexPathForSelectedRow {
+            print("MarksTable: deleteFromProjectList: deleting \(course!.projects[(selectedIndexPath as NSIndexPath).row])")
             course!.projects.remove(at: (selectedIndexPath as NSIndexPath).row)
             course!.projectWeights.remove(at: (selectedIndexPath as NSIndexPath).row)
             course!.projectMarks.remove(at: (selectedIndexPath as NSIndexPath).row)
         }
         tableView.reloadData()
+        updateLabels()
     }
     
     
@@ -81,7 +85,7 @@ class MarksTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("Starting.. Courses.count=\(courses.count)")
+        print("MarksTable: viewDidLoad Start.. Courses.count=\(courses.count)")
         for course in courses {
             if course.courseName == courseName {
                 print("MarksTable: Found. User clicked \(course.courseName)")
@@ -104,6 +108,7 @@ class MarksTableViewController: UITableViewController {
     
     // MARK: - Functions
     func updateLabels() {
+        print("MarksTable: updateLabels")
         if ((10*course!.getAverage()*100)/10 != -100.0) {
             averageLabel.text = "\(round(10*course!.getAverage()*100)/10)%"
         }
@@ -112,6 +117,16 @@ class MarksTableViewController: UITableViewController {
         }
         
         numMarks.text = "\(course!.getNumMarks())"
+        let weight = course!.getWeightTotal()
+        
+        if (weight <= 100 && weight >= 0) {
+            remainingWeight.textColor = UIColor.white
+            remainingWeight.text = "\(100.0-weight) %"
+        }
+        else {
+            remainingWeight.textColor = UIColor.red
+            remainingWeight.text = "\(100.0-weight)"
+        }
     }
     
     // save course information
