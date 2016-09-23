@@ -98,6 +98,16 @@ class Course: NSObject, NSCoding {
         return markCount
     }
     
+    // Returns the total weight
+    func getWeightTotal() -> Double {
+        var weight = 0.0
+        print("Course.swift: getWeightTotal")
+        for i in 0..<projects.count {
+            weight += projectWeights[i]
+        }
+        return weight
+    }
+    
     // Mark: Actions
     func addProject(_ projectName: String, grade: Double, outOf: Double, weight: Double) {
         projects.append(projectName)

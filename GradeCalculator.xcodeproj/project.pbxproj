@@ -211,6 +211,7 @@
 				TargetAttributes = {
 					B274AE8C1D46A5B100E732FD = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = X2RHS589XN;
 						LastSwiftMigration = 0800;
 					};
 					B274AEA21D46A5B200E732FD = {
@@ -418,6 +419,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = X2RHS589XN;
 				INFOPLIST_FILE = GradeCalculator/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -431,6 +433,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = X2RHS589XN;
 				INFOPLIST_FILE = GradeCalculator/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
