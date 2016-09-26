@@ -223,12 +223,13 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
         
         let keyboardScreenEndFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
         let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: scrollView)
+        let navHeight = self.navigationController!.navigationBar.frame.height
         
         if notification.name == NSNotification.Name.UIKeyboardWillHide {
-            scrollView.contentInset = UIEdgeInsets.zero
+            scrollView.contentInset = UIEdgeInsets(top: navHeight + 20, left: 0, bottom: 0, right: 0)
             print("AddProject: Keyboard is hidden.")
         } else {
-            scrollView.contentInset = UIEdgeInsets(top: self.navigationController!.navigationBar.frame.height + 20, left: 0, bottom: keyboardViewEndFrame.height, right: 0)
+            scrollView.contentInset = UIEdgeInsets(top: navHeight + 20, left: 0, bottom: keyboardViewEndFrame.height, right: 0)
             print("AddProject: Keyboard is showing.")
         }
     }
