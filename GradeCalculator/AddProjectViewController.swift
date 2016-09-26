@@ -47,6 +47,9 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
         incorrectInfoLabel.isHidden = true
         // Do any additional setup after loading the view.
         
+//        scrollView.contentInset = UIEdgeInsets.zero
+//        print("AddProject: Content Inset.")
+        
         if (self.projectWeight != -1.0 || self.projectName != "") {
             editorMode = true
             
