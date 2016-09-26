@@ -228,7 +228,7 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
             scrollView.contentInset = UIEdgeInsets.zero
             print("AddProject: Keyboard is hidden.")
         } else {
-            scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height, right: 0)
+            scrollView.contentInset = UIEdgeInsets(top: self.navigationController!.navigationBar.frame.height + 20, left: 0, bottom: keyboardViewEndFrame.height, right: 0)
             print("AddProject: Keyboard is showing.")
         }
     }
