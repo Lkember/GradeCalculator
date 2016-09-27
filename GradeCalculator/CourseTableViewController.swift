@@ -29,7 +29,6 @@ class CourseTableViewController: UITableViewController {
         else {
             overallAverage.text = "N/A"
         }
-        
         numCourses.text = "\(num)"
     }
     
@@ -186,6 +185,21 @@ class CourseTableViewController: UITableViewController {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
     }
+    
+    // Override to support rearranging the table view.
+    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        let tempCourse = courses[sourceIndexPath.row]
+        courses[sourceIndexPath.row] = courses[destinationIndexPath.row]
+        courses[destinationIndexPath.row] = tempCourse
+        saveCourses()
+    }
+    
+    // Override to support conditional rearranging of the table view.
+    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+//    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        // Return false if you do not want the item to be re-orderable.
+        return true
+    }
 
     
     // MARK: NSCoding
@@ -201,21 +215,6 @@ class CourseTableViewController: UITableViewController {
         print("CourseTable: Loading courses...")
         return (NSKeyedUnarchiver.unarchiveObject(withFile: Course.ArchiveURL.path) as? [Course])
     }
-    
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
 
     /*
     // MARK: - Navigation
