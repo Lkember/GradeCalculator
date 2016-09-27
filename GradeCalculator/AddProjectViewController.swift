@@ -45,11 +45,8 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(AddProjectViewController.keyboardToggle(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
         incorrectInfoLabel.isHidden = true
+        
         // Do any additional setup after loading the view.
-        
-//        scrollView.contentInset = UIEdgeInsets.zero
-//        print("AddProject: Content Inset.")
-        
         if (self.projectWeight != -1.0 || self.projectName != "") {
             editorMode = true
             
@@ -120,56 +117,36 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
     
     // Function which checks the to make sure all fields are completed
     func checkInput() -> Bool {
-        // if user is adding a new project
-        if (!editorMode) {
-            if (projectNameField.text == "" || weightField.text == "") {
-                incorrectInfoLabel.isHidden = false
-                return false
-            }
-            else {
-                projectName = projectNameField.text!
-                projectWeight = Double(weightField.text!)!
-            }
-            if (projectIsComplete.isOn) {
-                if (gradeField.text == "" || gradeOutOfField.text == "" || !checkMarkInput()) {
-                    incorrectInfoLabel.isHidden = false
-                    return false
-                }
-                else {
-                    projectGrade = Double(gradeField.text!)!
-                    projectOutOf = Double(gradeOutOfField.text!)!
-                }
-            }
-            incorrectInfoLabel.isHidden = true
-            return true
+        print("AddProject: CheckInput Entry")
+        if (projectNameField.text == "" || weightField.text == "") {
+            incorrectInfoLabel.isHidden = false
+            print("AddProject: CheckInput Exit -> projectName or weight field empty")
+            return false
         }
-            // if user is editing a project
         else {
-            if (projectNameField.text == "" || weightField.text == "") {
+            projectName = projectNameField.text!
+            projectWeight = Double(weightField.text!)!
+        }
+        if (projectIsComplete.isOn) {
+            print("AddProject: CheckInput projectIsComplete.isOn -> True")
+            if (gradeField.text == "" || gradeOutOfField.text == "" || Double(gradeOutOfField.text!) == 0.0 || !checkMarkInput()) {
                 incorrectInfoLabel.isHidden = false
+                print("AddProject: CheckInput Exit -> Field empty or gradeOutOf set to 0")
                 return false
             }
             else {
-                projectName = projectNameField.text!
-                projectWeight = Double(weightField.text!)!
+                projectGrade = Double(gradeField.text!)!
+                projectOutOf = Double(gradeOutOfField.text!)!
             }
-            if (projectIsComplete.isOn) {
-                if (gradeField.text == "" || gradeOutOfField.text == "" || Double(gradeOutOfField.text!) == 0.0 || !checkMarkInput()) {
-                    incorrectInfoLabel.isHidden = false
-                    return false
-                }
-                else {
-                    projectGrade = Double(gradeField.text!)!
-                    projectOutOf = Double(gradeOutOfField.text!)!
-                }
-            }
-            incorrectInfoLabel.isHidden = true
-            return true
+
         }
+        print("AddProject: CheckInput Exit -> Success")
+        incorrectInfoLabel.isHidden = true
+        return true
     }
     
     func checkMarkInput() -> Bool {
-        print("AddProject: Checking mark input")
+        print("AddProject: checkMarkInput Entry")
         let grade = gradeField.text
         let weight = weightField.text
         var numDecimals = 0
@@ -190,8 +167,10 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
         print("AddProject: number of decimals in weight: \(numDecimals2)")
         
         if (numDecimals < 2 && numDecimals2 < 2) {
+            print("AddProject: checkMarkInput Exit -> Success")
             return true
         }
+        print("AddProject: checkMarkInput Exit -> Incorrect input")
         return false
     }
     
