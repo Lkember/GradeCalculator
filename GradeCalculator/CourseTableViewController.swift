@@ -13,6 +13,75 @@ class CourseTableViewController: UITableViewController {
     // MARK: Properties
     
     var courses = [Course]()
+    @IBOutlet weak var overallAverage: UILabel!
+    @IBOutlet weak var numCourses: UILabel!
+    
+    
+    // MARK: Functions
+    
+    func updateLabels() {
+        let average = getOverallAverage()
+        let num = getNumCourses()
+        
+        if (average != -1.0) {
+            overallAverage.text = "\(round(10*average*100)/10)%"
+        }
+        else {
+            overallAverage.text = "N/A"
+        }
+        
+        numCourses.text = "\(num)"
+    }
+    
+    
+    func getOverallAverage() -> Double {
+        print("CourseTable: getOverallAverage -> Entry")
+        var average = 0.0
+        var courseMark = 0.0
+        var numCourses = 0
+        
+        for course in courses {
+            courseMark = course.getAverage()
+            if courseMark != -1.0 {
+                average += course.getAverage()
+                numCourses += 1
+            }
+        }
+        if (numCourses != 0) {
+            average = (average/Double(numCourses))
+        }
+        else {
+            average = -1.0
+        }
+        print("CourseTable: getOverallAverage RETURN \(average) with number of courses in calculation: \(numCourses)")
+        print("CourseTable: getOverallAverage -> Exit")
+        return average
+    }
+    
+    
+    func getNumCourses() -> Int {
+        return courses.count
+    }
+    
+    
+    @IBAction func unwindToCourseList(_ sender: UIStoryboardSegue) {
+        print("CourseTable: Adding course to course list.")
+        if let sourceViewController = sender.source as? NewCoursesViewController, let course = sourceViewController.course {
+            print("CourseTable: New course: \(course.courseName)")
+            let newIndexPath = IndexPath(row: courses.count, section: 0)
+            self.courses.append(course)
+            tableView.insertRows(at: [newIndexPath], with: .bottom)
+            
+            tableView.reloadData()
+            
+            // save courses
+            saveCourses()
+        }
+        else {
+            print("CourseTable: Failed to add course.")
+        }
+    }
+    
     
     func loadSampleCourses() {
         let calculus = Course(courseName: "Calculus 1000")
@@ -40,10 +109,13 @@ class CourseTableViewController: UITableViewController {
         else {
             loadSampleCourses()
         }
+        
+        updateLabels()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         tableView.reloadData()
+        updateLabels()
         saveCourses()
     }
     
@@ -93,53 +165,6 @@ class CourseTableViewController: UITableViewController {
         }
 
         return cell
-    }
-    
-    // MARK: Functions
-    func getOverallAverage() -> Double {
-        print("CourseTable: getOverallAverage -> Entry")
-        var average = 0.0
-        var courseMark = 0.0
-        var numCourses = 0
-        
-        for course in courses {
-            courseMark = course.getAverage()
-            if courseMark != -1.0 {
-                average += course.getAverage()
-                numCourses += 1
-            }
-        }
-        if (numCourses != 0) {
-            average = (average/Double(numCourses))
-        }
-        else {
-            average = -1.0
-        }
-        print("CourseTable: getOverallAverage RETURN \(average) with number of courses in calculation: \(numCourses)")
-        print("CourseTable: getOverallAverage -> Exit")
-        return average
-    }
-    
-    func getNumCourses() -> Int {
-        return courses.count
-    }
-    
-    @IBAction func unwindToCourseList(_ sender: UIStoryboardSegue) {
-        print("CourseTable: Adding course to course list.")
-        if let sourceViewController = sender.source as? NewCoursesViewController, let course = sourceViewController.course {
-            print("CourseTable: New course: \(course.courseName)")
-            let newIndexPath = IndexPath(row: courses.count, section: 0)
-            self.courses.append(course)
-            tableView.insertRows(at: [newIndexPath], with: .bottom)
-            
-            tableView.reloadData()
-            
-            // save courses
-            saveCourses()
-        }
-        else {
-            print("CourseTable: Failed to add course.")
-        }
     }
 
     
