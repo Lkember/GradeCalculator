@@ -88,6 +88,7 @@ class Course: NSObject, NSCoding {
     
     // Returns the number of grades that have been inputted
     func getNumMarks() -> Int {
+        print("Courses getNumMarks entry")
         var markCount = 0
         print("Course.swift: projects.count = \(projects.count)");
         for i in 0..<projects.count {
@@ -95,25 +96,29 @@ class Course: NSObject, NSCoding {
                 markCount+=1
             }
         }
+        print("Courses getNumMarks exit")
         return markCount
     }
     
     // Returns the total weight
     func getWeightTotal() -> Double {
+        print("courses getWeightTotal entry")
         var weight = 0.0
-        print("Course.swift: getWeightTotal")
         for i in 0..<projects.count {
             weight += projectWeights[i]
         }
+        print("courses getWeightTotal exit")
         return weight
     }
     
     // Mark: Actions
     func addProject(_ projectName: String, grade: Double, outOf: Double, weight: Double) {
+        print("courses addProject entry")
         projects.append(projectName)
         projectMarks.append(grade)
         projectWeights.append(weight)
         projectOutOf.append(outOf)
+        print("courses addProject exit")
     }
     
     // MARK: NSCoding

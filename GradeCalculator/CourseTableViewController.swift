@@ -95,6 +95,34 @@ class CourseTableViewController: UITableViewController {
         return cell
     }
     
+    // MARK: Functions
+    func getOverallAverage() -> Double {
+        print("CourseTable: getOverallAverage -> Entry")
+        var average = 0.0
+        var courseMark = 0.0
+        var numCourses = 0
+        
+        for course in courses {
+            courseMark = course.getAverage()
+            if courseMark != -1.0 {
+                average += course.getAverage()
+                numCourses += 1
+            }
+        }
+        if (numCourses != 0) {
+            average = (average/Double(numCourses))
+        }
+        else {
+            average = -1.0
+        }
+        print("CourseTable: getOverallAverage RETURN \(average) with number of courses in calculation: \(numCourses)")
+        print("CourseTable: getOverallAverage -> Exit")
+        return average
+    }
+    
+    func getNumCourses() -> Int {
+        return courses.count
+    }
     
     @IBAction func unwindToCourseList(_ sender: UIStoryboardSegue) {
         print("CourseTable: Adding course to course list.")
