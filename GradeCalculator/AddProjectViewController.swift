@@ -81,7 +81,7 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
             dismiss(animated: true, completion: nil)
         }
         else {
-            self.navigationController?.popViewController(animated: true)
+            _ = self.navigationController?.popViewController(animated: true)
         }
     }
     

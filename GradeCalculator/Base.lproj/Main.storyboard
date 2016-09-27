@@ -137,41 +137,32 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Course Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HZq-pD-X6G">
-                                <frame key="frameInset" minX="20" minY="72" width="560" height="21"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="25" id="qRV-aW-s9I"/>
-                                </constraints>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Course Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HZq-pD-X6G">
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="You must enter a course name..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TfP-JG-j0D">
-                                <frame key="frameInset" minX="20" minY="139" width="560" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You must enter a course name..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TfP-JG-j0D">
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="1" green="0.11242632745804704" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Course Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="a6p-QG-Fx3">
-                                <frame key="frameInset" minX="20" minY="101" width="560" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="hPB-hL-jhc"/>
-                                </constraints>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Course Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="a6p-QG-Fx3">
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="yes" spellCheckingType="yes" keyboardAppearance="alert" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                             </textField>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="HZq-pD-X6G" firstAttribute="trailing" secondItem="lox-3j-gVc" secondAttribute="trailingMargin" id="1JK-lM-LVH"/>
-                            <constraint firstItem="HZq-pD-X6G" firstAttribute="leading" secondItem="lox-3j-gVc" secondAttribute="leadingMargin" id="Ctf-07-GWI"/>
-                            <constraint firstItem="HZq-pD-X6G" firstAttribute="leading" secondItem="a6p-QG-Fx3" secondAttribute="leading" id="I4G-aK-3Ma"/>
-                            <constraint firstItem="a6p-QG-Fx3" firstAttribute="leading" secondItem="TfP-JG-j0D" secondAttribute="leading" id="JV3-7e-fxK"/>
-                            <constraint firstItem="TfP-JG-j0D" firstAttribute="top" secondItem="a6p-QG-Fx3" secondAttribute="bottom" constant="8" symbolic="YES" id="QUk-2H-flP"/>
-                            <constraint firstItem="HZq-pD-X6G" firstAttribute="trailing" secondItem="a6p-QG-Fx3" secondAttribute="trailing" id="fjs-Xq-XY7"/>
-                            <constraint firstItem="a6p-QG-Fx3" firstAttribute="trailing" secondItem="TfP-JG-j0D" secondAttribute="trailing" id="k4W-tB-28h"/>
-                            <constraint firstItem="a6p-QG-Fx3" firstAttribute="top" secondItem="HZq-pD-X6G" secondAttribute="bottom" constant="8" symbolic="YES" id="xrV-gL-qrk"/>
-                            <constraint firstItem="HZq-pD-X6G" firstAttribute="top" secondItem="64p-kz-eJX" secondAttribute="bottom" constant="8" symbolic="YES" id="zfZ-kf-ldD"/>
+                            <constraint firstItem="TfP-JG-j0D" firstAttribute="top" secondItem="a6p-QG-Fx3" secondAttribute="bottom" constant="8" symbolic="YES" id="2Ew-bZ-0Za"/>
+                            <constraint firstItem="HZq-pD-X6G" firstAttribute="top" secondItem="64p-kz-eJX" secondAttribute="bottom" constant="8" symbolic="YES" id="38K-5t-ll7"/>
+                            <constraint firstItem="a6p-QG-Fx3" firstAttribute="trailing" secondItem="TfP-JG-j0D" secondAttribute="trailing" id="Jyk-Jd-zYj"/>
+                            <constraint firstItem="HZq-pD-X6G" firstAttribute="trailing" secondItem="a6p-QG-Fx3" secondAttribute="trailing" id="NOI-v0-9yL"/>
+                            <constraint firstItem="a6p-QG-Fx3" firstAttribute="leading" secondItem="TfP-JG-j0D" secondAttribute="leading" id="h86-Q0-VPQ"/>
+                            <constraint firstItem="HZq-pD-X6G" firstAttribute="leading" secondItem="lox-3j-gVc" secondAttribute="leadingMargin" id="lLd-j3-6MA"/>
+                            <constraint firstItem="HZq-pD-X6G" firstAttribute="trailing" secondItem="lox-3j-gVc" secondAttribute="trailingMargin" id="m1g-uj-IeQ"/>
+                            <constraint firstItem="HZq-pD-X6G" firstAttribute="leading" secondItem="a6p-QG-Fx3" secondAttribute="leading" id="nTp-28-9Og"/>
+                            <constraint firstItem="a6p-QG-Fx3" firstAttribute="top" secondItem="HZq-pD-X6G" secondAttribute="bottom" constant="8" symbolic="YES" id="pyk-4g-M3n"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="New Course" id="E3a-8j-QRs">
