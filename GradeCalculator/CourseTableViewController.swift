@@ -16,7 +16,6 @@ class CourseTableViewController: UITableViewController {
     @IBOutlet weak var overallAverage: UILabel!
     @IBOutlet weak var numCourses: UILabel!
     
-    
     // MARK: Functions
     
     func updateLabels() {
@@ -102,6 +101,7 @@ class CourseTableViewController: UITableViewController {
 
         //Add an edit button
         navigationItem.leftBarButtonItem = editButtonItem
+        self.tableView.allowsSelectionDuringEditing = true
         if let savedCourses = loadCourses() {
             courses += savedCourses
         }
