@@ -197,7 +197,7 @@ class MarksTableViewController: UITableViewController {
         if (segue.identifier == "EditItem") {
             print("MarksTable: User selected a cell.")
             let courseDVC = segue.destination as! AddProjectViewController
-            
+            courseDVC.navigationItem.title = self.courseName
             if let selectedCell = sender as? MarksViewCell {
                 let indexPath = tableView.indexPath(for: selectedCell)!
                 let selectedProject = course?.projects[(indexPath as NSIndexPath).row]
@@ -213,6 +213,10 @@ class MarksTableViewController: UITableViewController {
             
         } else if (segue.identifier == "AddItem") {
             print("MarksTable: User selected add button.")
+            let navDVC = segue.destination as! UINavigationController
+            print("MarksTable: Setting title to \(self.courseName)")
+            let courseDVC = navDVC.visibleViewController as! AddProjectViewController
+            courseDVC.courseName = self.courseName
         }
         
         // Get the new view controller using segue.destinationViewController.

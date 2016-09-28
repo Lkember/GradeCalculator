@@ -28,7 +28,7 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
     var projectGrade = -1.0
     var projectOutOf = -1.0
     var editorMode = false
-    var course: Course?
+    var courseName = ""
     
     
     override func viewDidLoad() {
@@ -47,6 +47,10 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
         incorrectInfoLabel.isHidden = true
         
         // Do any additional setup after loading the view.
+        if (courseName != "") {
+            self.title = courseName
+        }
+            
         if (self.projectWeight != -1.0 || self.projectName != "") {
             editorMode = true
             
