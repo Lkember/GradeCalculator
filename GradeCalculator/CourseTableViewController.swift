@@ -188,10 +188,25 @@ class CourseTableViewController: UITableViewController {
     
     // Override to support rearranging the table view.
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        let tempCourse = courses[sourceIndexPath.row]
-        courses[sourceIndexPath.row] = courses[destinationIndexPath.row]
-        courses[destinationIndexPath.row] = tempCourse
+        print("CourseTable: tableView moveRowAt -> Entry")
+        var index = sourceIndexPath.row
+        let temp = courses[index]
+        
+        if sourceIndexPath.row < destinationIndexPath.row {
+            while (index < destinationIndexPath.row) {
+                courses[index] = courses[index+1]
+                index += 1
+            }
+        }
+        else {
+            while (index > destinationIndexPath.row) {
+                courses[index] = courses[index-1]
+                index -= 1
+            }
+        }
+        courses[destinationIndexPath.row] = temp
         saveCourses()
+        print("CourseTable: tableView moveRowAt -> Exit")
     }
     
     // Override to support conditional rearranging of the table view.
@@ -205,7 +220,7 @@ class CourseTableViewController: UITableViewController {
     // MARK: NSCoding
     // Save user information
     func saveCourses() {
-        print("CourseTable: Saving courses...")
+        print("CourseTable: Saving courses.")
         if (!NSKeyedArchiver.archiveRootObject(courses, toFile: Course.ArchiveURL.path)) {
             print("CourseTable: Failed to save meals...")
         }
