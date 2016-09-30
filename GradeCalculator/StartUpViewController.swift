@@ -41,13 +41,16 @@ class StartUpViewController: UIViewController {
     func updateLabels() {
         numCourses.text = "\(courses.count)"
         let average = getOverallAverage()
+        let median = getMedian()
         if (average != -1.0) {
             overallAverage.text = "\(round(10*average*100)/10)%"
             gpaLabel.text = getGPA(average: average*100)
+            self.median.text = "\(round(10*median*100)/10)%"
         }
         else {
             overallAverage.text = "N/A"
             gpaLabel.text = "N/A"
+            self.median.text = "N/A"
         }
     }
     
@@ -97,8 +100,54 @@ class StartUpViewController: UIViewController {
         }
     }
     
-    func getMedian() {
+    func getBestAndWorstMarks() -> [Course] {
+        print("StartUpViewController: getBestAndWorstMarks -> Entry")
+        if (courses.count == 0) {
+            return []
+        }
         
+        var worst: Course = courses[0]
+        var best: Course = courses[0]
+        for course in courses {
+            if (course.getAverage() < worst.getAverage()) {
+                worst = course
+            }
+            if (course.getAverage() > best.getAverage()) {
+                best = course
+            }
+        }
+        return [best, worst]
+    }
+    
+    func getMedian() -> Double {
+        print("StartUpViewController: getMedian -> Entry")
+        var marks: [Double] = []
+        for i in 0..<courses.count {
+            let currMark = courses[i].getAverage()
+            if (currMark != -1.0) {
+                marks.append(courses[i].getAverage())
+            }
+        }
+        
+        if marks.count == 0 {
+            print("StartUpViewController: getMedian -> Exit marks.count=0")
+            return -1.0
+        }
+        
+        marks.sort()
+        print("StartUpViewController: getMedian size of marks array \(marks.count)")
+        
+        // if marks.count is even
+        if (marks.count % 2 == 0) {
+            let mid = marks.count/2
+            print("StartUpViewController: getMedian -> Exit marks.count even. At index \(mid)")
+            return (marks[mid] + marks[mid-1])/2
+        }
+        //marks.count is odd
+        else {
+            print("StartUpViewController: getMedian -> Exit marks.count odd. At index \(marks.count/2)")
+            return marks[marks.count/2]
+        }
     }
     
     func getOverallAverage() -> Double {
