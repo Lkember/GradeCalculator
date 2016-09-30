@@ -15,6 +15,10 @@ class StartUpViewController: UIViewController {
     @IBOutlet weak var overallAverage: UILabel!
     @IBOutlet weak var median: UILabel!
     @IBOutlet weak var gpaLabel: UILabel!
+    @IBOutlet weak var bestClass: UILabel!
+    @IBOutlet weak var bestClassMark: UILabel!
+    @IBOutlet weak var worstClass: UILabel!
+    @IBOutlet weak var worstClassMark: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,12 +46,21 @@ class StartUpViewController: UIViewController {
         numCourses.text = "\(courses.count)"
         let average = getOverallAverage()
         let median = getMedian()
+        let bestworstclasses = getBestAndWorstMarks()
         if (average != -1.0) {
+            bestClass.text = bestworstclasses[0].courseName
+            bestClassMark.text = "\(round(10*bestworstclasses[0].getAverage()*100)/10)%"
+            worstClass.text = bestworstclasses[1].courseName
+            worstClassMark.text = "\(round(10*bestworstclasses[1].getAverage()*100)/10)%"
             overallAverage.text = "\(round(10*average*100)/10)%"
             gpaLabel.text = getGPA(average: average*100)
             self.median.text = "\(round(10*median*100)/10)%"
         }
         else {
+            bestClassMark.text = "N/A"
+            bestClass.text = "N/A"
+            worstClass.text = "N/A"
+            worstClassMark.text = "N/A"
             overallAverage.text = "N/A"
             gpaLabel.text = "N/A"
             self.median.text = "N/A"
