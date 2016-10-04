@@ -16,22 +16,6 @@ class CourseTableViewController: UITableViewController {
     @IBOutlet weak var overallAverage: UILabel!
     @IBOutlet weak var numCourses: UILabel!
     
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if (tableView.isEditing == true) {
-            let check = tableView.cellForRow(at: indexPath)?.accessoryType
-            
-            if check == UITableViewCellAccessoryType.checkmark {
-                print("Deselected")
-                tableView.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.none
-            }
-            else {
-                print("Selected")
-                tableView.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.checkmark
-            }
-        }
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -49,6 +33,7 @@ class CourseTableViewController: UITableViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        print("CourseTable: viewDidAppear")
         tableView.reloadData()
         updateLabels()
         saveCourses()
@@ -207,6 +192,21 @@ class CourseTableViewController: UITableViewController {
         return true
     }
 
+    // Checks a cell when in edit mode
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if (tableView.isEditing == true) {
+            let check = tableView.cellForRow(at: indexPath)?.accessoryType
+            
+            if check == UITableViewCellAccessoryType.checkmark {
+                print("Deselected")
+                tableView.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.none
+            }
+            else {
+                print("Selected")
+                tableView.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.checkmark
+            }
+        }
+    }
     
     // Override to support editing the table view.
 //    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
@@ -235,6 +235,32 @@ class CourseTableViewController: UITableViewController {
         
         let editCourseTitle = UITableViewRowAction(style: UITableViewRowActionStyle.normal, title: "Edit", handler: { action, indexPath in
             print("Edit was selected.")
+            
+            let alertController = UIAlertController(title: "Edit Course: \(self.courses[indexPath.row].courseName)", message: "", preferredStyle: UIAlertControllerStyle.alert)
+            
+            let saveAction = UIAlertAction(title: "Save", style: UIAlertActionStyle.default, handler: {
+                (action: UIAlertAction!) -> Void in
+                
+                let courseNameField = alertController.textFields![0] as UITextField
+                
+                self.courses[indexPath.row].courseName = courseNameField.text!
+                self.saveCourses()
+                self.tableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.fade)
+            });
+            
+            let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: {
+                (action: UIAlertAction!) -> Void in
+                // do nothing
+            });
+            
+            alertController.addTextField(configurationHandler: { (textField : UITextField!) -> Void in
+                textField.text = self.courses[indexPath.row].courseName
+            });
+            
+            alertController.addAction(saveAction)
+            alertController.addAction(cancelAction)
+            
+            self.present(alertController, animated: true, completion: nil)
         });
     
         return [deleteRowAction, editCourseTitle]
