@@ -62,7 +62,6 @@ class Course: NSObject, NSCoding {
     
     // Returns the average of all completed projects
     func getAverage() -> Double {
-        print("Course.swift: projects.count = \(projects.count)")
         if projects.count != 0 {
             var mark = 0.0
             var weightSum = 0.0
@@ -79,10 +78,13 @@ class Course: NSObject, NSCoding {
             
             mark = mark/weightSum
             if (incomplete == projects.count) {
+                print("Courses: getAverage() -> Incomplete")
                 return -1.0
             }
+            print("Courses: getAverage() -> \(mark)")
             return mark
         }
+        print("Courses: getAverage() -> -1.0")
         return -1.0
     }
     

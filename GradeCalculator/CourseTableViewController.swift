@@ -16,6 +16,78 @@ class CourseTableViewController: UITableViewController {
     @IBOutlet weak var overallAverage: UILabel!
     @IBOutlet weak var numCourses: UILabel!
     
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if (tableView.isEditing == true) {
+            let check = tableView.cellForRow(at: indexPath)?.accessoryType
+            
+            if check == UITableViewCellAccessoryType.checkmark {
+                print("Deselected")
+                tableView.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.none
+            }
+            else {
+                print("Selected")
+                tableView.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.checkmark
+            }
+        }
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        //Add an edit button
+        navigationItem.leftBarButtonItem = editButtonItem
+        self.tableView.allowsSelectionDuringEditing = true
+        if let savedCourses = loadCourses() {
+            courses += savedCourses
+        }
+        else {
+            loadSampleCourses()
+        }
+        
+        updateLabels()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        tableView.reloadData()
+        updateLabels()
+        saveCourses()
+    }
+    
+    // should perform segue
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        if tableView.isEditing == true {
+            return false
+        }
+        else {
+            return true
+        }
+    }
+    
+    // preparing for segue
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier=="CourseView" {
+            print("CourseTable: Setting courses to courseView")
+            let selectedCourse = sender as? CourseTableViewCell
+            let destVC = segue.destination as? MarksTableViewController
+            destVC?.courses = self.courses
+            destVC?.courseName = (selectedCourse?.courseName.text)!
+        }
+            
+        else if segue.identifier=="AddItem" {
+            print("CourseTable: Setting courses to view.")
+            let destinationViewController = segue.destination.childViewControllers[0] as? NewCoursesViewController
+            destinationViewController?.courses = courses;
+        }
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+
+    
     // MARK: Functions
     
     func updateLabels() {
@@ -96,59 +168,20 @@ class CourseTableViewController: UITableViewController {
         courses.append(compSci!)
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        //Add an edit button
-        navigationItem.leftBarButtonItem = editButtonItem
-        self.tableView.allowsSelectionDuringEditing = true
-        if let savedCourses = loadCourses() {
-            courses += savedCourses
-        }
-        else {
-            loadSampleCourses()
-        }
-        
-        updateLabels()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        tableView.reloadData()
-        updateLabels()
-        saveCourses()
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier=="AddItem" {
-            print("CourseTable: Setting courses to view.")
-            let destinationViewController = segue.destination.childViewControllers[0] as? NewCoursesViewController
-            destinationViewController?.courses = courses;
-        }
-        else if segue.identifier=="CourseView" {
-            print("CourseTable: Setting courses to courseView")
-            let selectedCourse = sender as? CourseTableViewCell
-            let destVC = segue.destination as? MarksTableViewController
-            destVC?.courses = self.courses
-            destVC?.courseName = (selectedCourse?.courseName.text)!
-        }
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
 
     // MARK: - Table view data source
-
+    
+    // Returns the number of sections in the table
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-
+    
+    // Returns the number of rows per section
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return courses.count
     }
 
-    
+    // Setting the data of each cell
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentifier = "CourseTableViewCell"
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! CourseTableViewCell
@@ -168,6 +201,7 @@ class CourseTableViewController: UITableViewController {
 
     
     // Override to support conditional editing of the table view.
+    // Sets all cells to be editable
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
         return true
@@ -175,15 +209,35 @@ class CourseTableViewController: UITableViewController {
 
     
     // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            courses.remove(at: (indexPath as NSIndexPath).row)
-            saveCourses()
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+//    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+//        if editingStyle == .delete {
+//            // Delete the row from the data source
+//            courses.remove(at: (indexPath as NSIndexPath).row)
+//            saveCourses()
+//            tableView.deleteRows(at: [indexPath], with: .fade)
+//        } else if editingStyle == .insert {
+//            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+//        }    
+//    }
+    
+    // Sets the style of editing when the edit button is selected
+//    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+//        return UITableViewCellEditingStyle.delete
+//    }
+    
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        print("CourseTable: Setting buttons")
+        let deleteRowAction = UITableViewRowAction(style: UITableViewRowActionStyle.destructive, title: "Delete", handler:{action, indexPath in
+            self.courses.remove(at: (indexPath as NSIndexPath).row)
+            self.saveCourses()
+            self.tableView.deleteRows(at: [indexPath], with: .fade)
+        });
+        
+        let editCourseTitle = UITableViewRowAction(style: UITableViewRowActionStyle.normal, title: "Edit", handler: { action, indexPath in
+            print("Edit was selected.")
+        });
+    
+        return [deleteRowAction, editCourseTitle]
     }
     
     // Override to support rearranging the table view.
@@ -211,7 +265,6 @@ class CourseTableViewController: UITableViewController {
     
     // Override to support conditional rearranging of the table view.
     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-//    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         // Return false if you do not want the item to be re-orderable.
         return true
     }
