@@ -193,20 +193,20 @@ class CourseTableViewController: UITableViewController {
     }
 
     // Checks a cell when in edit mode
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if (tableView.isEditing == true) {
-            let check = tableView.cellForRow(at: indexPath)?.accessoryType
-            
-            if check == UITableViewCellAccessoryType.checkmark {
-                print("Deselected")
-                tableView.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.none
-            }
-            else {
-                print("Selected")
-                tableView.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.checkmark
-            }
-        }
-    }
+//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        if (tableView.isEditing == true) {
+//            let check = tableView.cellForRow(at: indexPath)?.accessoryType
+//            
+//            if check == UITableViewCellAccessoryType.checkmark {
+//                print("Deselected")
+//                tableView.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.none
+//            }
+//            else {
+//                print("Selected")
+//                tableView.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.checkmark
+//            }
+//        }
+//    }
     
     // Override to support editing the table view.
 //    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
