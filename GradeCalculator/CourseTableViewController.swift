@@ -84,27 +84,34 @@ class CourseTableViewController: UITableViewController {
     // MARK: Functions
     // If the user selects multiple courses and chooses delete
     @IBAction func deleteCourses(_ sender: AnyObject) {
-        print("CoursesTable: deleteCourses -> Entry")
-        let indexPaths = tableView.indexPathsForSelectedRows;
-        
-        print("CoursesTable: deleteCourses: Deleting \(indexPaths!.count) rows")
-        
-        var offset = 0
-        
-        for i in 0..<indexPaths!.count {
-            print("CoursesTable: deleteCourses: Removing course: \(courses[(indexPaths?[i].row)! + offset].courseName), indexPath=\(indexPaths?[i].row), offset=\(offset)")
-            courses.remove(at: (indexPaths?[i].row)! + offset)
-            offset -= 1
+        var indexPaths = tableView.indexPathsForSelectedRows
+        if (indexPaths != nil) {
+            print("CoursesTable: deleteCourses -> Entry: Deleting \(indexPaths!.count) rows")
+            
+            // the indexes must be sorted by row value since you can only delete one course at a time, the size of courses is always changing
+            indexPaths = indexPaths?.sorted()
+            var offset = 0
+            
+            for i in 0..<indexPaths!.count {
+                print("CoursesTable: deleteCourses: Removing course: \(courses[(indexPaths?[i].row)! + offset].courseName), indexPath=\(indexPaths?[i].row), offset=\(offset)")
+                courses.remove(at: (indexPaths?[i].row)! + offset)
+                offset -= 1
+            }
+            
+            //reload data, update the labels and save changes
+            tableView.reloadData()
+            updateLabels()
+            saveCourses()
+            
+            // Get out of editing mode
+            tableView.setEditing(false, animated: true)
+            self.setEditing(false, animated: true)
+            
+            //If courses.count is empty, then hide toolbar. This is to fix a bug where the toolbar appears when no courses are in the list
+            self.navigationController!.toolbar.isHidden = true
+            
+            print("CoursesTable: deleteCourses -> Exit")
         }
-        
-        tableView.reloadData()
-        updateLabels()
-        saveCourses()
-        
-        tableView.setEditing(false, animated: true)
-        self.setEditing(false, animated: true)
-        
-        print("CoursesTable: deleteCourses -> Exit")
     }
     
     
