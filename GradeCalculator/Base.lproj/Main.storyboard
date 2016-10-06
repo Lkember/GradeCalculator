@@ -57,7 +57,7 @@
                                     <constraints>
                                         <constraint firstAttribute="height" constant="30" id="Ve6-Ly-kPg"/>
                                     </constraints>
-                                    <state key="normal" title="More Details">
+                                    <state key="normal" title="Summary">
                                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     </state>
                                     <connections>
