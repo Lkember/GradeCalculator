@@ -124,6 +124,15 @@
                             <outlet property="delegate" destination="2px-Qq-uIr" id="Cnv-BB-urO"/>
                         </connections>
                     </tableView>
+                    <toolbarItems>
+                        <barButtonItem title="Item" systemItem="trash" id="LGn-kk-AtD">
+                            <connections>
+                                <action selector="deleteCourses:" destination="2px-Qq-uIr" id="yKC-iG-ktb"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="VVI-I1-BSn"/>
+                        <barButtonItem title="Move" id="LEq-CB-ciL"/>
+                    </toolbarItems>
                     <navigationItem key="navigationItem" title="Courses" id="b0C-xC-6G3">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="wv1-Bq-N1c">
                             <connections>
@@ -786,13 +795,17 @@
         <!--Navigation Controller-->
         <scene sceneID="w2i-83-Snx">
             <objects>
-                <navigationController storyboardIdentifier="NavCourseView" automaticallyAdjustsScrollViewInsets="NO" id="WYK-ti-e5R" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="NavCourseView" automaticallyAdjustsScrollViewInsets="NO" toolbarHidden="NO" id="WYK-ti-e5R" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="g16-Bf-88H">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="cT9-HK-GaL">
+                        <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
                         <segue destination="2px-Qq-uIr" kind="relationship" relationship="rootViewController" id="WtP-sj-wW2"/>
                     </connections>

@@ -17,17 +17,23 @@ class CourseTableViewController: UITableViewController {
     @IBOutlet weak var numCourses: UILabel!
     
     override func viewDidLoad() {
+        print("CourseTable: viewDidLoad -> Entry")
         super.viewDidLoad()
         
         self.tableView.allowsMultipleSelectionDuringEditing = true
         self.tableView.allowsSelectionDuringEditing = true
         
-        //Add an edit button
+        //Add an edit button to the navigation bar
         navigationItem.leftBarButtonItem = editButtonItem
+        
+        // Add buttons to tool bar
+        self.navigationController!.toolbar.isHidden = true
+        
         if let savedCourses = loadCourses() {
             courses += savedCourses
         }
-        else {
+        
+        if courses.count == 0 {
             loadSampleCourses()
         }
         
@@ -76,6 +82,31 @@ class CourseTableViewController: UITableViewController {
 
     
     // MARK: Functions
+    // If the user selects multiple courses and chooses delete
+    @IBAction func deleteCourses(_ sender: AnyObject) {
+        print("CoursesTable: deleteCourses -> Entry")
+        let indexPaths = tableView.indexPathsForSelectedRows;
+        
+        print("CoursesTable: deleteCourses: Deleting \(indexPaths!.count) rows")
+        
+        var offset = 0
+        
+        for i in 0..<indexPaths!.count {
+            print("CoursesTable: deleteCourses: Removing course: \(courses[(indexPaths?[i].row)! + offset].courseName), indexPath=\(indexPaths?[i].row), offset=\(offset)")
+            courses.remove(at: (indexPaths?[i].row)! + offset)
+            offset -= 1
+        }
+        
+        tableView.reloadData()
+        updateLabels()
+        saveCourses()
+        
+        tableView.setEditing(false, animated: true)
+        self.setEditing(false, animated: true)
+        
+        print("CoursesTable: deleteCourses -> Exit")
+    }
+    
     
     func updateLabels() {
         let average = getOverallAverage()
