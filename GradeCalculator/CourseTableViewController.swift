@@ -19,9 +19,11 @@ class CourseTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.tableView.allowsMultipleSelectionDuringEditing = true
+        self.tableView.allowsSelectionDuringEditing = true
+        
         //Add an edit button
         navigationItem.leftBarButtonItem = editButtonItem
-        self.tableView.allowsSelectionDuringEditing = true
         if let savedCourses = loadCourses() {
             courses += savedCourses
         }
@@ -189,9 +191,29 @@ class CourseTableViewController: UITableViewController {
     // Sets all cells to be editable
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
+        print("CourseTable: canEditRowAt -> Entry")
+        if (tableView.isEditing) {
+            print("CourseTable: canEditRowAt -> setToolBarHidden = false")
+            self.navigationController?.setToolbarHidden(false, animated: true)
+        }
+        else {
+            print("CourseTable: canEditRowAt -> setToolBarHidden = true")
+            self.navigationController?.setToolbarHidden(true, animated: true)
+        }
+        print("CourseTable: canEditRowAt -> Exit")
         return true
     }
 
+//    override func tableView(_ tableView: UITableView, willBeginEditingRowAt indexPath: IndexPath) {
+//        print("beginEditingRowAt")
+//        self.navigationController?.setToolbarHidden(false, animated: true)
+//    }
+//    
+//    override func tableView(_ tableView: UITableView, didEndEditingRowAt indexPath: IndexPath?) {
+//        print("endEditingRowAt")
+//        self.navigationController?.setToolbarHidden(true, animated: true)
+//    }
+    
     // Checks a cell when in edit mode
 //    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 //        if (tableView.isEditing == true) {
@@ -208,6 +230,7 @@ class CourseTableViewController: UITableViewController {
 //        }
 //    }
     
+    
     // Override to support editing the table view.
 //    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
 //        if editingStyle == .delete {
@@ -215,15 +238,9 @@ class CourseTableViewController: UITableViewController {
 //            courses.remove(at: (indexPath as NSIndexPath).row)
 //            saveCourses()
 //            tableView.deleteRows(at: [indexPath], with: .fade)
-//        } else if editingStyle == .insert {
-//            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-//        }    
+//        }
 //    }
     
-    // Sets the style of editing when the edit button is selected
-//    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
-//        return UITableViewCellEditingStyle.delete
-//    }
     
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         print("CourseTable: Setting buttons")
@@ -265,6 +282,7 @@ class CourseTableViewController: UITableViewController {
     
         return [deleteRowAction, editCourseTitle]
     }
+    
     
     // Override to support rearranging the table view.
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
