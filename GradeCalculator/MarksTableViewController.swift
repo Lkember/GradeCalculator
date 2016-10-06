@@ -178,13 +178,8 @@ class MarksTableViewController: UITableViewController {
                 cell.staticMarkLabel.isHidden = false
             }
         }
-//        else {
-//            cell.projectNameLabel.text = "Not enough information."
-//            cell.markLabel.hidden = true
-//            cell.weightLabel.hidden = true
-//            cell.staticMarkLabel.hidden = true
-//            cell.staticWeightLabel.hidden = true
-//        }
+        
+        cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
         
         return cell
     }

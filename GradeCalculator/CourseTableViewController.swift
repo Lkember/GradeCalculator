@@ -220,13 +220,15 @@ class CourseTableViewController: UITableViewController {
         else {
             cell.courseDescription.text = "Not enough information"
         }
-
+        
+        cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
+        
         return cell
     }
 
     
     // Override to support conditional editing of the table view.
-    // Sets all cells to be editable
+    // Sets all cells to be editable and when editing it brings up the toolbar
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
         print("CourseTable: canEditRowAt -> Entry")
