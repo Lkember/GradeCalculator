@@ -9,7 +9,8 @@
 import UIKit
 
 class StartUpViewController: UIViewController {
-
+    
+    var groups: [String: [Course]] = [:]
     var courses: [Course] = []
     @IBOutlet weak var numCourses: UILabel!
     @IBOutlet weak var overallAverage: UILabel!
@@ -26,6 +27,7 @@ class StartUpViewController: UIViewController {
         // Do any additional setup after loading the view.
         if let savedCourses = loadCourses() {
             courses += savedCourses
+            groups["Ungrouped Courses"] = courses
         }
         updateLabels()
     }
@@ -192,14 +194,19 @@ class StartUpViewController: UIViewController {
         }
     }
     
-    /*
+    
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        if (segue.identifier == "groupViewSegue") {
+            print("StartUpView: prepare: going to groupView")
+            let destView = segue.destination as? GroupsTableViewController
+            destView?.groups = self.groups
+        }
     }
-    */
 
 }
