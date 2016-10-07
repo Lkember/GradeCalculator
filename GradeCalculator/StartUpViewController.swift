@@ -204,7 +204,7 @@ class StartUpViewController: UIViewController {
         // Pass the selected object to the new view controller.
         if (segue.identifier == "groupViewSegue") {
             print("StartUpView: prepare: going to groupView")
-            let destView = segue.destination as? GroupsTableViewController
+            let destView = segue.destination.childViewControllers[0] as? GroupsTableViewController
             destView?.groups = self.groups
         }
     }

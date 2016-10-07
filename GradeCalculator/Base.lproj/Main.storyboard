@@ -396,7 +396,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YfY-mn-fvh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2980" y="-306.29685157421289"/>
+            <point key="canvasLocation" x="3919.1999999999998" y="-306.29685157421289"/>
         </scene>
         <!--Add Project View Controller-->
         <scene sceneID="Uwx-T0-g5c">
@@ -590,7 +590,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hMY-Po-bvB" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="BDV-8h-3Xu" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="4513.6000000000004" y="-306.74662668665667"/>
+            <point key="canvasLocation" x="5452.8000000000002" y="-306.74662668665667"/>
         </scene>
         <!--Groups Table View Controller-->
         <scene sceneID="DhD-Ek-1c8">
@@ -601,7 +601,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="Jcj-ff-4ES">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="106"/>
+                            <rect key="frame" x="0.0" y="64" width="375" height="106"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="My Groups" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="37c-LF-Ikv">
@@ -627,7 +627,7 @@
                         </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="GroupCell" textLabel="fiJ-2v-3bX" detailTextLabel="zQL-1N-qTq" style="IBUITableViewCellStyleSubtitle" id="qtP-xe-zYq">
-                                <rect key="frame" x="0.0" y="134" width="375" height="95"/>
+                                <rect key="frame" x="0.0" y="198" width="375" height="95"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qtP-xe-zYq" id="VG5-xd-VZc">
                                     <frame key="frameInset" width="375" height="94"/>
@@ -656,10 +656,11 @@
                             <outlet property="delegate" destination="wBn-pk-1bJ" id="lod-zX-E7b"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" id="6cB-DW-gk6"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FPr-9d-9f8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="969" y="-762"/>
+            <point key="canvasLocation" x="1692" y="-762"/>
         </scene>
         <!--Start Up View Controller-->
         <scene sceneID="n1W-Ph-dUy">
@@ -827,7 +828,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="wBn-pk-1bJ" kind="popoverPresentation" identifier="groupViewSegue" popoverAnchorView="h0V-fm-NEG" id="ynr-s0-QG2">
+                                    <segue destination="bWW-a5-F7M" kind="popoverPresentation" identifier="groupViewSegue" popoverAnchorView="h0V-fm-NEG" id="ynr-s0-QG2">
                                         <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                                     </segue>
                                 </connections>
@@ -936,7 +937,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pkD-xh-Rbu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2206" y="-786"/>
+            <point key="canvasLocation" x="3144.8000000000002" y="-786.65667166416802"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="6A8-cw-A9Q">
@@ -954,7 +955,25 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dfr-JP-1u2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3748" y="-619"/>
+            <point key="canvasLocation" x="4687.1999999999998" y="-619.34032983508246"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="2Dr-up-M1u">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="bWW-a5-F7M" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="uns-Lq-rxg">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="wBn-pk-1bJ" kind="relationship" relationship="rootViewController" id="EIR-01-5l0"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Nxs-16-ylD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="968.79999999999995" y="-762.36881559220399"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
