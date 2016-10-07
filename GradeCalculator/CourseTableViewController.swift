@@ -82,6 +82,13 @@ class CourseTableViewController: UITableViewController {
 
     
     // MARK: Functions
+    
+    // Go back to the details view
+    @IBAction func backToDetailView(_ sender: AnyObject) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    
     // If the user selects multiple courses and chooses delete
     @IBAction func deleteCourses(_ sender: AnyObject) {
         var indexPaths = tableView.indexPathsForSelectedRows
