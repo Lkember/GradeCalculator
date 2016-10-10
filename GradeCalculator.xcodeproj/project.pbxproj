@@ -22,6 +22,7 @@
 		B28A7E171D5BA2BE00C2ADEB /* AddProjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28A7E161D5BA2BE00C2ADEB /* AddProjectViewController.swift */; };
 		B28A7E2E1D61FF0300C2ADEB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B28A7E2D1D61FF0300C2ADEB /* Main.storyboard */; };
 		B28A7E331D63852600C2ADEB /* NewCoursesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28A7E321D63852600C2ADEB /* NewCoursesViewController.swift */; };
+		B2E4E4601DA8A23200CBF92B /* AddGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E4E45F1DA8A23200CBF92B /* AddGroupViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		B28A7E161D5BA2BE00C2ADEB /* AddProjectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddProjectViewController.swift; sourceTree = "<group>"; };
 		B28A7E2D1D61FF0300C2ADEB /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B28A7E321D63852600C2ADEB /* NewCoursesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewCoursesViewController.swift; sourceTree = "<group>"; };
+		B2E4E45F1DA8A23200CBF92B /* AddGroupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddGroupViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +116,7 @@
 			isa = PBXGroup;
 			children = (
 				B28A7E161D5BA2BE00C2ADEB /* AddProjectViewController.swift */,
+				B2E4E45F1DA8A23200CBF92B /* AddGroupViewController.swift */,
 				B274AE901D46A5B100E732FD /* AppDelegate.swift */,
 				B274AEC41D46AFB600E732FD /* Course.swift */,
 				B274AEC21D46AEE500E732FD /* CourseTableViewController.swift */,
@@ -284,6 +287,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2E4E4601DA8A23200CBF92B /* AddGroupViewController.swift in Sources */,
 				B28A7E171D5BA2BE00C2ADEB /* AddProjectViewController.swift in Sources */,
 				B24468F01DA7F60B0011C4CC /* GroupsTableViewController.swift in Sources */,
 				B28A7E331D63852600C2ADEB /* NewCoursesViewController.swift in Sources */,

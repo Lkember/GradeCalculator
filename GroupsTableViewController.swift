@@ -68,6 +68,24 @@ class GroupsTableViewController: UITableViewController {
         return cell
     }
     
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("GroupsTable: didSelectRowAt: -> Entry")
+        if (tableView.isEditing) {
+            print("GroupsTable: didSelectRowAt: isEditing")
+            
+        }
+        else {
+            
+        }
+    }
+    
+    
+    override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        
+    }
+    
+    
     /*
     // Override to support conditional rearranging of the table view.
     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
@@ -115,14 +133,14 @@ class GroupsTableViewController: UITableViewController {
 
     
     
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        let destView = segue.destination.childViewControllers[0] as! AddGroupViewController
+        destView.groups = self.groups
     }
-    */
 
 }

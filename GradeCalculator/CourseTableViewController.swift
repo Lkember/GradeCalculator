@@ -15,6 +15,9 @@ class CourseTableViewController: UITableViewController {
     var courses = [Course]()
     @IBOutlet weak var overallAverage: UILabel!
     @IBOutlet weak var numCourses: UILabel!
+    @IBOutlet weak var deleteButton: UIBarButtonItem!
+    @IBOutlet weak var editButton: UIBarButtonItem!
+    
     
     override func viewDidLoad() {
         print("CourseTable: viewDidLoad -> Entry")
@@ -262,21 +265,45 @@ class CourseTableViewController: UITableViewController {
 //    }
     
     // Checks a cell when in edit mode
-//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        if (tableView.isEditing == true) {
-//            let check = tableView.cellForRow(at: indexPath)?.accessoryType
-//            
-//            if check == UITableViewCellAccessoryType.checkmark {
-//                print("Deselected")
-//                tableView.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.none
-//            }
-//            else {
-//                print("Selected")
-//                tableView.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.checkmark
-//            }
-//        }
-//    }
-    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if (tableView.isEditing) {
+            let selectedRows = tableView.indexPathsForSelectedRows
+            
+            if selectedRows?.count == 0 {
+                deleteButton.isEnabled = false
+                editButton.isEnabled = false
+            }
+            else if selectedRows?.count == 1 {
+                deleteButton.isEnabled = true
+                editButton.isEnabled = true
+            }
+            else {
+                deleteButton.isEnabled = true
+                editButton.isEnabled = false
+            }
+        }
+    }
+
+    override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        print("CourseTable: didDeselectRowAt -> Entry")
+        if (tableView.isEditing) {
+            let selectedRows = tableView.indexPathsForSelectedRows
+            
+            if selectedRows?.count == 0 {
+                deleteButton.isEnabled = false
+                editButton.isEnabled = false
+            }
+            else if selectedRows?.count == 1 {
+                deleteButton.isEnabled = true
+                editButton.isEnabled = true
+            }
+            else {
+                deleteButton.isEnabled = true
+                editButton.isEnabled = false
+            }
+            print("CourseTable: didDeselectRowAt -> Exit")
+        }
+    }
     
     // Override to support editing the table view.
 //    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {

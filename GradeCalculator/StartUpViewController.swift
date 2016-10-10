@@ -123,14 +123,21 @@ class StartUpViewController: UIViewController {
         
         var worst: Course = courses[0]
         var best: Course = courses[0]
+        var worstGrade = courses[0].getAverage()
+        var bestGrade = courses[0].getAverage()
+        
         for course in courses {
-            if (course.getAverage() < worst.getAverage()) {
+            let average = course.getAverage()
+            if ((average < worstGrade) && (average != -1.0)) {
+                worstGrade = average
                 worst = course
             }
-            if (course.getAverage() > best.getAverage()) {
+            if (average > bestGrade) {
+                bestGrade = average
                 best = course
             }
         }
+        print("StartUpViewController: getBestAndWorstMarks -> Exit")
         return [best, worst]
     }
     
