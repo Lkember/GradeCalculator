@@ -253,16 +253,6 @@ class CourseTableViewController: UITableViewController {
         print("CourseTable: canEditRowAt -> Exit")
         return true
     }
-
-//    override func tableView(_ tableView: UITableView, willBeginEditingRowAt indexPath: IndexPath) {
-//        print("beginEditingRowAt")
-//        self.navigationController?.setToolbarHidden(false, animated: true)
-//    }
-//    
-//    override func tableView(_ tableView: UITableView, didEndEditingRowAt indexPath: IndexPath?) {
-//        print("endEditingRowAt")
-//        self.navigationController?.setToolbarHidden(true, animated: true)
-//    }
     
     // Checks a cell when in edit mode
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

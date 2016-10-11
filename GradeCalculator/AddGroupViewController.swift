@@ -21,12 +21,17 @@ class AddGroupViewController: UIViewController, UITableViewDelegate, UITableView
         super.viewDidLoad()
         
         tableView.delegate = self
+        tableView.dataSource = self
+        tableView.allowsSelectionDuringEditing = true
+        tableView.allowsMultipleSelectionDuringEditing = true
+        tableView.isEditing = true
         
-        for group in groups {
-            for course in group.value {
-                courses.append(course)
-            }
+        for course in groups["Ungrouped Courses"]! {
+            print("Appending \(course.courseName)")
+            courses.append(course)
         }
+        
+        tableView.reloadData()
     }
     
     override func didReceiveMemoryWarning() {
@@ -45,19 +50,20 @@ class AddGroupViewController: UIViewController, UITableViewDelegate, UITableView
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return groups.count
+        print("AddGroupProject: numberOfRowsInSection = \(courses.count)")
+        return courses.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentifier = "CoursesCell"
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath as IndexPath)
         
-        cell.textLabel?.text = ""
+        cell.textLabel?.text = courses[indexPath.row].courseName
         
-        return UITableViewCell()
+        return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // cell selected code here
     }
     
