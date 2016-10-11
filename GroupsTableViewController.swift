@@ -10,7 +10,7 @@ import UIKit
 
 class GroupsTableViewController: UITableViewController {
     
-    var groups: [String: [Course]] = [:]
+    var groups: [String: [Course]?] = [:]
     var groupNames: [String] = []
     
     override func viewDidLoad() {
@@ -34,6 +34,20 @@ class GroupsTableViewController: UITableViewController {
 
     
     // MARK: - Functions
+    
+    @IBAction func unwindToCourseDict(sender: UIStoryboardSegue) {
+        print("GroupsTable: unwindToCourseDict: -> Entry")
+        if let sourceVC = sender.source as? AddGroupViewController {
+            let newGroup = sourceVC.groupName.text
+            
+            groups[newGroup!] = [] as [Course]??
+            groupNames.append(newGroup!)
+            
+            print("groups.count == \(groups.count)")
+        }
+        self.tableView.reloadData()
+        
+    }
     
     @IBAction func backToStartUpView(_ sender: AnyObject) {
         self.dismiss(animated: true, completion: nil)
@@ -61,7 +75,7 @@ class GroupsTableViewController: UITableViewController {
         let groupName = groupNames[indexPath.row]
         
         cell.textLabel?.text = groupName
-        cell.detailTextLabel?.text = "Number of courses in group: \(groups[groupName]!.count)"
+        cell.detailTextLabel?.text = "Number of courses in group: \(groups[groupName]!!.count)"
         
         cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
         
@@ -96,7 +110,8 @@ class GroupsTableViewController: UITableViewController {
     
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        if (groups[groupNames[indexPath.row]]!.count == 0) {
+        print("canEditRowAt: \(indexPath.row)")
+        if (groups[groupNames[indexPath.row]]!?.count == 0) {
             print("GroupsTable: canEditRowAt \(indexPath.row) -> True")
             return true
         }
@@ -107,9 +122,11 @@ class GroupsTableViewController: UITableViewController {
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
+            groups.removeValue(forKey: groupNames[indexPath.row])
+            groupNames.remove(at: indexPath.row)
+            
             // Delete the row from the data source
             tableView.deleteRows(at: [indexPath], with: .fade)
-            groups.removeValue(forKey: groupNames[indexPath.row])
             tableView.reloadData()
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view

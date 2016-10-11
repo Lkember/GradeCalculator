@@ -11,11 +11,11 @@ import UIKit
 class AddGroupViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
 
     // MARK: - Attributes
-    var groups: [String: [Course]] = [:]
+    var groups: [String: [Course]?] = [:]
     var courses: [Course] = []
     @IBOutlet weak var groupName: UITextField!
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var doneButton: UIBarButtonItem!
+    @IBOutlet weak var saveButton: UIBarButtonItem!
     
     
     override func viewDidLoad() {
@@ -29,9 +29,9 @@ class AddGroupViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.allowsMultipleSelectionDuringEditing = true
         tableView.isEditing = true
         
-        doneButton.isEnabled = false
+        saveButton.isEnabled = false
         
-        for course in groups["Ungrouped Courses"]! {
+        for course in groups["Ungrouped Courses"]!! {
             print("Appending \(course.courseName)")
             courses.append(course)
         }
@@ -46,9 +46,6 @@ class AddGroupViewController: UIViewController, UITableViewDelegate, UITableView
     
     
     // MARK: - Functions
-    @IBAction func doneClicked(_ sender: UIBarButtonItem) {
-        
-    }
     
     @IBAction func cancelClicked(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
@@ -59,14 +56,14 @@ class AddGroupViewController: UIViewController, UITableViewDelegate, UITableView
         
         if (input == "") {
             print("checkInput -> False")
-            doneButton.isEnabled = false
+            saveButton.isEnabled = false
         }
-        else if (groups[input]?.count != nil) {
-            doneButton.isEnabled = false
+        else if (groups[input]??.count != nil) {
+            saveButton.isEnabled = false
         }
         else {
             print("checkInput -> True")
-            doneButton.isEnabled = true
+            saveButton.isEnabled = true
         }
     }
     

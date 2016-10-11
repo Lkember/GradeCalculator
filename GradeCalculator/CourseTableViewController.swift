@@ -11,7 +11,7 @@ import UIKit
 class CourseTableViewController: UITableViewController {
 
     // MARK: Properties
-    
+    var dictionaryKey: String = ""
     var courses = [Course]()
     @IBOutlet weak var overallAverage: UILabel!
     @IBOutlet weak var numCourses: UILabel!
@@ -183,9 +183,9 @@ class CourseTableViewController: UITableViewController {
     
     
     @IBAction func unwindToCourseList(_ sender: UIStoryboardSegue) {
-        print("CourseTable: Adding course to course list.")
+        print("CourseTable: unwindToCourseList: Adding course to course list.")
         if let sourceViewController = sender.source as? NewCoursesViewController, let course = sourceViewController.course {
-            print("CourseTable: New course: \(course.courseName)")
+            print("CourseTable: unwindToCourseList: New course: \(course.courseName)")
             let newIndexPath = IndexPath(row: courses.count, section: 0)
             self.courses.append(course)
             tableView.insertRows(at: [newIndexPath], with: .bottom)

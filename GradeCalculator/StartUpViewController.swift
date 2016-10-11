@@ -214,6 +214,10 @@ class StartUpViewController: UIViewController {
             let destView = segue.destination.childViewControllers[0] as? GroupsTableViewController
             destView?.groups = self.groups
         }
+        else if (segue.identifier == "allCoursesSegue") {
+            let destView = segue.destination.childViewControllers[0] as? CourseTableViewController
+            destView?.dictionaryKey = ""
+        }
     }
 
 }

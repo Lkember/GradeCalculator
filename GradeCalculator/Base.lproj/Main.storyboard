@@ -750,19 +750,20 @@
                                 <action selector="cancelClicked:" destination="8gA-JI-YNo" id="ceX-1L-pXL"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Done" id="7kT-mU-Esi">
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="7kT-mU-Esi">
                             <connections>
-                                <action selector="doneClicked:" destination="8gA-JI-YNo" id="hlL-XH-1GH"/>
+                                <segue destination="XWr-pK-NF4" kind="unwind" unwindAction="unwindToCourseDictWithSender:" id="q2u-fT-1CU"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="doneButton" destination="7kT-mU-Esi" id="vSt-Eg-SEY"/>
                         <outlet property="groupName" destination="CIb-we-rTd" id="xMS-bX-FH8"/>
+                        <outlet property="saveButton" destination="7kT-mU-Esi" id="b3u-Vf-qjz"/>
                         <outlet property="tableView" destination="fvQ-M5-hkJ" id="wk5-8F-TZN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1DZ-ac-EMh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="XWr-pK-NF4" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="3220" y="-762"/>
         </scene>
@@ -786,7 +787,7 @@
                                 <color key="textColor" red="0.94973287038557042" green="1" blue="0.937716014423709" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MdP-ob-A7V">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MdP-ob-A7V">
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Details" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vuH-uC-fKc">
                                         <constraints>
@@ -946,7 +947,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="WYK-ti-e5R" kind="popoverPresentation" popoverAnchorView="8ID-4Q-hmv" id="zPf-Tx-qAA">
+                                    <segue destination="WYK-ti-e5R" kind="popoverPresentation" identifier="allCoursesSegue" popoverAnchorView="8ID-4Q-hmv" id="zPf-Tx-qAA">
                                         <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                                     </segue>
                                 </connections>
