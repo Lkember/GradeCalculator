@@ -55,10 +55,8 @@ class AddGroupViewController: UIViewController, UITableViewDelegate, UITableView
     }
 
     func checkTextFieldInput(input: String) {
-        print("checkInput -> Entry")
-        let input = groupName.text! + input
+        print("checkInput -> Entry \(input)")
         
-        print("input == \(input)")
         if (input == "") {
             print("checkInput -> False")
             doneButton.isEnabled = false
@@ -70,7 +68,6 @@ class AddGroupViewController: UIViewController, UITableViewDelegate, UITableView
             print("checkInput -> True")
             doneButton.isEnabled = true
         }
-        
     }
     
     // MARK: - TableViewDelegate
@@ -91,25 +88,14 @@ class AddGroupViewController: UIViewController, UITableViewDelegate, UITableView
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // cell selected code here
     }
-    
-//    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cellIdentifier = "GroupCell"
-//        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
-//
-//        let groupName = groupNames[indexPath.row]
-//        
-//        cell.textLabel?.text = groupName
-//        cell.detailTextLabel?.text = "Number of courses in group: \(groups[groupName]!.count)"
-//        
-//        cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
-//        
-//        return cell
-//    }
 
     // MARK: - TextFieldDelegate
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        checkTextFieldInput(input: string)
+        let text: NSString = (textField.text ?? "") as NSString
+        let resultString = text.replacingCharacters(in: range, with: string)
+        
+        checkTextFieldInput(input: resultString)
         return true
     }
     
