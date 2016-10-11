@@ -90,6 +90,7 @@ class CourseTableViewController: UITableViewController {
     
     // Go back to the details view
     @IBAction func backToDetailView(_ sender: AnyObject) {
+        saveCourses()
         self.dismiss(animated: true, completion: nil)
     }
     

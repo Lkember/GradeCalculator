@@ -31,6 +31,15 @@ class StartUpViewController: UIViewController {
         }
         updateLabels()
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        print("StartUpView: viewDidAppear: loading courses again.")
+        if let savedCourses = loadCourses() {
+            courses = savedCourses
+            groups["Ungrouped Courses"] = courses
+        }
+        updateLabels()
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -40,7 +49,7 @@ class StartUpViewController: UIViewController {
     // MARK: Functions
     
     func loadCourses() -> [Course]? {
-        print("StartUpViewController: Loading courses...")
+        print("StartUpViewController: loadCourses: Loading courses...")
         return (NSKeyedUnarchiver.unarchiveObject(withFile: Course.ArchiveURL.path) as? [Course])
     }
     
