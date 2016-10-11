@@ -20,18 +20,18 @@ class MarksTableViewController: UITableViewController {
     
     // MARK: Actions
     @IBAction func unwindToProjectList(_ sender: UIStoryboardSegue) {
-        print("MarksTable: Starting unwind to project list method.")
+        print("MarksTable: unwindToProjectList -> Entry")
         if let svc = sender.source as? AddProjectViewController {
             
             // If user is editing a row
             if let selectedIndexPath = tableView.indexPathForSelectedRow {
                 
-                print("MarksTable: Editing a row")
+                print("MarksTable: unwindToProjectList: Editing a row")
                 let i = (selectedIndexPath as NSIndexPath).row
                 
                 if svc.projectIsComplete.isOn == true {
                 
-                    print("MarksTable: projectName: \(svc.projectName), grade: \(svc.projectGrade), out of: \(svc.projectOutOf), weight: \(svc.projectWeight)")
+                    print("MarksTable: undwindToProjectList: projectName: \(svc.projectName), grade: \(svc.projectGrade), out of: \(svc.projectOutOf), weight: \(svc.projectWeight)")
                     course!.projects[i] = svc.projectName
                     course!.projectMarks[i] = svc.projectGrade
                     course!.projectWeights[i] = svc.projectWeight
@@ -39,7 +39,7 @@ class MarksTableViewController: UITableViewController {
                     tableView.reloadRows(at: [selectedIndexPath], with: .fade)
                 }
                 else {
-                    print("MarksTable: projectName: \(svc.projectName), grade: -1.0, out of: -1.0, weight: \(svc.projectWeight)")
+                    print("MarksTable: undwindToProjectList: projectName: \(svc.projectName), grade: -1.0, out of: -1.0, weight: \(svc.projectWeight)")
                     course!.projects[i] = svc.projectName
                     course!.projectMarks[i] = -1.0
                     course!.projectWeights[i] = svc.projectWeight
@@ -49,27 +49,28 @@ class MarksTableViewController: UITableViewController {
             }
             // If user is adding a new row
             else {
-                print("MarksTable: Adding a new row")
+                print("MarksTable: undwindToProjectList: Adding a new row")
                 
                 let newIndexPath = IndexPath(row: course!.projects.count, section: 0)
                 
                 if svc.projectGrade == -1.0 {
-                    print("MarksTable: Adding project \(svc.projectName), grade: -1.0, outOf: -1.0, weight: \(svc.projectWeight)")
+                    print("MarksTable: undwindToProjectList: Adding project \(svc.projectName), grade: -1.0, outOf: -1.0, weight: \(svc.projectWeight)")
                     course?.addProject(svc.projectName, grade: -1.0, outOf: -1.0, weight: svc.projectWeight)
                 }
                 else {
-                    print("MarksTable: Adding project \(svc.projectName), grade \(svc.projectGrade), outOf \(svc.projectOutOf), weight \(svc.projectWeight)")
+                    print("MarksTable: undwindToProjectList: Adding project \(svc.projectName), grade \(svc.projectGrade), outOf \(svc.projectOutOf), weight \(svc.projectWeight)")
                     course?.addProject(svc.projectName, grade: svc.projectGrade, outOf: svc.projectOutOf, weight: svc.projectWeight)
                 }
                 tableView.insertRows(at: [newIndexPath], with: .bottom)
             }
-        }	
+        }
         saveCourses()
         updateLabels()
+        print("MarksTable: unwindToProjectList -> Exit")
     }
     
     @IBAction func deleteFromProjectList(_ sender: UIStoryboardSegue) {
-        print("MarksTable: deleteFromProjectList start")
+        print("MarksTable: deleteFromProjectList -> Entry")
         if let selectedIndexPath = tableView.indexPathForSelectedRow {
             print("MarksTable: deleteFromProjectList: deleting \(course!.projects[(selectedIndexPath as NSIndexPath).row])")
             course!.projects.remove(at: (selectedIndexPath as NSIndexPath).row)
@@ -78,6 +79,7 @@ class MarksTableViewController: UITableViewController {
         }
         tableView.reloadData()
         updateLabels()
+        print("MarksTable: deleteFromProjectList -> Exit")
     }
     
     

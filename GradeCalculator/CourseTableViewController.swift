@@ -31,6 +31,8 @@ class CourseTableViewController: UITableViewController {
         
         // Add buttons to tool bar
         self.navigationController!.toolbar.isHidden = true
+        self.deleteButton.isEnabled = false
+        self.editButton.isEnabled = false
         
         if let savedCourses = loadCourses() {
             courses += savedCourses
@@ -125,6 +127,17 @@ class CourseTableViewController: UITableViewController {
     }
     
     
+    @IBAction func editCourse(_ sender: AnyObject) {
+        let indexPaths = tableView.indexPathsForSelectedRows
+        if (indexPaths!.count != 1) {
+            print("CourseTable: editCourse: The user has \(indexPaths!.count) and clicked the edit button. This cannot happen.")
+        }
+        else {
+            editCourseTitle(indexPath: indexPaths![0])
+        }
+    }
+    
+    
     func updateLabels() {
         let average = getOverallAverage()
         let num = getNumCourses()
@@ -185,6 +198,36 @@ class CourseTableViewController: UITableViewController {
         else {
             print("CourseTable: Failed to add course.")
         }
+    }
+    
+    
+    func editCourseTitle(indexPath: IndexPath) {
+        print("CourseTableView: editActionsForRowAt: User selected edit")
+        let alertController = UIAlertController(title: "Editing Course: \(self.courses[indexPath.row].courseName)", message: "", preferredStyle: UIAlertControllerStyle.alert)
+        
+        let saveAction = UIAlertAction(title: "Save", style: UIAlertActionStyle.default, handler: {
+            (action: UIAlertAction!) -> Void in
+            
+            let courseNameField = alertController.textFields![0] as UITextField
+            
+            self.courses[indexPath.row].courseName = courseNameField.text!
+            self.saveCourses()
+            self.tableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.fade)
+        });
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: {
+            (action: UIAlertAction!) -> Void in
+            // do nothing
+        });
+        
+        alertController.addTextField(configurationHandler: { (textField : UITextField!) -> Void in
+            textField.text = self.courses[indexPath.row].courseName
+        });
+        
+        alertController.addAction(saveAction)
+        alertController.addAction(cancelAction)
+        
+        self.present(alertController, animated: true, completion: nil)
     }
     
     
@@ -260,38 +303,42 @@ class CourseTableViewController: UITableViewController {
             let selectedRows = tableView.indexPathsForSelectedRows
             
             if selectedRows?.count == 0 {
-                deleteButton.isEnabled = false
-                editButton.isEnabled = false
+                print("CourseTable: TableView: 0 rows selected")
+                self.deleteButton.isEnabled = false
+                self.editButton.isEnabled = false
             }
             else if selectedRows?.count == 1 {
-                deleteButton.isEnabled = true
-                editButton.isEnabled = true
+                print("CourseTable: TableView: 1 row selected")
+                self.deleteButton.isEnabled = true
+                self.editButton.isEnabled = true
             }
             else {
-                deleteButton.isEnabled = true
-                editButton.isEnabled = false
+                print("CourseTable: TableView: >1 rows selected")
+                self.deleteButton.isEnabled = true
+                self.editButton.isEnabled = false
             }
         }
     }
 
     override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        print("CourseTable: didDeselectRowAt -> Entry")
         if (tableView.isEditing) {
             let selectedRows = tableView.indexPathsForSelectedRows
             
             if selectedRows?.count == 0 {
-                deleteButton.isEnabled = false
-                editButton.isEnabled = false
+                print("CourseTable: TableViewDeselect: 0 rows selected")
+                self.deleteButton.isEnabled = false
+                self.editButton.isEnabled = false
             }
             else if selectedRows?.count == 1 {
-                deleteButton.isEnabled = true
-                editButton.isEnabled = true
+                print("CourseTable: TableViewDeselect: 1 rows selected")
+                self.deleteButton.isEnabled = true
+                self.editButton.isEnabled = true
             }
             else {
-                deleteButton.isEnabled = true
-                editButton.isEnabled = false
+                print("CourseTable: TableViewDeselect: >1 rows selected")
+                self.deleteButton.isEnabled = true
+                self.editButton.isEnabled = false
             }
-            print("CourseTable: didDeselectRowAt -> Exit")
         }
     }
     
@@ -307,7 +354,7 @@ class CourseTableViewController: UITableViewController {
     
     
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        print("CourseTable: Setting buttons")
+        print("CourseTable: editActionsForRowAt: Setting buttons")
         let deleteRowAction = UITableViewRowAction(style: UITableViewRowActionStyle.destructive, title: "Delete", handler:{action, indexPath in
             self.courses.remove(at: (indexPath as NSIndexPath).row)
             self.saveCourses()
@@ -315,33 +362,7 @@ class CourseTableViewController: UITableViewController {
         });
         
         let editCourseTitle = UITableViewRowAction(style: UITableViewRowActionStyle.normal, title: "Edit", handler: { action, indexPath in
-            print("Edit was selected.")
-            
-            let alertController = UIAlertController(title: "Edit Course: \(self.courses[indexPath.row].courseName)", message: "", preferredStyle: UIAlertControllerStyle.alert)
-            
-            let saveAction = UIAlertAction(title: "Save", style: UIAlertActionStyle.default, handler: {
-                (action: UIAlertAction!) -> Void in
-                
-                let courseNameField = alertController.textFields![0] as UITextField
-                
-                self.courses[indexPath.row].courseName = courseNameField.text!
-                self.saveCourses()
-                self.tableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.fade)
-            });
-            
-            let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: {
-                (action: UIAlertAction!) -> Void in
-                // do nothing
-            });
-            
-            alertController.addTextField(configurationHandler: { (textField : UITextField!) -> Void in
-                textField.text = self.courses[indexPath.row].courseName
-            });
-            
-            alertController.addAction(saveAction)
-            alertController.addAction(cancelAction)
-            
-            self.present(alertController, animated: true, completion: nil)
+            self.editCourseTitle(indexPath: indexPath)
         });
     
         return [deleteRowAction, editCourseTitle]

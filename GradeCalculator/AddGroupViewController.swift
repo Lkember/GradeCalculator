@@ -8,13 +8,14 @@
 
 import UIKit
 
-class AddGroupViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class AddGroupViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
 
     // MARK: - Attributes
     var groups: [String: [Course]] = [:]
     var courses: [Course] = []
     @IBOutlet weak var groupName: UITextField!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var doneButton: UIBarButtonItem!
     
     
     override func viewDidLoad() {
@@ -22,9 +23,13 @@ class AddGroupViewController: UIViewController, UITableViewDelegate, UITableView
         
         tableView.delegate = self
         tableView.dataSource = self
+        groupName.delegate = self
+        
         tableView.allowsSelectionDuringEditing = true
         tableView.allowsMultipleSelectionDuringEditing = true
         tableView.isEditing = true
+        
+        doneButton.isEnabled = false
         
         for course in groups["Ungrouped Courses"]! {
             print("Appending \(course.courseName)")
@@ -49,6 +54,26 @@ class AddGroupViewController: UIViewController, UITableViewDelegate, UITableView
         dismiss(animated: true, completion: nil)
     }
 
+    func checkTextFieldInput(input: String) {
+        print("checkInput -> Entry")
+        let input = groupName.text! + input
+        
+        print("input == \(input)")
+        if (input == "") {
+            print("checkInput -> False")
+            doneButton.isEnabled = false
+        }
+        else if (groups[input]?.count != nil) {
+            doneButton.isEnabled = false
+        }
+        else {
+            print("checkInput -> True")
+            doneButton.isEnabled = true
+        }
+        
+    }
+    
+    // MARK: - TableViewDelegate
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print("AddGroupProject: numberOfRowsInSection = \(courses.count)")
         return courses.count
@@ -81,6 +106,14 @@ class AddGroupViewController: UIViewController, UITableViewDelegate, UITableView
 //        return cell
 //    }
 
+    // MARK: - TextFieldDelegate
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        checkTextFieldInput(input: string)
+        return true
+    }
+    
+    
     /*
     // MARK: - Navigation
 
