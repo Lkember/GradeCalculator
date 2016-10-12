@@ -39,8 +39,24 @@ class GroupsTableViewController: UITableViewController {
         print("GroupsTable: unwindToCourseDict: -> Entry")
         if let sourceVC = sender.source as? AddGroupViewController {
             let newGroup = sourceVC.groupName.text
+            let indexPaths = sourceVC.tableView.indexPathsForSelectedRows?.sorted()
             
-            groups[newGroup!] = [] as [Course]??
+            var moveCourses: [Course] = []
+            var ungroupedCourses: [Course]?? = sourceVC.groups["Ungrouped Courses"]
+            
+//            for indexPath in indexPaths! {
+            for i in 0 ..< indexPaths!.count {
+                moveCourses.append((ungroupedCourses??[(indexPaths?[i].row)!])!)
+                groups["Ungrouped Courses"]??.remove(at: (indexPaths?[i].row)! - i)
+            }
+            
+            if moveCourses.count == 0 {
+                groups[newGroup!] = [] as [Course]??
+            }
+            else {
+                groups[newGroup!] = moveCourses
+            }
+            
             groupNames.append(newGroup!)
             
             print("groups.count == \(groups.count)")
