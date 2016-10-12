@@ -126,8 +126,8 @@ class GroupsTableViewController: UITableViewController {
     
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        print("canEditRowAt: \(indexPath.row)")
-        if (groups[groupNames[indexPath.row]]!?.count == 0) {
+//        if (groups[groupNames[indexPath.row]]!?.count == 0) {
+        if groupNames[indexPath.row] != "Ungrouped Courses" {
             print("GroupsTable: canEditRowAt \(indexPath.row) -> True")
             return true
         }
@@ -138,8 +138,19 @@ class GroupsTableViewController: UITableViewController {
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            groups.removeValue(forKey: groupNames[indexPath.row])
-            groupNames.remove(at: indexPath.row)
+            if groups[groupNames[indexPath.row]]!?.count == 0 {
+                groups.removeValue(forKey: groupNames[indexPath.row])
+                groupNames.remove(at: indexPath.row)
+            }
+            else {
+                let tempCourses = groups[groupNames[indexPath.row]]!
+                
+                for course in tempCourses! {
+                    groups["Ungrouped Courses"]!!.append(course)
+                    groups.removeValue(forKey: groupNames[indexPath.row])
+                    groupNames.remove(at: indexPath.row)
+                }
+            }
             
             // Delete the row from the data source
             tableView.deleteRows(at: [indexPath], with: .fade)
