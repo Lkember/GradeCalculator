@@ -10,7 +10,7 @@ import UIKit
 
 class StartUpViewController: UIViewController {
     
-    var groups: [String: [Course]] = [:]
+    var groups: [String: [Course]?] = [:]
     var courses: [Course] = []
     @IBOutlet weak var numCourses: UILabel!
     @IBOutlet weak var overallAverage: UILabel!
@@ -22,6 +22,7 @@ class StartUpViewController: UIViewController {
     @IBOutlet weak var worstClassMark: UILabel!
     
     override func viewDidLoad() {
+        print("StartUpView: viewDidLoad")
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
@@ -36,7 +37,7 @@ class StartUpViewController: UIViewController {
         print("StartUpView: viewDidAppear: loading courses again.")
         if let savedCourses = loadCourses() {
             courses = savedCourses
-            groups["Ungrouped Courses"] = courses
+//            groups["Ungrouped Courses"] = courses
         }
         updateLabels()
     }
@@ -51,6 +52,13 @@ class StartUpViewController: UIViewController {
     func loadCourses() -> [Course]? {
         print("StartUpViewController: loadCourses: Loading courses...")
         return (NSKeyedUnarchiver.unarchiveObject(withFile: Course.ArchiveURL.path) as? [Course])
+    }
+    
+    @IBAction func unwindToDetailViewController(storyboard: UIStoryboardSegue) {
+        print("StartUpView: unwindToDetailViewController: -> Entry")
+        let sourceVC = storyboard.source as? GroupsTableViewController
+        
+        self.groups = (sourceVC?.groups)!
     }
     
     func updateLabels() {

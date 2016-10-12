@@ -65,11 +65,6 @@ class GroupsTableViewController: UITableViewController {
         
     }
     
-    @IBAction func backToStartUpView(_ sender: AnyObject) {
-        self.dismiss(animated: true, completion: nil)
-    }
-    
-    
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -103,18 +98,17 @@ class GroupsTableViewController: UITableViewController {
         print("GroupsTable: didSelectRowAt: -> Entry")
         if (tableView.isEditing) {
             print("GroupsTable: didSelectRowAt: isEditing")
-            
         }
         else {
             
         }
     }
     
-    
+    /*
     override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         
     }
-    
+    */
     
     /*
     // Override to support conditional rearranging of the table view.
@@ -137,15 +131,19 @@ class GroupsTableViewController: UITableViewController {
 
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        print("GroupsTable: commit editingStyle: Entry")
         if editingStyle == .delete {
             if groups[groupNames[indexPath.row]]!?.count == 0 {
+                print("GroupsTable: commit editingStyle: count == 0")
                 groups.removeValue(forKey: groupNames[indexPath.row])
                 groupNames.remove(at: indexPath.row)
             }
             else {
+                print("GroupsTable: commit editingStyle: count > 0")
                 let tempCourses = groups[groupNames[indexPath.row]]!
                 
                 for course in tempCourses! {
+                    print("GroupsTable: commit editingStyle: current course = \(course.courseName)")
                     groups["Ungrouped Courses"]!!.append(course)
                     groups.removeValue(forKey: groupNames[indexPath.row])
                     groupNames.remove(at: indexPath.row)
@@ -181,10 +179,14 @@ class GroupsTableViewController: UITableViewController {
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        print("GroupsTable: prepare: Entry")
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-        let destView = segue.destination.childViewControllers[0] as! AddGroupViewController
-        destView.groups = self.groups
+        if (segue.identifier == "AddGroupSegue") {
+            print("GroupsTable: prepare: AddGroupSegue has started")
+            let destView = segue.destination.childViewControllers[0] as! AddGroupViewController
+            destView.groups = self.groups
+        }
     }
 
 }
