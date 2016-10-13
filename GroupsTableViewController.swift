@@ -40,17 +40,16 @@ class GroupsTableViewController: UITableViewController {
             let newGroup = sourceVC.groupName.text
             let indexPaths = sourceVC.tableView.indexPathsForSelectedRows?.sorted()
             
-            var moveCourses: [Course] = []
-            var ungroupedCourses: [Course]?? = sourceVC.groups.group["Ungrouped Courses"]
+            var moveCourses: [Course?] = []
+            var ungroupedCourses = sourceVC.groups.group["Ungrouped Courses"]
             
-//            for indexPath in indexPaths! {
             for i in 0 ..< indexPaths!.count {
-                moveCourses.append((ungroupedCourses??[(indexPaths?[i].row)!])!)
-                groups.group["Ungrouped Courses"]??.remove(at: (indexPaths?[i].row)! - i)
+                moveCourses.append(ungroupedCourses?[(indexPaths?[i].row)!])
+                groups.group["Ungrouped Courses"]?.remove(at: (indexPaths?[i].row)! - i)
             }
             
             if moveCourses.count == 0 {
-                groups.group[newGroup!] = [] as [Course]??
+                groups.group[newGroup!] = []
             }
             else {
                 groups.group[newGroup!] = moveCourses
@@ -85,7 +84,7 @@ class GroupsTableViewController: UITableViewController {
         let groupName = groupNames[indexPath.row]
         
         cell.textLabel?.text = groupName
-        cell.detailTextLabel?.text = "Number of courses in group: \(groups.group[groupName]!!.count)"
+        cell.detailTextLabel?.text = "Number of courses in group: \(groups.group[groupName]?.count)"
         
         cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
         
@@ -132,7 +131,7 @@ class GroupsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         print("GroupsTable: commit editingStyle: Entry")
         if editingStyle == .delete {
-            if groups.group[groupNames[indexPath.row]]!?.count == 0 {
+            if groups.group[groupNames[indexPath.row]]!.count == 0 {
                 print("GroupsTable: commit editingStyle: count == 0")
                 groups.group.removeValue(forKey: groupNames[indexPath.row])
                 groupNames.remove(at: indexPath.row)
@@ -141,9 +140,9 @@ class GroupsTableViewController: UITableViewController {
                 print("GroupsTable: commit editingStyle: count > 0")
                 let tempCourses = groups.group[groupNames[indexPath.row]]!
                 
-                for course in tempCourses! {
-                    print("GroupsTable: commit editingStyle: current course = \(course.courseName)")
-                    groups.group["Ungrouped Courses"]!!.append(course)
+                for course in tempCourses {
+                    print("GroupsTable: commit editingStyle: current course = \(course?.courseName)")
+                    groups.group["Ungrouped Courses"]!.append(course)
                     groups.group.removeValue(forKey: groupNames[indexPath.row])
                     groupNames.remove(at: indexPath.row)
                 }

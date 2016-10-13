@@ -32,9 +32,9 @@ class AddGroupViewController: UIViewController, UITableViewDelegate, UITableView
         
         saveButton.isEnabled = false
         
-        for course in groups.group["Ungrouped Courses"]!! {
-            print("Appending \(course.courseName)")
-            courses.append(course)
+        for course in groups.group["Ungrouped Courses"]! {
+            print("Appending \(course!.courseName)")
+            courses.append(course!)
         }
         
         tableView.reloadData()
@@ -59,7 +59,7 @@ class AddGroupViewController: UIViewController, UITableViewDelegate, UITableView
             print("checkInput -> False")
             saveButton.isEnabled = false
         }
-        else if (groups.group[input]??.count != nil) {
+        else if (groups.group[input]?.count != nil) {
             saveButton.isEnabled = false
         }
         else {
