@@ -40,6 +40,15 @@ class CourseTableViewController: UITableViewController {
             courses += savedCourses
         }
         
+        
+        ///////////////////////////////////////////////////////////
+        if let loadedData = load() {
+            print("TestTestTestTestTest")
+            groups = loadedData
+        }
+        ///////////////////////////////////////////////////////////
+        
+        
         if courses.count == 0 {
             loadSampleCourses()
         }
@@ -52,6 +61,10 @@ class CourseTableViewController: UITableViewController {
         tableView.reloadData()
         updateLabels()
         saveCourses()
+        
+        ///////////////////////////////////////////////////////////
+        save()
+        ///////////////////////////////////////////////////////////
     }
     
     // should perform segue
@@ -73,12 +86,21 @@ class CourseTableViewController: UITableViewController {
             let destVC = segue.destination as? MarksTableViewController
             destVC?.courses = self.courses
             destVC?.courseName = (selectedCourse?.courseName.text)!
+            
+            ///////////////////////////////////////////////////////////
+//            destVC?.groups = self.groups
+//            destVC?.courseName = (selectedCourse?.courseName.text)!
+            ///////////////////////////////////////////////////////////
         }
             
         else if segue.identifier=="AddItem" {
             print("CourseTable: prepare: Setting courses to view.")
             let destinationViewController = segue.destination.childViewControllers[0] as? NewCoursesViewController
             destinationViewController?.courses = courses;
+            
+            ///////////////////////////////////////////////////////////
+//            destinationViewController?.groups = self.groups
+            ///////////////////////////////////////////////////////////
         }
     }
     
@@ -92,6 +114,9 @@ class CourseTableViewController: UITableViewController {
     
     // Go back to the details view
     @IBAction func backToDetailView(_ sender: AnyObject) {
+        ///////////////////////////////////////////////////////////
+        save()
+        ///////////////////////////////////////////////////////////
         saveCourses()
         self.dismiss(animated: true, completion: nil)
     }
@@ -108,6 +133,18 @@ class CourseTableViewController: UITableViewController {
             var offset = 0
             
             //TODO: Still have to delete the course from groups as well.
+            ///////////////////////////////////////////////////////////
+            if (dictionaryKey != "") {
+                for i in 0..<indexPaths!.count {
+                    groups.group[dictionaryKey]?.remove(at: (indexPaths?[i].row)! + offset)
+                    offset -= 1
+                }
+            }
+            else {
+                //TODO: SEARCH THROUGH GROUPS DATA AND DELETE ALL SELECTED COURSES
+            }
+            ///////////////////////////////////////////////////////////
+            offset = 0
             
             for i in 0..<indexPaths!.count {
                 print("CoursesTable: deleteCourses: Removing course: \(courses[(indexPaths?[i].row)! + offset].courseName), indexPath=\(indexPaths?[i].row), offset=\(offset)")
@@ -119,6 +156,10 @@ class CourseTableViewController: UITableViewController {
             tableView.reloadData()
             updateLabels()
             saveCourses()
+            
+            ///////////////////////////////////////////////////////////
+            save()
+            ///////////////////////////////////////////////////////////
             
             // Get out of editing mode
             tableView.setEditing(false, animated: true)
@@ -193,6 +234,8 @@ class CourseTableViewController: UITableViewController {
             print("CourseTable: unwindToCourseList: New course: \(course.courseName)")
             let newIndexPath = IndexPath(row: courses.count, section: 0)
             self.courses.append(course)
+            self.groups.courses.append(course)
+            groups.group["Ungrouped Courses"]?.append(course)
             tableView.insertRows(at: [newIndexPath], with: .bottom)
             
             tableView.reloadData()
@@ -411,5 +454,17 @@ class CourseTableViewController: UITableViewController {
         print("CourseTable: Loading courses...")
         return (NSKeyedUnarchiver.unarchiveObject(withFile: Course.ArchiveURL.path) as? [Course])
     }
-
+    
+    func save() {
+        print("CourseTable: save: Saving courses and groups.")
+        if (!NSKeyedArchiver.archiveRootObject(groups, toFile: Group.ArchiveURL.path)) {
+            print("CourseTable: save: Failed to save courses and groups.")
+        }
+    }
+    
+    func load() -> Group? {
+        print("CourseTable: Load: Loading courses.")
+        return (NSKeyedUnarchiver.unarchiveObject(withFile: Group.ArchiveURL.path) as! Group?)
+    }
+    
 }

@@ -58,10 +58,10 @@ class Group: NSObject, NSCoding {
     }
     
     required convenience init?(coder aDecoder: NSCoder) {
-        let group = aDecoder.decodeObject(forKey: PropertyKey.groupKey) as! [String: [Course?]]
+        let group = aDecoder.decodeObject(forKey: PropertyKey.groupKey) as? [String: [Course?]]
         let courses = aDecoder.decodeObject(forKey: PropertyKey.coursesKey) as! [Course]
         let keys = aDecoder.decodeObject(forKey: PropertyKey.keys) as! [String]
         
-        self.init(group: group, courses: courses, keys: keys)
+        self.init(group: group!, courses: courses, keys: keys)
     }
 }
