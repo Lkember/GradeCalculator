@@ -12,6 +12,7 @@ class CourseTableViewController: UITableViewController {
 
     // MARK: Properties
     var dictionaryKey: String = ""
+    var groups = Group()
     var courses = [Course]()
     @IBOutlet weak var overallAverage: UILabel!
     @IBOutlet weak var numCourses: UILabel!

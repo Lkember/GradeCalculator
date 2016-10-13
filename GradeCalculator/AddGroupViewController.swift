@@ -11,7 +11,8 @@ import UIKit
 class AddGroupViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
 
     // MARK: - Attributes
-    var groups: [String: [Course]?] = [:]
+    var groups = Group()
+//    var groups: [String: [Course]?] = [:]
     var courses: [Course] = []
     @IBOutlet weak var groupName: UITextField!
     @IBOutlet weak var tableView: UITableView!
@@ -31,7 +32,7 @@ class AddGroupViewController: UIViewController, UITableViewDelegate, UITableView
         
         saveButton.isEnabled = false
         
-        for course in groups["Ungrouped Courses"]!! {
+        for course in groups.group["Ungrouped Courses"]!! {
             print("Appending \(course.courseName)")
             courses.append(course)
         }
@@ -58,7 +59,7 @@ class AddGroupViewController: UIViewController, UITableViewDelegate, UITableView
             print("checkInput -> False")
             saveButton.isEnabled = false
         }
-        else if (groups[input]??.count != nil) {
+        else if (groups.group[input]??.count != nil) {
             saveButton.isEnabled = false
         }
         else {
