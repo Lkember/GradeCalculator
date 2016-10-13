@@ -19,10 +19,16 @@ class Group: NSObject, NSCoding {
         self.group = group
         self.courses = courses
         self.keys = keys
+        
+        if (self.group.count == 0) {
+            self.group["Ungrouped Courses"] = []
+            self.keys.append("Ungrouped Courses")
+        }
     }
     
     override init() {
         self.group = [:]
+        self.group["Ungrouped Courses"] = []
         self.courses = []
         self.keys = []
     }
@@ -32,12 +38,7 @@ class Group: NSObject, NSCoding {
     
     //A function which returns an array of all group names
     func getGroupNames() -> [String] {
-        var groupNames: [String] = []
-        for (groupName, _) in group {
-            groupNames.append(groupName)
-        }
-        
-        return groupNames
+        return keys
     }
     
     //MARK: - NSCoding
