@@ -98,6 +98,8 @@ class MarksTableViewController: UITableViewController {
         self.navigationItem.title = course!.courseName
         tableView.rowHeight = 60.0
         
+        self.navigationController?.setToolbarHidden(false, animated: true)
+        
         updateLabels()
         saveCourses()
     }
@@ -109,6 +111,16 @@ class MarksTableViewController: UITableViewController {
     
     
     // MARK: - Functions
+    @IBAction func editButtonIsClicked(_ sender: UIBarButtonItem) {
+        if (self.tableView.isEditing) {
+            tableView.setEditing(false, animated: true)
+        }
+        else {
+            tableView.setEditing(true, animated: true)
+        }
+    }
+    
+    
     func updateLabels() {
         print("MarksTable: updateLabels")
         if ((10*course!.getAverage()*100)/10 != -100.0) {
@@ -184,6 +196,41 @@ class MarksTableViewController: UITableViewController {
         cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
         
         return cell
+    }
+    
+    //Allow the rearranging of cells
+    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        print("MarksTable: tableView moveRowAt -> Entry")
+        var index = sourceIndexPath.row
+        let tempProject = course?.projects[index]
+        let tempProjectMark = course?.projectMarks[index]
+        let tempProjectOutOf = course?.projectOutOf[index]
+        let tempProjectWeight = course?.projectWeights[index]
+        
+        if sourceIndexPath.row < destinationIndexPath.row {
+            while (index < destinationIndexPath.row) {
+                course!.projects[index] = course!.projects[index+1]
+                course!.projectMarks[index] = course!.projectMarks[index+1]
+                course!.projectOutOf[index] = course!.projectOutOf[index+1]
+                course!.projectWeights[index] = course!.projectWeights[index+1]
+                index += 1
+            }
+        }
+        else {
+            while (index > destinationIndexPath.row) {
+                course!.projects[index] = course!.projects[index-1]
+                course!.projectMarks[index] = course!.projectMarks[index-1]
+                course!.projectOutOf[index] = course!.projectOutOf[index-1]
+                course!.projectWeights[index] = course!.projectWeights[index-1]
+                index -= 1
+            }
+        }
+        course!.projects[destinationIndexPath.row] = tempProject!
+        course!.projectMarks[destinationIndexPath.row] = tempProjectMark!
+        course!.projectOutOf[destinationIndexPath.row] = tempProjectOutOf!
+        course!.projectWeights[destinationIndexPath.row] = tempProjectWeight!
+        saveCourses()
+        print("MarksTable: tableView moveRowAt -> Exit")
     }
     
 

@@ -229,11 +229,11 @@
             <objects>
                 <tableViewController id="3RL-h7-A66" customClass="MarksTableViewController" customModule="GradeCalculator" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="60" sectionHeaderHeight="28" sectionFooterHeight="28" id="fHg-5L-nB9">
-                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="vI6-I2-iV8">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="103"/>
+                            <rect key="frame" x="0.0" y="64" width="375" height="103"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current Mark: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IRa-pl-6nG">
@@ -309,7 +309,7 @@
                         </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MarksViewCell" rowHeight="60" id="Cg1-s5-LB5" customClass="MarksViewCell" customModule="GradeCalculator" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="131" width="375" height="60"/>
+                                <rect key="frame" x="0.0" y="195" width="375" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Cg1-s5-LB5" id="z3g-iP-tN2">
                                     <frame key="frameInset" width="375" height="59"/>
@@ -387,6 +387,13 @@
                             <outlet property="delegate" destination="3RL-h7-A66" id="DZp-6f-Fvk"/>
                         </connections>
                     </tableView>
+                    <toolbarItems>
+                        <barButtonItem systemItem="edit" id="L8Q-5y-L1h">
+                            <connections>
+                                <action selector="editButtonIsClicked:" destination="3RL-h7-A66" id="3VZ-2u-kNe"/>
+                            </connections>
+                        </barButtonItem>
+                    </toolbarItems>
                     <navigationItem key="navigationItem" id="lJd-jm-lvM">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="dWV-z9-3MA">
                             <connections>
@@ -394,8 +401,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackOpaque"/>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="averageLabel" destination="30o-GC-dpm" id="fD4-oy-V1r"/>
                         <outlet property="numMarks" destination="kMn-mu-eWq" id="fLd-cd-JtN"/>
@@ -415,7 +423,7 @@
                         <viewControllerLayoutGuide type="bottom" id="t5i-0t-Sbc"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="fc8-XJ-l9q">
-                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <scrollView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="zAj-Q2-JUW">
@@ -1034,13 +1042,17 @@
         <!--Navigation Controller-->
         <scene sceneID="cdp-RX-etw">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="xf1-mt-RWP" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" toolbarHidden="NO" id="xf1-mt-RWP" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="9Kr-vq-9lg">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="wK8-Cj-j1K">
+                        <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
                         <segue destination="3RL-h7-A66" kind="relationship" relationship="rootViewController" id="Ogw-IM-3dy"/>
                     </connections>
@@ -1105,7 +1117,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="XHZ-Lz-icb"/>
+        <segue reference="Ogw-IM-3dy"/>
         <segue reference="883-gk-HxU"/>
     </inferredMetricsTieBreakers>
 </document>

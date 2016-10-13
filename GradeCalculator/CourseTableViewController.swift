@@ -67,7 +67,7 @@ class CourseTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier=="CourseView" {
-            print("CourseTable: Setting courses to courseView")
+            print("CourseTable: prepare: Setting courses to courseView")
             let selectedCourse = sender as? CourseTableViewCell
             let destVC = segue.destination as? MarksTableViewController
             destVC?.courses = self.courses
@@ -75,7 +75,7 @@ class CourseTableViewController: UITableViewController {
         }
             
         else if segue.identifier=="AddItem" {
-            print("CourseTable: Setting courses to view.")
+            print("CourseTable: prepare: Setting courses to view.")
             let destinationViewController = segue.destination.childViewControllers[0] as? NewCoursesViewController
             destinationViewController?.courses = courses;
         }
@@ -410,15 +410,5 @@ class CourseTableViewController: UITableViewController {
         print("CourseTable: Loading courses...")
         return (NSKeyedUnarchiver.unarchiveObject(withFile: Course.ArchiveURL.path) as? [Course])
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
