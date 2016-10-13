@@ -25,23 +25,18 @@ class NewCoursesViewController: UIViewController, UITextFieldDelegate {
     
     
     // MARK: - Navigation
-    
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         return checkInput()
     }
     
     override func viewDidLoad() {
+        print("NewCourses: viewDidLoad")
         super.viewDidLoad()
         
         self.courseName.delegate = self
         warningLabel.isHidden = true
         courseName.addTarget(self, action: #selector(NewCoursesViewController.textFieldDidChange(_:)), for: UIControlEvents.editingChanged)
         saveButton.isEnabled = false
-        
-        print("num courses: \(courses.count)")
-        for course in courses {
-            print(course.courseName)
-        }
     }
     
     override func didReceiveMemoryWarning() {

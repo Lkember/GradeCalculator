@@ -17,6 +17,7 @@ class CourseTableViewController: UITableViewController {
     @IBOutlet weak var numCourses: UILabel!
     @IBOutlet weak var deleteButton: UIBarButtonItem!
     @IBOutlet weak var editButton: UIBarButtonItem!
+    @IBOutlet weak var addButton: UIBarButtonItem!
     
     
     override func viewDidLoad() {
@@ -104,6 +105,8 @@ class CourseTableViewController: UITableViewController {
             // the indexes must be sorted by row value since you can only delete one course at a time, the size of courses is always changing
             indexPaths = indexPaths?.sorted()
             var offset = 0
+            
+            //TODO: Still have to delete the course from groups as well.
             
             for i in 0..<indexPaths!.count {
                 print("CoursesTable: deleteCourses: Removing course: \(courses[(indexPaths?[i].row)! + offset].courseName), indexPath=\(indexPaths?[i].row), offset=\(offset)")
@@ -211,6 +214,8 @@ class CourseTableViewController: UITableViewController {
             
             let courseNameField = alertController.textFields![0] as UITextField
             
+            //TODO: Have to edit the name of the course in groups as well.
+            
             self.courses[indexPath.row].courseName = courseNameField.text!
             self.saveCourses()
             self.tableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.fade)
@@ -289,10 +294,12 @@ class CourseTableViewController: UITableViewController {
         if (tableView.isEditing) {
             print("CourseTable: canEditRowAt -> setToolBarHidden = false")
             self.navigationController?.setToolbarHidden(false, animated: true)
+            addButton.isEnabled = false
         }
         else {
             print("CourseTable: canEditRowAt -> setToolBarHidden = true")
             self.navigationController?.setToolbarHidden(true, animated: true)
+            addButton.isEnabled = true
         }
         print("CourseTable: canEditRowAt -> Exit")
         return true
@@ -342,16 +349,6 @@ class CourseTableViewController: UITableViewController {
             }
         }
     }
-    
-    // Override to support editing the table view.
-//    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-//        if editingStyle == .delete {
-//            // Delete the row from the data source
-//            courses.remove(at: (indexPath as NSIndexPath).row)
-//            saveCourses()
-//            tableView.deleteRows(at: [indexPath], with: .fade)
-//        }
-//    }
     
     
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
@@ -403,7 +400,7 @@ class CourseTableViewController: UITableViewController {
     // MARK: NSCoding
     // Save user information
     func saveCourses() {
-        print("CourseTable: Saving courses.")
+        print("CourseTable: saveCourses: Saving courses.")
         if (!NSKeyedArchiver.archiveRootObject(courses, toFile: Course.ArchiveURL.path)) {
             print("CourseTable: Failed to save meals...")
         }

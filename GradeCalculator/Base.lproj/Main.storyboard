@@ -147,6 +147,7 @@
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackOpaque"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
                     <connections>
+                        <outlet property="addButton" destination="wv1-Bq-N1c" id="bCC-kI-HNQ"/>
                         <outlet property="deleteButton" destination="LGn-kk-AtD" id="527-AY-Gi2"/>
                         <outlet property="editButton" destination="LEq-CB-ciL" id="Oyu-he-AQ1"/>
                         <outlet property="numCourses" destination="J2g-N2-5T2" id="R5B-WD-cP4"/>
@@ -1104,7 +1105,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Ogw-IM-3dy"/>
+        <segue reference="XHZ-Lz-icb"/>
         <segue reference="883-gk-HxU"/>
     </inferredMetricsTieBreakers>
 </document>
