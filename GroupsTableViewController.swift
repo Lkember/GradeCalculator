@@ -38,26 +38,32 @@ class GroupsTableViewController: UITableViewController {
         print("GroupsTable: unwindToCourseDict: -> Entry")
         if let sourceVC = sender.source as? AddGroupViewController {
             let newGroup = sourceVC.groupName.text
-            let indexPaths = sourceVC.tableView.indexPathsForSelectedRows?.sorted()
-            
-            var moveCourses: [Course?] = []
-            var ungroupedCourses = sourceVC.groups.group["Ungrouped Courses"]
-            
-            for i in 0 ..< indexPaths!.count {
-                moveCourses.append(ungroupedCourses?[(indexPaths?[i].row)!])
-                groups.group["Ungrouped Courses"]?.remove(at: (indexPaths?[i].row)! - i)
-            }
-            
-            if moveCourses.count == 0 {
-                groups.group[newGroup!] = []
+            if let indexPaths = sourceVC.tableView.indexPathsForSelectedRows?.sorted() {
+                
+                var moveCourses: [Course?] = []
+                var ungroupedCourses = sourceVC.groups.group["Ungrouped Courses"]
+                
+                for i in 0 ..< indexPaths.count {
+                    moveCourses.append(ungroupedCourses?[(indexPaths[i].row)])
+                    groups.group["Ungrouped Courses"]?.remove(at: (indexPaths[i].row) - i)
+                }
+                
+                if moveCourses.count == 0 {
+                    groups.group[newGroup!] = []
+                }
+                else {
+                    groups.group[newGroup!] = moveCourses
+                }
+                
+                groupNames.append(newGroup!)
+                
+                print("groups.count == \(groups.group.count)")
             }
             else {
-                groups.group[newGroup!] = moveCourses
+                groups.group[newGroup!] = []
+                groups.keys.append(newGroup!)
+                groupNames.append(newGroup!)
             }
-            
-            groupNames.append(newGroup!)
-            
-            print("groups.count == \(groups.group.count)")
         }
         self.tableView.reloadData()
         
@@ -84,7 +90,7 @@ class GroupsTableViewController: UITableViewController {
         let groupName = groupNames[indexPath.row]
         
         cell.textLabel?.text = groupName
-        cell.detailTextLabel?.text = "Number of courses in group: \(groups.group[groupName]?.count)"
+        cell.detailTextLabel?.text = "Number of courses in group: \(groups.group[groupName]!.count)"
         
         cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
         
