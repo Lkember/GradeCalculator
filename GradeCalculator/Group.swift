@@ -41,6 +41,30 @@ class Group: NSObject, NSCoding {
         return keys
     }
     
+    // A function which removes all courses in a given array.
+    // TODO: THIS METHOD IS VERY INEFFICIENT. CONSIDER REDOING.
+    func removeCourses(coursesToDelete: [Course?]) {
+        print("Group: removeCourses: -> Entry")
+        var counter = 0
+        
+        for tempCourse in coursesToDelete {
+            for key in keys {
+                counter = 0
+                for course in self.group[key]! {
+//                for i in 0..<self.group[key]!.count {
+//                    let course = self.group[key]![i]
+                    if course == tempCourse {
+                        print("Group: removeCourses: Removing course -> \(self.group[key]![counter]?.courseName)")
+                        self.group[key]!.remove(at: counter)
+                    }
+                    counter += 1
+                }
+            }
+        }
+        print("Group: removeCourses: -> Exit")
+    }
+    
+    
     //MARK: - NSCoding
     static let DocumentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
     static let ArchiveURL = DocumentsDirectory.appendingPathComponent("groups")

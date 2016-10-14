@@ -37,19 +37,21 @@ class CourseTableViewController: UITableViewController {
         self.editButton.isEnabled = false
         
         if let savedCourses = loadCourses() {
+            if groups.courses.count == 0 {
+                groups.courses = savedCourses
+            }
             courses += savedCourses
         }
         
         
         ///////////////////////////////////////////////////////////
-        if let loadedData = load() {
-            print("TestTestTestTestTest")
-            groups = loadedData
-        }
+//        if let loadedData = load() {
+//            groups = loadedData
+//        }
         ///////////////////////////////////////////////////////////
         
         
-        if courses.count == 0 {
+        if groups.courses.count == 0 {
             loadSampleCourses()
         }
         
@@ -135,13 +137,28 @@ class CourseTableViewController: UITableViewController {
             //TODO: Still have to delete the course from groups as well.
             ///////////////////////////////////////////////////////////
             if (dictionaryKey != "") {
+                print("CoursesTable: deleteCourses -> Deleting from group \(dictionaryKey)")
                 for i in 0..<indexPaths!.count {
-                    groups.group[dictionaryKey]?.remove(at: (indexPaths?[i].row)! + offset)
+                    _ = groups.group[dictionaryKey]?.remove(at: (indexPaths?[i].row)! + offset)
                     offset -= 1
                 }
             }
             else {
                 //TODO: SEARCH THROUGH GROUPS DATA AND DELETE ALL SELECTED COURSES
+                
+                var tempCourses: [Course?] = []
+                print("1")
+                for i in 0..<indexPaths!.count {
+                    print("groups.courses.count=\(groups.courses.count)")
+                    tempCourses.append(groups.courses[(indexPaths?[i].row)!])
+                    print("3")
+                }
+                
+                print("CoursesTable: deleteCourses -> Running removeCourses from Group Class.")
+                groups.removeCourses(coursesToDelete: tempCourses)
+                for course in groups.courses {
+                    print("remaining courses = \(course.courseName)")
+                }
             }
             ///////////////////////////////////////////////////////////
             offset = 0
