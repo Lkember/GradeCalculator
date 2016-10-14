@@ -11,13 +11,9 @@ import UIKit
 class GroupsTableViewController: UITableViewController {
     
     var groups = Group()
-//    var groups: [String: [Course]?] = [:]
-    var groupNames: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        groupNames = groups.getGroupNames()
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -55,14 +51,13 @@ class GroupsTableViewController: UITableViewController {
                     groups.group[newGroup!] = moveCourses
                 }
                 
-                groupNames.append(newGroup!)
+                groups.keys.append(newGroup!)
                 
                 print("groups.count == \(groups.group.count)")
             }
             else {
                 groups.group[newGroup!] = []
                 groups.keys.append(newGroup!)
-                groupNames.append(newGroup!)
             }
         }
         self.tableView.reloadData()
@@ -72,12 +67,10 @@ class GroupsTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         print("GroupsTable: numberOfRows = \(groups.group.count)")
         return groups.group.count
     }
@@ -87,7 +80,7 @@ class GroupsTableViewController: UITableViewController {
         let cellIdentifier = "GroupCell"
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
         
-        let groupName = groupNames[indexPath.row]
+        let groupName = groups.keys[indexPath.row]
         
         cell.textLabel?.text = groupName
         cell.detailTextLabel?.text = "Number of courses in group: \(groups.group[groupName]!.count)"
@@ -124,8 +117,7 @@ class GroupsTableViewController: UITableViewController {
     
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-//        if (groups[groupNames[indexPath.row]]!?.count == 0) {
-        if groupNames[indexPath.row] != "Ungrouped Courses" {
+        if groups.keys[indexPath.row] != "Ungrouped Courses" {
             print("GroupsTable: canEditRowAt \(indexPath.row) -> True")
             return true
         }
@@ -137,20 +129,20 @@ class GroupsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         print("GroupsTable: commit editingStyle: Entry")
         if editingStyle == .delete {
-            if groups.group[groupNames[indexPath.row]]!.count == 0 {
+            if groups.group[groups.keys[indexPath.row]]!.count == 0 {
                 print("GroupsTable: commit editingStyle: count == 0")
-                groups.group.removeValue(forKey: groupNames[indexPath.row])
-                groupNames.remove(at: indexPath.row)
+                groups.group.removeValue(forKey: groups.keys[indexPath.row])
+                groups.keys.remove(at: indexPath.row)
             }
             else {
                 print("GroupsTable: commit editingStyle: count > 0")
-                let tempCourses = groups.group[groupNames[indexPath.row]]!
+                let tempCourses = groups.group[groups.keys[indexPath.row]]!
                 
                 for course in tempCourses {
                     print("GroupsTable: commit editingStyle: current course = \(course?.courseName)")
                     groups.group["Ungrouped Courses"]!.append(course)
-                    groups.group.removeValue(forKey: groupNames[indexPath.row])
-                    groupNames.remove(at: indexPath.row)
+                    groups.group.removeValue(forKey: groups.keys[indexPath.row])
+                    groups.keys.remove(at: indexPath.row)
                 }
             }
             
