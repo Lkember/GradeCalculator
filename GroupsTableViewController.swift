@@ -41,7 +41,7 @@ class GroupsTableViewController: UITableViewController {
                 
                 for i in 0 ..< indexPaths.count {
                     moveCourses.append(ungroupedCourses?[(indexPaths[i].row)])
-                    groups.group["Ungrouped Courses"]?.remove(at: (indexPaths[i].row) - i)
+                    _ = groups.group["Ungrouped Courses"]?.remove(at: (indexPaths[i].row) - i)
                 }
                 
                 if moveCourses.count == 0 {
