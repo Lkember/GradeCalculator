@@ -144,14 +144,10 @@ class CourseTableViewController: UITableViewController {
                 }
             }
             else {
-                //TODO: SEARCH THROUGH GROUPS DATA AND DELETE ALL SELECTED COURSES
-                
                 var tempCourses: [Course?] = []
-                print("1")
+                
                 for i in 0..<indexPaths!.count {
-                    print("groups.courses.count=\(groups.courses.count)")
                     tempCourses.append(groups.courses[(indexPaths?[i].row)!])
-                    print("3")
                 }
                 
                 print("CoursesTable: deleteCourses -> Running removeCourses from Group Class.")
@@ -221,27 +217,74 @@ class CourseTableViewController: UITableViewController {
         var courseMark = 0.0
         var numCourses = 0
         
-        for course in courses {
-            courseMark = course.getAverage()
-            if courseMark != -1.0 {
-                average += course.getAverage()
-                numCourses += 1
+//        for course in courses {
+//            courseMark = course.getAverage()
+//            if courseMark != -1.0 {
+//                average += course.getAverage()
+//                numCourses += 1
+//            }
+//        }
+//        if (numCourses != 0) {
+//            average = (average/Double(numCourses))
+//        }
+//        else {
+//            average = -1.0
+//        }
+//        print("CourseTable: getOverallAverage RETURN \(average) with number of courses in calculation: \(numCourses)")
+//        print("CourseTable: getOverallAverage -> Exit")
+//        return average
+        
+        ///////////////////////////////////////////////////////
+        if (dictionaryKey == "") {
+            for course in groups.courses {
+                courseMark = course.getAverage()
+                if courseMark != -1.0 {
+                    average += course.getAverage()
+                    numCourses += 1
+                }
             }
-        }
-        if (numCourses != 0) {
-            average = (average/Double(numCourses))
+            if (numCourses != 0) {
+                average = (average/Double(numCourses))
+            }
+            else {
+                average = -1.0
+            }
+            print("CourseTable: getOverallAverage RETURN \(average) with number of courses in calculation: \(numCourses)")
+            print("CourseTable: getOverallAverage -> Exit")
+            return average
         }
         else {
-            average = -1.0
+            for course in groups.group[dictionaryKey]! {
+                courseMark = course!.getAverage()
+                if courseMark != -1.0 {
+                    average += course!.getAverage()
+                    numCourses += 1
+                }
+            }
+            if (numCourses != 0) {
+                average = (average/Double(numCourses))
+            }
+            else {
+                average = -1.0
+            }
+            print("CourseTable: getOverallAverage RETURN \(average) with number of courses in calculation: \(numCourses)")
+            print("CourseTable: getOverallAverage -> Exit")
+            return average
         }
-        print("CourseTable: getOverallAverage RETURN \(average) with number of courses in calculation: \(numCourses)")
-        print("CourseTable: getOverallAverage -> Exit")
-        return average
+        ///////////////////////////////////////////////////////
     }
     
     
     func getNumCourses() -> Int {
-        return courses.count
+        ///////////////////////////////////////////////////////////
+        if (dictionaryKey == "") {
+            return groups.courses.count
+        }
+        else {
+            return groups.group[dictionaryKey]!.count
+        }
+        ///////////////////////////////////////////////////////////
+//        return courses.count
     }
     
     
@@ -249,16 +292,30 @@ class CourseTableViewController: UITableViewController {
         print("CourseTable: unwindToCourseList: Adding course to course list.")
         if let sourceViewController = sender.source as? NewCoursesViewController, let course = sourceViewController.course {
             print("CourseTable: unwindToCourseList: New course: \(course.courseName)")
-            let newIndexPath = IndexPath(row: courses.count, section: 0)
+//            let newIndexPath = IndexPath(row: courses.count, section: 0)
+            let newIndexPath: IndexPath
             self.courses.append(course)
+            ///////////////////////////////////////////////////////////
             self.groups.courses.append(course)
-            groups.group["Ungrouped Courses"]?.append(course)
+            if (dictionaryKey == "") {
+                newIndexPath = IndexPath(row: groups.courses.count, section: 0)
+                groups.group["Ungrouped Courses"]?.append(course)
+            }
+            else {
+                newIndexPath = IndexPath(row: groups.group[dictionaryKey]!.count, section: 0)
+                groups.group[dictionaryKey]?.append(course)
+            }
+            ///////////////////////////////////////////////////////////
             tableView.insertRows(at: [newIndexPath], with: .bottom)
             
             tableView.reloadData()
             
             // save courses
             saveCourses()
+            
+            ///////////////////////////////////////////////////////////
+            save()
+            ///////////////////////////////////////////////////////////
         }
         else {
             print("CourseTable: Failed to add course.")
@@ -268,14 +325,32 @@ class CourseTableViewController: UITableViewController {
     
     func editCourseTitle(indexPath: IndexPath) {
         print("CourseTableView: editActionsForRowAt: User selected edit")
-        let alertController = UIAlertController(title: "Editing Course: \(self.courses[indexPath.row].courseName)", message: "", preferredStyle: UIAlertControllerStyle.alert)
+        ////////////////////////////////////////////////////////////////
+        var alertController: UIAlertController
+        if (dictionaryKey == "") {
+            alertController = UIAlertController(title: "Editing Course: \(self.groups.courses[indexPath.row].courseName)", message: "", preferredStyle: UIAlertControllerStyle.alert)
+        }
+        else {
+            alertController = UIAlertController(title: "Editing Course: \(self.groups.group[dictionaryKey]?[indexPath.row]?.courseName)", message: "", preferredStyle: UIAlertControllerStyle.alert)
+        }
+        ////////////////////////////////////////////////////////////////
         
         let saveAction = UIAlertAction(title: "Save", style: UIAlertActionStyle.default, handler: {
             (action: UIAlertAction!) -> Void in
             
             let courseNameField = alertController.textFields![0] as UITextField
             
-            //TODO: Have to edit the name of the course in groups as well.
+            ///////////////////////////////////////////////////////////
+            if (self.dictionaryKey == "") {
+                let tempCourse = self.groups.courses[indexPath.row]
+                self.groups.courses[indexPath.row].courseName = courseNameField.text!
+                self.groups.editCourse(courseToEdit: tempCourse, newCourseName: courseNameField.text!)
+            }
+            else {
+                self.groups.group[self.dictionaryKey]?[indexPath.row]?.courseName = courseNameField.text!
+            }
+            self.save()
+            ///////////////////////////////////////////////////////////
             
             self.courses[indexPath.row].courseName = courseNameField.text!
             self.saveCourses()
@@ -288,7 +363,15 @@ class CourseTableViewController: UITableViewController {
         });
         
         alertController.addTextField(configurationHandler: { (textField : UITextField!) -> Void in
-            textField.text = self.courses[indexPath.row].courseName
+//            textField.text = self.courses[indexPath.row].courseName
+            //////////////////////////////////////////////////////////
+            if (self.dictionaryKey == "") {
+                textField.text = self.groups.courses[indexPath.row].courseName
+            }
+            else {
+                textField.text = self.groups.group[self.dictionaryKey]?[indexPath.row]?.courseName
+            }
+            //////////////////////////////////////////////////////////
         });
         
         alertController.addAction(saveAction)
@@ -311,6 +394,9 @@ class CourseTableViewController: UITableViewController {
         courses.append(calculus!)
         courses.append(physics!)
         courses.append(compSci!)
+        
+        groups.courses = courses
+        groups.group["Ungrouped Courses"] = courses
     }
     
 
@@ -318,12 +404,22 @@ class CourseTableViewController: UITableViewController {
     
     // Returns the number of sections in the table
     override func numberOfSections(in tableView: UITableView) -> Int {
+        //TODO: Make the number of sections equal to the number of groups
         return 1
     }
     
     // Returns the number of rows per section
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return courses.count
+        //TODO: Make this function return the number of courses in a section (group) using the keys array
+//        return courses.count
+        //////////////////////////////////////////////////
+        if (dictionaryKey == "") {
+            return groups.courses.count
+        }
+        else {
+            return groups.group[dictionaryKey]!.count
+        }
+        //////////////////////////////////////////////////
     }
 
     // Setting the data of each cell
@@ -331,9 +427,32 @@ class CourseTableViewController: UITableViewController {
         let cellIdentifier = "CourseTableViewCell"
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! CourseTableViewCell
         
-        let course = courses[(indexPath as NSIndexPath).row]
-        cell.courseName.text = course.courseName
+//        let course = courses[(indexPath as NSIndexPath).row]
+//        cell.courseName.text = course.courseName
+//        
+//        if course.getAverage() != -1.0 {
+//            cell.courseDescription.text = "Course Average: \(round(10*course.getAverage()*100)/10)%"
+//        }
+//        else {
+//            cell.courseDescription.text = "Not enough information"
+//        }
+//        
+//        cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
+//        
+//        return cell
         
+        //////////////////////////////////////////////////
+        var course: Course
+        
+        if (dictionaryKey == "") {
+            course = groups.courses[indexPath.row]
+        }
+        else {
+            course = groups.group[dictionaryKey]![indexPath.row]!
+        }
+        
+        cell.courseName.text = course.courseName
+            
         if course.getAverage() != -1.0 {
             cell.courseDescription.text = "Course Average: \(round(10*course.getAverage()*100)/10)%"
         }
@@ -344,6 +463,7 @@ class CourseTableViewController: UITableViewController {
         cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
         
         return cell
+        //////////////////////////////////////////////////
     }
 
     
@@ -418,12 +538,28 @@ class CourseTableViewController: UITableViewController {
             self.courses.remove(at: (indexPath as NSIndexPath).row)
             self.saveCourses()
             self.tableView.deleteRows(at: [indexPath], with: .fade)
+            
+            ////////////////////////////////////////////////////////////////////
+            if (self.dictionaryKey == "") {
+                var course: [Course?] = []
+                course.append(self.groups.courses[indexPath.row])
+                self.groups.courses.remove(at: indexPath.row)
+                self.groups.removeCourses(coursesToDelete: course)
+            }
+            else {
+                self.groups.deleteFromCourseList(courseToDelete: self.groups.group[self.dictionaryKey]![indexPath.row]!)
+                self.groups.group[self.dictionaryKey]!.remove(at: indexPath.row)
+            }
+            
+            self.save()
+            self.tableView.deleteRows(at: [indexPath], with: .fade)
+            ////////////////////////////////////////////////////////////////////
         });
         
         let editCourseTitle = UITableViewRowAction(style: UITableViewRowActionStyle.normal, title: "Edit", handler: { action, indexPath in
             self.editCourseTitle(indexPath: indexPath)
         });
-    
+        
         return [deleteRowAction, editCourseTitle]
     }
     
@@ -431,8 +567,29 @@ class CourseTableViewController: UITableViewController {
     // Override to support rearranging the table view.
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         print("CourseTable: tableView moveRowAt -> Entry")
+//        var index = sourceIndexPath.row
+//        let temp = courses[index]
+//        
+//        if sourceIndexPath.row < destinationIndexPath.row {
+//            while (index < destinationIndexPath.row) {
+//                courses[index] = courses[index+1]
+//                index += 1
+//            }
+//        }
+//        else {
+//            while (index > destinationIndexPath.row) {
+//                courses[index] = courses[index-1]
+//                index -= 1
+//            }
+//        }
+//        courses[destinationIndexPath.row] = temp
+//        saveCourses()
+//        print("CourseTable: tableView moveRowAt -> Exit")
+//        
+        ////////////////////////////////////////////////////////////////////
+        //TODO: If the table is changed to have sections, than this method must be changed
         var index = sourceIndexPath.row
-        let temp = courses[index]
+        let temp = groups.courses[index]
         
         if sourceIndexPath.row < destinationIndexPath.row {
             while (index < destinationIndexPath.row) {
@@ -448,7 +605,7 @@ class CourseTableViewController: UITableViewController {
         }
         courses[destinationIndexPath.row] = temp
         saveCourses()
-        print("CourseTable: tableView moveRowAt -> Exit")
+        ////////////////////////////////////////////////////////////////////
     }
     
     // Override to support conditional rearranging of the table view.

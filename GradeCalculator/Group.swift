@@ -51,11 +51,10 @@ class Group: NSObject, NSCoding {
             for key in keys {
                 counter = 0
                 for course in self.group[key]! {
-//                for i in 0..<self.group[key]!.count {
-//                    let course = self.group[key]![i]
                     if course == tempCourse {
                         print("Group: removeCourses: Removing course -> \(self.group[key]![counter]?.courseName)")
                         self.group[key]!.remove(at: counter)
+                        break
                     }
                     counter += 1
                 }
@@ -64,6 +63,28 @@ class Group: NSObject, NSCoding {
         print("Group: removeCourses: -> Exit")
     }
     
+    //A function to edit the courseName of a given course
+    func editCourse(courseToEdit: Course?, newCourseName: String) {
+        for key in keys {
+            for course in self.group[key]! {
+                if course == courseToEdit {
+                    course?.courseName = newCourseName
+                    return
+                }
+            }
+        }
+    }
+    
+    
+    //A function to delete a course from the courses list
+    func deleteFromCourseList(courseToDelete: Course?) {
+        for i in 0..<self.courses.count {
+            if self.courses[i] == courseToDelete {
+                self.courses.remove(at: i)
+                return
+            }
+        }
+    }
     
     //MARK: - NSCoding
     static let DocumentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
