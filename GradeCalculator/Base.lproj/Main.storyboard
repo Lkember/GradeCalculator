@@ -714,6 +714,9 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="WYK-ti-e5R" kind="presentation" identifier="ViewGroupSegue" id="Emk-Xd-bAy"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <sections/>
@@ -1117,6 +1120,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="Emk-Xd-bAy"/>
         <segue reference="XHZ-Lz-icb"/>
         <segue reference="883-gk-HxU"/>
     </inferredMetricsTieBreakers>

@@ -190,6 +190,11 @@ class GroupsTableViewController: UITableViewController {
             let destView = segue.destination.childViewControllers[0] as! AddGroupViewController
             destView.groups = self.groups
         }
+        else if (segue.identifier == "ViewGroupSegue") {
+            print("GroupsTable: prepare: ViewGroupSegue has started")
+            let destView = segue.destination.childViewControllers[0] as! CourseTableViewController
+            
+        }
     }
     
     
