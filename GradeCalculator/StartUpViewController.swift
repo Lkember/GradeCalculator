@@ -12,7 +12,7 @@ class StartUpViewController: UIViewController {
     
 //    var groups: [String: [Course]?] = [:]
     var groups = Group()
-    var courses: [Course] = []
+//    var courses: [Course] = []
     @IBOutlet weak var numCourses: UILabel!
     @IBOutlet weak var overallAverage: UILabel!
     @IBOutlet weak var median: UILabel!
@@ -26,26 +26,32 @@ class StartUpViewController: UIViewController {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        if let savedCourses = loadCourses() {
-            courses += savedCourses
-            groups.group["Ungrouped Courses"] = courses
-            groups.keys.append("Ungrouped Courses")
+//        if let savedCourses = loadCourses() {
+//            courses += savedCourses
+//            groups.group["Ungrouped Courses"] = courses
+//            groups.keys.append("Ungrouped Courses")
+//        }
+        
+        if let loadedData = load() {
+            groups = loadedData
         }
         
         print("StartUpView: viewDidLoad: # keys \(groups.keys.count), # courses \(groups.courses.count)")
-        if (groups.courses.count == 0) {
-            groups.courses = courses
-        }
         
         updateLabels()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         print("StartUpView: viewDidAppear: loading courses again.")
-        if let savedCourses = loadCourses() {
-            courses = savedCourses
+//        if let savedCourses = loadCourses() {
+//            courses = savedCourses
 //            groups["Ungrouped Courses"] = courses
+//        }
+        
+        if let loadedData = load() {
+            groups = loadedData
         }
+        
         updateLabels()
     }
 
@@ -56,10 +62,10 @@ class StartUpViewController: UIViewController {
     
     // MARK: Functions
     
-    func loadCourses() -> [Course]? {
-        print("StartUpViewController: loadCourses: Loading courses...")
-        return (NSKeyedUnarchiver.unarchiveObject(withFile: Course.ArchiveURL.path) as? [Course])
-    }
+//    func loadCourses() -> [Course]? {
+//        print("StartUpViewController: loadCourses: Loading courses...")
+//        return (NSKeyedUnarchiver.unarchiveObject(withFile: Course.ArchiveURL.path) as? [Course])
+//    }
     
     func load() -> Group? {
         print("StartUpViewController: load: Loading groups and courses.")
@@ -74,7 +80,7 @@ class StartUpViewController: UIViewController {
     }
     
     func updateLabels() {
-        numCourses.text = "\(courses.count)"
+        numCourses.text = "\(groups.courses.count)"
         let average = getOverallAverage()
         let median = getMedian()
         let bestworstclasses = getBestAndWorstMarks()
@@ -99,7 +105,6 @@ class StartUpViewController: UIViewController {
     }
     
     func getGPA(average: Double) -> String {
-        print("")
         if (average > 100.0) {
             return "4.00"
         }
@@ -146,16 +151,16 @@ class StartUpViewController: UIViewController {
     
     func getBestAndWorstMarks() -> [Course] {
         print("StartUpViewController: getBestAndWorstMarks -> Entry")
-        if (courses.count == 0) {
+        if (groups.courses.count == 0) {
             return []
         }
         
-        var worst: Course = courses[0]
-        var best: Course = courses[0]
-        var worstGrade = courses[0].getAverage()
-        var bestGrade = courses[0].getAverage()
+        var worst: Course = groups.courses[0]
+        var best: Course = groups.courses[0]
+        var worstGrade = groups.courses[0].getAverage()
+        var bestGrade = groups.courses[0].getAverage()
         
-        for course in courses {
+        for course in groups.courses {
             let average = course.getAverage()
             if ((average < worstGrade) && (average != -1.0)) {
                 worstGrade = average
@@ -173,10 +178,10 @@ class StartUpViewController: UIViewController {
     func getMedian() -> Double {
         print("StartUpViewController: getMedian -> Entry")
         var marks: [Double] = []
-        for i in 0..<courses.count {
-            let currMark = courses[i].getAverage()
+        for i in 0..<groups.courses.count {
+            let currMark = groups.courses[i].getAverage()
             if (currMark != -1.0) {
-                marks.append(courses[i].getAverage())
+                marks.append(groups.courses[i].getAverage())
             }
         }
         
@@ -207,7 +212,7 @@ class StartUpViewController: UIViewController {
         var courseMark = 0.0
         var numCourses = 0
         
-        for course in courses {
+        for course in groups.courses {
             courseMark = course.getAverage()
             if courseMark != -1.0 {
                 average += course.getAverage()
