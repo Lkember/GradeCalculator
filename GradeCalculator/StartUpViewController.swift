@@ -26,11 +26,6 @@ class StartUpViewController: UIViewController {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-//        if let savedCourses = loadCourses() {
-//            courses += savedCourses
-//            groups.group["Ungrouped Courses"] = courses
-//            groups.keys.append("Ungrouped Courses")
-//        }
         
         if let loadedData = load() {
             groups = loadedData
