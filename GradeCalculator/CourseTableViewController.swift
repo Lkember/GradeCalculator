@@ -19,7 +19,6 @@ class CourseTableViewController: UITableViewController {
     @IBOutlet weak var editButton: UIBarButtonItem!
     @IBOutlet weak var addButton: UIBarButtonItem!
     
-    
     override func viewDidLoad() {
         print("CourseTable: viewDidLoad -> Entry")
         super.viewDidLoad()

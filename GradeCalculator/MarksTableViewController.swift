@@ -64,7 +64,7 @@ class MarksTableViewController: UITableViewController {
                 tableView.insertRows(at: [newIndexPath], with: .bottom)
             }
         }
-        saveCourses()
+//        saveCourses()
         updateLabels()
         print("MarksTable: unwindToProjectList -> Exit")
     }
@@ -101,7 +101,7 @@ class MarksTableViewController: UITableViewController {
         self.navigationController?.setToolbarHidden(false, animated: true)
         
         updateLabels()
-        saveCourses()
+//        saveCourses()
     }
 
     override func didReceiveMemoryWarning() {
@@ -144,12 +144,12 @@ class MarksTableViewController: UITableViewController {
     }
     
     // save course information
-    func saveCourses() {
-        print("MarksTable: Saving courses...")
-        if (!NSKeyedArchiver.archiveRootObject(courses, toFile: Course.ArchiveURL.path)) {
-            print("MarksTable: Failed to save meals...")
-        }
-    }
+//    func saveCourses() {
+//        print("MarksTable: Saving courses...")
+//        if (!NSKeyedArchiver.archiveRootObject(courses, toFile: Course.ArchiveURL.path)) {
+//            print("MarksTable: Failed to save meals...")
+//        }
+//    }
     
     
     // MARK: - Table view data source
@@ -229,7 +229,7 @@ class MarksTableViewController: UITableViewController {
         course!.projectMarks[destinationIndexPath.row] = tempProjectMark!
         course!.projectOutOf[destinationIndexPath.row] = tempProjectOutOf!
         course!.projectWeights[destinationIndexPath.row] = tempProjectWeight!
-        saveCourses()
+//        saveCourses()
         print("MarksTable: tableView moveRowAt -> Exit")
     }
     
@@ -247,7 +247,7 @@ class MarksTableViewController: UITableViewController {
                 let selectedProject = course?.projects[(indexPath as NSIndexPath).row]
                 
                 print("MarksTable: User selected \(selectedProject!)")
-                print("MarksTable: project grade: \(course?.projectMarks[(indexPath as NSIndexPath).row]) out of \(course?.projectOutOf[(indexPath as NSIndexPath).row])")
+                print("MarksTable: project grade: \(course?.projectMarks[indexPath.row]) out of \(course?.projectOutOf[indexPath.row])")
                 
                 courseDVC.projectName = selectedProject!
                 courseDVC.projectWeight = (course?.projectWeights[(indexPath as NSIndexPath).row])!
