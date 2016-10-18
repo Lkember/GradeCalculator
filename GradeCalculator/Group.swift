@@ -89,6 +89,22 @@ class Group: NSObject, NSCoding {
         }
     }
     
+    //A function to make sure the keys array is correct
+    func updateKeys() {
+        print("Group: UpdateKeys -> Entry group.count=\(group.count), keys.count=\(keys.count)")
+        if group.count == keys.count {
+            return
+        }
+        else {
+            keys.removeAll()
+            for (key, _) in group {
+                keys.append(key)
+            }
+        }
+        print("Group: UpdateKeys -> Exit")
+    }
+    
+    
     //MARK: - NSCoding
     static let DocumentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
     static let ArchiveURL = DocumentsDirectory.appendingPathComponent("groups")

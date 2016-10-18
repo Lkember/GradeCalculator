@@ -10,9 +10,7 @@ import UIKit
 
 class StartUpViewController: UIViewController {
     
-//    var groups: [String: [Course]?] = [:]
     var groups = Group()
-//    var courses: [Course] = []
     @IBOutlet weak var numCourses: UILabel!
     @IBOutlet weak var overallAverage: UILabel!
     @IBOutlet weak var median: UILabel!

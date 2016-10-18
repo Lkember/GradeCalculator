@@ -15,6 +15,12 @@ class GroupsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //Making sure the keys are updated
+        groups.updateKeys()
+        save()
+        
+        print("GroupsTableView: viewDidLoad -> Entry # keys \(groups.keys.count)")
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -117,6 +123,7 @@ class GroupsTableViewController: UITableViewController {
     
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        print("indexPath.row=\(indexPath.row), groups.keys.count=\(groups.keys.count)")
         if groups.keys[indexPath.row] != "Ungrouped Courses" {
             print("GroupsTable: canEditRowAt \(indexPath.row) -> True")
             return true
@@ -141,9 +148,9 @@ class GroupsTableViewController: UITableViewController {
                 for course in tempCourses {
                     print("GroupsTable: commit editingStyle: current course = \(course.courseName)")
                     groups.group["Ungrouped Courses"]!.append(course)
-                    groups.group.removeValue(forKey: groups.keys[indexPath.row])
-                    groups.keys.remove(at: indexPath.row)
                 }
+                groups.group.removeValue(forKey: groups.keys[indexPath.row])
+                groups.keys.remove(at: indexPath.row)
             }
             
             // Delete the row from the data source
@@ -184,5 +191,14 @@ class GroupsTableViewController: UITableViewController {
             destView.groups = self.groups
         }
     }
-
+    
+    
+    // MARK: - NSCoding
+    
+    func save() {
+        print("CourseTable: save: Saving courses and groups.")
+        if (!NSKeyedArchiver.archiveRootObject(self.groups, toFile: Group.ArchiveURL.path)) {
+            print("CourseTable: save: Failed to save courses and groups.")
+        }
+    }
 }
