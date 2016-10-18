@@ -140,13 +140,13 @@ class CourseTableViewController: UITableViewController {
             indexPaths = indexPaths?.sorted()
             var offset = 0
             
-            //TODO: Still have to delete the course from groups as well.
             ///////////////////////////////////////////////////////////
             if (dictionaryKey != "") {
                 print("CoursesTable: deleteCourses -> Deleting from group \(dictionaryKey)")
                 for i in 0..<indexPaths!.count {
                     _ = groups.group[dictionaryKey]?.remove(at: (indexPaths?[i].row)! + offset)
                     offset -= 1
+                    //TODO: Must also delete from groups.courses
                 }
             }
             else {
@@ -157,25 +157,20 @@ class CourseTableViewController: UITableViewController {
                     print("CoursesTable: deleteCourses: Deleting course \(tempCourses.last!.courseName)")
                 }
                 
+                for i in 0..<indexPaths!.count {
+                    groups.courses.remove(at: (indexPaths![i].row) + offset)
+                    
+                    offset-=1
+                }
+                
                 print("CoursesTable: deleteCourses -> Running removeCourses from Group Class.")
                 groups.removeCourses(coursesToDelete: tempCourses)
-                for course in groups.courses {
-                    print("remaining courses = \(course.courseName)")
-                }
             }
             ///////////////////////////////////////////////////////////
-            offset = 0
-            
-//            for i in 0..<indexPaths!.count {
-//                print("CoursesTable: deleteCourses: Removing course: \(courses[(indexPaths?[i].row)! + offset].courseName), indexPath=\(indexPaths?[i].row), offset=\(offset)")
-//                courses.remove(at: (indexPaths?[i].row)! + offset)
-//                offset -= 1
-//            }
             
             //reload data, update the labels and save changes
             tableView.reloadData()
             updateLabels()
-//            saveCourses()
             
             ///////////////////////////////////////////////////////////
             save()
@@ -318,10 +313,7 @@ class CourseTableViewController: UITableViewController {
             ///////////////////////////////////////////////////////////
             tableView.insertRows(at: [newIndexPath], with: .bottom)
             
-            tableView.reloadData()
-            
-            // save courses
-//            saveCourses()
+            tableView.reloadRows(at: [newIndexPath], with: .fade)
             
             ///////////////////////////////////////////////////////////
             save()
