@@ -38,10 +38,6 @@ class StartUpViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         print("StartUpView: viewDidAppear: loading courses again.")
-//        if let savedCourses = loadCourses() {
-//            courses = savedCourses
-//            groups["Ungrouped Courses"] = courses
-//        }
         
         if let loadedData = load() {
             groups = loadedData
@@ -56,11 +52,6 @@ class StartUpViewController: UIViewController {
     }
     
     // MARK: Functions
-    
-//    func loadCourses() -> [Course]? {
-//        print("StartUpViewController: loadCourses: Loading courses...")
-//        return (NSKeyedUnarchiver.unarchiveObject(withFile: Course.ArchiveURL.path) as? [Course])
-//    }
     
     func load() -> Group? {
         print("StartUpViewController: load: Loading groups and courses.")
