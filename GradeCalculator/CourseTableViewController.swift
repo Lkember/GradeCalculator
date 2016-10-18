@@ -143,17 +143,18 @@ class CourseTableViewController: UITableViewController {
             //TODO: Still have to delete the course from groups as well.
             ///////////////////////////////////////////////////////////
             if (dictionaryKey != "") {
+                print("CoursesTable: deleteCourses -> Deleting from group \(dictionaryKey)")
                 for i in 0..<indexPaths!.count {
                     _ = groups.group[dictionaryKey]?.remove(at: (indexPaths?[i].row)! + offset)
                     offset -= 1
                 }
             }
             else {
-                print("CoursesTable: deleteCourses -> Deleting from group \(dictionaryKey)")
-                var tempCourses: [Course?] = []
+                var tempCourses: [Course] = []
                 
                 for i in 0..<indexPaths!.count {
                     tempCourses.append(groups.courses[(indexPaths?[i].row)!])
+                    print("CoursesTable: deleteCourses: Deleting course \(tempCourses.last!.courseName)")
                 }
                 
                 print("CoursesTable: deleteCourses -> Running removeCourses from Group Class.")
@@ -560,7 +561,7 @@ class CourseTableViewController: UITableViewController {
             
             ////////////////////////////////////////////////////////////////////
             if (self.dictionaryKey == "") {
-                var course: [Course?] = []
+                var course: [Course] = []
                 course.append(self.groups.courses[indexPath.row])
                 self.groups.courses.remove(at: indexPath.row)
                 self.groups.removeCourses(coursesToDelete: course)

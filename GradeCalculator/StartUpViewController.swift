@@ -23,15 +23,20 @@ class StartUpViewController: UIViewController {
     @IBOutlet weak var worstClassMark: UILabel!
     
     override func viewDidLoad() {
-        print("StartUpView: viewDidLoad")
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         if let savedCourses = loadCourses() {
             courses += savedCourses
             groups.group["Ungrouped Courses"] = courses
             groups.keys.append("Ungrouped Courses")
         }
+        
+        print("StartUpView: viewDidLoad: # keys \(groups.keys.count), # courses \(groups.courses.count)")
+        if (groups.courses.count == 0) {
+            groups.courses = courses
+        }
+        
         updateLabels()
     }
     
@@ -54,6 +59,11 @@ class StartUpViewController: UIViewController {
     func loadCourses() -> [Course]? {
         print("StartUpViewController: loadCourses: Loading courses...")
         return (NSKeyedUnarchiver.unarchiveObject(withFile: Course.ArchiveURL.path) as? [Course])
+    }
+    
+    func load() -> Group? {
+        print("StartUpViewController: load: Loading groups and courses.")
+        return (NSKeyedUnarchiver.unarchiveObject(withFile: Group.ArchiveURL.path) as? Group)
     }
     
     @IBAction func unwindToDetailViewController(storyboard: UIStoryboardSegue) {

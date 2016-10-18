@@ -43,14 +43,17 @@ class Group: NSObject, NSCoding {
     
     // A function which removes all courses in a given array.
     // TODO: THIS METHOD IS VERY INEFFICIENT. CONSIDER REDOING.
-    func removeCourses(coursesToDelete: [Course?]) {
+    func removeCourses(coursesToDelete: [Course]) {
         print("Group: removeCourses: -> Entry")
         var counter = 0
+        
+        print("Group: removeCourses: Number of courses to delete \(coursesToDelete.count), number of keys to search through \(keys.count)")
         
         for tempCourse in coursesToDelete {
             for key in keys {
                 counter = 0
                 for course in self.group[key]! {
+                    print("Group: removeCourses: Looking at course: \(course.courseName)")
                     if course == tempCourse {
                         print("Group: removeCourses: Removing course -> \(self.group[key]?[counter].courseName)")
                         self.group[key]!.remove(at: counter)
