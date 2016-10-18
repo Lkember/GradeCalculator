@@ -33,8 +33,8 @@ class AddGroupViewController: UIViewController, UITableViewDelegate, UITableView
         saveButton.isEnabled = false
         
         for course in groups.group["Ungrouped Courses"]! {
-            print("Appending \(course!.courseName)")
-            courses.append(course!)
+            print("Appending \(course.courseName)")
+            courses.append(course)
         }
         
         tableView.reloadData()

@@ -262,9 +262,9 @@ class CourseTableViewController: UITableViewController {
         }
         else {
             for course in groups.group[dictionaryKey]! {
-                courseMark = course!.getAverage()
+                courseMark = course.getAverage()
                 if courseMark != -1.0 {
-                    average += course!.getAverage()
+                    average += course.getAverage()
                     numCourses += 1
                 }
             }
@@ -303,7 +303,7 @@ class CourseTableViewController: UITableViewController {
             let newIndexPath: IndexPath
 //            self.courses.append(course)
             ///////////////////////////////////////////////////////////
-            self.groups.courses.append(course)
+            
             if (dictionaryKey == "") {
                 newIndexPath = IndexPath(row: groups.courses.count, section: 0)
                 groups.group["Ungrouped Courses"]?.append(course)
@@ -312,6 +312,8 @@ class CourseTableViewController: UITableViewController {
                 newIndexPath = IndexPath(row: groups.group[dictionaryKey]!.count, section: 0)
                 groups.group[dictionaryKey]?.append(course)
             }
+            
+            self.groups.courses.append(course)
             ///////////////////////////////////////////////////////////
             tableView.insertRows(at: [newIndexPath], with: .bottom)
             
@@ -338,7 +340,7 @@ class CourseTableViewController: UITableViewController {
             alertController = UIAlertController(title: "Editing Course: \(self.groups.courses[indexPath.row].courseName)", message: "", preferredStyle: UIAlertControllerStyle.alert)
         }
         else {
-            alertController = UIAlertController(title: "Editing Course: \(self.groups.group[dictionaryKey]?[indexPath.row]?.courseName)", message: "", preferredStyle: UIAlertControllerStyle.alert)
+            alertController = UIAlertController(title: "Editing Course: \(self.groups.group[dictionaryKey]?[indexPath.row].courseName)", message: "", preferredStyle: UIAlertControllerStyle.alert)
         }
         ////////////////////////////////////////////////////////////////
         
@@ -354,7 +356,7 @@ class CourseTableViewController: UITableViewController {
                 self.groups.editCourse(courseToEdit: tempCourse, newCourseName: courseNameField.text!)
             }
             else {
-                self.groups.group[self.dictionaryKey]?[indexPath.row]?.courseName = courseNameField.text!
+                self.groups.group[self.dictionaryKey]?[indexPath.row].courseName = courseNameField.text!
             }
             self.save()
             ///////////////////////////////////////////////////////////
@@ -376,7 +378,7 @@ class CourseTableViewController: UITableViewController {
                 textField.text = self.groups.courses[indexPath.row].courseName
             }
             else {
-                textField.text = self.groups.group[self.dictionaryKey]?[indexPath.row]?.courseName
+                textField.text = self.groups.group[self.dictionaryKey]?[indexPath.row].courseName
             }
             //////////////////////////////////////////////////////////
         });
@@ -465,7 +467,7 @@ class CourseTableViewController: UITableViewController {
             course = groups.courses[indexPath.row]
         }
         else {
-            course = groups.group[dictionaryKey]![indexPath.row]!
+            course = groups.group[dictionaryKey]![indexPath.row]
         }
         
         cell.courseName.text = course.courseName
@@ -564,7 +566,7 @@ class CourseTableViewController: UITableViewController {
                 self.groups.removeCourses(coursesToDelete: course)
             }
             else {
-                self.groups.deleteFromCourseList(courseToDelete: self.groups.group[self.dictionaryKey]![indexPath.row]!)
+                self.groups.deleteFromCourseList(courseToDelete: self.groups.group[self.dictionaryKey]![indexPath.row])
                 self.groups.group[self.dictionaryKey]!.remove(at: indexPath.row)
             }
             
@@ -625,17 +627,17 @@ class CourseTableViewController: UITableViewController {
         }
         else {
             var index = sourceIndexPath.row
-            let temp = groups.group[dictionaryKey]![index]!
+            let temp = groups.group[dictionaryKey]![index]
             
             if sourceIndexPath.row < destinationIndexPath.row {
                 while (index < destinationIndexPath.row) {
-                    groups.group[dictionaryKey]![index]! = groups.group[dictionaryKey]![index+1]!
+                    groups.group[dictionaryKey]![index] = groups.group[dictionaryKey]![index+1]
                     index += 1
                 }
             }
             else {
                 while (index > destinationIndexPath.row) {
-                    groups.group[dictionaryKey]![index]! = groups.group[dictionaryKey]![index-1]!
+                    groups.group[dictionaryKey]![index] = groups.group[dictionaryKey]![index-1]
                     index -= 1
                 }
                 groups.group[dictionaryKey]![destinationIndexPath.row] = temp
@@ -668,11 +670,9 @@ class CourseTableViewController: UITableViewController {
     
     func save() {
         print("CourseTable: save: Saving courses and groups.")
-        NSKeyedArchiver.archivedData(withRootObject: self.groups)
-//        print("CourseTable: Save: Failed to save courses and groups.")
-//        if (!NSKeyedArchiver.archiveRootObject(self.groups.group, toFile: Group.ArchiveURL.path)) {
-//            print("CourseTable: save: Failed to save courses and groups.")
-//        }
+        if (!NSKeyedArchiver.archiveRootObject(self.groups, toFile: Group.ArchiveURL.path)) {
+            print("CourseTable: save: Failed to save courses and groups.")
+        }
     }
     
     func load() -> Group? {

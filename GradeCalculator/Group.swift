@@ -10,12 +10,12 @@ import UIKit
 
 class Group: NSObject, NSCoding {
     //MARK: - Properties
-    var group: [String: [Course?]] = [:]
+    var group: [String: [Course]] = [:]
     var courses = [Course]()
     var keys: [String] = []
     
     //MARK: - init
-    init(group: [String: [Course?]], courses: [Course], keys: [String]) {
+    init(group: [String: [Course]], courses: [Course], keys: [String]) {
         self.group = group
         self.courses = courses
         self.keys = keys
@@ -52,7 +52,7 @@ class Group: NSObject, NSCoding {
                 counter = 0
                 for course in self.group[key]! {
                     if course == tempCourse {
-                        print("Group: removeCourses: Removing course -> \(self.group[key]![counter]?.courseName)")
+                        print("Group: removeCourses: Removing course -> \(self.group[key]?[counter].courseName)")
                         self.group[key]!.remove(at: counter)
                         break
                     }
@@ -68,7 +68,7 @@ class Group: NSObject, NSCoding {
         for key in keys {
             for course in self.group[key]! {
                 if course == courseToEdit {
-                    course?.courseName = newCourseName
+                    course.courseName = newCourseName
                     return
                 }
             }
@@ -103,7 +103,7 @@ class Group: NSObject, NSCoding {
     }
     
     required convenience init?(coder aDecoder: NSCoder) {
-        let group = aDecoder.decodeObject(forKey: PropertyKey.groupKey) as! [String: [Course?]]
+        let group = aDecoder.decodeObject(forKey: PropertyKey.groupKey) as! [String: [Course]]
         let courses = aDecoder.decodeObject(forKey: PropertyKey.coursesKey) as! [Course]
         let keys = aDecoder.decodeObject(forKey: PropertyKey.keys) as! [String]
         

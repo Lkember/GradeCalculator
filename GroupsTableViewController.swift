@@ -36,11 +36,11 @@ class GroupsTableViewController: UITableViewController {
             let newGroup = sourceVC.groupName.text
             if let indexPaths = sourceVC.tableView.indexPathsForSelectedRows?.sorted() {
                 
-                var moveCourses: [Course?] = []
+                var moveCourses: [Course] = []
                 var ungroupedCourses = sourceVC.groups.group["Ungrouped Courses"]
                 
                 for i in 0 ..< indexPaths.count {
-                    moveCourses.append(ungroupedCourses?[(indexPaths[i].row)])
+                    moveCourses.append((ungroupedCourses?[(indexPaths[i].row)])!)
                     _ = groups.group["Ungrouped Courses"]?.remove(at: (indexPaths[i].row) - i)
                 }
                 
@@ -139,7 +139,7 @@ class GroupsTableViewController: UITableViewController {
                 let tempCourses = groups.group[groups.keys[indexPath.row]]!
                 
                 for course in tempCourses {
-                    print("GroupsTable: commit editingStyle: current course = \(course?.courseName)")
+                    print("GroupsTable: commit editingStyle: current course = \(course.courseName)")
                     groups.group["Ungrouped Courses"]!.append(course)
                     groups.group.removeValue(forKey: groups.keys[indexPath.row])
                     groups.keys.remove(at: indexPath.row)
