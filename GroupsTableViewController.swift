@@ -102,21 +102,26 @@ class GroupsTableViewController: UITableViewController {
         cell.textLabel?.text = groupName
         cell.detailTextLabel?.text = "Number of courses in group: \(groups.group[groupName]!.count)"
         
-        cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
+        if (!tableView.isEditing) {
+            cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
+        }
+        else {
+            cell.accessoryType = UITableViewCellAccessoryType.none
+        }
         
         return cell
     }
     
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("GroupsTable: didSelectRowAt: -> Entry")
-        if (tableView.isEditing) {
-            print("GroupsTable: didSelectRowAt: isEditing")
-        }
-        else {
-            
-        }
-    }
+//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        print("GroupsTable: didSelectRowAt: -> Entry")
+//        if (tableView.isEditing) {
+//            print("GroupsTable: didSelectRowAt: isEditing")
+//        }
+//        else {
+//            
+//        }
+//    }
     
     /*
     override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
@@ -134,6 +139,12 @@ class GroupsTableViewController: UITableViewController {
     
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        if (tableView.isEditing) {
+            tableView.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.none
+        }
+        else {
+            tableView.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
+        }
         print("indexPath.row=\(indexPath.row), groups.keys.count=\(groups.keys.count)")
         if groups.keys[indexPath.row] != "Ungrouped Courses" {
             print("GroupsTable: canEditRowAt \(indexPath.row) -> True")
@@ -145,7 +156,7 @@ class GroupsTableViewController: UITableViewController {
 
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        print("GroupsTable: commit editingStyle: Entry")
+        print("GroupsTable: commit editingStyle -> Entry")
         if editingStyle == .delete {
             if groups.group[groups.keys[indexPath.row]]!.count == 0 {
                 print("GroupsTable: commit editingStyle: count == 0")
@@ -169,7 +180,9 @@ class GroupsTableViewController: UITableViewController {
             tableView.reloadData()
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        }
+        save()
+        print("GroupsTable: commit editingStyle -> Exit")
     }
 
     /*
