@@ -61,6 +61,8 @@ class StartUpViewController: UIViewController {
         let sourceVC = storyboard.source as? GroupsTableViewController
         
         self.groups = (sourceVC?.groups)!
+        
+        save()
     }
     
     func updateLabels() {
@@ -220,7 +222,6 @@ class StartUpViewController: UIViewController {
     }
     
     
-    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -238,4 +239,12 @@ class StartUpViewController: UIViewController {
         }
     }
 
+    
+    // MARK: - NSCoding
+    func save() {
+        print("CourseTable: save: Saving courses and groups.")
+        if (!NSKeyedArchiver.archiveRootObject(self.groups, toFile: Group.ArchiveURL.path)) {
+            print("CourseTable: save: Failed to save courses and groups.")
+        }
+    }
 }

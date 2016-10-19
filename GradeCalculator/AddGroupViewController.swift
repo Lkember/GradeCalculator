@@ -12,8 +12,6 @@ class AddGroupViewController: UIViewController, UITableViewDelegate, UITableView
 
     // MARK: - Attributes
     var groups = Group()
-//    var groups: [String: [Course]?] = [:]
-    var courses: [Course] = []
     @IBOutlet weak var groupName: UITextField!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var saveButton: UIBarButtonItem!
@@ -31,11 +29,6 @@ class AddGroupViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.isEditing = true
         
         saveButton.isEnabled = false
-        
-        for course in groups.group["Ungrouped Courses"]! {
-            print("Appending \(course.courseName)")
-            courses.append(course)
-        }
         
         tableView.reloadData()
     }
@@ -70,15 +63,15 @@ class AddGroupViewController: UIViewController, UITableViewDelegate, UITableView
     
     // MARK: - TableViewDelegate
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("AddGroupProject: numberOfRowsInSection = \(courses.count)")
-        return courses.count
+        print("AddGroupProject: numberOfRowsInSection = \(groups.group["Ungrouped Courses"]!.count)")
+        return groups.group["Ungrouped Courses"]!.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentifier = "CoursesCell"
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath as IndexPath)
         
-        cell.textLabel?.text = courses[indexPath.row].courseName
+        cell.textLabel?.text = groups.group["Ungrouped Courses"]![indexPath.row].courseName
         
         return cell
     }

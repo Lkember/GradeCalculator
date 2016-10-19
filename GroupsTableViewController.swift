@@ -190,10 +190,12 @@ class GroupsTableViewController: UITableViewController {
             let destView = segue.destination.childViewControllers[0] as! AddGroupViewController
             destView.groups = self.groups
         }
-        else if (segue.identifier == "ViewGroupSegue") {
+        else if (segue.identifier == "ShowGroupSegue") {
             print("GroupsTable: prepare: ViewGroupSegue has started")
             let destView = segue.destination.childViewControllers[0] as! CourseTableViewController
-            
+            let cell = sender as! UITableViewCell
+            print("GroupsTable: prepare: Showing \(cell.textLabel?.text)")
+            destView.dictionaryKey = (cell.textLabel?.text)!
         }
     }
     

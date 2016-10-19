@@ -18,10 +18,15 @@ class CourseTableViewController: UITableViewController {
     @IBOutlet weak var deleteButton: UIBarButtonItem!
     @IBOutlet weak var editButton: UIBarButtonItem!
     @IBOutlet weak var addButton: UIBarButtonItem!
+    @IBOutlet weak var backButton: UIButton!
     
     override func viewDidLoad() {
         print("CourseTable: viewDidLoad -> Entry")
         super.viewDidLoad()
+        
+        if (dictionaryKey != "") {
+            backButton.setTitle("Back", for: UIControlState.normal)
+        }
         
         self.tableView.allowsMultipleSelectionDuringEditing = true
         self.tableView.allowsSelectionDuringEditing = true
