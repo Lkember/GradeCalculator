@@ -11,6 +11,7 @@ import UIKit
 class StartUpViewController: UIViewController {
     
     var groups = Group()
+    var courses: [Course] = []
     @IBOutlet weak var numCourses: UILabel!
     @IBOutlet weak var overallAverage: UILabel!
     @IBOutlet weak var median: UILabel!
@@ -28,6 +29,18 @@ class StartUpViewController: UIViewController {
         if let loadedData = load() {
             groups = loadedData
         }
+        
+        if let courseData = loadCourses() {
+            courses = courseData
+        }
+        
+        // Used if data is lost from iPhone
+//        print("courses.count = \(courses.count), groups.courses.count = \(groups.courses.count)")
+//        if groups.courses.count < courses.count {
+//            groups.courses = courses
+//            groups.group["Ungrouped Courses"] = courses
+//            save()
+//        }
         
         print("StartUpView: viewDidLoad: # keys \(groups.keys.count), # courses \(groups.courses.count)")
         
@@ -246,5 +259,10 @@ class StartUpViewController: UIViewController {
         if (!NSKeyedArchiver.archiveRootObject(self.groups, toFile: Group.ArchiveURL.path)) {
             print("StartUpView: save: Failed to save courses and groups.")
         }
+    }
+    
+    func loadCourses() -> [Course]? {
+        print("GroupsTable: load: Loading courses.")
+        return (NSKeyedUnarchiver.unarchiveObject(withFile: Course.ArchiveURL.path) as! [Course])
     }
 }

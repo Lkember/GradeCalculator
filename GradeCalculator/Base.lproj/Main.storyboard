@@ -640,18 +640,18 @@
                                 <rect key="frame" x="0.0" y="198" width="375" height="69"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qtP-xe-zYq" id="VG5-xd-VZc">
-                                    <frame key="frameInset" width="375" height="68.5"/>
+                                    <frame key="frameInset" width="375" height="68"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fiJ-2v-3bX">
-                                            <frame key="frameInset" minX="15" minY="13" width="39" height="24"/>
+                                            <frame key="frameInset" minX="15" minY="12" width="39" height="24"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zQL-1N-qTq">
-                                            <frame key="frameInset" minX="15" minY="37" width="56" height="19.5"/>
+                                            <frame key="frameInset" minX="15" minY="36" width="56" height="20"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                             <nil key="textColor"/>
@@ -701,11 +701,11 @@
                                         <rect key="frame" x="0.0" y="28" width="1000" height="52"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hDh-tf-4Jh" id="7eF-VN-SK2">
-                                            <frame key="frameInset" width="1000" height="51.5"/>
+                                            <frame key="frameInset" width="359" height="51"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="prn-Xl-tgv">
-                                                    <frame key="frameInset" minX="164" width="672" height="51.5"/>
+                                                    <frame key="frameInset" minX="15" width="329" height="51"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -962,7 +962,7 @@
                                 <constraints>
                                     <constraint firstAttribute="width" constant="167" id="sOs-fH-i5Z"/>
                                 </constraints>
-                                <state key="normal" title="Manage Groups">
+                                <state key="normal" title="View Groups">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
