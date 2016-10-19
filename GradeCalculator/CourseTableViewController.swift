@@ -121,11 +121,9 @@ class CourseTableViewController: UITableViewController {
     
     // Go back to the details view
     @IBAction func backToDetailView(_ sender: AnyObject) {
-        if (dictionaryKey == "") {
-            print("CourseTable: backToDetailView: Going back a view")
-            save()
-            self.dismiss(animated: true, completion: nil)
-        }
+        print("CourseTable: backToDetailView: Going back a view")
+        save()
+        self.dismiss(animated: true, completion: nil)
     }
     
     
@@ -233,6 +231,7 @@ class CourseTableViewController: UITableViewController {
             return average
         }
         else {
+            print("CourseTable: getOverallAverage: Getting averages in dictionary: \(dictionaryKey)")
             for course in groups.group[dictionaryKey]! {
                 courseMark = course.getAverage()
                 if courseMark != -1.0 {

@@ -15,11 +15,11 @@ class GroupsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        print("GroupsTableViewController: viewDidLoad")
+        
         //Making sure the keys are updated
         groups.updateKeys()
         save()
-        
-        print("GroupsTableView: viewDidLoad -> Entry # keys \(groups.keys.count)")
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -28,6 +28,15 @@ class GroupsTableViewController: UITableViewController {
          self.navigationItem.leftBarButtonItem = self.editButtonItem
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        print("GroupsTableViewController: viewDidAppear -> Loading courses and reloading table")
+        if let loadedData = load() {
+            groups = loadedData
+        }
+        
+        tableView.reloadData()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -39,6 +48,7 @@ class GroupsTableViewController: UITableViewController {
     @IBAction func unwindToCourseDict(sender: UIStoryboardSegue) {
         print("GroupsTable: unwindToCourseDict: -> Entry")
         if let sourceVC = sender.source as? AddGroupViewController {
+            print("GroupsTable: unwindToCourseDict: Source view is AddGroupView")
             let newGroup = sourceVC.groupName.text
             if let indexPaths = sourceVC.tableView.indexPathsForSelectedRows?.sorted() {
                 
@@ -46,6 +56,7 @@ class GroupsTableViewController: UITableViewController {
                 var ungroupedCourses = sourceVC.groups.group["Ungrouped Courses"]
                 
                 for i in 0 ..< indexPaths.count {
+                    print("GroupsTable: unwindToCourseDict: Courses to move: \((ungroupedCourses?[(indexPaths[i].row)])!.courseName)")
                     moveCourses.append((ungroupedCourses?[(indexPaths[i].row)])!)
                     _ = groups.group["Ungrouped Courses"]?.remove(at: (indexPaths[i].row) - i)
                 }
@@ -66,8 +77,8 @@ class GroupsTableViewController: UITableViewController {
                 groups.keys.append(newGroup!)
             }
         }
+        save()
         self.tableView.reloadData()
-        
     }
     
     // MARK: - Table view data source
@@ -203,9 +214,14 @@ class GroupsTableViewController: UITableViewController {
     // MARK: - NSCoding
     
     func save() {
-        print("CourseTable: save: Saving courses and groups.")
+        print("GroupsTable: save: Saving courses and groups.")
         if (!NSKeyedArchiver.archiveRootObject(self.groups, toFile: Group.ArchiveURL.path)) {
-            print("CourseTable: save: Failed to save courses and groups.")
+            print("GroupsTable: save: Failed to save courses and groups.")
         }
+    }
+    
+    func load() -> Group? {
+        print("GroupsTable: load: Loading courses.")
+        return (NSKeyedUnarchiver.unarchiveObject(withFile: Group.ArchiveURL.path) as! Group?)
     }
 }

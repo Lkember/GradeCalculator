@@ -91,14 +91,23 @@ class AddGroupViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        // Get the new view controller using segue.destinationViewController.
+//        // Pass the selected object to the new view controller.
+//        print("AddGroup: prepare: Preparing for Segue")
+//        save()
+//    }
 
+    
+    // MARK: - NSCoding
+//    func save() {
+//        print("AddGroupView: save: Saving courses and groups.")
+//        if (!NSKeyedArchiver.archiveRootObject(self.groups, toFile: Group.ArchiveURL.path)) {
+//            print("AddGroupView: save: Failed to save courses and groups.")
+//        }
+//    }
+    
 }

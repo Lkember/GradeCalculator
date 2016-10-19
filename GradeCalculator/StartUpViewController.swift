@@ -242,9 +242,9 @@ class StartUpViewController: UIViewController {
     
     // MARK: - NSCoding
     func save() {
-        print("CourseTable: save: Saving courses and groups.")
+        print("StartUpView: save: Saving courses and groups.")
         if (!NSKeyedArchiver.archiveRootObject(self.groups, toFile: Group.ArchiveURL.path)) {
-            print("CourseTable: save: Failed to save courses and groups.")
+            print("StartUpView: save: Failed to save courses and groups.")
         }
     }
 }

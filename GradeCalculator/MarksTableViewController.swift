@@ -143,14 +143,6 @@ class MarksTableViewController: UITableViewController {
         }
     }
     
-    // save course information
-//    func saveCourses() {
-//        print("MarksTable: Saving courses...")
-//        if (!NSKeyedArchiver.archiveRootObject(courses, toFile: Course.ArchiveURL.path)) {
-//            print("MarksTable: Failed to save meals...")
-//        }
-//    }
-    
     
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
