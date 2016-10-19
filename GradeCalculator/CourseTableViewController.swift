@@ -66,10 +66,24 @@ class CourseTableViewController: UITableViewController {
     
     // should perform segue
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        print("CourseTable: shouldPerformSegue -> Entry")
+        if (sender as? UIButton) != nil {
+            print("CourseTable: shouldPerformSegue -> Sender is UIButton")
+            if (dictionaryKey == "") {
+                print("CourseTable: shouldPerformSegue -> Exit Return False")
+                return false
+            }
+            else {
+                print("CourseTable: shouldPerformSegue -> Exit Return True")
+                return true
+            }
+        }
         if tableView.isEditing == true {
+            print("CourseTable: shouldPerformSegue -> Exit Return False")
             return false
         }
         else {
+            print("CourseTable: shouldPerformSegue -> Exit Return True")
             return true
         }
     }
@@ -107,8 +121,11 @@ class CourseTableViewController: UITableViewController {
     
     // Go back to the details view
     @IBAction func backToDetailView(_ sender: AnyObject) {
-        save()
-        self.dismiss(animated: true, completion: nil)
+        if (dictionaryKey == "") {
+            print("CourseTable: backToDetailView: Going back a view")
+            save()
+            self.dismiss(animated: true, completion: nil)
+        }
     }
     
     
