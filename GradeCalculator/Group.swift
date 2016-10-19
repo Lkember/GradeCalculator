@@ -105,6 +105,26 @@ class Group: NSObject, NSCoding {
     }
     
     
+    func getGroupAverage(key: String) -> Double {
+        print("Group: getGroupAverage -> Entry")
+        var counter = 0
+        var totalAverage = 0.0
+        var currAverage = 0.0
+        for course in group[key]! {
+            currAverage = course.getAverage()
+            if currAverage != -1.0 {
+                totalAverage += currAverage
+                counter += 1
+            }
+        }
+        if counter == 0 {
+            print("Group: getGroupAverage -> Exit Return -1.0 due to no course averages")
+            return -1.0
+        }
+        print("Group: getGroupAverage -> Exit")
+        return totalAverage/Double(counter)
+    }
+    
     //MARK: - NSCoding
     static let DocumentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
     static let ArchiveURL = DocumentsDirectory.appendingPathComponent("groups")

@@ -48,7 +48,8 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         print("StartUpView: viewDidLoad: # keys \(groups.keys.count), # courses \(groups.courses.count)")
         
-        updateLabels()
+//        updateLabels()
+        tableView.reloadData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -58,7 +59,8 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
             groups = loadedData
         }
         
-        updateLabels()
+//        updateLabels()
+        tableView.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -82,30 +84,30 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
         save()
     }
     
-    func updateLabels() {
-        numCourses.text = "\(groups.courses.count)"
-        let average = getOverallAverage()
-        let median = getMedian()
-        let bestworstclasses = getBestAndWorstMarks()
-        if (average != -1.0) {
-            bestClass.text = bestworstclasses[0].courseName
-            bestClassMark.text = "\(round(10*bestworstclasses[0].getAverage()*100)/10)%"
-            worstClass.text = bestworstclasses[1].courseName
-            worstClassMark.text = "\(round(10*bestworstclasses[1].getAverage()*100)/10)%"
-            overallAverage.text = "\(round(10*average*100)/10)%"
-            gpaLabel.text = getGPA(average: average*100)
-            self.median.text = "\(round(10*median*100)/10)%"
-        }
-        else {
-            bestClassMark.text = "N/A"
-            bestClass.text = "N/A"
-            worstClass.text = "N/A"
-            worstClassMark.text = "N/A"
-            overallAverage.text = "N/A"
-            gpaLabel.text = "N/A"
-            self.median.text = "N/A"
-        }
-    }
+//    func updateLabels() {
+//        numCourses.text = "\(groups.courses.count)"
+//        let average = getOverallAverage()
+//        let median = getMedian()
+//        let bestworstclasses = getBestAndWorstMarks()
+//        if (average != -1.0) {
+//            bestClass.text = bestworstclasses[0].courseName
+//            bestClassMark.text = "\(round(10*bestworstclasses[0].getAverage()*100)/10)%"
+//            worstClass.text = bestworstclasses[1].courseName
+//            worstClassMark.text = "\(round(10*bestworstclasses[1].getAverage()*100)/10)%"
+//            overallAverage.text = "\(round(10*average*100)/10)%"
+//            gpaLabel.text = getGPA(average: average*100)
+//            self.median.text = "\(round(10*median*100)/10)%"
+//        }
+//        else {
+//            bestClassMark.text = "N/A"
+//            bestClass.text = "N/A"
+//            worstClass.text = "N/A"
+//            worstClassMark.text = "N/A"
+//            overallAverage.text = "N/A"
+//            gpaLabel.text = "N/A"
+//            self.median.text = "N/A"
+//        }
+//    }
     
     func getGPA(average: Double) -> String {
         if (average > 100.0) {
@@ -280,40 +282,79 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
         //TODO
         let identifier = "RightDetailCell"
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier)
+        let average = getOverallAverage()
         
         if (indexPath.section == 0) {
-            var average = getOverallAverage()
             switch indexPath.row {
             case 0:
                 cell?.textLabel?.text = "Number of Courses:"
                 cell?.detailTextLabel?.text = "\(groups.courses.count)"
                 break
+                
             case 1:
                 cell?.textLabel?.text = "Average:"
-                cell?.detailTextLabel?.text = "\(round(10*average*100)/10)%"
+                
+                if (average != -1.0) {
+                    cell?.detailTextLabel?.text = "\(round(10*average*100)/10)%"
+                }
+                else {
+                    cell?.detailTextLabel?.text = "N/A"
+                }
                 break
+                
             case 2:
                 cell?.textLabel?.text = "Median:"
-                cell?.detailTextLabel?.text = "\(round(10*getMedian()*100)/10)%"
+                
+                if (average != -1.0) {
+                    cell?.detailTextLabel?.text = "\(round(10*getMedian()*100)/10)%"
+                }
+                else {
+                    cell?.detailTextLabel?.text = "N/A"
+                }
+                
                 break
+                
             case 3:
                 cell?.textLabel?.text = "GPA (Approximate):"
-                cell?.detailTextLabel?.text = "\(getGPA(average: average*100))"
+                
+                if (average != -1.0) {
+                    cell?.detailTextLabel?.text = "\(getGPA(average: average*100))"
+                }
+                else {
+                    cell?.detailTextLabel?.text = "N/A"
+                }
+                
                 break
+                
             case 4:
-                cell?.textLabel?.text = "Best Class:"
-                cell?.detailTextLabel?.text = "\(round(10*getMedian()*100)/10)%"
+                cell?.textLabel?.text = "Best Mark:"
+                if (average == -1.0) {
+                    cell?.detailTextLabel?.text = "N/A"
+                }
+                
+                let bestAndWorst = getBestAndWorstMarks()
+                cell?.detailTextLabel?.text = "\(round(10*bestAndWorst[0].getAverage()*100)/10)%"
                 break
+                
             case 5:
+                let bestAndWorst = getBestAndWorstMarks()
                 cell?.textLabel?.text = "Worst Class:"
-                cell?.detailTextLabel?.text = "\(round(10*getMedian()*100)/10)%"
+                cell?.detailTextLabel?.text = "\(round(10*bestAndWorst[1].getAverage()*100)/10)%"
                 break
             default:
                 break
             }
         }
         else {
-            cell?.textLabel?.text = "Group Info"
+            print("StartUpView: cellForRowAt: Currently looking at row: \(indexPath.row)")
+            cell?.textLabel?.text = "\(groups.keys[indexPath.row]) Average:"
+            let groupAverage = round(10*groups.getGroupAverage(key: groups.keys[indexPath.row])*100)/10
+            if groupAverage == -100.0 {
+                cell?.detailTextLabel?.text = "N/A"
+            }
+            else {
+                cell?.detailTextLabel?.text = "\(groupAverage)%"
+            }
         }
         return cell!
     }
