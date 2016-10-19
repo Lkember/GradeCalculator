@@ -8,7 +8,7 @@
 
 import UIKit
 
-class StartUpViewController: UIViewController {
+class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var groups = Group()
     var courses: [Course] = []
@@ -20,11 +20,15 @@ class StartUpViewController: UIViewController {
     @IBOutlet weak var bestClassMark: UILabel!
     @IBOutlet weak var worstClass: UILabel!
     @IBOutlet weak var worstClassMark: UILabel!
+    @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+        
+        tableView.delegate = self
+        tableView.dataSource = self
         
         if let loadedData = load() {
             groups = loadedData
@@ -251,6 +255,77 @@ class StartUpViewController: UIViewController {
             destView?.dictionaryKey = ""
         }
     }
+    
+    // MARK: - TableViewDataSource
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        //TODO
+        if section == 0 {
+            print("StartUpView: numberOfRowsInSection: Section 0 has 6 rows")
+            return 6
+        }
+        else if section == 1 {
+            print("StartUpView: numberOfRowsInSection: Section 1 has \(groups.keys.count) rows")
+            return groups.keys.count
+        }
+        print("StartUpView: numberOfRowsInSection: This print statement should not be printed.")
+        return 0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        //TODO
+        let identifier = "RightDetailCell"
+        let cell = tableView.dequeueReusableCell(withIdentifier: identifier)
+        
+        if (indexPath.section == 0) {
+            var average = getOverallAverage()
+            switch indexPath.row {
+            case 0:
+                cell?.textLabel?.text = "Number of Courses:"
+                cell?.detailTextLabel?.text = "\(groups.courses.count)"
+                break
+            case 1:
+                cell?.textLabel?.text = "Average:"
+                cell?.detailTextLabel?.text = "\(round(10*average*100)/10)%"
+                break
+            case 2:
+                cell?.textLabel?.text = "Median:"
+                cell?.detailTextLabel?.text = "\(round(10*getMedian()*100)/10)%"
+                break
+            case 3:
+                cell?.textLabel?.text = "GPA (Approximate):"
+                cell?.detailTextLabel?.text = "\(getGPA(average: average*100))"
+                break
+            case 4:
+                cell?.textLabel?.text = "Best Class:"
+                cell?.detailTextLabel?.text = "\(round(10*getMedian()*100)/10)%"
+                break
+            case 5:
+                cell?.textLabel?.text = "Worst Class:"
+                cell?.detailTextLabel?.text = "\(round(10*getMedian()*100)/10)%"
+                break
+            default:
+                break
+            }
+        }
+        else {
+            cell?.textLabel?.text = "Group Info"
+        }
+        return cell!
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        //TODO
+        return ""
+    }
+    
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        // cell selected code here
+//    }
 
     
     // MARK: - NSCoding
