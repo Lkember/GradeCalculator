@@ -35,9 +35,9 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
             groups = loadedData
         }
         
-        if let courseData = loadCourses() {
-            courses = courseData
-        }
+//        if let courseData = loadCourses() {
+//            courses = courseData
+//        }
         
         // Used if data is lost from iPhone
 //        print("courses.count = \(courses.count), groups.courses.count = \(groups.courses.count)")
@@ -68,6 +68,11 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     
     // MARK: Functions
     

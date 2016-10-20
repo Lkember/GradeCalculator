@@ -63,6 +63,10 @@ class CourseTableViewController: UITableViewController {
         print("CourseTable: viewDidAppear -> Exit")
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     // should perform segue
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         print("CourseTable: shouldPerformSegue -> Entry")

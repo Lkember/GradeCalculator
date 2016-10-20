@@ -78,6 +78,9 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     
     // MARK: - Actions
     @IBAction func cancelView(_ sender: UIBarButtonItem) {

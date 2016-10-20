@@ -111,6 +111,9 @@ class MarksTableViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     
     // MARK: - Functions
     @IBAction func editButtonIsClicked(_ sender: UIBarButtonItem) {
