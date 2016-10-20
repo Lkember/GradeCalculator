@@ -94,6 +94,9 @@ class GroupsTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print("GroupsTable: numberOfRows = \(groups.group.count)")
+        if (groups.group["Ungrouped Courses"]?.count == 0) {
+            return groups.group.count - 1
+        }
         return groups.group.count
     }
     
@@ -101,8 +104,16 @@ class GroupsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentifier = "GroupCell"
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
+        var index = 0
         
-        let groupName = groups.keys[indexPath.row]
+        if (groups.group["Ungrouped Courses"]?.count == 0) {
+            index = indexPath.row + 1
+        }
+        else {
+            index = indexPath.row
+        }
+        
+        let groupName = groups.keys[index]
         
         cell.textLabel?.text = groupName
         cell.detailTextLabel?.text = "Number of courses in group: \(groups.group[groupName]!.count)"

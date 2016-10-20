@@ -302,7 +302,12 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
         else if section == 1 {
             print("StartUpView: numberOfRowsInSection: Section 1 has \(groups.keys.count) rows")
-            return groups.keys.count
+            if groups.group["Ungrouped Courses"]?.count == 0 {
+                return groups.keys.count-1
+            }
+            else {
+                return groups.keys.count
+            }
         }
         print("StartUpView: numberOfRowsInSection: This print statement should not be printed.")
         return 0
@@ -380,11 +385,19 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
         else {
             print("StartUpView: cellForRowAt: Currently looking at row: \(indexPath.row)")
-            cell?.textLabel?.text = "\(groups.keys[indexPath.row]) Average:"
+            var index = 0
+            if (groups.group["Ungrouped Courses"]?.count == 0) {
+                index = indexPath.row + 1
+            }
+            else {
+                index = indexPath.row
+            }
+            
+            cell?.textLabel?.text = "\(groups.keys[index]) Average:"
             cell?.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
             cell?.selectionStyle = UITableViewCellSelectionStyle.blue
             
-            let groupAverage = round(10*groups.getGroupAverage(key: groups.keys[indexPath.row])*100)/10
+            let groupAverage = round(10*groups.getGroupAverage(key: groups.keys[index])*100)/10
             if groupAverage == -100.0 {
                 cell?.detailTextLabel?.text = "N/A"
             }

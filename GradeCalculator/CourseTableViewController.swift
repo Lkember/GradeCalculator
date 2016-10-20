@@ -407,7 +407,7 @@ class CourseTableViewController: UITableViewController {
         cell.courseName.text = course.courseName
             
         if course.getAverage() != -1.0 {
-            cell.courseDescription.text = "Course Average: \(round(10*course.getAverage()*100)/10)%"
+            cell.courseDescription.text = "Mark: \(round(10*course.getAverage()*100)/10)%"
         }
         else {
             cell.courseDescription.text = "Not enough information"
