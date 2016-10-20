@@ -34,6 +34,8 @@ class NewCoursesViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         
         self.courseName.delegate = self
+        self.navigationController?.navigationBar.barStyle = UIBarStyle.black
+        
         warningLabel.isHidden = true
         courseName.addTarget(self, action: #selector(NewCoursesViewController.textFieldDidChange(_:)), for: UIControlEvents.editingChanged)
         saveButton.isEnabled = false

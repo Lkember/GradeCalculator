@@ -45,6 +45,7 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(AddProjectViewController.keyboardToggle(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
         incorrectInfoLabel.isHidden = true
+        self.navigationController?.navigationBar.barStyle = UIBarStyle.black
         
         // Do any additional setup after loading the view.
         if (courseName != "") {

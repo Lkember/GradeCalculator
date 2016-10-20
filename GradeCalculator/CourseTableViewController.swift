@@ -30,6 +30,8 @@ class CourseTableViewController: UITableViewController {
         
         self.tableView.allowsMultipleSelectionDuringEditing = true
         self.tableView.allowsSelectionDuringEditing = true
+        self.navigationController?.navigationBar.barStyle = UIBarStyle.black
+        self.navigationController?.toolbar.barStyle = UIBarStyle.black
         
         //Add an edit button to the navigation bar
         navigationItem.leftBarButtonItem = editButtonItem
@@ -43,14 +45,11 @@ class CourseTableViewController: UITableViewController {
         
         if let loadedData = load() {
             groups = loadedData
-            for course in groups.courses {
-                print("Loaded Course: \(course.courseName)")
-            }
         }
         
-        if groups.courses.count == 0 {
-            loadSampleCourses()
-        }
+//        if groups.courses.count == 0 {
+//            loadSampleCourses()
+//        }
         
         updateLabels()
     }
@@ -140,9 +139,11 @@ class CourseTableViewController: UITableViewController {
             if (dictionaryKey != "") {
                 print("CoursesTable: deleteCourses -> Deleting from group \(dictionaryKey)")
                 for i in 0..<indexPaths!.count {
-                    _ = groups.group[dictionaryKey]?.remove(at: (indexPaths?[i].row)! + offset)
+                    groups.deleteFromCourseList(courseToDelete: groups.group[dictionaryKey]?.remove(at: (indexPaths?[i].row)! + offset))
                     offset -= 1
                     //TODO: Must also delete from groups.courses
+                    
+                    
                 }
             }
             else {
@@ -340,28 +341,28 @@ class CourseTableViewController: UITableViewController {
     }
     
     
-    func loadSampleCourses() {
-        print("CourseTable: loadSampleCourses -> Entry")
-        let calculus = Course(courseName: "Calculus 1000")
-        let physics = Course(courseName: "Physics 1026")
-        let compSci = Course(courseName: "CompSci 1027")
-        calculus?.addProject("Midterm", grade: 0.86, outOf: 1, weight: 25)
-        calculus?.addProject("Assignment 1", grade: 0.95, outOf: 1, weight: 12)
-        calculus?.addProject("Assignment 2", grade: 0.82, outOf: 1, weight: 13)
-        physics?.addProject("Midterm", grade: 0.78, outOf: 1, weight: 35)
-        physics?.addProject("Assignment 1", grade: 0.67, outOf: 1, weight: 1)
-        physics?.addProject("Assignment 2", grade: 1.0, outOf: 1, weight: 1)
-        
-        groups.courses.append(calculus!)
-        groups.courses.append(physics!)
-        groups.courses.append(compSci!)
-        
-        groups.group["Ungrouped Courses"]?.append(calculus!)
-        groups.group["Ungrouped Courses"]?.append(physics!)
-        groups.group["Ungrouped Courses"]?.append(compSci!)
-        
-        print("CourseTable: loadSampleCourses -> Exit")
-    }
+//    func loadSampleCourses() {
+//        print("CourseTable: loadSampleCourses -> Entry")
+//        let calculus = Course(courseName: "Calculus 1000")
+//        let physics = Course(courseName: "Physics 1026")
+//        let compSci = Course(courseName: "CompSci 1027")
+//        calculus?.addProject("Midterm", grade: 0.86, outOf: 1, weight: 25)
+//        calculus?.addProject("Assignment 1", grade: 0.95, outOf: 1, weight: 12)
+//        calculus?.addProject("Assignment 2", grade: 0.82, outOf: 1, weight: 13)
+//        physics?.addProject("Midterm", grade: 0.78, outOf: 1, weight: 35)
+//        physics?.addProject("Assignment 1", grade: 0.67, outOf: 1, weight: 1)
+//        physics?.addProject("Assignment 2", grade: 1.0, outOf: 1, weight: 1)
+//        
+//        groups.courses.append(calculus!)
+//        groups.courses.append(physics!)
+//        groups.courses.append(compSci!)
+//        
+//        groups.group["Ungrouped Courses"]?.append(calculus!)
+//        groups.group["Ungrouped Courses"]?.append(physics!)
+//        groups.group["Ungrouped Courses"]?.append(compSci!)
+//        
+//        print("CourseTable: loadSampleCourses -> Exit")
+//    }
     
 
     // MARK: - Table view data source

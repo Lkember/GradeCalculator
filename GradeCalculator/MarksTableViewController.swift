@@ -99,6 +99,8 @@ class MarksTableViewController: UITableViewController {
         tableView.rowHeight = 60.0
         
         self.navigationController?.setToolbarHidden(false, animated: true)
+        self.navigationController?.navigationBar.barStyle = UIBarStyle.black
+        self.navigationController?.toolbar.barStyle = UIBarStyle.black
         
         updateLabels()
 //        saveCourses()

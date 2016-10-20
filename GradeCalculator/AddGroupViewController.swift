@@ -27,6 +27,7 @@ class AddGroupViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.allowsSelectionDuringEditing = true
         tableView.allowsMultipleSelectionDuringEditing = true
         tableView.isEditing = true
+        self.navigationController?.navigationBar.barStyle = UIBarStyle.black
         
         saveButton.isEnabled = false
         
