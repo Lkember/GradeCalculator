@@ -14,6 +14,8 @@ class MarksTableViewController: UITableViewController {
     @IBOutlet weak var averageLabel: UILabel!
     @IBOutlet weak var numMarks: UILabel!
     @IBOutlet weak var remainingWeight: UILabel!
+    @IBOutlet weak var staticPotentialMark: UILabel!
+    @IBOutlet weak var potentialMark: UILabel!
     var courses = [Course]()
     var course = Course(courseName: "")
     var courseName = ""
@@ -128,8 +130,9 @@ class MarksTableViewController: UITableViewController {
     
     func updateLabels() {
         print("MarksTable: updateLabels")
-        if ((10*course!.getAverage()*100)/10 != -100.0) {
-            averageLabel.text = "\(round(10*course!.getAverage()*100)/10)%"
+        let average = (round(10*course!.getAverage()*100)/10)
+        if (average != -100.0) {
+            averageLabel.text = "\(average)%"
         }
         else {
             averageLabel.text = "N/A"
@@ -140,7 +143,20 @@ class MarksTableViewController: UITableViewController {
         
         if (weight <= 100 && weight >= 0) {
             remainingWeight.textColor = UIColor.white
-            remainingWeight.text = "\(100.0-weight) %"
+            remainingWeight.text = "\(100.0-weight)%"
+            if weight == 100 {
+                potentialMark.isHidden = true
+                staticPotentialMark.isHidden = true
+            }
+            else {
+                if (average < 0) {
+                    potentialMark.text = "100.0%"
+                }
+                else {
+                    let potential = course?.getPotentialMark(currAverage: average/100, weightRemaining: (100-weight)/100)
+                    potentialMark.text = "\((round(10*potential!*100)/10))%"
+                }
+            }
         }
         else {
             remainingWeight.textColor = UIColor.red

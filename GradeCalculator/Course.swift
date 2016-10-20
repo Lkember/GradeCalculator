@@ -109,8 +109,15 @@ class Course: NSObject, NSCoding {
         for i in 0..<projects.count {
             weight += projectWeights[i]
         }
-        print("courses getWeightTotal exit")
+        print("courses getWeightTotal -> exit RETURN \(weight)")
         return weight
+    }
+    
+    func getPotentialMark(currAverage: Double, weightRemaining: Double) -> Double {
+        print("Courses: getPotentialMark: Entry currAverage: \(currAverage), weightRemaining: \(weightRemaining)")
+        let potential = (currAverage*(1-weightRemaining)) + weightRemaining
+        print("Courses: getPotentialMark: Exit Return \(potential)")
+        return potential
     }
     
     // Mark: Actions
