@@ -94,6 +94,7 @@ class MarksTableViewController: UITableViewController {
             if course.courseName == courseName {
                 print("MarksTable: Found. User clicked \(course.courseName)")
                 self.course = course
+                break
             }
         }
         print("MarksTable: Setting title to \(course!.courseName)")
@@ -251,6 +252,7 @@ class MarksTableViewController: UITableViewController {
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        print("prepare is run")
         if (segue.identifier == "EditItem") {
             print("MarksTable: User selected a cell.")
             let courseDVC = segue.destination as! AddProjectViewController
@@ -275,10 +277,6 @@ class MarksTableViewController: UITableViewController {
             let courseDVC = navDVC.visibleViewController as! AddProjectViewController
             courseDVC.courseName = self.courseName
         }
-        
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    
     }
-    
-    
 }

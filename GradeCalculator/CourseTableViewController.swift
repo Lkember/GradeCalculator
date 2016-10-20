@@ -259,6 +259,7 @@ class CourseTableViewController: UITableViewController {
     
     
     func getNumCourses() -> Int {
+        print("CourseTable: getNumCourses Called")
         if (dictionaryKey == "") {
             return groups.courses.count
         }
