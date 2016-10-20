@@ -29,7 +29,7 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.allowsSelection = false
+        tableView.allowsSelection = true
         
         if let loadedData = load() {
             groups = loadedData
@@ -249,6 +249,21 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     // MARK: - Navigation
 
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        if let cell = sender as? UITableViewCell {
+            if (cell.selectionStyle == UITableViewCellSelectionStyle.none) {
+                return false
+            }
+            else {
+                return true
+            }
+            
+        }
+        else {
+            return true
+        }
+    }
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
@@ -258,9 +273,18 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
             let destView = segue.destination.childViewControllers[0] as? GroupsTableViewController
             destView?.groups = self.groups
         }
-        else if (segue.identifier == "allCoursesSegue") {
+        else if (segue.identifier == "allCoursesSegue" || segue.identifier == "ShowGroupSegue") {
             let destView = segue.destination.childViewControllers[0] as? CourseTableViewController
-            destView?.dictionaryKey = ""
+            
+            if let cell = sender as? UITableViewCell {
+                let cellLabel = cell.textLabel?.text
+                let dictKey = cellLabel?.substring(to: (cellLabel?.index((cellLabel?.endIndex)!, offsetBy: -9))!)
+                
+                destView?.dictionaryKey = dictKey!
+            }
+            else {
+                destView?.dictionaryKey = ""
+            }
         }
     }
     
@@ -291,6 +315,8 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
         let average = getOverallAverage()
         
         if (indexPath.section == 0) {
+            cell?.selectionStyle = UITableViewCellSelectionStyle.none
+            
             switch indexPath.row {
             case 0:
                 cell?.textLabel?.text = "Number of Courses:"
@@ -338,7 +364,7 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
                 cell?.detailTextLabel?.text = "\(round(10*bestAndWorst[0].getAverage()*100)/10)%"
                 
             case 5:
-                cell?.textLabel?.text = "Worst Class:"
+                cell?.textLabel?.text = "Worst Mark:"
                 
                 if (average == -1.0) {
                     cell?.detailTextLabel?.text = "N/A"
@@ -355,6 +381,9 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
         else {
             print("StartUpView: cellForRowAt: Currently looking at row: \(indexPath.row)")
             cell?.textLabel?.text = "\(groups.keys[indexPath.row]) Average:"
+            cell?.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
+            cell?.selectionStyle = UITableViewCellSelectionStyle.blue
+            
             let groupAverage = round(10*groups.getGroupAverage(key: groups.keys[indexPath.row])*100)/10
             if groupAverage == -100.0 {
                 cell?.detailTextLabel?.text = "N/A"
@@ -374,10 +403,6 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
             return "Group Details"
         }
     }
-    
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        // cell selected code here
-//    }
 
     
     // MARK: - NSCoding

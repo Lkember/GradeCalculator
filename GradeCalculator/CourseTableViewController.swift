@@ -26,6 +26,7 @@ class CourseTableViewController: UITableViewController {
         
         if (dictionaryKey != "") {
             backButton.setTitle("Back", for: UIControlState.normal)
+            self.title = dictionaryKey
         }
         
         self.tableView.allowsMultipleSelectionDuringEditing = true
