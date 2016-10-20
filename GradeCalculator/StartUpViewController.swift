@@ -29,6 +29,7 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.allowsSelection = false
         
         if let loadedData = load() {
             groups = loadedData
@@ -360,8 +361,12 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        //TODO
-        return ""
+        if (section == 0) {
+            return "All Courses"
+        }
+        else {
+            return "Group Details"
+        }
     }
     
 //    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
