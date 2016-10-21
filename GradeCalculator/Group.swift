@@ -10,27 +10,35 @@ import UIKit
 
 class Group: NSObject, NSCoding {
     //MARK: - Properties
-    var group: [String: [Course]] = [:]
+//    var group: [String: [Course]] = [:]
+    var groupName = ""
     var courses = [Course]()
-    var keys: [String] = []
+//    var keys: [String] = []
     
     //MARK: - init
-    init(group: [String: [Course]], courses: [Course], keys: [String]) {
-        self.group = group
+//    init(group: [String: [Course]], courses: [Course], keys: [String]) {
+//        self.group = group
+//        self.courses = courses
+//        self.keys = keys
+//        
+//        if (self.group.count == 0) {
+//            self.group["Ungrouped Courses"] = []
+//            self.keys.append("Ungrouped Courses")
+//        }
+//    }
+
+    init(groupName: String, courses: [Course]) {
+        self.groupName = groupName
         self.courses = courses
-        self.keys = keys
-        
-        if (self.group.count == 0) {
-            self.group["Ungrouped Courses"] = []
-            self.keys.append("Ungrouped Courses")
-        }
     }
     
     override init() {
-        self.group = [:]
-        self.group["Ungrouped Courses"] = []
+//        self.group = [:]
+//        self.group["Ungrouped Courses"] = []
+//        self.courses = []
+//        self.keys = []
+        self.groupName = ""
         self.courses = []
-        self.keys = []
     }
     
     
