@@ -46,23 +46,23 @@ class Group: NSObject, NSCoding {
     
     // A function which finds the index and dictionary key for a course
     // The return is in the form of [key, index]
-    func getDictionaryAndIndex(course: String) -> [Int] {
-        
-        // loop through each key
-        for i in 0..<keys.count {
-            
-            //loop through each course in each dictionary
-            for j in 0..<group[keys[i]]!.count {
-                
-                // if the current course name is equal to the input course name, then we have a match
-                if (group[keys[i]]![j].courseName == course) {
-                    return [i,j]
-                }
-            }
-        }
-        
-        return [-1]
-    }
+//    func getDictionaryAndIndex(course: String) -> [Int] {
+//        
+//        // loop through each key
+//        for i in 0..<keys.count {
+//            
+//            //loop through each course in each dictionary
+//            for j in 0..<group[keys[i]]!.count {
+//                
+//                // if the current course name is equal to the input course name, then we have a match
+//                if (group[keys[i]]![j].courseName == course) {
+//                    return [i,j]
+//                }
+//            }
+//        }
+//        
+//        return [-1]
+//    }
     
     //A function which returns the index to a course in the courses list only
     //Returns -1 if course is not found
@@ -77,29 +77,29 @@ class Group: NSObject, NSCoding {
     
     
     // A function which removes all courses in a given array.
-    // TODO: THIS METHOD IS VERY INEFFICIENT. CONSIDER REDOING.
-    func removeCourses(coursesToDelete: [Course]) {
-        print("Group: removeCourses: -> Entry")
-        var counter = 0
-        
-        print("Group: removeCourses: Number of courses to delete \(coursesToDelete.count), number of keys to search through \(keys.count)")
-        
-        for tempCourse in coursesToDelete {
-            for key in keys {
-                counter = 0
-                for course in self.group[key]! {
-                    print("Group: removeCourses: Looking at course: \(course.courseName)")
-                    if course == tempCourse {
-                        print("Group: removeCourses: Removing course -> \(self.group[key]?[counter].courseName)")
-                        self.group[key]!.remove(at: counter)
-                        break
-                    }
-                    counter += 1
-                }
-            }
-        }
-        print("Group: removeCourses: -> Exit")
-    }
+    // TODO: This method needs to be reimplemented.
+//    func removeCourses(coursesToDelete: [Course]) {
+//        print("Group: removeCourses: -> Entry")
+//        var counter = 0
+//        
+//        print("Group: removeCourses: Number of courses to delete \(coursesToDelete.count), number of keys to search through \(keys.count)")
+//        
+//        for tempCourse in coursesToDelete {
+//            for key in keys {
+//                counter = 0
+//                for course in self.group[key]! {
+//                    print("Group: removeCourses: Looking at course: \(course.courseName)")
+//                    if course == tempCourse {
+//                        print("Group: removeCourses: Removing course -> \(self.group[key]?[counter].courseName)")
+//                        self.group[key]!.remove(at: counter)
+//                        break
+//                    }
+//                    counter += 1
+//                }
+//            }
+//        }
+//        print("Group: removeCourses: -> Exit")
+//    }
     
     //A function to edit the courseName of a given course
     func editCourse(courseToEdit: Course?, newCourseName: String) {
