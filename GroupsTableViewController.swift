@@ -129,22 +129,6 @@ class GroupsTableViewController: UITableViewController {
     }
     
     
-//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        print("GroupsTable: didSelectRowAt: -> Entry")
-//        if (tableView.isEditing) {
-//            print("GroupsTable: didSelectRowAt: isEditing")
-//        }
-//        else {
-//            
-//        }
-//    }
-    
-    /*
-    override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        
-    }
-    */
-    
     /*
     // Override to support conditional rearranging of the table view.
     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
@@ -192,7 +176,8 @@ class GroupsTableViewController: UITableViewController {
             }
             
             // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
+//            tableView.deleteRows(at: [indexPath], with: .fade)
+//            tableView.insertRows(at: [IndexPath.init(item: 0, section: 0)], with: .fade)
             tableView.reloadData()
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view

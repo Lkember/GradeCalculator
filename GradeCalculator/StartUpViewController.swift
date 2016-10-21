@@ -35,11 +35,12 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
             groups = loadedData
         }
         
+        // Used if data is lost from iPhone
+        // Can be removed when ready for release
 //        if let courseData = loadCourses() {
 //            courses = courseData
 //        }
-        
-        // Used if data is lost from iPhone
+//
 //        print("courses.count = \(courses.count), groups.courses.count = \(groups.courses.count)")
 //        if groups.courses.count < courses.count {
 //            groups.courses = courses

@@ -16,9 +16,74 @@ class MarksTableViewController: UITableViewController {
     @IBOutlet weak var remainingWeight: UILabel!
     @IBOutlet weak var staticPotentialMark: UILabel!
     @IBOutlet weak var potentialMark: UILabel!
-    var courses = [Course]()
+    var dictionaryKey = ""
+    var indexInDictionary = -1
+    var indexInCourseList = -1
+    var groups: Group = Group()
     var course = Course(courseName: "")
     var courseName = ""
+    
+    // MARK: Views
+    // When the view loads, perform the following
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        print("MarksTable: viewDidLoad -> Entry: Courses.count=\(groups.courses.count), courseName=\(courseName)")
+        
+        if (self.dictionaryKey == "") {
+            for i in 0..<groups.courses.count {
+                if groups.courses[i].courseName == courseName {
+                    print("MarksTable: viewDidLoad: Course found at index \(i)")
+                    self.course = groups.courses[i]
+                    self.indexInCourseList = i
+                    self.navigationItem.title = groups.courses[i].courseName
+                    break
+                }
+            }
+            var dictAndIndex = groups.getDictionaryAndIndex(course: course!.courseName)
+            if (dictAndIndex.count == 1) {
+                print("MarksTableView: viewDidLoad: FAILURE THE GROUP/COURSE WAS NOT FOUND.")
+            }
+            
+            dictionaryKey = groups.keys[dictAndIndex[0]]
+            indexInDictionary = dictAndIndex[1]
+            
+            print("MarksTableView: viewDidLoad: The dictionaryKey is \(dictionaryKey) and the indexInDictionary is \(indexInDictionary)")
+        }
+        else {
+            for i in 0..<groups.group[dictionaryKey]!.count {
+                if groups.group[dictionaryKey]![i].courseName == courseName {
+                    print("MarksTable: Found. User clicked \(groups.group[dictionaryKey]![i].courseName)")
+                    self.course = groups.group[dictionaryKey]![i]
+                    self.indexInDictionary = i
+                    self.navigationItem.title = course!.courseName
+                    break
+                }
+            }
+            
+            indexInCourseList = groups.findIndexInCourseList(course: course!.courseName)
+            
+            print("MarksTableView: viewDidLoad: The indexInCourseList is \(indexInCourseList)")
+        }
+        
+        tableView.rowHeight = 60.0
+        
+        self.navigationController?.setToolbarHidden(false, animated: true)
+        self.navigationController?.navigationBar.barStyle = UIBarStyle.black
+        self.navigationController?.toolbar.barStyle = UIBarStyle.black
+        
+        updateLabels()
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     
     // MARK: Actions
     @IBAction func unwindToProjectList(_ sender: UIStoryboardSegue) {
@@ -29,7 +94,7 @@ class MarksTableViewController: UITableViewController {
             if let selectedIndexPath = tableView.indexPathForSelectedRow {
                 
                 print("MarksTable: unwindToProjectList: Editing a row")
-                let i = (selectedIndexPath as NSIndexPath).row
+                let i = selectedIndexPath.row
                 
                 if svc.projectIsComplete.isOn == true {
                 
@@ -48,6 +113,7 @@ class MarksTableViewController: UITableViewController {
                     course!.projectOutOf[i] = -1.0
                     tableView.reloadRows(at: [selectedIndexPath], with: .fade)
                 }
+                
             }
             // If user is adding a new row
             else {
@@ -63,10 +129,16 @@ class MarksTableViewController: UITableViewController {
                     print("MarksTable: undwindToProjectList: Adding project \(svc.projectName), grade \(svc.projectGrade), outOf \(svc.projectOutOf), weight \(svc.projectWeight)")
                     course?.addProject(svc.projectName, grade: svc.projectGrade, outOf: svc.projectOutOf, weight: svc.projectWeight)
                 }
+                
                 tableView.insertRows(at: [newIndexPath], with: .bottom)
             }
+            
+            print("MarksTable: unwindToProjectList: Putting course in course list and dictionary. These values should be equal: \(groups.courses[indexInCourseList].getNumMarks())=\(course?.getNumMarks())")
+            groups.courses[indexInCourseList] = course!
+            groups.group[dictionaryKey]![indexInDictionary] = course!
         }
-//        saveCourses()
+        
+        save()
         updateLabels()
         print("MarksTable: unwindToProjectList -> Exit")
     }
@@ -84,39 +156,6 @@ class MarksTableViewController: UITableViewController {
         print("MarksTable: deleteFromProjectList -> Exit")
     }
     
-    
-    // When the view loads, perform the following
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        print("MarksTable: viewDidLoad Start.. Courses.count=\(courses.count)")
-        for course in courses {
-            if course.courseName == courseName {
-                print("MarksTable: Found. User clicked \(course.courseName)")
-                self.course = course
-                break
-            }
-        }
-        print("MarksTable: Setting title to \(course!.courseName)")
-        self.navigationItem.title = course!.courseName
-        tableView.rowHeight = 60.0
-        
-        self.navigationController?.setToolbarHidden(false, animated: true)
-        self.navigationController?.navigationBar.barStyle = UIBarStyle.black
-        self.navigationController?.toolbar.barStyle = UIBarStyle.black
-        
-        updateLabels()
-//        saveCourses()
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
     
     // MARK: - Functions
     @IBAction func editButtonIsClicked(_ sender: UIBarButtonItem) {
@@ -243,7 +282,11 @@ class MarksTableViewController: UITableViewController {
         course!.projectMarks[destinationIndexPath.row] = tempProjectMark!
         course!.projectOutOf[destinationIndexPath.row] = tempProjectOutOf!
         course!.projectWeights[destinationIndexPath.row] = tempProjectWeight!
-//        saveCourses()
+        
+        groups.courses[indexInCourseList] = course!
+        groups.group[dictionaryKey]![indexInDictionary] = course!
+        
+        save()
         print("MarksTable: tableView moveRowAt -> Exit")
     }
     
@@ -252,7 +295,6 @@ class MarksTableViewController: UITableViewController {
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        print("prepare is run")
         if (segue.identifier == "EditItem") {
             print("MarksTable: User selected a cell.")
             let courseDVC = segue.destination as! AddProjectViewController
@@ -278,5 +320,20 @@ class MarksTableViewController: UITableViewController {
             courseDVC.courseName = self.courseName
         }
     
+    }
+    
+    // MARK: NSCoding
+    
+    func save() {
+        print("MarksTabe: save: Saving courses and groups.")
+        if (!NSKeyedArchiver.archiveRootObject(self.groups, toFile: Group.ArchiveURL.path)) {
+            print("CourseTable: save: Failed to save courses and groups.")
+        }
+    }
+    
+    // Load user information
+    func load() -> Group? {
+        print("MarksTable: Load: Loading courses.")
+        return (NSKeyedUnarchiver.unarchiveObject(withFile: Group.ArchiveURL.path) as! Group?)
     }
 }

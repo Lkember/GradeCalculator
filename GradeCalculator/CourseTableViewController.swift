@@ -99,11 +99,10 @@ class CourseTableViewController: UITableViewController {
             print("CourseTable: prepare: Setting courses to courseView")
             let selectedCourse = sender as? CourseTableViewCell
             let destVC = segue.destination as? MarksTableViewController
-            destVC?.courses = self.groups.courses
+            
+            destVC?.groups = self.groups
+            destVC?.dictionaryKey = self.dictionaryKey
             destVC?.courseName = (selectedCourse?.courseName.text)!
-
-//            destVC?.groups = self.groups
-//            destVC?.courseName = (selectedCourse?.courseName.text)!
         }
             
         else if segue.identifier=="AddItem" {
