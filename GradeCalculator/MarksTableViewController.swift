@@ -16,10 +16,12 @@ class MarksTableViewController: UITableViewController {
     @IBOutlet weak var remainingWeight: UILabel!
     @IBOutlet weak var staticPotentialMark: UILabel!
     @IBOutlet weak var potentialMark: UILabel!
-    var dictionaryKey = ""
-    var indexInDictionary = -1
-    var indexInCourseList = -1
-    var groups: Group = Group()
+//    var dictionaryKey = ""
+    var index = -1
+    var courseIndex = -1
+//    var indexInDictionary = -1
+//    var indexInCourseList = -1
+    var groups: [Group] = []
     var course = Course(courseName: "")
     var courseName = ""
     
@@ -28,42 +30,44 @@ class MarksTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("MarksTable: viewDidLoad -> Entry: Courses.count=\(groups.courses.count), courseName=\(courseName)")
+        print("MarksTable: viewDidLoad -> Entry")
         
-        if (self.dictionaryKey == "") {
-            for i in 0..<groups.courses.count {
-                if groups.courses[i].courseName == courseName {
-                    print("MarksTable: viewDidLoad: Course found at index \(i)")
-                    self.course = groups.courses[i]
-                    self.indexInCourseList = i
-                    self.navigationItem.title = groups.courses[i].courseName
-                    break
-                }
-            }
-            var dictAndIndex = groups.getDictionaryAndIndex(course: course!.courseName)
-            if (dictAndIndex.count == 1) {
-                print("MarksTableView: viewDidLoad: FAILURE THE GROUP/COURSE WAS NOT FOUND.")
-            }
-            
-            dictionaryKey = groups.keys[dictAndIndex[0]]
-            indexInDictionary = dictAndIndex[1]
-            
-            print("MarksTableView: viewDidLoad: The dictionaryKey is \(dictionaryKey) and the indexInDictionary is \(indexInDictionary)")
+        if (self.index == -1) {
+            // TODO: FIND THE COURSE THAT IS BEING EDITED.
+            // OPTIONS: IN COURSETABLE PREPARE METHOD SEND THE SECTION WHERE THE OBJECT IS SELECTED
+//            for i in 0..<groups.courses.count {
+//                if groups.courses[i].courseName == courseName {
+//                    print("MarksTable: viewDidLoad: Course found at index \(i)")
+//                    self.course = groups.courses[i]
+//                    self.indexInCourseList = i
+//                    self.navigationItem.title = groups.courses[i].courseName
+//                    break
+//                }
+//            }
+//            var dictAndIndex = groups.getDictionaryAndIndex(course: course!.courseName)
+//            if (dictAndIndex.count == 1) {
+//                print("MarksTableView: viewDidLoad: FAILURE THE GROUP/COURSE WAS NOT FOUND.")
+//            }
+//            
+//            dictionaryKey = groups.keys[dictAndIndex[0]]
+//            indexInDictionary = dictAndIndex[1]
+//            
+//            print("MarksTableView: viewDidLoad: The dictionaryKey is \(dictionaryKey) and the indexInDictionary is \(indexInDictionary)")
         }
         else {
-            for i in 0..<groups.group[dictionaryKey]!.count {
-                if groups.group[dictionaryKey]![i].courseName == courseName {
-                    print("MarksTable: Found. User clicked \(groups.group[dictionaryKey]![i].courseName)")
-                    self.course = groups.group[dictionaryKey]![i]
-                    self.indexInDictionary = i
+            for i in 0..<groups[index].courses.count {
+                if groups[index].courses[i].courseName == courseName {
+                    print("MarksTable: Found. User clicked \(groups[index].courses[i].courseName)")
+                    self.course = groups[index].courses[i]
+                    self.courseIndex = i
                     self.navigationItem.title = course!.courseName
                     break
                 }
             }
             
-            indexInCourseList = groups.findIndexInCourseList(course: course!.courseName)
+//            indexInCourseList = groups.findIndexInCourseList(course: course!.courseName)
             
-            print("MarksTableView: viewDidLoad: The indexInCourseList is \(indexInCourseList)")
+            print("MarksTableView: viewDidLoad: Exit")
         }
         
         tableView.rowHeight = 60.0
@@ -133,9 +137,8 @@ class MarksTableViewController: UITableViewController {
                 tableView.insertRows(at: [newIndexPath], with: .bottom)
             }
             
-            print("MarksTable: unwindToProjectList: Putting course in course list and dictionary. These values should be equal: \(groups.courses[indexInCourseList].getNumMarks())=\(course?.getNumMarks())")
-            groups.courses[indexInCourseList] = course!
-            groups.group[dictionaryKey]![indexInDictionary] = course!
+            groups[index].courses[self.courseIndex] = course!
+//            groups.group[dictionaryKey]![indexInDictionary] = course!
         }
         
         save()
@@ -283,8 +286,8 @@ class MarksTableViewController: UITableViewController {
         course!.projectOutOf[destinationIndexPath.row] = tempProjectOutOf!
         course!.projectWeights[destinationIndexPath.row] = tempProjectWeight!
         
-        groups.courses[indexInCourseList] = course!
-        groups.group[dictionaryKey]![indexInDictionary] = course!
+        groups[index].courses[courseIndex] = course!
+//        groups[index].group[dictionaryKey]![indexInDictionary] = course!
         
         save()
         print("MarksTable: tableView moveRowAt -> Exit")

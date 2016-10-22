@@ -10,22 +10,10 @@ import UIKit
 
 class Group: NSObject, NSCoding {
     //MARK: - Properties
-//    var group: [String: [Course]] = [:]
     var groupName = ""
     var courses = [Course]()
-//    var keys: [String] = []
     
     //MARK: - init
-//    init(group: [String: [Course]], courses: [Course], keys: [String]) {
-//        self.group = group
-//        self.courses = courses
-//        self.keys = keys
-//        
-//        if (self.group.count == 0) {
-//            self.group["Ungrouped Courses"] = []
-//            self.keys.append("Ungrouped Courses")
-//        }
-//    }
 
     init(groupName: String, courses: [Course]) {
         self.groupName = groupName
@@ -33,10 +21,6 @@ class Group: NSObject, NSCoding {
     }
     
     override init() {
-//        self.group = [:]
-//        self.group["Ungrouped Courses"] = []
-//        self.courses = []
-//        self.keys = []
         self.groupName = ""
         self.courses = []
     }
@@ -103,12 +87,18 @@ class Group: NSObject, NSCoding {
     
     //A function to edit the courseName of a given course
     func editCourse(courseToEdit: Course?, newCourseName: String) {
-        for key in keys {
-            for course in self.group[key]! {
-                if course == courseToEdit {
-                    course.courseName = newCourseName
-                    return
-                }
+//        for key in keys {
+//            for course in self.group[key]! {
+//                if course == courseToEdit {
+//                    course.courseName = newCourseName
+//                    return
+//                }
+//            }
+//        }
+        for course in courses {
+            if course.courseName == courseToEdit?.courseName {
+                course.courseName = newCourseName
+                return
             }
         }
     }
@@ -116,44 +106,51 @@ class Group: NSObject, NSCoding {
     
     //A function to delete a course from the courses list
     func deleteFromCourseList(courseToDelete: Course?) {
+        print("Group: deleteFromCourseList -> Entry: Deleting course \(courseToDelete?.courseName)")
         for i in 0..<self.courses.count {
             if self.courses[i] == courseToDelete {
+                print("Group: deleteFromCourseList -> Exit: Course found. Deleting course \(courses[i].courseName)")
                 self.courses.remove(at: i)
                 return
             }
         }
     }
     
+    //Can probably delete this method
     //A function to make sure the keys array is correct
-    func updateKeys() {
-        print("Group: UpdateKeys -> Entry group.count=\(group.count), keys.count=\(keys.count)")
-        if group.count == keys.count {
-            return
-        }
-        else {
-            keys.removeAll()
-            for (key, _) in group {
-                keys.append(key)
-            }
-        }
-        print("Group: UpdateKeys -> Exit")
-    }
+//    func updateKeys() {
+//        print("Group: UpdateKeys -> Entry")
+//        if group.count == keys.count {
+//            return
+//        }
+//        else {
+//            keys.removeAll()
+//            for (key, _) in group {
+//                keys.append(key)
+//            }
+//        }
+//        print("Group: UpdateKeys -> Exit")
+//    }
     
     
+    // A function which gets the average for the current group
     func getGroupAverage(key: String) -> Double {
         print("Group: getGroupAverage -> Entry")
+        
         var counter = 0
         var totalAverage = 0.0
         var currAverage = 0.0
-        for course in group[key]! {
+        
+        for course in courses {
             currAverage = course.getAverage()
             if currAverage != -1.0 {
                 totalAverage += currAverage
                 counter += 1
             }
         }
+        
         if counter == 0 {
-            print("Group: getGroupAverage -> Exit Return -1.0 due to no course averages")
+            print("Group: getGroupAverage -> Exit: Return -1.0 since no courses have a mark")
             return -1.0
         }
         print("Group: getGroupAverage -> Exit")
@@ -166,22 +163,19 @@ class Group: NSObject, NSCoding {
     static let ArchiveURL = DocumentsDirectory.appendingPathComponent("groups")
     
     struct PropertyKey {
-        static let groupKey = "group"
+        static let groupNameKey = "groupName"
         static let coursesKey = "courses"
-        static let keys = "keys"
     }
     
     func encode(with aCoder: NSCoder) {
-        aCoder.encode(group, forKey: PropertyKey.groupKey)
+        aCoder.encode(groupName, forKey: PropertyKey.groupNameKey)
         aCoder.encode(courses, forKey: PropertyKey.coursesKey)
-        aCoder.encode(keys, forKey: PropertyKey.keys)
     }
     
     required convenience init?(coder aDecoder: NSCoder) {
-        let group = aDecoder.decodeObject(forKey: PropertyKey.groupKey) as! [String: [Course]]
+        let groupName = aDecoder.decodeObject(forKey: PropertyKey.groupNameKey) as! [String: [Course]]
         let courses = aDecoder.decodeObject(forKey: PropertyKey.coursesKey) as! [Course]
-        let keys = aDecoder.decodeObject(forKey: PropertyKey.keys) as! [String]
         
-        self.init(group: group, courses: courses, keys: keys)
+        self.init(groupName: groupName, courses: courses)
     }
 }
