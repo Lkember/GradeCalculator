@@ -11,8 +11,9 @@ import UIKit
 class CourseTableViewController: UITableViewController {
 
     // MARK: Properties
-    var dictionaryKey: String = ""
-    var groups = Group()
+//    var dictionaryKey: String = ""
+    var groups: [Group] = []
+    var index = -1
     @IBOutlet weak var overallAverage: UILabel!
     @IBOutlet weak var numCourses: UILabel!
     @IBOutlet weak var deleteButton: UIBarButtonItem!
@@ -24,9 +25,9 @@ class CourseTableViewController: UITableViewController {
         print("CourseTable: viewDidLoad -> Entry")
         super.viewDidLoad()
         
-        if (dictionaryKey != "") {
+        if (index != -1) {
             backButton.setTitle("Back", for: UIControlState.normal)
-            self.title = dictionaryKey
+            self.title = groups[index].groupName
         }
         
         self.tableView.allowsMultipleSelectionDuringEditing = true
@@ -73,7 +74,7 @@ class CourseTableViewController: UITableViewController {
         print("CourseTable: shouldPerformSegue -> Entry")
         if (sender as? UIButton) != nil {
             print("CourseTable: shouldPerformSegue -> Sender is UIButton")
-            if (dictionaryKey == "") {
+            if (index == -1) {
                 print("CourseTable: shouldPerformSegue -> Exit Return False")
                 return false
             }
@@ -101,14 +102,14 @@ class CourseTableViewController: UITableViewController {
             let destVC = segue.destination as? MarksTableViewController
             
             destVC?.groups = self.groups
-            destVC?.dictionaryKey = self.dictionaryKey
+//            destVC?.dictionaryKey = self.dictionaryKey
             destVC?.courseName = (selectedCourse?.courseName.text)!
         }
             
         else if segue.identifier=="AddItem" {
             print("CourseTable: prepare: Setting courses to view.")
             let destinationViewController = segue.destination.childViewControllers[0] as? NewCoursesViewController
-            destinationViewController?.courses = groups.courses;
+            destinationViewController?.courses = groups[0].courses;
             
 //            destinationViewController?.groups = self.groups
         }
@@ -140,32 +141,31 @@ class CourseTableViewController: UITableViewController {
             indexPaths = indexPaths?.sorted()
             var offset = 0
             
-            if (dictionaryKey != "") {
-                print("CoursesTable: deleteCourses -> Deleting from group \(dictionaryKey)")
+            if (index != -1) {
+                print("CoursesTable: deleteCourses -> Deleting from group \(groups[index].groupName)")
                 for i in 0..<indexPaths!.count {
-                    groups.deleteFromCourseList(courseToDelete: groups.group[dictionaryKey]?.remove(at: (indexPaths?[i].row)! + offset))
+                    groups[index].courses.remove(at: (indexPaths?[i].row)! + offset)
                     offset -= 1
-                    //TODO: Must also delete from groups.courses
-                    
-                    
                 }
             }
             else {
-                var tempCourses: [Course] = []
                 
-                for i in 0..<indexPaths!.count {
-                    tempCourses.append(groups.courses[(indexPaths?[i].row)!])
-                    print("CoursesTable: deleteCourses: Deleting course \(tempCourses.last!.courseName)")
-                }
-                
-                for i in 0..<indexPaths!.count {
-                    groups.courses.remove(at: (indexPaths![i].row) + offset)
-                    
-                    offset-=1
-                }
-                
-                print("CoursesTable: deleteCourses -> Running removeCourses from Group Class.")
-                groups.removeCourses(coursesToDelete: tempCourses)
+                //TODO: NEED TO IMPLEMENT STILL
+//                var tempCourses: [Course] = []
+//                
+//                for i in 0..<indexPaths!.count {
+//                    tempCourses.append(groups.courses[(indexPaths?[i].row)!])
+//                    print("CoursesTable: deleteCourses: Deleting course \(tempCourses.last!.courseName)")
+//                }
+//                
+//                for i in 0..<indexPaths!.count {
+//                    groups.courses.remove(at: (indexPaths![i].row) + offset)
+//                    
+//                    offset-=1
+//                }
+//                
+//                print("CoursesTable: deleteCourses -> Running removeCourses from Group Class.")
+//                groups.removeCourses(coursesToDelete: tempCourses)
             }
             
             //reload data, update the labels and save changes
@@ -217,42 +217,42 @@ class CourseTableViewController: UITableViewController {
         var courseMark = 0.0
         var numCourses = 0
         
-        if (dictionaryKey == "") {
-            for course in groups.courses {
-                courseMark = course.getAverage()
-                if courseMark != -1.0 {
-                    average += course.getAverage()
-                    numCourses += 1
-                }
-            }
-            if (numCourses != 0) {
-                average = (average/Double(numCourses))
-            }
-            else {
-                average = -1.0
-            }
-            print("CourseTable: getOverallAverage RETURN \(average) with number of courses in calculation: \(numCourses)")
-            print("CourseTable: getOverallAverage -> Exit")
-            return average
+        if (index == -1) {
+//            for course in groups[index].courses {
+//                courseMark = course.getAverage()
+//                if courseMark != -1.0 {
+//                    average += course.getAverage()
+//                    numCourses += 1
+//                }
+//            }
+//            if (numCourses != 0) {
+//                average = (average/Double(numCourses))
+//            }
+//            else {
+//                average = -1.0
+//            }
+//            print("CourseTable: getOverallAverage RETURN \(average) with number of courses in calculation: \(numCourses)")
+//            print("CourseTable: getOverallAverage -> Exit")
+//            return average
         }
         else {
-            print("CourseTable: getOverallAverage: Getting averages in dictionary: \(dictionaryKey)")
-            for course in groups.group[dictionaryKey]! {
-                courseMark = course.getAverage()
-                if courseMark != -1.0 {
-                    average += course.getAverage()
-                    numCourses += 1
-                }
-            }
-            if (numCourses != 0) {
-                average = (average/Double(numCourses))
-            }
-            else {
-                average = -1.0
-            }
-            print("CourseTable: getOverallAverage RETURN \(average) with number of courses in calculation: \(numCourses)")
-            print("CourseTable: getOverallAverage -> Exit")
-            return average
+            print("CourseTable: getOverallAverage: Getting averages in dictionary: ")
+//            for course in groups.group[dictionaryKey]! {
+//                courseMark = course.getAverage()
+//                if courseMark != -1.0 {
+//                    average += course.getAverage()
+//                    numCourses += 1
+//                }
+//            }
+//            if (numCourses != 0) {
+//                average = (average/Double(numCourses))
+//            }
+//            else {
+//                average = -1.0
+//            }
+//            print("CourseTable: getOverallAverage RETURN \(average) with number of courses in calculation: \(numCourses)")
+//            print("CourseTable: getOverallAverage -> Exit")
+//            return average
         }
     }
     
@@ -573,9 +573,9 @@ class CourseTableViewController: UITableViewController {
     }
     
     // Load user information
-    func load() -> Group? {
+    func load() -> [Group]? {
         print("CourseTable: Load: Loading courses.")
-        return (NSKeyedUnarchiver.unarchiveObject(withFile: Group.ArchiveURL.path) as! Group?)
+        return (NSKeyedUnarchiver.unarchiveObject(withFile: Group.ArchiveURL.path) as! [Group]?)
     }
     
 }

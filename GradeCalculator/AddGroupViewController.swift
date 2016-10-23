@@ -11,7 +11,7 @@ import UIKit
 class AddGroupViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
 
     // MARK: - Attributes
-    var groups = Group()
+    var groups: [Group] = []
     @IBOutlet weak var groupName: UITextField!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var saveButton: UIBarButtonItem!
