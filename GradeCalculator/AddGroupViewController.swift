@@ -12,6 +12,7 @@ class AddGroupViewController: UIViewController, UITableViewDelegate, UITableView
 
     // MARK: - Attributes
     var groups: [Group] = []
+    var ungroupedCoursesIndex = -1
     @IBOutlet weak var groupName: UITextField!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var saveButton: UIBarButtonItem!
@@ -56,7 +57,7 @@ class AddGroupViewController: UIViewController, UITableViewDelegate, UITableView
             print("checkInput -> False")
             saveButton.isEnabled = false
         }
-        else if (groups.group[input]?.count != nil) {
+        else if (checkEntryHelper(input: input)) {
             saveButton.isEnabled = false
         }
         else {
@@ -65,11 +66,34 @@ class AddGroupViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
+    // Is used to check if a groupName already exists
+    func checkEntryHelper(input: String) -> Bool {
+        for group in groups {
+            if (input == group.groupName) {
+                return false
+            }
+        }
+        return true
+    }
+    
+    
+    // Returns the index for a group with a given name
+    func getIndexForGroup(withName: String) -> Int {
+        for i in 0..<groups.count {
+            if (groups[i].groupName == withName) {
+                return i
+            }
+        }
+        return -1
+    }
+    
+    
     // MARK: - TableViewDelegate
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("AddGroupProject: numberOfRowsInSection = \(groups.group["Ungrouped Courses"]!.count)")
-        return groups.group["Ungrouped Courses"]!.count
+        print("AddGroupProject: numberOfRowsInSection = \(groups[getIndexForGroup(withName: "Ungrouped Courses")].courses.count)")
+        return groups[getIndexForGroup(withName: "Ungrouped Courses")].courses.count
     }
+    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentifier = "CoursesCell"

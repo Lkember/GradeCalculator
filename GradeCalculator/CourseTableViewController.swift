@@ -45,9 +45,9 @@ class CourseTableViewController: UITableViewController {
         
         print("CourseTable: viewDidLoad Loading courses")
         
-        if let loadedData = load() {
-            groups = loadedData
-        }
+//        if let loadedData = load() {
+//            groups = loadedData
+//        }
         
 //        if groups.courses.count == 0 {
 //            loadSampleCourses()
