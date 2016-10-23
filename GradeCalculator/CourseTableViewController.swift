@@ -27,6 +27,7 @@ class CourseTableViewController: UITableViewController {
         
         if (index != -1) {
             backButton.setTitle("Back", for: UIControlState.normal)
+            print("CourseTable: viewDidLoad: Current Index = \(index)")
             self.title = groups[index].groupName
         }
         
@@ -102,8 +103,11 @@ class CourseTableViewController: UITableViewController {
             let destVC = segue.destination as? MarksTableViewController
             
             destVC?.groups = self.groups
+            print("DestVC count = \(destVC?.groups.count)")
 //            destVC?.dictionaryKey = self.dictionaryKey
             destVC?.courseName = (selectedCourse?.courseName.text)!
+            destVC?.index = self.index
+            print("CourseTable: prepare: destVC.index=\(destVC?.index)")
         }
             
         else if segue.identifier=="AddItem" {

@@ -294,12 +294,16 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
         else if (segue.identifier == "allCoursesSegue" || segue.identifier == "ShowGroupSegue") {
             let destView = segue.destination.childViewControllers[0] as? CourseTableViewController
+            print("StartUpView: prepare: Going to CourseView")
+            
+            destView?.groups = self.groups
             
             if let cell = sender as? UITableViewCell {
                 let cellLabel = cell.textLabel?.text
                 let nameOfGroup = cellLabel?.substring(to: (cellLabel?.index((cellLabel?.endIndex)!, offsetBy: -9))!)
                 
                 destView?.index = getIndexForGroup(nameOfGroup: nameOfGroup!)
+                print("StartUpView: prepare: Sender is a UITableViewCell with groupName=\(nameOfGroup) and index=\(destView?.index)")
             }
             else {
                 destView?.index = -1

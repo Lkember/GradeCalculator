@@ -222,6 +222,7 @@ class GroupsTableViewController: UITableViewController {
 //            destView.dictionaryKey = (cell.textLabel?.text)!
             destView.groups = groups
             destView.index = getGroupIndexWithName(nameOfGroup: cell.textLabel!.text!)
+            print("GroupsTable: prepare: destView groups.count=\(destView.groups.count), groups[0].courses.count=\(destView.groups[0].courses.count), destView index = \(destView.index)")
         }
     }
     
