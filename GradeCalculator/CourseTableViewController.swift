@@ -218,6 +218,9 @@ class CourseTableViewController: UITableViewController {
         var numCourses = 0
         
         if (index == -1) {
+            for i in 0..<groups.count {
+                
+            }
 //            for course in groups[index].courses {
 //                courseMark = course.getAverage()
 //                if courseMark != -1.0 {

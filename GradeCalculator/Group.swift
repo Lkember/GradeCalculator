@@ -102,42 +102,41 @@ class Group: NSObject, NSCoding {
 //    }
     
     //A function to edit the courseName of a given course
-    func editCourse(courseToEdit: Course?, newCourseName: String) {
-        for key in keys {
-            for course in self.group[key]! {
-                if course == courseToEdit {
-                    course.courseName = newCourseName
-                    return
-                }
+    func editCourse(courseToEdit: Course?, newCourseName: String) -> Bool {
+        for course in courses {
+            if courseToEdit == course {
+                course.courseName = newCourseName
+                return true
             }
         }
+        return false
     }
     
     
     //A function to delete a course from the courses list
     func deleteFromCourseList(courseToDelete: Course?) {
-        for i in 0..<self.courses.count {
-            if self.courses[i] == courseToDelete {
-                self.courses.remove(at: i)
+        for i in 0..<courses.count {
+            if courses[i] == courseToDelete {
+                courses.remove(at: i)
                 return
             }
         }
     }
     
     //A function to make sure the keys array is correct
-    func updateKeys() {
-        print("Group: UpdateKeys -> Entry group.count=\(group.count), keys.count=\(keys.count)")
-        if group.count == keys.count {
-            return
-        }
-        else {
-            keys.removeAll()
-            for (key, _) in group {
-                keys.append(key)
-            }
-        }
-        print("Group: UpdateKeys -> Exit")
-    }
+//    func updateKeys() {
+//        print("Group: UpdateKeys -> Entry group.count=\(group.count), keys.count=\(keys.count)")
+//        if group.count == keys.count {
+//            return
+//        }
+//        else {
+//            keys.removeAll()
+//            for (key, _) in group {
+//                keys.append(key)
+//            }
+//        }
+//        print("Group: UpdateKeys -> Exit")
+//    }
     
     
     func getGroupAverage(key: String) -> Double {
@@ -145,7 +144,8 @@ class Group: NSObject, NSCoding {
         var counter = 0
         var totalAverage = 0.0
         var currAverage = 0.0
-        for course in group[key]! {
+        
+        for course in courses {
             currAverage = course.getAverage()
             if currAverage != -1.0 {
                 totalAverage += currAverage
@@ -166,22 +166,19 @@ class Group: NSObject, NSCoding {
     static let ArchiveURL = DocumentsDirectory.appendingPathComponent("groups")
     
     struct PropertyKey {
-        static let groupKey = "group"
+        static let groupNameKey = "groupName"
         static let coursesKey = "courses"
-        static let keys = "keys"
     }
     
     func encode(with aCoder: NSCoder) {
-        aCoder.encode(group, forKey: PropertyKey.groupKey)
+        aCoder.encode(groupName, forKey: PropertyKey.groupNameKey)
         aCoder.encode(courses, forKey: PropertyKey.coursesKey)
-        aCoder.encode(keys, forKey: PropertyKey.keys)
     }
     
     required convenience init?(coder aDecoder: NSCoder) {
-        let group = aDecoder.decodeObject(forKey: PropertyKey.groupKey) as! [String: [Course]]
+        let groupName = aDecoder.decodeObject(forKey: PropertyKey.groupNameKey) as! String
         let courses = aDecoder.decodeObject(forKey: PropertyKey.coursesKey) as! [Course]
-        let keys = aDecoder.decodeObject(forKey: PropertyKey.keys) as! [String]
         
-        self.init(group: group, courses: courses, keys: keys)
+        self.init(groupName: groupName, courses: courses)
     }
 }
