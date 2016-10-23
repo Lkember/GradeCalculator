@@ -139,7 +139,7 @@ class Group: NSObject, NSCoding {
 //    }
     
     
-    func getGroupAverage(key: String) -> Double {
+    func getGroupAverage() -> Double {
         print("Group: getGroupAverage -> Entry")
         var counter = 0
         var totalAverage = 0.0

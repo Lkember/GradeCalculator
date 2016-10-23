@@ -18,7 +18,7 @@ class GroupsTableViewController: UITableViewController {
         print("GroupsTableViewController: viewDidLoad")
         
         //Making sure the keys are updated
-        groups.updateKeys()
+//        groups.updateKeys()
         save()
         
         // Uncomment the following line to preserve selection between presentations
