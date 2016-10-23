@@ -10,7 +10,7 @@ import UIKit
 
 class GroupsTableViewController: UITableViewController {
     
-    var groups = Group()
+    var groups: [Group] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,36 +50,39 @@ class GroupsTableViewController: UITableViewController {
     
     // MARK: - Functions
     
+    //This method gets the group with a specific group name
+    func getGroupIndexWithName(nameOfGroup: String) -> Int {
+        
+        for i in 0..<groups.count {
+            if (groups[i].groupName == nameOfGroup) {
+                return i
+            }
+        }
+        return -1
+    }
+    
+    // This method is run when the user is adding a new group.
     @IBAction func unwindToCourseDict(sender: UIStoryboardSegue) {
         print("GroupsTable: unwindToCourseDict: -> Entry")
         if let sourceVC = sender.source as? AddGroupViewController {
             print("GroupsTable: unwindToCourseDict: Source view is AddGroupView")
-            let newGroup = sourceVC.groupName.text
-            if let indexPaths = sourceVC.tableView.indexPathsForSelectedRows?.sorted() {
+            
+            let newGroup = sourceVC.groupName.text                                              //Getting the name of the new group
+            if let indexPaths = sourceVC.tableView.indexPathsForSelectedRows?.sorted() {        //Getting the indexes of the courses to add to the group
                 
-                var moveCourses: [Course] = []
-                var ungroupedCourses = sourceVC.groups.group["Ungrouped Courses"]
+                var coursesToMove: [Course] = []
+                let ungroupedCourses = sourceVC.groups[getGroupIndexWithName(nameOfGroup: "Ungrouped Courses")]
                 
                 for i in 0 ..< indexPaths.count {
-                    print("GroupsTable: unwindToCourseDict: Courses to move: \((ungroupedCourses?[(indexPaths[i].row)])!.courseName)")
-                    moveCourses.append((ungroupedCourses?[(indexPaths[i].row)])!)
-                    _ = groups.group["Ungrouped Courses"]?.remove(at: (indexPaths[i].row) - i)
+                    print("GroupsTable: unwindToCourseDict: Courses to move: \(ungroupedCourses.courses[indexPaths[i].row].courseName)")
+                    coursesToMove.append(groups[0].courses.remove(at: (indexPaths[i].row) - i))
                 }
                 
-                if moveCourses.count == 0 {
-                    groups.group[newGroup!] = []
-                }
-                else {
-                    groups.group[newGroup!] = moveCourses
-                }
-                
-                groups.keys.append(newGroup!)
-                
-                print("groups.count == \(groups.group.count)")
+                // Add the courses to the new group
+                groups.append(Group.init(groupName: newGroup!, courses: coursesToMove))
             }
             else {
-                groups.group[newGroup!] = []
-                groups.keys.append(newGroup!)
+                groups.append(Group.init(groupName: newGroup!, courses: []))
             }
         }
         save()
@@ -93,30 +96,29 @@ class GroupsTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("GroupsTable: numberOfRows = \(groups.group.count)")
-        if (groups.group["Ungrouped Courses"]?.count == 0) {
-            return groups.group.count - 1
+        if (groups[getGroupIndexWithName(nameOfGroup: "Ungrouped Courses")].courses.count == 0) {
+            return groups.count-1
         }
-        return groups.group.count
+        return groups.count
     }
     
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentifier = "GroupCell"
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
-        var index = 0
+        var tempIndex = 0
         
-        if (groups.group["Ungrouped Courses"]?.count == 0) {
-            index = indexPath.row + 1
+        if (groups[getGroupIndexWithName(nameOfGroup: "Ungrouped Courses")].courses.count == 0) {
+            tempIndex = indexPath.row + 1
         }
         else {
-            index = indexPath.row
+            tempIndex = indexPath.row
         }
         
-        let groupName = groups.keys[index]
+        let groupName = groups[tempIndex].groupName
         
         cell.textLabel?.text = groupName
-        cell.detailTextLabel?.text = "Number of courses in group: \(groups.group[groupName]!.count)"
+        cell.detailTextLabel?.text = "Number of courses in group: \(groups[tempIndex].courses.count)"
         
         if (!tableView.isEditing) {
             cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
@@ -145,8 +147,8 @@ class GroupsTableViewController: UITableViewController {
         else {
             tableView.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
         }
-        print("indexPath.row=\(indexPath.row), groups.keys.count=\(groups.keys.count)")
-        if groups.keys[indexPath.row] != "Ungrouped Courses" {
+        
+        if groups[indexPath.row].groupName != "Ungrouped Courses" {
             print("GroupsTable: canEditRowAt \(indexPath.row) -> True")
             return true
         }
@@ -158,21 +160,18 @@ class GroupsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         print("GroupsTable: commit editingStyle -> Entry")
         if editingStyle == .delete {
-            if groups.group[groups.keys[indexPath.row]]!.count == 0 {
+            
+            if groups[indexPath.row].courses.count == 0 {
                 print("GroupsTable: commit editingStyle: count == 0")
-                groups.group.removeValue(forKey: groups.keys[indexPath.row])
-                groups.keys.remove(at: indexPath.row)
+                groups.remove(at: indexPath.row)
             }
             else {
                 print("GroupsTable: commit editingStyle: count > 0")
-                let tempCourses = groups.group[groups.keys[indexPath.row]]!
+                let tempCourses = groups[indexPath.row].courses
                 
-                for course in tempCourses {
-                    print("GroupsTable: commit editingStyle: current course = \(course.courseName)")
-                    groups.group["Ungrouped Courses"]!.append(course)
-                }
-                groups.group.removeValue(forKey: groups.keys[indexPath.row])
-                groups.keys.remove(at: indexPath.row)
+                groups[getGroupIndexWithName(nameOfGroup: "Ungrouped Courses")].courses += tempCourses
+                
+                groups.remove(at: indexPath.row)
             }
             
             // Delete the row from the data source
@@ -189,7 +188,7 @@ class GroupsTableViewController: UITableViewController {
     /*
     // Override to support rearranging the table view.
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-        
+        // TODO: Support rearranging of table
     }
     */
 
@@ -216,11 +215,13 @@ class GroupsTableViewController: UITableViewController {
             destView.groups = self.groups
         }
         else if (segue.identifier == "ShowGroupSegue") {
-            print("GroupsTable: prepare: ViewGroupSegue has started")
+            print("GroupsTable: prepare: ShowGroupSegue has started")
             let destView = segue.destination.childViewControllers[0] as! CourseTableViewController
             let cell = sender as! UITableViewCell
             print("GroupsTable: prepare: Showing \(cell.textLabel?.text)")
-            destView.dictionaryKey = (cell.textLabel?.text)!
+//            destView.dictionaryKey = (cell.textLabel?.text)!
+            destView.groups = groups
+            destView.index = getGroupIndexWithName(nameOfGroup: cell.textLabel!.text!)
         }
     }
     
@@ -234,8 +235,8 @@ class GroupsTableViewController: UITableViewController {
         }
     }
     
-    func load() -> Group? {
+    func load() -> [Group]? {
         print("GroupsTable: load: Loading courses.")
-        return (NSKeyedUnarchiver.unarchiveObject(withFile: Group.ArchiveURL.path) as! Group?)
+        return (NSKeyedUnarchiver.unarchiveObject(withFile: Group.ArchiveURL.path) as! [Group]?)
     }
 }
