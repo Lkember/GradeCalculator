@@ -35,6 +35,10 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
             groups = loadedData
         }
         
+        if groups.count == 0 {
+            groups.append(Group.init(groupName: "Ungrouped Courses", courses: [Course]()))
+        }
+        
         // Used if data is lost from iPhone
         // Can be removed when ready for release
 //        if let courseData = loadCourses() {

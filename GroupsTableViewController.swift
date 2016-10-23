@@ -82,7 +82,7 @@ class GroupsTableViewController: UITableViewController {
                 groups.append(Group.init(groupName: newGroup!, courses: coursesToMove))
             }
             else {
-                groups.append(Group.init(groupName: newGroup!, courses: []))
+                groups.append(Group.init(groupName: newGroup!, courses: [Course]()))
             }
         }
         save()

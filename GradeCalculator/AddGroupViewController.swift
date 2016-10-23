@@ -12,7 +12,6 @@ class AddGroupViewController: UIViewController, UITableViewDelegate, UITableView
 
     // MARK: - Attributes
     var groups: [Group] = []
-    var ungroupedCoursesIndex = -1
     @IBOutlet weak var groupName: UITextField!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var saveButton: UIBarButtonItem!
@@ -99,7 +98,7 @@ class AddGroupViewController: UIViewController, UITableViewDelegate, UITableView
         let cellIdentifier = "CoursesCell"
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath as IndexPath)
         
-        cell.textLabel?.text = groups.group["Ungrouped Courses"]![indexPath.row].courseName
+        cell.textLabel?.text = groups[getIndexForGroup(withName: "Ungrouped Courses")].courses[indexPath.row].courseName
         
         return cell
     }
