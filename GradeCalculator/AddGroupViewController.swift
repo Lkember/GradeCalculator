@@ -50,17 +50,18 @@ class AddGroupViewController: UIViewController, UITableViewDelegate, UITableView
     }
 
     func checkTextFieldInput(input: String) {
-        print("checkInput -> Entry \(input)")
+        print("AddGroupView: checkInput -> Entry \(input)")
         
         if (input == "") {
-            print("checkInput -> False")
+            print("checkInput -> False: input is empty")
             saveButton.isEnabled = false
         }
-        else if (checkEntryHelper(input: input)) {
+        else if (!checkEntryHelper(input: input)) {
+            print("AddGroupView: checkInput -> False a group with that name already exists")
             saveButton.isEnabled = false
         }
         else {
-            print("checkInput -> True")
+            print("AddGroupView: checkInput -> True")
             saveButton.isEnabled = true
         }
     }
