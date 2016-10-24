@@ -10,22 +10,10 @@ import UIKit
 
 class Group: NSObject, NSCoding {
     //MARK: - Properties
-//    var group: [String: [Course]] = [:]
     var groupName = ""
     var courses = [Course]()
-//    var keys: [String] = []
     
     //MARK: - init
-//    init(group: [String: [Course]], courses: [Course], keys: [String]) {
-//        self.group = group
-//        self.courses = courses
-//        self.keys = keys
-//        
-//        if (self.group.count == 0) {
-//            self.group["Ungrouped Courses"] = []
-//            self.keys.append("Ungrouped Courses")
-//        }
-//    }
 
     init(groupName: String, courses: [Course]) {
         self.groupName = groupName
@@ -33,10 +21,6 @@ class Group: NSObject, NSCoding {
     }
     
     override init() {
-//        self.group = [:]
-//        self.group["Ungrouped Courses"] = []
-//        self.courses = []
-//        self.keys = []
         self.groupName = ""
         self.courses = []
     }
@@ -102,11 +86,27 @@ class Group: NSObject, NSCoding {
 //    }
     
     //A function to edit the courseName of a given course
+<<<<<<< HEAD
     func editCourse(courseToEdit: Course?, newCourseName: String) -> Bool {
         for course in courses {
             if courseToEdit == course {
                 course.courseName = newCourseName
                 return true
+=======
+    func editCourse(courseToEdit: Course?, newCourseName: String) {
+//        for key in keys {
+//            for course in self.group[key]! {
+//                if course == courseToEdit {
+//                    course.courseName = newCourseName
+//                    return
+//                }
+//            }
+//        }
+        for course in courses {
+            if course.courseName == courseToEdit?.courseName {
+                course.courseName = newCourseName
+                return
+>>>>>>> master
             }
         }
         return false
@@ -115,17 +115,30 @@ class Group: NSObject, NSCoding {
     
     //A function to delete a course from the courses list
     func deleteFromCourseList(courseToDelete: Course?) {
+<<<<<<< HEAD
         for i in 0..<courses.count {
             if courses[i] == courseToDelete {
                 courses.remove(at: i)
+=======
+        print("Group: deleteFromCourseList -> Entry: Deleting course \(courseToDelete?.courseName)")
+        for i in 0..<self.courses.count {
+            if self.courses[i] == courseToDelete {
+                print("Group: deleteFromCourseList -> Exit: Course found. Deleting course \(courses[i].courseName)")
+                self.courses.remove(at: i)
+>>>>>>> master
                 return
             }
         }
     }
     
+    //Can probably delete this method
     //A function to make sure the keys array is correct
 //    func updateKeys() {
+<<<<<<< HEAD
 //        print("Group: UpdateKeys -> Entry group.count=\(group.count), keys.count=\(keys.count)")
+=======
+//        print("Group: UpdateKeys -> Entry")
+>>>>>>> master
 //        if group.count == keys.count {
 //            return
 //        }
@@ -139,8 +152,14 @@ class Group: NSObject, NSCoding {
 //    }
     
     
+<<<<<<< HEAD
     func getGroupAverage() -> Double {
+=======
+    // A function which gets the average for the current group
+    func getGroupAverage(key: String) -> Double {
+>>>>>>> master
         print("Group: getGroupAverage -> Entry")
+        
         var counter = 0
         var totalAverage = 0.0
         var currAverage = 0.0
@@ -152,8 +171,9 @@ class Group: NSObject, NSCoding {
                 counter += 1
             }
         }
+        
         if counter == 0 {
-            print("Group: getGroupAverage -> Exit Return -1.0 due to no course averages")
+            print("Group: getGroupAverage -> Exit: Return -1.0 since no courses have a mark")
             return -1.0
         }
         print("Group: getGroupAverage -> Exit")
@@ -176,7 +196,11 @@ class Group: NSObject, NSCoding {
     }
     
     required convenience init?(coder aDecoder: NSCoder) {
+<<<<<<< HEAD
         let groupName = aDecoder.decodeObject(forKey: PropertyKey.groupNameKey) as! String
+=======
+        let groupName = aDecoder.decodeObject(forKey: PropertyKey.groupNameKey) as! [String: [Course]]
+>>>>>>> master
         let courses = aDecoder.decodeObject(forKey: PropertyKey.coursesKey) as! [Course]
         
         self.init(groupName: groupName, courses: courses)

@@ -17,10 +17,17 @@ class MarksTableViewController: UITableViewController {
     @IBOutlet weak var staticPotentialMark: UILabel!
     @IBOutlet weak var potentialMark: UILabel!
 //    var dictionaryKey = ""
+<<<<<<< HEAD
 //    var indexInDictionary = -1
 //    var indexInCourseList = -1
     var index = -1
     var courseIndex = -1
+=======
+    var index = -1
+    var courseIndex = -1
+//    var indexInDictionary = -1
+//    var indexInCourseList = -1
+>>>>>>> master
     var groups: [Group] = []
     var course = Course(courseName: "")
     var courseName = ""
@@ -30,9 +37,17 @@ class MarksTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+<<<<<<< HEAD
         print("MarksTable: viewDidLoad -> Entry: Courses.count=\(groups[index].courses.count), courseName=\(courseName)")
         
         if (self.index == -1) {
+=======
+        print("MarksTable: viewDidLoad -> Entry")
+        
+        if (self.index == -1) {
+            // TODO: FIND THE COURSE THAT IS BEING EDITED.
+            // OPTIONS: IN COURSETABLE PREPARE METHOD SEND THE SECTION WHERE THE OBJECT IS SELECTED
+>>>>>>> master
 //            for i in 0..<groups.courses.count {
 //                if groups.courses[i].courseName == courseName {
 //                    print("MarksTable: viewDidLoad: Course found at index \(i)")
@@ -135,8 +150,13 @@ class MarksTableViewController: UITableViewController {
                 tableView.insertRows(at: [newIndexPath], with: .bottom)
             }
             
+<<<<<<< HEAD
             print("MarksTable: unwindToProjectList: Putting course in course list and dictionary.")
             groups[index].courses[courseIndex] = course!
+=======
+            groups[index].courses[self.courseIndex] = course!
+//            groups.group[dictionaryKey]![indexInDictionary] = course!
+>>>>>>> master
         }
         
         save()
@@ -280,8 +300,12 @@ class MarksTableViewController: UITableViewController {
         course!.projectWeights[destinationIndexPath.row] = tempProjectWeight!
         
         groups[index].courses[courseIndex] = course!
+<<<<<<< HEAD
 //        groups.courses[indexInCourseList] = course!
 //        groups.group[dictionaryKey]![indexInDictionary] = course!
+=======
+//        groups[index].group[dictionaryKey]![indexInDictionary] = course!
+>>>>>>> master
         
         save()
         print("MarksTable: tableView moveRowAt -> Exit")
