@@ -45,19 +45,11 @@ class MarksTableViewController: UITableViewController {
             print("MarksTable: viewDidLoad: Found. User clicked \(groups[index].courses[courseIndex].courseName)")
         }
         else {
-            print("MarksTable: viewDidLoad: index is \(index)")
-            for i in 0..<groups[index].courses.count {
-                if groups[index].courses[i].courseName == courseName {
-                    print("MarksTable: Found. User clicked \(groups[index].courses[i].courseName)")
-                    self.course = groups[index].courses[i]
-//                    self.courseIndex = i
-                    self.navigationItem.title = course!.courseName
-                    break
-                }
-            }
+            courseIndex = groups[index].findIndexInCourseList(course: courseName)
+            self.course = groups[index].courses[courseIndex]
+            self.navigationItem.title = courseName
             
-//            indexInCourseList = groups.findIndexInCourseList(course: course!.courseName)
-            
+            print("MarksTable: viewDidLoad: index is \(index), courseIndex is \(courseIndex)")
             print("MarksTableView: viewDidLoad: Exit")
         }
         
