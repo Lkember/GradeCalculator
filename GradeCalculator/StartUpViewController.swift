@@ -10,7 +10,7 @@ import UIKit
 
 class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    var groups: [Group] = []
+    var groups = Group()
     var courses: [Course] = []
     @IBOutlet weak var numCourses: UILabel!
     @IBOutlet weak var overallAverage: UILabel!
@@ -35,10 +35,6 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
             groups = loadedData
         }
         
-        if groups.count == 0 {
-            groups.append(Group.init(groupName: "Ungrouped Courses", courses: [Course]()))
-        }
-        
         // Used if data is lost from iPhone
         // Can be removed when ready for release
 //        if let courseData = loadCourses() {
@@ -52,22 +48,20 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
 //            save()
 //        }
         
-        getAllCourses()
-        print("StartUpView: viewDidLoad: Number of courses \(courses.count)")
+        print("StartUpView: viewDidLoad: # keys \(groups.keys.count), # courses \(groups.courses.count)")
         
 //        updateLabels()
         tableView.reloadData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        print("StartUpView: viewDidAppear: reloading courses.")
+        print("StartUpView: viewDidAppear: loading courses again.")
         
         if let loadedData = load() {
             groups = loadedData
         }
         
 //        updateLabels()
-        getAllCourses()
         tableView.reloadData()
     }
 
@@ -82,6 +76,11 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     
     // MARK: Functions
+    
+    func load() -> Group? {
+        print("StartUpViewController: load: Loading groups and courses.")
+        return (NSKeyedUnarchiver.unarchiveObject(withFile: Group.ArchiveURL.path) as? Group)
+    }
     
     @IBAction func unwindToDetailViewController(storyboard: UIStoryboardSegue) {
         print("StartUpView: unwindToDetailViewController: -> Entry")
@@ -164,16 +163,16 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func getBestAndWorstMarks() -> [Course] {
         print("StartUpViewController: getBestAndWorstMarks -> Entry")
-        if (courses.count == 0) {
+        if (groups.courses.count == 0) {
             return []
         }
         
-        var worst: Course = courses[0]
-        var best: Course = courses[0]
-        var worstGrade = courses[0].getAverage()
-        var bestGrade = courses[0].getAverage()
+        var worst: Course = groups.courses[0]
+        var best: Course = groups.courses[0]
+        var worstGrade = groups.courses[0].getAverage()
+        var bestGrade = groups.courses[0].getAverage()
         
-        for course in courses {
+        for course in groups.courses {
             let average = course.getAverage()
             if ((average < worstGrade) && (average != -1.0)) {
                 worstGrade = average
@@ -191,10 +190,10 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
     func getMedian() -> Double {
         print("StartUpViewController: getMedian -> Entry")
         var marks: [Double] = []
-        for i in 0..<courses.count {
-            let currMark = courses[i].getAverage()
+        for i in 0..<groups.courses.count {
+            let currMark = groups.courses[i].getAverage()
             if (currMark != -1.0) {
-                marks.append(courses[i].getAverage())
+                marks.append(groups.courses[i].getAverage())
             }
         }
         
@@ -225,7 +224,7 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
         var courseMark = 0.0
         var numCourses = 0
         
-        for course in courses {
+        for course in groups.courses {
             courseMark = course.getAverage()
             if courseMark != -1.0 {
                 average += course.getAverage()
@@ -246,23 +245,6 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
         else {
             return 1
         }
-    }
-    
-    func getAllCourses() {
-        var tempCourses: [Course] = []
-        for group in groups {
-            tempCourses += group.courses
-        }
-        self.courses = tempCourses
-    }
-    
-    func getIndexForGroup(nameOfGroup: String) -> Int {
-        for i in 0..<groups.count {
-            if groups[i].groupName == nameOfGroup {
-                return i
-            }
-        }
-        return -1
     }
     
     
@@ -294,19 +276,15 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
         else if (segue.identifier == "allCoursesSegue" || segue.identifier == "ShowGroupSegue") {
             let destView = segue.destination.childViewControllers[0] as? CourseTableViewController
-            print("StartUpView: prepare: Going to CourseView")
-            
-            destView?.groups = self.groups
             
             if let cell = sender as? UITableViewCell {
                 let cellLabel = cell.textLabel?.text
-                let nameOfGroup = cellLabel?.substring(to: (cellLabel?.index((cellLabel?.endIndex)!, offsetBy: -9))!)
+                let dictKey = cellLabel?.substring(to: (cellLabel?.index((cellLabel?.endIndex)!, offsetBy: -9))!)
                 
-                destView?.index = getIndexForGroup(nameOfGroup: nameOfGroup!)
-                print("StartUpView: prepare: Sender is a UITableViewCell with groupName=\(nameOfGroup) and index=\(destView?.index)")
+                destView?.dictionaryKey = dictKey!
             }
             else {
-                destView?.index = -1
+                destView?.dictionaryKey = ""
             }
         }
     }
@@ -324,15 +302,15 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
             return 6
         }
         else if section == 1 {
-            print("StartUpView: numberOfRowsInSection: Section 1 has \(groups.count) rows")
-            if groups[getIndexForGroup(nameOfGroup: "Ungrouped Courses")].courses.count == 0 {
-                return groups.count-1
+            print("StartUpView: numberOfRowsInSection: Section 1 has \(groups.keys.count) rows")
+            if groups.group["Ungrouped Courses"]?.count == 0 {
+                return groups.keys.count-1
             }
             else {
-                return groups.count
+                return groups.keys.count
             }
         }
-        print("StartUpView: numberOfRowsInSection: This print statement should never be printed.")
+        print("StartUpView: numberOfRowsInSection: This print statement should not be printed.")
         return 0
     }
     
@@ -348,7 +326,7 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
             switch indexPath.row {
             case 0:
                 cell?.textLabel?.text = "Number of Courses:"
-                cell?.detailTextLabel?.text = "\(courses.count)"
+                cell?.detailTextLabel?.text = "\(groups.courses.count)"
                 break
                 
             case 1:
@@ -409,19 +387,18 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
         else {
             print("StartUpView: cellForRowAt: Currently looking at row: \(indexPath.row)")
             var index = 0
-            if (groups[getIndexForGroup(nameOfGroup: "Ungrouped Courses")].courses.count == 0) {
+            if (groups.group["Ungrouped Courses"]?.count == 0) {
                 index = indexPath.row + 1
             }
             else {
                 index = indexPath.row
             }
             
-            cell?.textLabel?.text = "\(groups[index].groupName) Average:"
+            cell?.textLabel?.text = "\(groups.keys[index]) Average:"
             cell?.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
             cell?.selectionStyle = UITableViewCellSelectionStyle.blue
             
-//            let groupAverage = round(10*groups.getGroupAverage(key: groups.keys[index])*100)/10
-            let groupAverage = round(10*groups[index].getGroupAverage()*100)/10
+            let groupAverage = round(10*groups.getGroupAverage(key: groups.keys[index])*100)/10
             if groupAverage == -100.0 {
                 cell?.detailTextLabel?.text = "N/A"
             }
@@ -450,13 +427,8 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
     }
     
-    func load() -> [Group]? {
-        print("StartUpViewController: load: Loading groups and courses.")
-        return (NSKeyedUnarchiver.unarchiveObject(withFile: Group.ArchiveURL.path) as! [Group]?)
+    func loadCourses() -> [Course]? {
+        print("GroupsTable: load: Loading courses.")
+        return (NSKeyedUnarchiver.unarchiveObject(withFile: Course.ArchiveURL.path) as! [Course])
     }
-    
-//    func loadCourses() -> [Course]? {
-//        print("GroupsTable: load: Loading courses.")
-//        return (NSKeyedUnarchiver.unarchiveObject(withFile: Course.ArchiveURL.path) as! [Course])
-//    }
 }
