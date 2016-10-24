@@ -16,9 +16,6 @@ class MarksTableViewController: UITableViewController {
     @IBOutlet weak var remainingWeight: UILabel!
     @IBOutlet weak var staticPotentialMark: UILabel!
     @IBOutlet weak var potentialMark: UILabel!
-//    var dictionaryKey = ""
-//    var indexInDictionary = -1
-//    var indexInCourseList = -1
     var index = -1
     var courseIndex = -1
     var groups: [Group] = []
@@ -30,7 +27,7 @@ class MarksTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("MarksTable: viewDidLoad -> Entry: Courses.count=\(groups[index].courses.count), courseName=\(courseName)")
+        print("MarksTable: viewDidLoad -> Entry: courseName=\(courseName)")
         
         if (self.index == -1) {
 //            for i in 0..<groups.courses.count {

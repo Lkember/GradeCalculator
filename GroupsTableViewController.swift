@@ -74,7 +74,7 @@ class GroupsTableViewController: UITableViewController {
                 let ungroupedCourses = sourceVC.groups[getGroupIndexWithName(nameOfGroup: "Ungrouped Courses")]
                 
                 for i in 0 ..< indexPaths.count {
-                    print("GroupsTable: unwindToCourseDict: Courses to move: \(ungroupedCourses.courses[indexPaths[i].row].courseName)")
+                    print("GroupsTable: unwindToCourseDict: Courses to move: \(ungroupedCourses.courses[indexPaths[i].row - i].courseName)")
                     coursesToMove.append(groups[0].courses.remove(at: (indexPaths[i].row) - i))
                 }
                 

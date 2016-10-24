@@ -103,8 +103,6 @@ class CourseTableViewController: UITableViewController {
             let destVC = segue.destination as? MarksTableViewController
             
             destVC?.groups = self.groups
-            print("DestVC count = \(destVC?.groups.count)")
-//            destVC?.dictionaryKey = self.dictionaryKey
             destVC?.courseName = (selectedCourse?.courseName.text)!
             destVC?.index = self.index
             print("CourseTable: prepare: destVC.index=\(destVC?.index)")
@@ -369,12 +367,13 @@ class CourseTableViewController: UITableViewController {
     
     // Returns the number of sections in the table
     override func numberOfSections(in tableView: UITableView) -> Int {
-        //TODO: Make the number of sections equal to the number of groups
         if (index == -1) {
-            return 1
+            print("CourseTable: numberOfSections: Returning \(groups.count)")
+            return groups.count
         }
         else {
-            return groups.count
+            print("CourseTable: numberOfSections: Returning static(1)")
+            return 1
         }
     }
     
