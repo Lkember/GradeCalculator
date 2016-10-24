@@ -370,7 +370,12 @@ class CourseTableViewController: UITableViewController {
     // Returns the number of sections in the table
     override func numberOfSections(in tableView: UITableView) -> Int {
         //TODO: Make the number of sections equal to the number of groups
-        return 1
+        if (index == -1) {
+            return 1
+        }
+        else {
+            return groups.count
+        }
     }
     
     // Returns the number of rows per section
@@ -378,9 +383,11 @@ class CourseTableViewController: UITableViewController {
         //TODO: Make this function return the number of courses in a section (group) using the keys array
         
         if (index == -1) {
+            print("CourseTable: numberOfRowsInSection: Returning \(groups[section].courses.count) for section \(section)")
             return groups[section].courses.count
         }
         else {
+            print("CourseTable: numberOfRowsInSection: Returning \(groups[index].courses.count)")
             return groups[index].courses.count
         }
     }
@@ -546,6 +553,18 @@ class CourseTableViewController: UITableViewController {
         }
         save()
     }
+    
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if (groups[section].courses.count != 0) {
+            return groups[section].groupName
+        }
+        else {
+            return nil
+        }
+    }
+    
+    
     
     // Override to support conditional rearranging of the table view.
     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {

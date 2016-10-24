@@ -306,6 +306,7 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
                 print("StartUpView: prepare: Sender is a UITableViewCell with groupName=\(nameOfGroup) and index=\(destView?.index)")
             }
             else {
+                print("StartupView: prepare: Sender is AllCourses button. Seting destView index to -1.")
                 destView?.index = -1
             }
         }
