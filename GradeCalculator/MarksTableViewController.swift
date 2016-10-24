@@ -18,6 +18,7 @@ class MarksTableViewController: UITableViewController {
     @IBOutlet weak var potentialMark: UILabel!
     var index = -1
     var courseIndex = -1
+    var groupIndex = -1
     var groups: [Group] = []
     var course = Course(courseName: "")
     var courseName = ""
@@ -30,26 +31,20 @@ class MarksTableViewController: UITableViewController {
         print("MarksTable: viewDidLoad -> Entry: courseName=\(courseName)")
         
         if (self.index == -1) {
-//            for i in 0..<groups.courses.count {
-//                if groups.courses[i].courseName == courseName {
-//                    print("MarksTable: viewDidLoad: Course found at index \(i)")
-//                    self.course = groups.courses[i]
-//                    self.indexInCourseList = i
-//                    self.navigationItem.title = groups.courses[i].courseName
-//                    break
-//                }
-//            }
-//            var dictAndIndex = groups.getDictionaryAndIndex(course: course!.courseName)
-//            if (dictAndIndex.count == 1) {
-//                print("MarksTableView: viewDidLoad: FAILURE THE GROUP/COURSE WAS NOT FOUND.")
-//            }
-//            
-//            dictionaryKey = groups.keys[dictAndIndex[0]]
-//            indexInDictionary = dictAndIndex[1]
-//            
-//            print("MarksTableView: viewDidLoad: The dictionaryKey is \(dictionaryKey) and the indexInDictionary is \(indexInDictionary)")
+            print("MarksTable: viewDidLoad: index is -1")
+            for i in 0..<groups.count {
+                courseIndex = groups[i].findIndexInCourseList(course: courseName)
+                if courseIndex != -1 {
+                    groupIndex = i
+                    break
+                }
+            }
+            
+            self.course = groups[groupIndex].courses[courseIndex]
+            print("MarksTable: viewDidLoad: Found. User clicked \(groups[groupIndex].courses[courseIndex].courseName)")
         }
         else {
+            print("MarksTable: viewDidLoad: index is \(index)")
             for i in 0..<groups[index].courses.count {
                 if groups[index].courses[i].courseName == courseName {
                     print("MarksTable: Found. User clicked \(groups[index].courses[i].courseName)")
@@ -277,8 +272,6 @@ class MarksTableViewController: UITableViewController {
         course!.projectWeights[destinationIndexPath.row] = tempProjectWeight!
         
         groups[index].courses[courseIndex] = course!
-//        groups.courses[indexInCourseList] = course!
-//        groups.group[dictionaryKey]![indexInDictionary] = course!
         
         save()
         print("MarksTable: tableView moveRowAt -> Exit")

@@ -35,19 +35,27 @@ class Course: NSObject, NSCoding {
     
     // MARK: Initilization
     
-    init?(courseName: String) {
-        // Initialize stored properties.
-        self.courseName = courseName
+    override init() {
+        self.courseName = ""
         projects = []
         projectMarks = []
         projectOutOf = []
         projectWeights = []
-        
-        super.init()
-        
+    }
+    
+    init?(courseName: String) {
+        // Initialize stored properties.
         if courseName.isEmpty {
             return nil
         }
+        
+        self.courseName = courseName
+        projects = [String]()
+        projectMarks = [Double]()
+        projectOutOf = [Double]()
+        projectWeights = [Double]()
+        
+        super.init()
     }
     
     init?(courseName: String, projects: [String], projectMarks: [Double], projectOutOf: [Double],projectWeights: [Double]) {

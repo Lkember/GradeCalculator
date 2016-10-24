@@ -44,26 +44,6 @@ class Group: NSObject, NSCoding {
     
     //MARK: - Functions
     
-    // A function which finds the index and dictionary key for a course
-    // The return is in the form of [key, index]
-//    func getDictionaryAndIndex(course: String) -> [Int] {
-//        
-//        // loop through each key
-//        for i in 0..<keys.count {
-//            
-//            //loop through each course in each dictionary
-//            for j in 0..<group[keys[i]]!.count {
-//                
-//                // if the current course name is equal to the input course name, then we have a match
-//                if (group[keys[i]]![j].courseName == course) {
-//                    return [i,j]
-//                }
-//            }
-//        }
-//        
-//        return [-1]
-//    }
-    
     //A function which returns the index to a course in the courses list only
     //Returns -1 if course is not found
     func findIndexInCourseList(course: String) -> Int {
@@ -123,22 +103,8 @@ class Group: NSObject, NSCoding {
         }
     }
     
-    //A function to make sure the keys array is correct
-//    func updateKeys() {
-//        print("Group: UpdateKeys -> Entry group.count=\(group.count), keys.count=\(keys.count)")
-//        if group.count == keys.count {
-//            return
-//        }
-//        else {
-//            keys.removeAll()
-//            for (key, _) in group {
-//                keys.append(key)
-//            }
-//        }
-//        print("Group: UpdateKeys -> Exit")
-//    }
     
-    
+    // Calculates and returns the average of the entire group
     func getGroupAverage() -> Double {
         print("Group: getGroupAverage -> Entry")
         var counter = 0

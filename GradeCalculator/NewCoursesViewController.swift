@@ -12,7 +12,7 @@ class NewCoursesViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: Properties
     var courses = [Course]()
-    var course: Course?
+    var course: Course = Course()
     @IBOutlet weak var courseName: UITextField!
     @IBOutlet weak var warningLabel: UILabel!
     @IBOutlet weak var saveButton: UIBarButtonItem!
@@ -81,8 +81,8 @@ class NewCoursesViewController: UIViewController, UITextFieldDelegate {
             warningLabel.isHidden = false;
             return false
         }
-        course = Course(courseName: courseInput)
-        courses.append(course!)
+        course = Course(courseName: courseInput)!
+        courses.append(course)
         warningLabel.isHidden = true
         return true
     }

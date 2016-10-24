@@ -267,7 +267,8 @@ class CourseTableViewController: UITableViewController {
     
     @IBAction func unwindToCourseList(_ sender: UIStoryboardSegue) {
         print("CourseTable: unwindToCourseList: Adding course to course list.")
-        if let sourceViewController = sender.source as? NewCoursesViewController, let course = sourceViewController.course {
+        if let sourceViewController = sender.source as? NewCoursesViewController {
+            let course = sourceViewController.course
             print("CourseTable: unwindToCourseList: New course: \(course.courseName)")
             let newIndexPath: IndexPath
             

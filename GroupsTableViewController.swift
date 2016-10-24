@@ -147,10 +147,14 @@ class GroupsTableViewController: UITableViewController {
         else {
             tableView.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
         }
-        
-        if groups[indexPath.row].groupName != "Ungrouped Courses" {
-            print("GroupsTable: canEditRowAt \(indexPath.row) -> True")
+        if (groups[getGroupIndexWithName(nameOfGroup: "Ungrouped Courses")].courses.count == 0) {
             return true
+        }
+        else {
+            if groups[indexPath.row].groupName != "Ungrouped Courses" {
+                print("GroupsTable: canEditRowAt \(indexPath.row) -> True")
+                return true
+            }
         }
         print("GroupsTable: canEditRowAt \(indexPath.row) -> False")
         return false
