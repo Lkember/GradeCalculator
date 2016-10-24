@@ -86,6 +86,13 @@ class Group: NSObject, NSCoding {
 //    }
     
     //A function to edit the courseName of a given course
+<<<<<<< HEAD
+    func editCourse(courseToEdit: Course?, newCourseName: String) -> Bool {
+        for course in courses {
+            if courseToEdit == course {
+                course.courseName = newCourseName
+                return true
+=======
     func editCourse(courseToEdit: Course?, newCourseName: String) {
 //        for key in keys {
 //            for course in self.group[key]! {
@@ -99,18 +106,26 @@ class Group: NSObject, NSCoding {
             if course.courseName == courseToEdit?.courseName {
                 course.courseName = newCourseName
                 return
+>>>>>>> master
             }
         }
+        return false
     }
     
     
     //A function to delete a course from the courses list
     func deleteFromCourseList(courseToDelete: Course?) {
+<<<<<<< HEAD
+        for i in 0..<courses.count {
+            if courses[i] == courseToDelete {
+                courses.remove(at: i)
+=======
         print("Group: deleteFromCourseList -> Entry: Deleting course \(courseToDelete?.courseName)")
         for i in 0..<self.courses.count {
             if self.courses[i] == courseToDelete {
                 print("Group: deleteFromCourseList -> Exit: Course found. Deleting course \(courses[i].courseName)")
                 self.courses.remove(at: i)
+>>>>>>> master
                 return
             }
         }
@@ -119,7 +134,11 @@ class Group: NSObject, NSCoding {
     //Can probably delete this method
     //A function to make sure the keys array is correct
 //    func updateKeys() {
+<<<<<<< HEAD
+//        print("Group: UpdateKeys -> Entry group.count=\(group.count), keys.count=\(keys.count)")
+=======
 //        print("Group: UpdateKeys -> Entry")
+>>>>>>> master
 //        if group.count == keys.count {
 //            return
 //        }
@@ -133,8 +152,12 @@ class Group: NSObject, NSCoding {
 //    }
     
     
+<<<<<<< HEAD
+    func getGroupAverage() -> Double {
+=======
     // A function which gets the average for the current group
     func getGroupAverage(key: String) -> Double {
+>>>>>>> master
         print("Group: getGroupAverage -> Entry")
         
         var counter = 0
@@ -173,7 +196,11 @@ class Group: NSObject, NSCoding {
     }
     
     required convenience init?(coder aDecoder: NSCoder) {
+<<<<<<< HEAD
+        let groupName = aDecoder.decodeObject(forKey: PropertyKey.groupNameKey) as! String
+=======
         let groupName = aDecoder.decodeObject(forKey: PropertyKey.groupNameKey) as! [String: [Course]]
+>>>>>>> master
         let courses = aDecoder.decodeObject(forKey: PropertyKey.coursesKey) as! [Course]
         
         self.init(groupName: groupName, courses: courses)
