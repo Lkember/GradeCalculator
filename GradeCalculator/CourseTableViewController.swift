@@ -125,6 +125,16 @@ class CourseTableViewController: UITableViewController {
     
     // MARK: Functions
     
+    //Find index for course with courseName
+    func findIndexForGroup(groupName: String) -> Int {
+        for i in 0..<groups.count {
+            if groups[i].groupName == groupName {
+                return i
+            }
+        }
+        return -1
+    }
+    
     // Go back to the details view
     @IBAction func backToDetailView(_ sender: AnyObject) {
         print("CourseTable: backToDetailView: Going back a view")
@@ -273,11 +283,14 @@ class CourseTableViewController: UITableViewController {
             let newIndexPath: IndexPath
             
             if (index == -1) {
-                newIndexPath = IndexPath(row: groups[0].courses.count, section: 0)
-                groups[0].courses.append(course)
+                print("CourseTable: unwindToCourseList: index is -1")
+                let tempIndex = findIndexForGroup(groupName: "Ungrouped Courses")
+                newIndexPath = IndexPath(row: groups[tempIndex].courses.count, section: tempIndex)
+                groups[tempIndex].courses.append(course)
             }
             else {
-                newIndexPath = IndexPath(row: groups[index].courses.count, section: index)
+                print("CourseTable: unwindToCourseList: index is \(index)")
+                newIndexPath = IndexPath(row: groups[index].courses.count, section: 0)
                 groups[index].courses.append(course)
             }
             
@@ -380,18 +393,29 @@ class CourseTableViewController: UITableViewController {
     
     // Returns the number of rows per section
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //TODO: Make this function return the number of courses in a section (group) using the keys array
-        
         if (index == -1) {
-            print("CourseTable: numberOfRowsInSection: Returning \(groups[section].courses.count) for section \(section)")
+            print("CourseTable: numberOfRowsInSection \(section): Returning \(groups[section].courses.count) for section \(section)")
             return groups[section].courses.count
         }
         else {
-            print("CourseTable: numberOfRowsInSection: Returning \(groups[index].courses.count)")
+            print("CourseTable: numberOfRowsInSection \(section): Returning \(groups[index].courses.count)")
             return groups[index].courses.count
         }
     }
-
+    
+    //Returns the title for the current section
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if index == -1 {
+            if groups[section].courses.count != 0 {
+                return groups[section].groupName
+            }
+            return nil
+        }
+        else {
+            return nil
+        }
+    }
+    
     // Setting the data of each cell
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentifier = "CourseTableViewCell"
@@ -552,16 +576,6 @@ class CourseTableViewController: UITableViewController {
             }
         }
         save()
-    }
-    
-    
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if (groups[section].courses.count != 0) {
-            return groups[section].groupName
-        }
-        else {
-            return nil
-        }
     }
     
     

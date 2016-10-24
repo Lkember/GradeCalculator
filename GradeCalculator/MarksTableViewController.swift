@@ -18,7 +18,7 @@ class MarksTableViewController: UITableViewController {
     @IBOutlet weak var potentialMark: UILabel!
     var index = -1
     var courseIndex = -1
-    var groupIndex = -1
+//    var groupIndex = -1
     var groups: [Group] = []
     var course = Course(courseName: "")
     var courseName = ""
@@ -35,13 +35,14 @@ class MarksTableViewController: UITableViewController {
             for i in 0..<groups.count {
                 courseIndex = groups[i].findIndexInCourseList(course: courseName)
                 if courseIndex != -1 {
-                    groupIndex = i
+//                    groupIndex = i
+                    index = i
                     break
                 }
             }
             
-            self.course = groups[groupIndex].courses[courseIndex]
-            print("MarksTable: viewDidLoad: Found. User clicked \(groups[groupIndex].courses[courseIndex].courseName)")
+            self.course = groups[index].courses[courseIndex]
+            print("MarksTable: viewDidLoad: Found. User clicked \(groups[index].courses[courseIndex].courseName)")
         }
         else {
             print("MarksTable: viewDidLoad: index is \(index)")
@@ -49,7 +50,7 @@ class MarksTableViewController: UITableViewController {
                 if groups[index].courses[i].courseName == courseName {
                     print("MarksTable: Found. User clicked \(groups[index].courses[i].courseName)")
                     self.course = groups[index].courses[i]
-                    self.courseIndex = i
+//                    self.courseIndex = i
                     self.navigationItem.title = course!.courseName
                     break
                 }
@@ -127,7 +128,7 @@ class MarksTableViewController: UITableViewController {
                 tableView.insertRows(at: [newIndexPath], with: .bottom)
             }
             
-            print("MarksTable: unwindToProjectList: Putting course in course list and dictionary.")
+            print("MarksTable: unwindToProjectList: Adding course to group.")
             groups[index].courses[courseIndex] = course!
         }
         
