@@ -171,7 +171,6 @@ class CourseTableViewController: UITableViewController {
                 }
             }
             else {
-                //TODO: NEED TO IMPLEMENT STILL
                 var offset = 0
                 var previousSection = indexPaths![0].section
                 
@@ -587,6 +586,15 @@ class CourseTableViewController: UITableViewController {
                 groups[index].courses[destinationIndexPath.row] = temp
             }
         }
+        else {
+            //TODO: Need to delete course from current group and add to a new group
+            let tempCourse = groups[sourceIndexPath.section].courses.remove(at: sourceIndexPath.row)
+            tableView.deleteRows(at: [sourceIndexPath], with: .fade)
+            
+            
+        }
+        
+        //////////// LOGGING START
         if index == -1 {
             print("CourseTable: moveRowAt: New order of courses:")
             for course in groups[sourceIndexPath.section].courses {
@@ -599,6 +607,8 @@ class CourseTableViewController: UITableViewController {
                 print(course.courseName)
             }
         }
+        /////////// END LOGGING
+        
         save()
         print("CourseTable: moveRowAt -> Exit")
     }
