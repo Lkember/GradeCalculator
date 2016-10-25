@@ -192,6 +192,8 @@ class CourseTableViewController: UITableViewController {
             //If courses.count is empty, then hide toolbar. This is to fix a bug where the toolbar appears when no courses are in the list
             self.navigationController!.toolbar.isHidden = true
             
+            self.updateLabels()
+            
             print("CoursesTable: deleteCourses -> Exit")
         }
     }
@@ -352,30 +354,6 @@ class CourseTableViewController: UITableViewController {
         self.present(alertController, animated: true, completion: nil)
     }
     
-    
-//    func loadSampleCourses() {
-//        print("CourseTable: loadSampleCourses -> Entry")
-//        let calculus = Course(courseName: "Calculus 1000")
-//        let physics = Course(courseName: "Physics 1026")
-//        let compSci = Course(courseName: "CompSci 1027")
-//        calculus?.addProject("Midterm", grade: 0.86, outOf: 1, weight: 25)
-//        calculus?.addProject("Assignment 1", grade: 0.95, outOf: 1, weight: 12)
-//        calculus?.addProject("Assignment 2", grade: 0.82, outOf: 1, weight: 13)
-//        physics?.addProject("Midterm", grade: 0.78, outOf: 1, weight: 35)
-//        physics?.addProject("Assignment 1", grade: 0.67, outOf: 1, weight: 1)
-//        physics?.addProject("Assignment 2", grade: 1.0, outOf: 1, weight: 1)
-//        
-//        groups.courses.append(calculus!)
-//        groups.courses.append(physics!)
-//        groups.courses.append(compSci!)
-//        
-//        groups.group["Ungrouped Courses"]?.append(calculus!)
-//        groups.group["Ungrouped Courses"]?.append(physics!)
-//        groups.group["Ungrouped Courses"]?.append(compSci!)
-//        
-//        print("CourseTable: loadSampleCourses -> Exit")
-//    }
-    
 
     // MARK: - Table view data source
     
@@ -523,6 +501,7 @@ class CourseTableViewController: UITableViewController {
             
             self.save()
             self.tableView.deleteRows(at: [indexPath], with: .fade)
+            self.updateLabels()
         });
         
         let editCourseTitle = UITableViewRowAction(style: UITableViewRowActionStyle.normal, title: "Edit", handler: { action, indexPath in
