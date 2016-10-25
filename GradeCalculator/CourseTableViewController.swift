@@ -111,9 +111,8 @@ class CourseTableViewController: UITableViewController {
         else if segue.identifier=="AddItem" {
             print("CourseTable: prepare: Setting courses to view.")
             let destinationViewController = segue.destination.childViewControllers[0] as? NewCoursesViewController
-            destinationViewController?.courses = groups[0].courses;
-            
-//            destinationViewController?.groups = self.groups
+            destinationViewController?.groups = groups
+            destinationViewController?.index = index
         }
     }
     
@@ -283,21 +282,38 @@ class CourseTableViewController: UITableViewController {
             let course = sourceViewController.course
             print("CourseTable: unwindToCourseList: New course: \(course.courseName)")
             let newIndexPath: IndexPath
+            let groupIndex = sourceViewController.groupSelection.selectedRow(inComponent: 0)
             
             if (index == -1) {
-                print("CourseTable: unwindToCourseList: index is -1")
-                let tempIndex = findIndexForGroup(groupName: "Ungrouped Courses")
-                newIndexPath = IndexPath(row: groups[tempIndex].courses.count, section: tempIndex)
-                groups[tempIndex].courses.append(course)
+                newIndexPath = IndexPath(row: groups[groupIndex].courses.count, section: groupIndex)
+                groups[groupIndex].courses.append(course)
+                tableView.insertRows(at: [newIndexPath], with: .bottom)
+                tableView.reloadRows(at: [newIndexPath], with: .fade)
             }
             else {
-                print("CourseTable: unwindToCourseList: index is \(index)")
-                newIndexPath = IndexPath(row: groups[index].courses.count, section: 0)
-                groups[index].courses.append(course)
+                if (index == groupIndex) {
+                    print("CourseTable: unwindToCourseList: index == groupIndex, adding course")
+                    newIndexPath = IndexPath(row: groups[groupIndex].courses.count, section: 0)
+                    groups[groupIndex].courses.append(course)
+                    tableView.insertRows(at: [newIndexPath], with: .bottom)
+                    tableView.reloadRows(at: [newIndexPath], with: .fade)
+                }
+                else {
+                    groups[groupIndex].courses.append(course)
+                }
             }
             
-            tableView.insertRows(at: [newIndexPath], with: .bottom)
-            tableView.reloadRows(at: [newIndexPath], with: .fade)
+//            if (index == -1) {
+//                print("CourseTable: unwindToCourseList: index is -1")
+//                let tempIndex = findIndexForGroup(groupName: "Ungrouped Courses")
+//                newIndexPath = IndexPath(row: groups[tempIndex].courses.count, section: tempIndex)
+//                groups[tempIndex].courses.append(course)
+//            }
+//            else {
+//                print("CourseTable: unwindToCourseList: index is \(index)")
+//                newIndexPath = IndexPath(row: groups[index].courses.count, section: 0)
+//                groups[index].courses.append(course)
+//            }
             
             save()
         }
@@ -527,7 +543,7 @@ class CourseTableViewController: UITableViewController {
                         sourceIndex += 1
                     }
                 }
-                else {
+                else if sourceIndexPath.row > destinationIndexPath.row {
                     while (sourceIndex > destinationIndexPath.row) {
                         groups[sourceIndexPath.section].courses[sourceIndex] = groups[sourceIndexPath.section].courses[sourceIndex-1]
                         sourceIndex -= 1
@@ -545,16 +561,29 @@ class CourseTableViewController: UITableViewController {
                         sourceIndex += 1
                     }
                 }
-                else {
+                else if sourceIndexPath.row > destinationIndexPath.row {
                     while (sourceIndex > destinationIndexPath.row) {
                         groups[index].courses[sourceIndex] = groups[index].courses[sourceIndex-1]
                         sourceIndex -= 1
                     }
-                    groups[index].courses[destinationIndexPath.row] = temp
                 }
+                groups[index].courses[destinationIndexPath.row] = temp
+            }
+        }
+        if index == -1 {
+            print("CourseTable: moveRowAt: New order of courses:")
+            for course in groups[sourceIndexPath.section].courses {
+                print(course.courseName)
+            }
+        }
+        else {
+            print("CourseTable: moveRowAt: New order of courses:")
+            for course in groups[index].courses {
+                print(course.courseName)
             }
         }
         save()
+        print("CourseTable: moveRowAt -> Exit")
     }
     
     

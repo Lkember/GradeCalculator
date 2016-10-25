@@ -16,16 +16,6 @@ class Group: NSObject, NSCoding {
 //    var keys: [String] = []
     
     //MARK: - init
-//    init(group: [String: [Course]], courses: [Course], keys: [String]) {
-//        self.group = group
-//        self.courses = courses
-//        self.keys = keys
-//        
-//        if (self.group.count == 0) {
-//            self.group["Ungrouped Courses"] = []
-//            self.keys.append("Ungrouped Courses")
-//        }
-//    }
 
     init(groupName: String, courses: [Course]) {
         self.groupName = groupName
@@ -55,6 +45,15 @@ class Group: NSObject, NSCoding {
         return -1
     }
     
+    // A function which checks to see if a course with this name already exists
+    func doesCourseNameExist(courseName: String) -> Bool {
+        for course in courses {
+            if course.courseName == courseName {
+                return true
+            }
+        }
+        return false
+    }
     
     // A function which removes all courses in a given array.
     // TODO: This method needs to be reimplemented.
