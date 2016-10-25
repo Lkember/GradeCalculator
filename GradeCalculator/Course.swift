@@ -121,9 +121,22 @@ class Course: NSObject, NSCoding {
         return weight
     }
     
-    func getPotentialMark(currAverage: Double, weightRemaining: Double) -> Double {
-        print("Courses: getPotentialMark: Entry currAverage: \(currAverage), weightRemaining: \(weightRemaining)")
-        let potential = (currAverage*(1-weightRemaining)) + weightRemaining
+    func getPotentialMark() -> Double {
+//        print("Courses: getPotentialMark: Entry currAverage: \(currAverage), weightRemaining: \(weightRemaining)")
+//        let potential = (currAverage*(1-weightRemaining)) + weightRemaining
+//        print("Courses: getPotentialMark: Exit Return \(potential)")
+//        return potential
+        let average = getAverage()
+        var activeWeight = 0.0
+        
+        for i in 0..<projects.count {
+            if projectMarks[i] != -1.0 {
+                activeWeight += projectWeights[i]
+            }
+        }
+        
+        let remainingWeight = 100.0 - activeWeight
+        let potential = ((average*(remainingWeight)) + remainingWeight)/100
         print("Courses: getPotentialMark: Exit Return \(potential)")
         return potential
     }

@@ -179,7 +179,7 @@ class MarksTableViewController: UITableViewController {
                     potentialMark.text = "100.0%"
                 }
                 else {
-                    let potential = course?.getPotentialMark(currAverage: average/100, weightRemaining: (100-weight)/100)
+                    let potential = course?.getPotentialMark()
                     potentialMark.text = "\((round(10*potential!*100)/10))%"
                 }
             }
