@@ -152,7 +152,15 @@ class CourseTableViewController: UITableViewController {
             print("CoursesTable: deleteCourses -> Entry: Deleting \(indexPaths!.count) rows")
             
             // the indexes must be sorted by row value since you can only delete one course at a time, the size of courses is always changing
+            for i in 0..<indexPaths!.count {
+                print("Index \(i): Section: \(indexPaths![i].section) Row: \(indexPaths![i].row)")
+            }
+            print("Sorting")
             indexPaths = indexPaths?.sorted()
+            for i in 0..<indexPaths!.count {
+                print("Index \(i): Section: \(indexPaths![i].section) Row: \(indexPaths![i].row)")
+            }
+            
             var offset = 0
             
             if (index != -1) {
@@ -163,23 +171,29 @@ class CourseTableViewController: UITableViewController {
                 }
             }
             else {
-                
                 //TODO: NEED TO IMPLEMENT STILL
-//                var tempCourses: [Course] = []
-//                
-//                for i in 0..<indexPaths!.count {
-//                    tempCourses.append(groups.courses[(indexPaths?[i].row)!])
-//                    print("CoursesTable: deleteCourses: Deleting course \(tempCourses.last!.courseName)")
-//                }
-//                
-//                for i in 0..<indexPaths!.count {
-//                    groups.courses.remove(at: (indexPaths![i].row) + offset)
-//                    
-//                    offset-=1
-//                }
-//                
-//                print("CoursesTable: deleteCourses -> Running removeCourses from Group Class.")
-//                groups.removeCourses(coursesToDelete: tempCourses)
+                var offset = 0
+                var previousSection = indexPaths![0].section
+                
+                for i in 0..<indexPaths!.count {
+                    
+                    if (previousSection == indexPaths![i].section && i != 0) {
+                        offset -= 1
+                    }
+                    else {
+                        offset = 0
+                    }
+                    
+                    if (i != 0) {
+                        previousSection = indexPaths![i].section
+                    }
+                    
+                    print("CourseTable: deleteCourses: Removing course: \(groups[indexPaths![i].section].courses[indexPaths![i].row + offset].courseName)")
+                    groups[indexPaths![i].section].courses.remove(at: (indexPaths![i].row) + offset)
+                    
+                }
+                
+                tableView.deleteRows(at: indexPaths!, with: .fade)
             }
             
             //reload data, update the labels and save changes
