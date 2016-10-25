@@ -68,6 +68,17 @@ class Course: NSObject, NSCoding {
         super.init()
     }
     
+    
+    //MARK: Functions
+    
+    // Deletes a project at the given index
+    func deleteAtRow(row: Int) {
+        projects.remove(at: row)
+        projectMarks.remove(at: row)
+        projectWeights.remove(at: row)
+        projectOutOf.remove(at: row)
+    }
+    
     // Returns the average of all completed projects
     func getAverage() -> Double {
         if projects.count != 0 {

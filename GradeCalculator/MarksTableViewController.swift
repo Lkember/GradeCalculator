@@ -18,7 +18,6 @@ class MarksTableViewController: UITableViewController {
     @IBOutlet weak var potentialMark: UILabel!
     var index = -1
     var courseIndex = -1
-//    var groupIndex = -1
     var groups: [Group] = []
     var course = Course(courseName: "")
     var courseName = ""
@@ -231,6 +230,25 @@ class MarksTableViewController: UITableViewController {
         
         return cell
     }
+    
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        print("GroupsTable: commit editingStyle -> Entry")
+        if editingStyle == .delete {
+            
+            course?.deleteAtRow(row: indexPath.row)
+            groups[index].courses[courseIndex] = course!
+            
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            
+            tableView.reloadData()
+        } else if editingStyle == .insert {
+            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+        }
+        save()
+        print("GroupsTable: commit editingStyle -> Exit")
+    }
+    
     
     //Allow the rearranging of cells
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
