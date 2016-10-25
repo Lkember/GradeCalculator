@@ -712,6 +712,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="backButton" destination="6u4-u2-lRB" id="Kyg-cF-uPM"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FPr-9d-9f8" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="iEr-iZ-A3P" userLabel="Exit" sceneMemberID="exit"/>
@@ -1041,8 +1044,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="yTc-G5-nQQ"/>
         <segue reference="XHZ-Lz-icb"/>
-        <segue reference="zPf-Tx-qAA"/>
         <segue reference="883-gk-HxU"/>
     </inferredMetricsTieBreakers>
 </document>

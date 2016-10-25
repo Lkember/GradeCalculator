@@ -44,6 +44,9 @@ class CourseTableViewController: UITableViewController {
         self.deleteButton.isEnabled = false
         self.editButton.isEnabled = false
         
+        // Rounding the back button
+        self.backButton.layer.cornerRadius = 10
+        
         print("CourseTable: viewDidLoad Loading courses")
         
         if let loadedData = load() {

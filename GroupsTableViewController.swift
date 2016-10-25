@@ -11,19 +11,21 @@ import UIKit
 class GroupsTableViewController: UITableViewController {
     
     var groups: [Group] = []
+    @IBOutlet weak var backButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         print("GroupsTableViewController: viewDidLoad")
         
-        //Making sure the keys are updated
-//        groups.updateKeys()
         save()
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
+        //Rounding the back button edges
+        self.backButton.layer.cornerRadius = 10
+        
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         self.navigationItem.leftBarButtonItem = self.editButtonItem
         self.navigationController?.navigationBar.barStyle = UIBarStyle.black
