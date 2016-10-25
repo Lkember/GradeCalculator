@@ -170,12 +170,12 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         var worst: Course = courses[0]
         var best: Course = courses[0]
-        var worstGrade = courses[0].getAverage()
-        var bestGrade = courses[0].getAverage()
+        var worstGrade = 9999999.0
+        var bestGrade = -1.0
         
         for course in courses {
             let average = course.getAverage()
-            if ((average < worstGrade) && (average != -1.0)) {
+            if ((average < worstGrade) && (average >= 0.0)) {
                 worstGrade = average
                 worst = course
             }
