@@ -421,6 +421,12 @@
                                 <action selector="editButtonIsClicked:" destination="3RL-h7-A66" id="3VZ-2u-kNe"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="Dsn-N7-Huf"/>
+                        <barButtonItem title="Change Group" id="jUf-0G-tli">
+                            <connections>
+                                <action selector="changeGroupAction:" destination="3RL-h7-A66" id="nZT-mz-HFU"/>
+                            </connections>
+                        </barButtonItem>
                     </toolbarItems>
                     <navigationItem key="navigationItem" id="lJd-jm-lvM">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="dWV-z9-3MA">
@@ -991,7 +997,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pkD-xh-Rbu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4036" y="-783"/>
+            <point key="canvasLocation" x="4036" y="-762"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="6A8-cw-A9Q">
@@ -1009,7 +1015,64 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dfr-JP-1u2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4934" y="-783"/>
+            <point key="canvasLocation" x="4934" y="-762"/>
+        </scene>
+        <!--Pop Up View Controller-->
+        <scene sceneID="1JD-un-jhk">
+            <objects>
+                <viewController storyboardIdentifier="PopUpView" id="rFf-QH-fKW" customClass="PopUpViewController" customModule="GradeCalculator" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="tIq-Te-TOq"/>
+                        <viewControllerLayoutGuide type="bottom" id="1I6-dk-wZx"/>
+                    </layoutGuides>
+                    <view key="view" alpha="0.69999999999999996" contentMode="scaleToFill" id="Brv-Kx-0PB">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LaS-Jb-aac">
+                                <subviews>
+                                    <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Nn2-YP-3lb">
+                                        <frame key="frameInset" minX="8" minY="35" height="170" maxX="8"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                    </pickerView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Select New Group:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Pe-bD-Uc5">
+                                        <frame key="frameInset" minX="8" minY="8" width="327" height="28"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w6x-zD-RuE">
+                                        <frame key="frameInset" minX="8" minY="213" width="164" height="54"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="0.1613331818" green="0.9067540395" blue="1" alpha="0.66212284480000005" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="Accept"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dEL-MZ-IMd">
+                                        <frame key="frameInset" minX="171" minY="213" width="164" height="54"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="0.1613331818" green="0.9067540395" blue="1" alpha="0.66212284480000005" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="Cancel"/>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.0" green="0.5447398671" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="275" id="ztr-Um-Z7R"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.89963158629999995" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="LaS-Jb-aac" firstAttribute="centerX" secondItem="Brv-Kx-0PB" secondAttribute="centerX" id="50q-ru-xdX"/>
+                            <constraint firstItem="LaS-Jb-aac" firstAttribute="centerY" secondItem="Brv-Kx-0PB" secondAttribute="centerY" id="9uh-0h-WGd"/>
+                            <constraint firstItem="LaS-Jb-aac" firstAttribute="trailing" secondItem="Brv-Kx-0PB" secondAttribute="trailingMargin" id="bwc-vy-ZYE"/>
+                            <constraint firstItem="LaS-Jb-aac" firstAttribute="leading" secondItem="Brv-Kx-0PB" secondAttribute="leadingMargin" id="tNm-aa-72F"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AwO-E2-KlG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="172" y="-762.36881559220399"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="2Dr-up-M1u">
@@ -1049,8 +1112,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="yTc-G5-nQQ"/>
         <segue reference="883-gk-HxU"/>
         <segue reference="Ogw-IM-3dy"/>
+        <segue reference="yTc-G5-nQQ"/>
     </inferredMetricsTieBreakers>
 </document>

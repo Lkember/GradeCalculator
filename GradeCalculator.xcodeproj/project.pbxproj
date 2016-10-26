@@ -23,6 +23,7 @@
 		B28A7E171D5BA2BE00C2ADEB /* AddProjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28A7E161D5BA2BE00C2ADEB /* AddProjectViewController.swift */; };
 		B28A7E2E1D61FF0300C2ADEB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B28A7E2D1D61FF0300C2ADEB /* Main.storyboard */; };
 		B28A7E331D63852600C2ADEB /* NewCoursesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28A7E321D63852600C2ADEB /* NewCoursesViewController.swift */; };
+		B28FBA641DC04BA7004CEA67 /* PopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28FBA631DC04BA7004CEA67 /* PopUpViewController.swift */; };
 		B2E4E4601DA8A23200CBF92B /* AddGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E4E45F1DA8A23200CBF92B /* AddGroupViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -66,6 +67,7 @@
 		B28A7E161D5BA2BE00C2ADEB /* AddProjectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddProjectViewController.swift; sourceTree = "<group>"; };
 		B28A7E2D1D61FF0300C2ADEB /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B28A7E321D63852600C2ADEB /* NewCoursesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewCoursesViewController.swift; sourceTree = "<group>"; };
+		B28FBA631DC04BA7004CEA67 /* PopUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopUpViewController.swift; sourceTree = "<group>"; };
 		B2E4E45F1DA8A23200CBF92B /* AddGroupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddGroupViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -131,6 +133,7 @@
 				B21A84221D9D5721004C33ED /* StartUpViewController.swift */,
 				B274AE991D46A5B100E732FD /* Assets.xcassets */,
 				B28A7E2D1D61FF0300C2ADEB /* Main.storyboard */,
+				B28FBA631DC04BA7004CEA67 /* PopUpViewController.swift */,
 				B274AE9B1D46A5B100E732FD /* LaunchScreen.storyboard */,
 				B274AE9E1D46A5B100E732FD /* Info.plist */,
 			);
@@ -297,6 +300,7 @@
 				B28A7E331D63852600C2ADEB /* NewCoursesViewController.swift in Sources */,
 				B274AEC51D46AFB600E732FD /* Course.swift in Sources */,
 				B274AEC31D46AEE500E732FD /* CourseTableViewController.swift in Sources */,
+				B28FBA641DC04BA7004CEA67 /* PopUpViewController.swift in Sources */,
 				B21A84231D9D5721004C33ED /* StartUpViewController.swift in Sources */,
 				B26FBB561D54D2360024DB9B /* MarksViewCell.swift in Sources */,
 				B28A7E0F1D5A55C800C2ADEB /* MarksTableViewController.swift in Sources */,

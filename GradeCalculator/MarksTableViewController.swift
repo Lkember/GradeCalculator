@@ -142,6 +142,15 @@ class MarksTableViewController: UITableViewController {
     }
     
     
+    @IBAction func changeGroupAction(_ sender: AnyObject) {
+        let popOverView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PopUpView") as! PopUpViewController
+        self.addChildViewController(popOverView)
+        popOverView.view.frame = self.view.frame
+        self.view.addSubview(popOverView.view)
+        popOverView.didMove(toParentViewController: self)
+    }
+    
+    
     // MARK: - Functions
     @IBAction func editButtonIsClicked(_ sender: UIBarButtonItem) {
         if (self.tableView.isEditing) {
