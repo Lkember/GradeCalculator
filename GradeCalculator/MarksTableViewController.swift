@@ -29,28 +29,7 @@ class MarksTableViewController: UITableViewController {
         
         print("MarksTable: viewDidLoad -> Entry: courseName=\(courseName)")
         
-        if (self.index == -1) {
-            print("MarksTable: viewDidLoad: index is -1")
-            for i in 0..<groups.count {
-                courseIndex = groups[i].findIndexInCourseList(course: courseName)
-                if courseIndex != -1 {
-//                    groupIndex = i
-                    index = i
-                    break
-                }
-            }
-            
-            self.course = groups[index].courses[courseIndex]
-            print("MarksTable: viewDidLoad: Found. User clicked \(groups[index].courses[courseIndex].courseName)")
-        }
-        else {
-            courseIndex = groups[index].findIndexInCourseList(course: courseName)
-            self.course = groups[index].courses[courseIndex]
-            self.navigationItem.title = courseName
-            
-            print("MarksTable: viewDidLoad: index is \(index), courseIndex is \(courseIndex)")
-            print("MarksTableView: viewDidLoad: Exit")
-        }
+        updateAttributes()
         
         tableView.rowHeight = 60.0
         
@@ -58,6 +37,13 @@ class MarksTableViewController: UITableViewController {
         self.navigationController?.navigationBar.barStyle = UIBarStyle.black
         self.navigationController?.toolbar.barStyle = UIBarStyle.black
         
+        updateLabels()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        print("MarksTable: viewDidAppear -> Entry: courseName=\(courseName)")
+        
+        updateAttributes()
         updateLabels()
     }
     
@@ -163,6 +149,31 @@ class MarksTableViewController: UITableViewController {
         }
         else {
             tableView.setEditing(true, animated: true)
+        }
+    }
+    
+    
+    func updateAttributes() {
+        if (self.index == -1) {
+            print("MarksTable: viewDidLoad: index is -1")
+            for i in 0..<groups.count {
+                courseIndex = groups[i].findIndexInCourseList(course: courseName)
+                if courseIndex != -1 {
+                    index = i
+                    break
+                }
+            }
+            
+            self.course = groups[index].courses[courseIndex]
+            print("MarksTable: viewDidLoad: Found. User clicked \(groups[index].courses[courseIndex].courseName)")
+        }
+        else {
+            courseIndex = groups[index].findIndexInCourseList(course: courseName)
+            self.course = groups[index].courses[courseIndex]
+            self.navigationItem.title = courseName
+            
+            print("MarksTable: viewDidLoad: index is \(index), courseIndex is \(courseIndex)")
+            print("MarksTableView: viewDidLoad: Exit")
         }
     }
     

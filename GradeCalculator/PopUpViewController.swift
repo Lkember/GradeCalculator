@@ -42,6 +42,17 @@ class PopUpViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         dismissAnimate()
     }
 
+    @IBAction func acceptIsClicked(_ sender: UIButton) {
+        if (groups[index].groupName != groups[groupSelector.selectedRow(inComponent: 0)].groupName) {
+            let tempCourse = groups[index].courses.remove(at: courseIndex)
+            groups[groupSelector.selectedRow(inComponent: 0)].courses.append(tempCourse)
+            index = groupSelector.selectedRow(inComponent: 0)
+            courseIndex = groups[index].courses.count
+        }
+        
+        dismissAnimate()
+    }
+    
     func animate() {
         self.view.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
         self.view.alpha = 0.0;

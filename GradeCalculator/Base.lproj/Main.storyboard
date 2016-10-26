@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="GSf-9V-Tb4">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11521.1" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="GSf-9V-Tb4">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11517.1"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -93,7 +93,7 @@
                                 <rect key="frame" x="0.0" y="172" width="375" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="k0a-xq-zfK" id="f6X-Gv-eQS">
-                                    <frame key="frameInset" width="375" height="59.5"/>
+                                    <frame key="frameInset" width="375" height="60"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="CourseInformation" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fny-tj-k8k">
@@ -341,10 +341,10 @@
                         </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MarksViewCell" rowHeight="60" id="Cg1-s5-LB5" customClass="MarksViewCell" customModule="GradeCalculator" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="222" width="375" height="60"/>
+                                <rect key="frame" x="0.0" y="202" width="375" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Cg1-s5-LB5" id="z3g-iP-tN2">
-                                    <frame key="frameInset" width="375" height="59.5"/>
+                                    <frame key="frameInset" width="375" height="60"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mark:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q16-4t-WYk">
@@ -748,7 +748,7 @@
                                 <color key="backgroundColor" red="0.0" green="0.5447398671" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CoursesCell" textLabel="prn-Xl-tgv" style="IBUITableViewCellStyleDefault" id="hDh-tf-4Jh">
-                                        <rect key="frame" x="0.0" y="28" width="359" height="52"/>
+                                        <rect key="frame" x="0.0" y="28" width="1000" height="52"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hDh-tf-4Jh" id="7eF-VN-SK2">
                                             <frame key="frameInset" width="359" height="51.5"/>
@@ -1047,6 +1047,9 @@
                                             <constraint firstAttribute="height" constant="54" id="QLr-XH-KAb"/>
                                         </constraints>
                                         <state key="normal" title="Accept"/>
+                                        <connections>
+                                            <action selector="acceptIsClicked:" destination="rFf-QH-fKW" eventType="touchUpInside" id="uIp-EA-wtL"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dEL-MZ-IMd">
                                         <color key="backgroundColor" red="0.1613331818" green="0.9067540395" blue="1" alpha="0.66212284480000005" colorSpace="calibratedRGB"/>
