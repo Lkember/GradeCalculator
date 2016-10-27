@@ -30,8 +30,8 @@ class PopUpViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         self.groupSelector.selectRow(index, inComponent: 0, animated: false)
         
         self.popUpView.layer.cornerRadius = 10
-        self.popUpView.layer.borderColor = UIColor.black.cgColor
-        self.popUpView.layer.borderWidth = 5
+        self.popUpView.layer.borderColor = UIColor.white.cgColor
+        self.popUpView.layer.borderWidth = 2
         
         self.animate()
         // Do any additional setup after loading the view.
