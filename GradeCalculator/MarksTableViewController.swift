@@ -129,6 +129,12 @@ class MarksTableViewController: UITableViewController {
     
     
     @IBAction func changeGroupAction(_ sender: AnyObject) {
+//        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.dark)
+//        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+////        blurEffectView.alpha = CGFloat.init(0.7)
+//        blurEffectView.frame = view.bounds
+//        view.addSubview(blurEffectView)
+        
         let popOverView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PopUpView") as! PopUpViewController
         self.addChildViewController(popOverView)
         

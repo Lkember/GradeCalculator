@@ -14,6 +14,7 @@ class PopUpViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     var groups: [Group] = []
     var index = -1
     var courseIndex = -1
+    @IBOutlet weak var popUpView: UIView!
     @IBOutlet weak var groupSelector: UIPickerView!
     
     // MARK: View
@@ -25,6 +26,12 @@ class PopUpViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         self.groupSelector.dataSource = self
         self.navigationController?.setToolbarHidden(true, animated: true)
         self.navigationController?.setNavigationBarHidden(true, animated: true)
+        
+        self.groupSelector.selectRow(index, inComponent: 0, animated: false)
+        
+        self.popUpView.layer.cornerRadius = 10
+        self.popUpView.layer.borderColor = UIColor.black.cgColor
+        self.popUpView.layer.borderWidth = 5
         
         self.animate()
         // Do any additional setup after loading the view.
