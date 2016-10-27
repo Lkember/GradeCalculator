@@ -416,10 +416,10 @@ class CourseTableViewController: UITableViewController {
     //Returns the title for the current section
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if index == -1 {
-            if groups[section].courses.count != 0 {
+//            if groups[section].courses.count != 0 {
                 return groups[section].groupName
-            }
-            return nil
+//            }
+//            return nil
         }
         else {
             return nil
