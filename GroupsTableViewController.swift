@@ -98,6 +98,10 @@ class GroupsTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("GroupsTable: numberOfRowsInSection: groups.count=\(groups.count) Printing groupNames:")
+        for group in groups {
+            print("\(group.groupName)")
+        }
         if (groups[getGroupIndexWithName(nameOfGroup: "Ungrouped Courses")].courses.count == 0) {
             return groups.count-1
         }
@@ -166,9 +170,9 @@ class GroupsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         print("GroupsTable: commit editingStyle -> Entry")
         if editingStyle == .delete {
-            
+
             if groups[indexPath.row].courses.count == 0 {
-                print("GroupsTable: commit editingStyle: count == 0")
+                print("GroupsTable: commit editingStyle: \(groups[indexPath.row].groupName).courses.count == 0")
                 groups.remove(at: indexPath.row)
             }
             else {
