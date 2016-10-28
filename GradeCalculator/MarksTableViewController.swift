@@ -16,6 +16,7 @@ class MarksTableViewController: UITableViewController {
     @IBOutlet weak var remainingWeight: UILabel!
     @IBOutlet weak var staticPotentialMark: UILabel!
     @IBOutlet weak var potentialMark: UILabel!
+
     var index = -1
     var courseIndex = -1
     var groups: [Group] = []
@@ -33,6 +34,8 @@ class MarksTableViewController: UITableViewController {
         
         tableView.rowHeight = 60.0
         
+        tableView.setEditing(false, animated: false)
+        
         self.navigationController?.setToolbarHidden(false, animated: true)
         self.navigationController?.navigationBar.barStyle = UIBarStyle.black
         self.navigationController?.toolbar.barStyle = UIBarStyle.black
@@ -42,6 +45,8 @@ class MarksTableViewController: UITableViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         print("MarksTable: viewDidAppear -> Entry: courseName=\(courseName)")
+        
+        tableView.setEditing(false, animated: false)
         
         updateAttributes()
         updateLabels()
@@ -150,11 +155,14 @@ class MarksTableViewController: UITableViewController {
     
     // MARK: - Functions
     @IBAction func editButtonIsClicked(_ sender: UIBarButtonItem) {
+        print("MarksTable: editButtonIsClicked")
         if (self.tableView.isEditing) {
             tableView.setEditing(false, animated: true)
+            sender.title = "Edit"
         }
         else {
             tableView.setEditing(true, animated: true)
+            sender.title = "Done"
         }
     }
     

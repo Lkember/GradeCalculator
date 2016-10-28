@@ -44,6 +44,8 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(AddProjectViewController.keyboardToggle(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(AddProjectViewController.keyboardToggle(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
+        deleteProjectButton.layer.cornerRadius = 10
+        
         incorrectInfoLabel.isHidden = true
         self.navigationController?.navigationBar.barStyle = UIBarStyle.black
         
@@ -112,8 +114,8 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
         let alertController = UIAlertController(title: "Delete Project", message: "Are you sure you want to delete this project?", preferredStyle: UIAlertControllerStyle.alert)
         alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
         
-        alertController.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.default, handler: { action in
-            // TODO
+        alertController.addAction(UIAlertAction(title: "Delete", style: UIAlertActionStyle.destructive, handler: { action in
+            
             self.performSegue(withIdentifier: "deleteProject", sender: self)
         }))
         

@@ -151,63 +151,77 @@ class CourseTableViewController: UITableViewController {
         if (indexPaths != nil) {
             print("CoursesTable: deleteCourses -> Entry: Deleting \(indexPaths!.count) rows")
             
-            // the indexes must be sorted by row value since you can only delete one course at a time, the size of courses is always changing
-            for i in 0..<indexPaths!.count {
-                print("Index \(i): Section: \(indexPaths![i].section) Row: \(indexPaths![i].row)")
-            }
-            print("Sorting")
-            indexPaths = indexPaths?.sorted()
-            for i in 0..<indexPaths!.count {
-                print("Index \(i): Section: \(indexPaths![i].section) Row: \(indexPaths![i].row)")
-            }
             
-            var offset = 0
+            ///////////////// BEGINNING OF UIALERT
+            let alertController = UIAlertController(title: "Delete Course(s)", message: "Are you sure you want to delete \(indexPaths!.count) course(s)", preferredStyle: UIAlertControllerStyle.alert)
             
-            if (index != -1) {
-                print("CoursesTable: deleteCourses -> Deleting from group \(groups[index].groupName)")
-                for i in 0..<indexPaths!.count {
-                    groups[index].courses.remove(at: (indexPaths?[i].row)! + offset)
-                    offset -= 1
-                }
-            }
-            else {
-                var offset = 0
-                var previousSection = indexPaths![0].section
+            alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
+            
+            alertController.addAction(UIAlertAction(title: "Delete", style: UIAlertActionStyle.destructive, handler: { action in
                 
+                // the indexes must be sorted by row value since you can only delete one course at a time, the size of courses is always changing
                 for i in 0..<indexPaths!.count {
-                    
-                    if (previousSection == indexPaths![i].section && i != 0) {
+                    print("Index \(i): Section: \(indexPaths![i].section) Row: \(indexPaths![i].row)")
+                }
+                print("Sorting")
+                indexPaths = indexPaths?.sorted()
+                for i in 0..<indexPaths!.count {
+                    print("Index \(i): Section: \(indexPaths![i].section) Row: \(indexPaths![i].row)")
+                }
+                
+                var offset = 0
+                
+                if (self.index != -1) {
+                    print("CoursesTable: deleteCourses -> Deleting from group \(self.groups[self.index].groupName)")
+                    for i in 0..<indexPaths!.count {
+                        self.groups[self.index].courses.remove(at: (indexPaths?[i].row)! + offset)
                         offset -= 1
                     }
-                    else {
-                        offset = 0
+                }
+                else {
+                    var offset = 0
+                    var previousSection = indexPaths![0].section
+                    
+                    for i in 0..<indexPaths!.count {
+                        
+                        if (previousSection == indexPaths![i].section && i != 0) {
+                            offset -= 1
+                        }
+                        else {
+                            offset = 0
+                        }
+                        
+                        if (i != 0) {
+                            previousSection = indexPaths![i].section
+                        }
+                        
+                        print("CourseTable: deleteCourses: Removing course: \(self.groups[indexPaths![i].section].courses[indexPaths![i].row + offset].courseName)")
+                        self.groups[indexPaths![i].section].courses.remove(at: (indexPaths![i].row) + offset)
+                        
                     }
                     
-                    if (i != 0) {
-                        previousSection = indexPaths![i].section
-                    }
+                    self.tableView.deleteRows(at: indexPaths!, with: .fade)
                     
-                    print("CourseTable: deleteCourses: Removing course: \(groups[indexPaths![i].section].courses[indexPaths![i].row + offset].courseName)")
-                    groups[indexPaths![i].section].courses.remove(at: (indexPaths![i].row) + offset)
+                    print("When is this executed")
+                    //reload data, update the labels and save changes
+                    self.tableView.reloadData()
+                    self.updateLabels()
+                    self.save()
                     
+                    // Get out of editing mode
+                    self.tableView.setEditing(false, animated: true)
+                    self.setEditing(false, animated: true)
+                    
+                    //If courses.count is empty, then hide toolbar. This is to fix a bug where the toolbar appears when no courses are in the list
+                    self.navigationController!.toolbar.isHidden = true
+                    
+                    self.updateLabels()
                 }
                 
-                tableView.deleteRows(at: indexPaths!, with: .fade)
-            }
+            }))
+            //////////////// END OF UIALERT
             
-            //reload data, update the labels and save changes
-            tableView.reloadData()
-            updateLabels()
-            save()
-            
-            // Get out of editing mode
-            tableView.setEditing(false, animated: true)
-            self.setEditing(false, animated: true)
-            
-            //If courses.count is empty, then hide toolbar. This is to fix a bug where the toolbar appears when no courses are in the list
-            self.navigationController!.toolbar.isHidden = true
-            
-            self.updateLabels()
+            self.present(alertController, animated: true, completion: nil)
             
             print("CoursesTable: deleteCourses -> Exit")
         }
