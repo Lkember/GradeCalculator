@@ -589,8 +589,8 @@ class CourseTableViewController: UITableViewController {
         else {
             //TODO: Need to delete course from current group and add to a new group
             let tempCourse = groups[sourceIndexPath.section].courses.remove(at: sourceIndexPath.row)
-            tableView.deleteRows(at: [sourceIndexPath], with: .fade)
-            
+            print("CourseTableView: moveRowAt: Moving course: \(tempCourse.courseName) from group \(groups[sourceIndexPath.section].groupName) to group \(groups[destinationIndexPath.section].groupName)")
+            groups[destinationIndexPath.section].courses.insert(tempCourse, at: destinationIndexPath.row)
             
         }
         
