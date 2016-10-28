@@ -548,50 +548,16 @@ class CourseTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         print("CourseTable: tableView moveRowAt -> Entry")
         
-        if (sourceIndexPath.section == destinationIndexPath.section) {
-            if (index == -1) {
-                var sourceIndex = sourceIndexPath.row
-                let temp = groups[sourceIndexPath.section].courses[sourceIndexPath.row]
-                
-                if sourceIndexPath.row < destinationIndexPath.row {
-                    while (sourceIndex < destinationIndexPath.row) {
-                        groups[sourceIndexPath.section].courses[sourceIndex] = groups[sourceIndexPath.section].courses[sourceIndex+1]
-                        sourceIndex += 1
-                    }
-                }
-                else if sourceIndexPath.row > destinationIndexPath.row {
-                    while (sourceIndex > destinationIndexPath.row) {
-                        groups[sourceIndexPath.section].courses[sourceIndex] = groups[sourceIndexPath.section].courses[sourceIndex-1]
-                        sourceIndex -= 1
-                    }
-                }
-                groups[sourceIndexPath.section].courses[destinationIndexPath.row] = temp
-            }
-            else {
-                var sourceIndex = sourceIndexPath.row
-                let temp = groups[index].courses[sourceIndex]
-                
-                if sourceIndexPath.row < destinationIndexPath.row {
-                    while (sourceIndex < destinationIndexPath.row) {
-                        groups[index].courses[sourceIndex] = groups[index].courses[sourceIndex+1]
-                        sourceIndex += 1
-                    }
-                }
-                else if sourceIndexPath.row > destinationIndexPath.row {
-                    while (sourceIndex > destinationIndexPath.row) {
-                        groups[index].courses[sourceIndex] = groups[index].courses[sourceIndex-1]
-                        sourceIndex -= 1
-                    }
-                }
-                groups[index].courses[destinationIndexPath.row] = temp
-            }
-        }
-        else {
+        if index == -1 {
             //TODO: Need to delete course from current group and add to a new group
             let tempCourse = groups[sourceIndexPath.section].courses.remove(at: sourceIndexPath.row)
             print("CourseTableView: moveRowAt: Moving course: \(tempCourse.courseName) from group \(groups[sourceIndexPath.section].groupName) to group \(groups[destinationIndexPath.section].groupName)")
             groups[destinationIndexPath.section].courses.insert(tempCourse, at: destinationIndexPath.row)
-            
+        }
+        else {
+            let tempCourse = groups[index].courses.remove(at: sourceIndexPath.row)
+            print("CourseTableView: moveRowAt: Moving course: \(tempCourse.courseName) from group \(groups[sourceIndexPath.section].groupName) to group \(groups[destinationIndexPath.section].groupName)")
+            groups[index].courses.insert(tempCourse, at: destinationIndexPath.row)
         }
         
         //////////// LOGGING START
