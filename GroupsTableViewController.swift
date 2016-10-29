@@ -186,13 +186,9 @@ class GroupsTableViewController: UITableViewController {
                 print("GroupsTable: commit editingStyle: \(groups[newIndex].groupName).courses.count == 0")
                 print("Currently looking at group \(groups[newIndex].groupName)")
                 groups.remove(at: newIndex)
-                if (groups.count > 1) {
-                    tableView.deleteRows(at: [indexPath], with: .fade)
-                }
-                else {
-                    tableView.isEditing = false
-                    tableView.reloadRows(at: [indexPath], with: .fade)
-                }
+                print(">1")
+                tableView.deleteRows(at: [indexPath], with: .fade)
+                tableView.isEditing = false
             }
             else {
                 print("GroupsTable: commit editingStyle: count > 0")

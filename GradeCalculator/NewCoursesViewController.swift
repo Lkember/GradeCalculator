@@ -20,10 +20,27 @@ class NewCoursesViewController: UIViewController, UITextFieldDelegate, UIPickerV
     @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var cancelButton: UIBarButtonItem!
     @IBOutlet weak var groupSelection: UIPickerView!
+    @IBOutlet weak var courseIsComplete: UISwitch!
+    @IBOutlet weak var gradeField: UITextField!
+    @IBOutlet weak var gradeOutOfField: UITextField!
+    @IBOutlet weak var gradeView: UIView!
     
     // MARK: Actions
     @IBAction func cancel(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func isComplete(_ sender: UISwitch) {
+        if sender.isOn {
+            UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveEaseOut, animations: {
+                self.gradeView.alpha = 1.0
+            }, completion: nil)
+        }
+        else {
+            UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveEaseOut, animations: {
+                self.gradeView.alpha = 0.0
+            }, completion: nil)
+        }
     }
     
     
@@ -40,6 +57,9 @@ class NewCoursesViewController: UIViewController, UITextFieldDelegate, UIPickerV
         self.navigationController?.navigationBar.barStyle = UIBarStyle.black
         self.groupSelection.delegate = self
         self.groupSelection.dataSource = self
+        
+        self.courseIsComplete.isOn = false
+        self.isComplete(courseIsComplete)
         
         if index != -1 {
             groupSelection.selectRow(index, inComponent: 0, animated: true)
@@ -120,4 +140,10 @@ class NewCoursesViewController: UIViewController, UITextFieldDelegate, UIPickerV
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return groups[row].groupName
     }
+    
+    // MARK: UITextFieldDelegate
+    //TODO
+//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+//        textField.resignFirstResponder()
+//    }
 }

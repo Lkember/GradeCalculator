@@ -308,12 +308,18 @@ class CourseTableViewController: UITableViewController {
     
     @IBAction func unwindToCourseList(_ sender: UIStoryboardSegue) {
         print("CourseTable: unwindToCourseList: Adding course to course list.")
-        if let sourceViewController = sender.source as? NewCoursesViewController {
-            let course = sourceViewController.course
+        if let svc = sender.source as? NewCoursesViewController {
+            let course = svc.course
             print("CourseTable: unwindToCourseList: New course: \(course.courseName)")
             let newIndexPath: IndexPath
-            let groupIndex = sourceViewController.groupSelection.selectedRow(inComponent: 0)
+            let groupIndex = svc.groupSelection.selectedRow(inComponent: 0)
             
+            // Adding the final mark to the course
+            if (svc.courseIsComplete.isOn && svc.gradeField.text != "" && svc.gradeOutOfField.text != "") {
+                course.addProject("Final Mark", grade: Double(svc.gradeField.text!)!, outOf: Double(svc.gradeOutOfField.text!)!, weight: 100.0)
+            }
+            
+            // Adding the course to it's designated group
             if (index == -1) {
                 newIndexPath = IndexPath(row: groups[groupIndex].courses.count, section: groupIndex)
                 groups[groupIndex].courses.append(course)
@@ -332,18 +338,6 @@ class CourseTableViewController: UITableViewController {
                     groups[groupIndex].courses.append(course)
                 }
             }
-            
-//            if (index == -1) {
-//                print("CourseTable: unwindToCourseList: index is -1")
-//                let tempIndex = findIndexForGroup(groupName: "Ungrouped Courses")
-//                newIndexPath = IndexPath(row: groups[tempIndex].courses.count, section: tempIndex)
-//                groups[tempIndex].courses.append(course)
-//            }
-//            else {
-//                print("CourseTable: unwindToCourseList: index is \(index)")
-//                newIndexPath = IndexPath(row: groups[index].courses.count, section: 0)
-//                groups[index].courses.append(course)
-//            }
             
             save()
         }
