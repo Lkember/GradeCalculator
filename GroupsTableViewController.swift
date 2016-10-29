@@ -170,24 +170,42 @@ class GroupsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         print("GroupsTable: commit editingStyle -> Entry")
         if editingStyle == .delete {
-
-            if groups[indexPath.row].courses.count == 0 {
-                print("GroupsTable: commit editingStyle: \(groups[indexPath.row].groupName).courses.count == 0")
-                groups.remove(at: indexPath.row)
+            
+            let ungroupedIndex = getGroupIndexWithName(nameOfGroup: "Ungrouped Courses")
+            var newIndex = indexPath.row
+            
+            if groups[ungroupedIndex].courses.count == 0 {
+                print("Ungrouped courses.count = 0, ungroupedIndex = \(ungroupedIndex), indexPath.row=\(indexPath.row)")
+                if (ungroupedIndex <= indexPath.row) {
+                    newIndex += 1
+                    print("newIndex increment \(newIndex)")
+                }
+            }
+            
+            if groups[newIndex].courses.count == 0 {
+                print("GroupsTable: commit editingStyle: \(groups[newIndex].groupName).courses.count == 0")
+                print("Currently looking at group \(groups[newIndex].groupName)")
+                groups.remove(at: newIndex)
+                if (groups.count > 1) {
+                    tableView.deleteRows(at: [indexPath], with: .fade)
+                }
+                else {
+                    tableView.isEditing = false
+                    tableView.reloadRows(at: [indexPath], with: .fade)
+                }
             }
             else {
                 print("GroupsTable: commit editingStyle: count > 0")
-                let tempCourses = groups[indexPath.row].courses
+                print("Currently looking at group \(groups[newIndex].groupName)")
+                let tempCourses = groups[newIndex].courses
                 
-                groups[getGroupIndexWithName(nameOfGroup: "Ungrouped Courses")].courses += tempCourses
+                groups.remove(at: newIndex)
+                tableView.deleteRows(at: [indexPath], with: .fade)
                 
-                groups.remove(at: indexPath.row)
+                groups[ungroupedIndex].courses += tempCourses
+                tableView.insertRows(at: [IndexPath.init(item: 0, section: 0)], with: .fade)
             }
             
-            // Delete the row from the data source
-//            tableView.deleteRows(at: [indexPath], with: .fade)
-//            tableView.insertRows(at: [IndexPath.init(item: 0, section: 0)], with: .fade)
-            tableView.reloadData()
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }
@@ -195,20 +213,58 @@ class GroupsTableViewController: UITableViewController {
         print("GroupsTable: commit editingStyle -> Exit")
     }
 
-    /*
+    
     // Override to support rearranging the table view.
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-        // TODO: Support rearranging of table
+        
+        print("Order of groups before rearrangement")
+        for group in groups {
+            print(group.groupName)
+        }
+        
+        if groups[getGroupIndexWithName(nameOfGroup: "Ungrouped Courses")].courses.count == 0 {
+            // TODO: Add support for rearranging table when ungrouped courses is empty
+            let ungroupedIndex = getGroupIndexWithName(nameOfGroup: "UngroupedCourses")
+            var fromIndex = fromIndexPath.row
+            var toIndex = to.row
+            
+            if (ungroupedIndex <= fromIndex) {
+                fromIndex += 1
+            }
+            if ungroupedIndex <= toIndex {
+                toIndex += 1
+            }
+            
+            let tempGroup = groups[toIndex]
+            groups[toIndex] = groups[fromIndex]
+            groups[fromIndex] = tempGroup
+        }
+        else {
+            let tempGroup = groups[to.row]
+            groups[to.row] = groups[fromIndexPath.row]
+            groups[fromIndexPath.row] = tempGroup
+        }
+        
+        print("Order of groups after rearrangement")
+        for group in groups {
+            print(group.groupName)
+        }
     }
-    */
 
-    /*
+
     // Override to support conditional rearranging of the table view.
     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the item to be re-orderable.
-        return true
+        if (groups[getGroupIndexWithName(nameOfGroup: "Ungrouped Courses")].courses.count == 0) {
+            return true
+        }
+        else {
+            if groups[indexPath.row].groupName == "Ungrouped Courses" {
+                return false
+            }
+            return true
+        }
     }
-    */
 
     
     
