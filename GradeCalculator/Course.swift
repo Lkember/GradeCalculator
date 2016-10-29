@@ -137,6 +137,8 @@ class Course: NSObject, NSCoding {
         let average = getAverage()
         var activeWeight = 0.0
         
+        print("Courses: getPotentialMark -> Entry: average \(average)")
+        
         for i in 0..<projects.count {
             if projectMarks[i] != -1.0 {
                 activeWeight += projectWeights[i]
@@ -144,8 +146,8 @@ class Course: NSObject, NSCoding {
         }
         
         let remainingWeight = 100.0 - activeWeight
-        let potential = ((average*(remainingWeight)) + remainingWeight)/100
-        print("Courses: getPotentialMark: Exit Return \(potential)")
+        let potential = ((average*(activeWeight)) + remainingWeight)/100
+        print("Courses: getPotentialMark -> Exit Return \(potential)")
         return potential
     }
     
