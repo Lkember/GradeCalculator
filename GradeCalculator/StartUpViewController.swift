@@ -228,7 +228,7 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
         for course in courses {
             courseMark = course.getAverage()
             if courseMark != -1.0 {
-                average += course.getAverage()
+                average += courseMark
                 numCourses += 1
             }
         }

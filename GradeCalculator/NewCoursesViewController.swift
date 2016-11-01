@@ -57,6 +57,9 @@ class NewCoursesViewController: UIViewController, UITextFieldDelegate, UIPickerV
         self.navigationController?.navigationBar.barStyle = UIBarStyle.black
         self.groupSelection.delegate = self
         self.groupSelection.dataSource = self
+        self.groupSelection.layer.cornerRadius = 10
+        self.groupSelection.layer.borderWidth = 1
+        self.groupSelection.layer.borderColor = UIColor.black.cgColor
         
         self.courseIsComplete.isOn = false
         self.isComplete(courseIsComplete)

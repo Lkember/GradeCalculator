@@ -97,27 +97,25 @@ class Course: NSObject, NSCoding {
             
             mark = mark/weightSum
             if (incomplete == projects.count) {
-                print("Courses: getAverage() -> Incomplete")
+                print("Courses: getAverage() -> \(courseName) Incomplete")
                 return -1.0
             }
-            print("Courses: getAverage() -> \(mark)")
+            print("Courses: getAverage() -> \(courseName) = \(mark)")
             return mark
         }
-        print("Courses: getAverage() -> -1.0")
+        print("Courses: getAverage() -> \(courseName) = -1.0")
         return -1.0
     }
     
     // Returns the number of grades that have been inputted
     func getNumMarks() -> Int {
-        print("Courses getNumMarks entry")
         var markCount = 0
-        print("Course.swift: projects.count = \(projects.count)");
         for i in 0..<projects.count {
             if (projectMarks[i] != -1.0) {
                 markCount+=1
             }
         }
-        print("Courses getNumMarks exit")
+        print("Courses getNumMarks \(courseName) numMarks = \(markCount)")
         return markCount
     }
     
@@ -128,7 +126,7 @@ class Course: NSObject, NSCoding {
         for i in 0..<projects.count {
             weight += projectWeights[i]
         }
-        print("courses getWeightTotal -> exit RETURN \(weight)")
+        print("courses getWeightTotal -> exit RETURN \(courseName) = \(weight)")
         return weight
     }
     
@@ -137,7 +135,7 @@ class Course: NSObject, NSCoding {
         let average = getAverage()
         var activeWeight = 0.0
         
-        print("Courses: getPotentialMark -> Entry: average \(average)")
+        print("Courses: getPotentialMark -> Entry: \(courseName) average \(average)")
         
         for i in 0..<projects.count {
             if projectMarks[i] != -1.0 {
@@ -147,18 +145,17 @@ class Course: NSObject, NSCoding {
         
         let remainingWeight = 100.0 - activeWeight
         let potential = ((average*(activeWeight)) + remainingWeight)/100
-        print("Courses: getPotentialMark -> Exit Return \(potential)")
+        print("Courses: getPotentialMark -> Exit Return \(courseName) potential = \(potential)")
         return potential
     }
     
     // Mark: Actions
     func addProject(_ projectName: String, grade: Double, outOf: Double, weight: Double) {
-        print("courses addProject entry")
+        print("courses addProject \(courseName)")
         projects.append(projectName)
         projectMarks.append(grade)
         projectWeights.append(weight)
         projectOutOf.append(outOf)
-        print("courses addProject exit")
     }
     
     // MARK: NSCoding
