@@ -21,6 +21,7 @@ class CourseTableViewController: UITableViewController {
     @IBOutlet weak var addButton: UIBarButtonItem!
     @IBOutlet weak var backButton: UIButton!
     
+    // MARK: Views
     override func viewDidLoad() {
         print("CourseTable: viewDidLoad -> Entry")
         super.viewDidLoad()
@@ -46,6 +47,11 @@ class CourseTableViewController: UITableViewController {
         
         // Rounding the back button
         self.backButton.layer.cornerRadius = 10
+        
+        // Adding an edge swipe listener
+        let edgePan = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(screenEdgeSwiped))
+        edgePan.edges = .left
+        view.addGestureRecognizer(edgePan)
         
         print("CourseTable: viewDidLoad Loading courses")
         
@@ -119,6 +125,22 @@ class CourseTableViewController: UITableViewController {
         }
     }
     
+    // A function to detect if the edge of the screen is swiped left
+    func screenEdgeSwiped(_ recognizer: UIScreenEdgePanGestureRecognizer) {
+        if recognizer.state == .recognized {
+            print("CourseTableView: screenEdgeSwiped")
+            save()
+            self.dismiss(animated: true, completion: nil)
+        }
+    }
+    
+    // Go back to the details view
+    @IBAction func backToDetailView(_ sender: AnyObject) {
+        print("CourseTable: backToDetailView: Going back a view")
+        save()
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -135,13 +157,6 @@ class CourseTableViewController: UITableViewController {
             }
         }
         return -1
-    }
-    
-    // Go back to the details view
-    @IBAction func backToDetailView(_ sender: AnyObject) {
-        print("CourseTable: backToDetailView: Going back a view")
-        save()
-        self.dismiss(animated: true, completion: nil)
     }
     
     
@@ -256,7 +271,7 @@ class CourseTableViewController: UITableViewController {
     
     //Returns the overall average of all courses in view
     func getOverallAverage() -> Double {
-//        print("CourseTable: getOverallAverage -> Entry")
+        print("CourseTable: getOverallAverage -> Entry")
         var average = 0.0
         var groupMark = 0.0
         var numCourses = 0
@@ -427,10 +442,10 @@ class CourseTableViewController: UITableViewController {
     //Returns the title for the current section
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if index == -1 {
-//            if groups[section].courses.count != 0 {
-                return groups[section].groupName
-//            }
-//            return nil
+            if groups[section].groupName == "Ungrouped Courses" && groups[section].courses.count == 0 {
+                return nil
+            }
+            return groups[section].groupName
         }
         else {
             return nil

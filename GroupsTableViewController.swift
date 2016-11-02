@@ -26,6 +26,11 @@ class GroupsTableViewController: UITableViewController {
         //Rounding the back button edges
         self.backButton.layer.cornerRadius = 10
         
+        //Adding an edge swipe listener
+        let edgePan = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(screenEdgeSwiped))
+        edgePan.edges = .left
+        view.addGestureRecognizer(edgePan)
+        
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         self.navigationItem.leftBarButtonItem = self.editButtonItem
         self.navigationController?.navigationBar.barStyle = UIBarStyle.black
@@ -49,6 +54,14 @@ class GroupsTableViewController: UITableViewController {
         return .lightContent
     }
     
+    // A function to detect if the edge of the screen is swiped left
+    func screenEdgeSwiped(_ recognizer: UIScreenEdgePanGestureRecognizer) {
+        if recognizer.state == .recognized {
+            print("CourseTableView: screenEdgeSwiped")
+            save()
+            self.dismiss(animated: true, completion: nil)
+        }
+    }
     
     // MARK: - Functions
     
