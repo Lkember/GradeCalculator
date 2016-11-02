@@ -125,6 +125,18 @@ class Group: NSObject, NSCoding {
         return totalAverage/Double(counter)
     }
     
+    // A function that gets the total number of courses with marks
+    func getNumActiveCourses() -> Int {
+        var numCourses = 0
+        
+        for course in courses {
+            if course.getAverage() != 0 {
+                numCourses += 1
+            }
+        }
+        return numCourses
+    }
+    
     
     //MARK: - NSCoding
     static let DocumentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!

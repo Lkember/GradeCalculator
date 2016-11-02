@@ -256,29 +256,32 @@ class CourseTableViewController: UITableViewController {
     
     //Returns the overall average of all courses in view
     func getOverallAverage() -> Double {
-        print("CourseTable: getOverallAverage -> Entry")
+//        print("CourseTable: getOverallAverage -> Entry")
         var average = 0.0
-        var courseMark = 0.0
+        var groupMark = 0.0
         var numCourses = 0
-        
+        var totalNumCourses = 0
+
         if (index == -1) {
             for i in 0..<groups.count {
-                courseMark = groups[i].getGroupAverage()
+                groupMark = groups[i].getGroupAverage()
+                numCourses = groups[i].getNumActiveCourses()
                 
-                if courseMark != -1.0 {
-                    average += courseMark
-                    numCourses += 1
+                if groupMark != -1.0 {
+                    average += groupMark * Double(numCourses)
+                    totalNumCourses += numCourses
+                }
+                
+                if totalNumCourses != 0 {
+                    print("CourseTable: getOverallAverage -> Exit: RETURN \(average) with number of courses in calculation: \(numCourses)")
+                    return average/Double(totalNumCourses)
+                }
+                else {
+                    return -1.0
                 }
             }
             
-            if (numCourses != 0) {
-                print("CourseTable: getOverallAverage -> Exit: RETURN \(average) with number of courses in calculation: \(numCourses)")
-                return (average/Double(numCourses))
-            }
-            else {
-                print("CourseTable: getOverallAverage -> Exit: RETURN -1.0 since there are no courses in calculation.")
-                return -1.0
-            }
+            return average/Double(totalNumCourses)
         }
         else {
             print("CourseTable: getOverallAverage: Getting averages in dictionary: \(groups[index].groupName)")
