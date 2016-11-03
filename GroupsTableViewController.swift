@@ -23,21 +23,28 @@ class GroupsTableViewController: UITableViewController {
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+        
         //Rounding the back button edges
         self.backButton.layer.cornerRadius = 10
         
+//        let plusButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.add, target: self, action: nil)
+        self.navigationItem.rightBarButtonItems?.append(self.editButtonItem)
+//        self.navigationItem.rightBarButtonItems = [plusButton, self.editButtonItem]
+        
         //Adding an edge swipe listener
-        let edgePan = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(screenEdgeSwiped))
-        edgePan.edges = .left
-        view.addGestureRecognizer(edgePan)
+//        let edgePan = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(screenEdgeSwiped))
+//        edgePan.edges = .left
+//        view.addGestureRecognizer(edgePan)
         
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        self.navigationItem.leftBarButtonItem = self.editButtonItem
+//        self.navigationItem.leftBarButtonItem = self.editButtonItem
         self.navigationController?.navigationBar.barStyle = UIBarStyle.black
     }
 
     override func viewDidAppear(_ animated: Bool) {
         print("GroupsTableViewController: viewDidAppear -> Loading courses and reloading table")
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
         if let loadedData = load() {
             groups = loadedData
         }
@@ -55,13 +62,13 @@ class GroupsTableViewController: UITableViewController {
     }
     
     // A function to detect if the edge of the screen is swiped left
-    func screenEdgeSwiped(_ recognizer: UIScreenEdgePanGestureRecognizer) {
-        if recognizer.state == .recognized {
-            print("CourseTableView: screenEdgeSwiped")
-            save()
-            self.dismiss(animated: true, completion: nil)
-        }
-    }
+//    func screenEdgeSwiped(_ recognizer: UIScreenEdgePanGestureRecognizer) {
+//        if recognizer.state == .recognized {
+//            print("CourseTableView: screenEdgeSwiped")
+//            save()
+//            self.dismiss(animated: true, completion: nil)
+//        }
+//    }
     
     // MARK: - Functions
     
@@ -284,6 +291,8 @@ class GroupsTableViewController: UITableViewController {
         print("GroupsTable: prepare: Entry")
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
+        
         if (segue.identifier == "AddGroupSegue") {
             print("GroupsTable: prepare: AddGroupSegue has started")
             let destView = segue.destination.childViewControllers[0] as! AddGroupViewController
