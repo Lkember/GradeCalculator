@@ -24,6 +24,10 @@ class AddGroupViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.dataSource = self
         groupName.delegate = self
         
+        tableView.layer.cornerRadius = 10
+        tableView.layer.borderColor = UIColor.black.cgColor
+        tableView.layer.borderWidth = 1
+        
         tableView.allowsSelectionDuringEditing = true
         tableView.allowsMultipleSelectionDuringEditing = true
         tableView.isEditing = true
