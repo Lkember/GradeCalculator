@@ -197,7 +197,7 @@ class MarksTableViewController: UITableViewController {
     
     
     func updateLabels() {
-        print("MarksTable: updateLabels")
+        print("MarksTable: updateLabels: Updating Labels")
         let average = (round(10*course!.getAverage()*100)/10)
         if (average != -100.0) {
             averageLabel.text = "\(average)%"
@@ -208,22 +208,25 @@ class MarksTableViewController: UITableViewController {
         
         numMarks.text = "\(course!.getNumMarks())"
         let weight = course!.getWeightTotal()
+        let activeWeight = course!.getActiveWeightTotal()
         
         if (weight <= 100 && weight >= 0) {
-            remainingWeight.textColor = UIColor.white
             remainingWeight.text = "\(100.0-weight)%"
-            if weight == 100 {
+
+            if activeWeight >= 100 {
                 potentialMark.isHidden = true
                 staticPotentialMark.isHidden = true
             }
+            else if (activeWeight <= 0) {
+                potentialMark.text = "100.0%"
+                potentialMark.isHidden = false
+                staticPotentialMark.isHidden = false
+                }
             else {
-                if (average < 0) {
-                    potentialMark.text = "100.0%"
-                }
-                else {
-                    let potential = course?.getPotentialMark()
-                    potentialMark.text = "\((round(10*potential!*100)/10))%"
-                }
+                let potential = course?.getPotentialMark()
+                potentialMark.text = "\((round(10*potential!*100)/10))%"
+                potentialMark.isHidden = false
+                staticPotentialMark.isHidden = false
             }
         }
         else {
@@ -285,6 +288,7 @@ class MarksTableViewController: UITableViewController {
             tableView.deleteRows(at: [indexPath], with: .fade)
             
             tableView.reloadData()
+            updateLabels()
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }
@@ -327,6 +331,7 @@ class MarksTableViewController: UITableViewController {
         
         groups[index].courses[courseIndex] = course!
         
+        updateLabels()
         save()
         print("MarksTable: tableView moveRowAt -> Exit")
     }

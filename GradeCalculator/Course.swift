@@ -130,6 +130,18 @@ class Course: NSObject, NSCoding {
         return weight
     }
     
+    func getActiveWeightTotal() -> Double {
+        print("courses getActiveWeightTotal entry")
+        var weight = 0.0
+        for i in 0..<projects.count {
+            if (projectMarks[i] != -1.0) {
+                weight += projectWeights[i]
+            }
+        }
+        print("courses getActiveWeightTotal -> exit RETURN \(courseName) = \(weight)")
+        return weight
+    }
+    
     func getPotentialMark() -> Double {
 
         let average = getAverage()
