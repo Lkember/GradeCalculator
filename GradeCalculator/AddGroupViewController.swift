@@ -122,6 +122,11 @@ class AddGroupViewController: UIViewController, UITableViewDelegate, UITableView
         return true
     }
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
     
     // MARK: - Navigation
 

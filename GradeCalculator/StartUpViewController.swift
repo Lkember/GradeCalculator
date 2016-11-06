@@ -20,6 +20,7 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
         // Do any additional setup after loading the view.
         
         self.navigationController?.setNavigationBarHidden(true, animated: true)
+        self.navigationController?.setToolbarHidden(true, animated: true)
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -57,6 +58,7 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
         print("StartUpView: viewDidAppear: reloading courses.")
         
         self.navigationController?.setNavigationBarHidden(true, animated: true)
+        self.navigationController?.setToolbarHidden(true, animated: true)
         
         if let loadedData = load() {
             groups = loadedData

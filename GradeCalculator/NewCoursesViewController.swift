@@ -24,6 +24,7 @@ class NewCoursesViewController: UIViewController, UITextFieldDelegate, UIPickerV
     @IBOutlet weak var gradeField: UITextField!
     @IBOutlet weak var gradeOutOfField: UITextField!
     @IBOutlet weak var gradeView: UIView!
+    @IBOutlet weak var scrollView: UIScrollView!
     
     // MARK: Actions
     @IBAction func cancel(_ sender: UIBarButtonItem) {
@@ -74,11 +75,18 @@ class NewCoursesViewController: UIViewController, UITextFieldDelegate, UIPickerV
         else {
             groupSelection.selectRow(getIndexForGroup(withName: "Ungrouped Courses"), inComponent: 0, animated: true)
         }
+        
         warningLabel.isHidden = true
+        
+        // Adding listeners for when a text field changes
         courseName.addTarget(self, action: #selector(NewCoursesViewController.textFieldDidChange(_:)), for: UIControlEvents.editingChanged)
         gradeField.addTarget(self, action: #selector(NewCoursesViewController.textFieldDidChange(_:)), for: UIControlEvents.editingChanged)
         gradeOutOfField.addTarget(self, action: #selector(NewCoursesViewController.textFieldDidChange(_:)), for: UIControlEvents.editingChanged)
         saveButton.isEnabled = false
+        
+        // Adding listeners for when the keyboard shows or hides
+        NotificationCenter.default.addObserver(self, selector: #selector(AddProjectViewController.keyboardToggle(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(AddProjectViewController.keyboardToggle(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
     }
     
@@ -163,6 +171,24 @@ class NewCoursesViewController: UIViewController, UITextFieldDelegate, UIPickerV
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return groups[row].groupName
     }
+    
+    // MARK: - Listeners
+    func keyboardToggle(_ notification: Notification) {
+        let userInfo = (notification as NSNotification).userInfo!
+        
+        let keyboardScreenEndFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+        let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: scrollView)
+        let navHeight = self.navigationController!.navigationBar.frame.height
+        
+        if notification.name == NSNotification.Name.UIKeyboardWillHide {
+            scrollView.contentInset = UIEdgeInsets(top: navHeight + 20, left: 0, bottom: 0, right: 0)
+            print("AddProject: Keyboard is hidden.")
+        } else {
+            scrollView.contentInset = UIEdgeInsets(top: navHeight + 20, left: 0, bottom: keyboardViewEndFrame.height, right: 0)
+            print("AddProject: Keyboard is showing.")
+        }
+    }
+    
     
     // MARK: UITextFieldDelegate
     //TODO

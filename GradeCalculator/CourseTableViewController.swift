@@ -19,7 +19,6 @@ class CourseTableViewController: UITableViewController {
     @IBOutlet weak var deleteButton: UIBarButtonItem!
     @IBOutlet weak var editButton: UIBarButtonItem!
     @IBOutlet weak var addButton: UIBarButtonItem!
-    @IBOutlet weak var backButton: UIButton!
     
     // MARK: Views
     override func viewDidLoad() {
@@ -27,12 +26,11 @@ class CourseTableViewController: UITableViewController {
         super.viewDidLoad()
         
         if (index != -1) {
-            backButton.setTitle("Back", for: UIControlState.normal)
             print("CourseTable: viewDidLoad: Current Index = \(index)")
             self.title = groups[index].groupName
         }
         
-        self.navigationController?.isNavigationBarHidden = false
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
         
         self.tableView.allowsMultipleSelectionDuringEditing = true
         self.tableView.allowsSelectionDuringEditing = true
@@ -44,12 +42,9 @@ class CourseTableViewController: UITableViewController {
         self.navigationItem.rightBarButtonItems?.append(self.editButtonItem)
         
         // Add buttons to tool bar
-        self.navigationController!.toolbar.isHidden = true
+        self.navigationController?.setToolbarHidden(true, animated: true)
         self.deleteButton.isEnabled = false
         self.editButton.isEnabled = false
-        
-        // Rounding the back button
-        self.backButton.layer.cornerRadius = 10
         
         // Adding an edge swipe listener
 //        let edgePan = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(screenEdgeSwiped))
@@ -71,9 +66,11 @@ class CourseTableViewController: UITableViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         print("CourseTable: viewDidAppear -> Entry")
+        
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+        
         tableView.reloadData()
         updateLabels()
-
         save()
         print("CourseTable: viewDidAppear -> Exit")
     }
@@ -199,6 +196,8 @@ class CourseTableViewController: UITableViewController {
                         self.groups[self.index].courses.remove(at: (indexPaths?[i].row)! + offset)
                         offset -= 1
                     }
+                    
+                    self.tableView.deleteRows(at: indexPaths!, with: .fade)
                 }
                 else {
                     var offset = 0
@@ -223,22 +222,21 @@ class CourseTableViewController: UITableViewController {
                     }
                     
                     self.tableView.deleteRows(at: indexPaths!, with: .fade)
-                    
-                    print("When is this executed")
-                    //reload data, update the labels and save changes
-                    self.tableView.reloadData()
-                    self.updateLabels()
-                    self.save()
-                    
-                    // Get out of editing mode
-                    self.tableView.setEditing(false, animated: true)
-                    self.setEditing(false, animated: true)
-                    
-                    //If courses.count is empty, then hide toolbar. This is to fix a bug where the toolbar appears when no courses are in the list
-                    self.navigationController!.toolbar.isHidden = true
-                    
-                    self.updateLabels()
                 }
+                
+                //reload data, update the labels and save changes
+                self.tableView.reloadData()
+                self.updateLabels()
+                self.save()
+                
+                // Get out of editing mode
+                self.tableView.setEditing(false, animated: true)
+                self.setEditing(false, animated: true)
+                
+                //If courses.count is empty, then hide toolbar. This is to fix a bug where the toolbar appears when no courses are in the list
+                self.navigationController?.setToolbarHidden(true, animated: true)
+                
+                self.updateLabels()
                 
             }))
             //////////////// END OF UIALERT
@@ -262,9 +260,10 @@ class CourseTableViewController: UITableViewController {
     
     
     func updateLabels() {
-        print("CourseTable: updateLabels: updating labels.")
         let average = getOverallAverage()
         let num = getNumCourses()
+        
+        print("CourseTable: updateLabels: updating labels. Average = \(average), # courses = \(num)")
         
         if (average != -1.0) {
             overallAverage.text = "\(round(10*average*100)/10)%"
@@ -293,17 +292,16 @@ class CourseTableViewController: UITableViewController {
                     average += groupMark * Double(numCourses)
                     totalNumCourses += numCourses
                 }
-                
-                if totalNumCourses != 0 {
-                    print("CourseTable: getOverallAverage -> Exit: RETURN \(average) with number of courses in calculation: \(numCourses)")
-                    return average/Double(totalNumCourses)
-                }
-                else {
-                    return -1.0
-                }
             }
             
-            return average/Double(totalNumCourses)
+            if totalNumCourses != 0 {
+                print("CourseTable: getOverallAverage -> Exit: RETURN \(average) with number of courses in calculation: \(numCourses)")
+                return average/Double(totalNumCourses)
+            }
+            else {
+                print("CourseTable: getOverallAverage -> Exit RETURN -1.0 due to no totalNumCourses is 0")
+                return -1.0
+            }
         }
         else {
             print("CourseTable: getOverallAverage: Getting averages in dictionary: \(groups[index].groupName)")
@@ -400,10 +398,14 @@ class CourseTableViewController: UITableViewController {
             
             self.save()
             self.tableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.fade)
+            self.setEditing(false, animated: true)
+            self.navigationController?.setToolbarHidden(true, animated: true)
         });
         
         let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: {
             (action: UIAlertAction!) -> Void in
+            self.setEditing(false, animated: true)
+            self.navigationController?.setToolbarHidden(true, animated: true)
             // do nothing
         });
         
@@ -568,6 +570,8 @@ class CourseTableViewController: UITableViewController {
                 self.groups[self.index].courses.remove(at: indexPath.row)
             }
             
+            self.setEditing(false, animated: true)
+            self.navigationController?.setToolbarHidden(true, animated: true)
             self.save()
             self.tableView.deleteRows(at: [indexPath], with: .fade)
             self.updateLabels()
@@ -586,7 +590,6 @@ class CourseTableViewController: UITableViewController {
         print("CourseTable: tableView moveRowAt -> Entry")
         
         if index == -1 {
-            //TODO: Need to delete course from current group and add to a new group
             let tempCourse = groups[sourceIndexPath.section].courses.remove(at: sourceIndexPath.row)
             print("CourseTableView: moveRowAt: Moving course: \(tempCourse.courseName) from group \(groups[sourceIndexPath.section].groupName) to group \(groups[destinationIndexPath.section].groupName)")
             groups[destinationIndexPath.section].courses.insert(tempCourse, at: destinationIndexPath.row)

@@ -11,7 +11,6 @@ import UIKit
 class GroupsTableViewController: UITableViewController {
     
     var groups: [Group] = []
-    @IBOutlet weak var backButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,9 +23,6 @@ class GroupsTableViewController: UITableViewController {
         // self.clearsSelectionOnViewWillAppear = false
 
         self.navigationController?.setNavigationBarHidden(false, animated: true)
-        
-        //Rounding the back button edges
-        self.backButton.layer.cornerRadius = 10
         
 //        let plusButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.add, target: self, action: nil)
         self.navigationItem.rightBarButtonItems?.append(self.editButtonItem)
@@ -71,6 +67,48 @@ class GroupsTableViewController: UITableViewController {
 //    }
     
     // MARK: - Functions
+    
+    func editCourseTitle(indexPath: IndexPath) {
+        // TODO
+        let alertController = UIAlertController(title: "Editing Group: \(groups[indexPath.row].groupName)", message: "", preferredStyle: UIAlertControllerStyle.alert)
+        let ungroupedIndex = getGroupIndexWithName(nameOfGroup: "Ungrouped Courses")
+        var index = indexPath.row
+        
+        if (groups[ungroupedIndex].courses.count == 0 && ungroupedIndex <= index) {
+            index += 1
+        }
+        
+        let saveAction = UIAlertAction(title: "Save", style: UIAlertActionStyle.default, handler: {
+            (action: UIAlertAction!) -> Void in
+            
+            let groupNameField = alertController.textFields![0].text ?? ""
+            
+            // Only change the name of the group if the field isn't empty and the group name doesn't exist
+            if (groupNameField != "" && self.getGroupIndexWithName(nameOfGroup: groupNameField) == -1) {
+                self.groups[index].groupName = groupNameField
+                self.save()
+                self.tableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.fade)
+            }
+            
+            self.setEditing(false, animated: true)
+            self.tableView.setEditing(false, animated: true)
+        });
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: { (action: UIAlertAction!) -> Void in
+            self.setEditing(false, animated: true)
+            self.tableView.setEditing(false, animated: true)
+        });
+    
+        
+        alertController.addTextField(configurationHandler: {(textField: UITextField!) -> Void in
+            textField.text = self.groups[index].groupName
+        });
+        
+        alertController.addAction(saveAction)
+        alertController.addAction(cancelAction)
+        
+        self.present(alertController, animated: true, completion: nil)
+    }
     
     //This method gets the group with a specific group name
     func getGroupIndexWithName(nameOfGroup: String) -> Int {
@@ -186,6 +224,51 @@ class GroupsTableViewController: UITableViewController {
         return false
     }
 
+    
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        print("GroupsTable: editActionsForRowAt: Setting edit actions")
+        let deleteRowAction = UITableViewRowAction(style: UITableViewRowActionStyle.destructive, title: "Delete", handler:{action, indexPath in
+            
+            let ungroupedIndex = self.getGroupIndexWithName(nameOfGroup: "Ungrouped Courses")
+            var newIndex = indexPath.row
+            
+            if self.groups[ungroupedIndex].courses.count == 0 {
+                print("Ungrouped courses.count = 0, ungroupedIndex = \(ungroupedIndex), indexPath.row=\(indexPath.row)")
+                if (ungroupedIndex <= indexPath.row) {
+                    newIndex += 1
+                    print("newIndex increment \(newIndex)")
+                }
+            }
+            
+            if self.groups[newIndex].courses.count == 0 {
+                print("GroupsTable: commit editingStyle: \(self.groups[newIndex].groupName).courses.count == 0")
+                print("Currently looking at group \(self.groups[newIndex].groupName)")
+                self.groups.remove(at: newIndex)
+                print(">1")
+                tableView.deleteRows(at: [indexPath], with: .fade)
+                tableView.isEditing = false
+            }
+            else {
+                print("GroupsTable: commit editingStyle: count > 0")
+                print("Currently looking at group \(self.groups[newIndex].groupName)")
+                let tempCourses = self.groups[newIndex].courses
+                
+                self.groups.remove(at: newIndex)
+                tableView.deleteRows(at: [indexPath], with: .fade)
+                
+                self.groups[ungroupedIndex].courses += tempCourses
+                tableView.insertRows(at: [IndexPath.init(item: 0, section: 0)], with: .fade)
+            }
+            
+        });
+        
+        let editCourseTitle = UITableViewRowAction(style: UITableViewRowActionStyle.normal, title: "Edit", handler: { action, indexPath in
+            self.editCourseTitle(indexPath: indexPath)
+        });
+        
+        return[deleteRowAction, editCourseTitle]
+    }
+    
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         print("GroupsTable: commit editingStyle -> Entry")
