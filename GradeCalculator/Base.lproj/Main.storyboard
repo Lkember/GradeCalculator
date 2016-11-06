@@ -844,18 +844,18 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelectionDuringEditing="YES" allowsMultipleSelection="YES" allowsMultipleSelectionDuringEditing="YES" rowHeight="52" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="fvQ-M5-hkJ">
-                                <rect key="frame" x="8" y="166" width="359" height="493"/>
+                                <rect key="frame" x="8" y="208" width="359" height="451"/>
                                 <color key="backgroundColor" red="0.0" green="0.5447398671" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CoursesCell" textLabel="prn-Xl-tgv" style="IBUITableViewCellStyleDefault" id="hDh-tf-4Jh">
                                         <rect key="frame" x="0.0" y="28" width="359" height="52"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hDh-tf-4Jh" id="7eF-VN-SK2">
-                                            <rect key="frame" x="0.0" y="0.0" width="359" height="51.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="359" height="51"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="prn-Xl-tgv">
-                                                    <rect key="frame" x="15" y="0.0" width="329" height="51.5"/>
+                                                    <rect key="frame" x="15" y="0.0" width="329" height="51"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -888,26 +888,31 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select all courses you would like to add to your new group:" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FiH-oQ-BFD">
+                                <rect key="frame" x="16" y="159" width="343" height="41"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.5447398671" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="TAC-Xu-CIk" firstAttribute="trailing" secondItem="8bS-HC-W9C" secondAttribute="trailingMargin" id="4fQ-xq-EP5"/>
-                            <constraint firstAttribute="trailing" secondItem="fvQ-M5-hkJ" secondAttribute="trailing" constant="8" id="4nl-3y-ZxX"/>
-                            <constraint firstItem="CIb-we-rTd" firstAttribute="top" secondItem="TAC-Xu-CIk" secondAttribute="bottom" constant="16" id="E4W-5A-ruJ"/>
-                            <constraint firstItem="fvQ-M5-hkJ" firstAttribute="top" secondItem="Suf-8b-Uzh" secondAttribute="bottom" constant="22" id="Gj5-Xf-B9R"/>
-                            <constraint firstItem="TAC-Xu-CIk" firstAttribute="top" secondItem="IVt-K1-2O5" secondAttribute="bottom" constant="8" id="IZI-5i-Hnw"/>
-                            <constraint firstItem="CIb-we-rTd" firstAttribute="leading" secondItem="Suf-8b-Uzh" secondAttribute="trailing" id="JqW-Vw-Uh4"/>
-                            <constraint firstItem="CIb-we-rTd" firstAttribute="top" secondItem="TAC-Xu-CIk" secondAttribute="bottom" constant="16" id="Lwd-72-lLJ"/>
-                            <constraint firstItem="fvQ-M5-hkJ" firstAttribute="top" secondItem="CIb-we-rTd" secondAttribute="bottom" constant="18" id="ZcS-9R-eEc"/>
-                            <constraint firstItem="7rc-s3-ai5" firstAttribute="top" secondItem="fvQ-M5-hkJ" secondAttribute="bottom" constant="8" id="a4w-QK-0kA"/>
-                            <constraint firstItem="Suf-8b-Uzh" firstAttribute="leading" secondItem="8bS-HC-W9C" secondAttribute="leadingMargin" id="aot-5T-XAf"/>
-                            <constraint firstItem="fvQ-M5-hkJ" firstAttribute="top" secondItem="CIb-we-rTd" secondAttribute="bottom" constant="18" id="d55-K4-Ttl"/>
-                            <constraint firstItem="TAC-Xu-CIk" firstAttribute="leading" secondItem="8bS-HC-W9C" secondAttribute="leadingMargin" id="hbv-xI-TCG"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="CIb-we-rTd" secondAttribute="trailing" constant="8" id="k8g-cO-kpO"/>
-                            <constraint firstItem="CIb-we-rTd" firstAttribute="leading" secondItem="Suf-8b-Uzh" secondAttribute="trailing" id="q98-ce-2jM"/>
-                            <constraint firstItem="fvQ-M5-hkJ" firstAttribute="leading" secondItem="8bS-HC-W9C" secondAttribute="leading" constant="8" id="qSQ-Lf-Ls1"/>
-                            <constraint firstItem="Suf-8b-Uzh" firstAttribute="top" secondItem="TAC-Xu-CIk" secondAttribute="bottom" constant="21" id="xh6-Zc-gS8"/>
-                            <constraint firstItem="fvQ-M5-hkJ" firstAttribute="top" secondItem="CIb-we-rTd" secondAttribute="bottom" constant="18" id="yKc-h2-PvN"/>
+                            <constraint firstItem="TAC-Xu-CIk" firstAttribute="leading" secondItem="8bS-HC-W9C" secondAttribute="leadingMargin" id="18A-Ja-lbh"/>
+                            <constraint firstItem="CIb-we-rTd" firstAttribute="top" secondItem="TAC-Xu-CIk" secondAttribute="bottom" constant="16" id="38J-fB-W8r"/>
+                            <constraint firstItem="7rc-s3-ai5" firstAttribute="top" secondItem="fvQ-M5-hkJ" secondAttribute="bottom" constant="8" id="6sc-Xe-dfW"/>
+                            <constraint firstItem="fvQ-M5-hkJ" firstAttribute="leading" secondItem="8bS-HC-W9C" secondAttribute="leadingMargin" constant="-8" id="B3Q-9E-7u6"/>
+                            <constraint firstItem="FiH-oQ-BFD" firstAttribute="top" secondItem="CIb-we-rTd" secondAttribute="bottom" constant="11" id="Hu4-uX-CsG"/>
+                            <constraint firstItem="Suf-8b-Uzh" firstAttribute="leading" secondItem="8bS-HC-W9C" secondAttribute="leadingMargin" id="R8k-Sr-fee"/>
+                            <constraint firstItem="fvQ-M5-hkJ" firstAttribute="top" secondItem="FiH-oQ-BFD" secondAttribute="bottom" constant="8" id="TIv-jx-y71"/>
+                            <constraint firstItem="CIb-we-rTd" firstAttribute="leading" secondItem="Suf-8b-Uzh" secondAttribute="trailing" id="W36-P0-u6T"/>
+                            <constraint firstItem="Suf-8b-Uzh" firstAttribute="top" secondItem="TAC-Xu-CIk" secondAttribute="bottom" constant="21" id="ckK-39-kMm"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="CIb-we-rTd" secondAttribute="trailing" constant="8" id="dha-bw-TMQ"/>
+                            <constraint firstItem="FiH-oQ-BFD" firstAttribute="leading" secondItem="8bS-HC-W9C" secondAttribute="leadingMargin" id="fNi-Cc-cEb"/>
+                            <constraint firstItem="TAC-Xu-CIk" firstAttribute="top" secondItem="IVt-K1-2O5" secondAttribute="bottom" constant="8" id="hK7-kK-8y9"/>
+                            <constraint firstItem="FiH-oQ-BFD" firstAttribute="top" secondItem="Suf-8b-Uzh" secondAttribute="bottom" constant="15" id="jH7-Ll-GnO"/>
+                            <constraint firstItem="FiH-oQ-BFD" firstAttribute="trailing" secondItem="8bS-HC-W9C" secondAttribute="trailingMargin" id="lrD-XK-4vM"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="fvQ-M5-hkJ" secondAttribute="trailing" constant="-8" id="tLl-WU-WWQ"/>
+                            <constraint firstItem="TAC-Xu-CIk" firstAttribute="trailing" secondItem="8bS-HC-W9C" secondAttribute="trailingMargin" id="yvQ-bJ-Jgn"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="cAb-Em-vUO">
@@ -931,7 +936,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1DZ-ac-EMh" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="XWr-pK-NF4" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3188" y="-813"/>
+            <point key="canvasLocation" x="3188" y="-813.64317841079469"/>
         </scene>
         <!--Start Up View Controller-->
         <scene sceneID="n1W-Ph-dUy">

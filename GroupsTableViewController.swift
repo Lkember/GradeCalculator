@@ -69,14 +69,16 @@ class GroupsTableViewController: UITableViewController {
     // MARK: - Functions
     
     func editCourseTitle(indexPath: IndexPath) {
-        // TODO
-        let alertController = UIAlertController(title: "Editing Group: \(groups[indexPath.row].groupName)", message: "", preferredStyle: UIAlertControllerStyle.alert)
         let ungroupedIndex = getGroupIndexWithName(nameOfGroup: "Ungrouped Courses")
         var index = indexPath.row
         
+        print("Test: ungrouped \(ungroupedIndex), index \(index)")
         if (groups[ungroupedIndex].courses.count == 0 && ungroupedIndex <= index) {
             index += 1
+            print("Incrementing index. Now index = \(index) which points to \(groups[index].groupName)")
         }
+        
+        let alertController = UIAlertController(title: "Editing Group: \(groups[index].groupName)", message: "", preferredStyle: UIAlertControllerStyle.alert)
         
         let saveAction = UIAlertAction(title: "Save", style: UIAlertActionStyle.default, handler: {
             (action: UIAlertAction!) -> Void in
