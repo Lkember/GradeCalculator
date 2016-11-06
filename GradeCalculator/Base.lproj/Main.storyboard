@@ -167,7 +167,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="idc-X5-iOL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2327" y="-66"/>
+            <point key="canvasLocation" x="1698" y="202"/>
         </scene>
         <!--New Course-->
         <scene sceneID="GUO-4d-QdT">
@@ -344,7 +344,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4MY-72-Bjw" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="z3Z-LI-P0o" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="4157.6000000000004" y="425.03748125937034"/>
+            <point key="canvasLocation" x="3481" y="525"/>
         </scene>
         <!--Marks Table View Controller-->
         <scene sceneID="ZOW-JA-Yuk">
@@ -569,7 +569,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YfY-mn-fvh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4975.1999999999998" y="-66.11694152923539"/>
+            <point key="canvasLocation" x="4225" y="-45"/>
         </scene>
         <!--Add Project View Controller-->
         <scene sceneID="Uwx-T0-g5c">
@@ -584,7 +584,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <scrollView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="250" alwaysBounceVertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zAj-Q2-JUW">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" text="Turn this switch on if you already have your mark for this project. Otherwise turn the switch off. " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vte-vA-neA">
                                         <rect key="frame" x="8" y="109.5" width="359" height="29"/>
@@ -778,7 +778,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hMY-Po-bvB" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="BDV-8h-3Xu" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="5872.8000000000002" y="-66.11694152923539"/>
+            <point key="canvasLocation" x="5033" y="-45"/>
         </scene>
         <!--Groups-->
         <scene sceneID="DhD-Ek-1c8">
@@ -1002,9 +1002,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="WYK-ti-e5R" kind="popoverPresentation" identifier="allCoursesSegue" popoverAnchorView="8ID-4Q-hmv" id="zPf-Tx-qAA">
-                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
-                                    </segue>
+                                    <segue destination="2px-Qq-uIr" kind="show" identifier="allCoursesSegue" id="VlD-FW-XQO"/>
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="51" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="fHF-8X-g2D">
@@ -1036,7 +1034,7 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.0" green="0.5447398671" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
-                                            <segue destination="WYK-ti-e5R" kind="show" identifier="ShowGroupSegue" id="Kx4-fq-sBs"/>
+                                            <segue destination="2px-Qq-uIr" kind="show" identifier="ShowGroupSegue" id="Jbt-N3-r7X"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -1104,7 +1102,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="keW-kh-wyk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1486" y="-66"/>
+            <point key="canvasLocation" x="580" y="781"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="WYU-Xx-H9e">
@@ -1122,7 +1120,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pQ4-AD-8La" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3097" y="425"/>
+            <point key="canvasLocation" x="2697" y="525"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="cdp-RX-etw">
@@ -1144,7 +1142,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pkD-xh-Rbu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4975.1999999999998" y="-783.05847076461771"/>
+            <point key="canvasLocation" x="4226" y="-813"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="6A8-cw-A9Q">
@@ -1162,7 +1160,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dfr-JP-1u2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5872.8000000000002" y="-783.05847076461771"/>
+            <point key="canvasLocation" x="5034" y="-813"/>
         </scene>
         <!--Pop Up View Controller-->
         <scene sceneID="1JD-un-jhk">
@@ -1248,7 +1246,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AwO-E2-KlG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4036" y="630.13493253373315"/>
+            <point key="canvasLocation" x="4340" y="633"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="WBz-j4-C5g">
@@ -1306,9 +1304,9 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="yTc-G5-nQQ"/>
+        <segue reference="Jbt-N3-r7X"/>
         <segue reference="kKh-ej-HbN"/>
-        <segue reference="XHZ-Lz-icb"/>
-        <segue reference="883-gk-HxU"/>
+        <segue reference="Ogw-IM-3dy"/>
+        <segue reference="Pnv-Sf-G43"/>
     </inferredMetricsTieBreakers>
 </document>

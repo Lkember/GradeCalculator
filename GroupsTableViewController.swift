@@ -308,6 +308,11 @@ class GroupsTableViewController: UITableViewController {
             destView.index = getGroupIndexWithName(nameOfGroup: cell.textLabel!.text!)
             print("GroupsTable: prepare: destView groups.count=\(destView.groups.count), groups[0].courses.count=\(destView.groups[0].courses.count), destView index = \(destView.index)")
         }
+        else if segue.identifier == nil {
+            print("GroupsTable: prepare: Back to startUpView")
+            self.navigationController?.setNavigationBarHidden(true, animated: true)
+        }
+        print("GroupsTable: prepare: Exit with identifier: \(segue.identifier)")
     }
     
     

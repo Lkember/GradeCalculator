@@ -19,7 +19,7 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
 
         // Do any additional setup after loading the view.
         
-        self.navigationController?.isNavigationBarHidden = true
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -56,7 +56,7 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
     override func viewDidAppear(_ animated: Bool) {
         print("StartUpView: viewDidAppear: reloading courses.")
         
-        self.navigationController?.isNavigationBarHidden = true
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
         
         if let loadedData = load() {
             groups = loadedData
@@ -265,7 +265,8 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
             destView?.groups = self.groups
         }
         else if (segue.identifier == "allCoursesSegue" || segue.identifier == "ShowGroupSegue") {
-            let destView = segue.destination.childViewControllers[0] as? CourseTableViewController
+//            let destView = segue.destination.childViewControllers[0] as? CourseTableViewController
+            let destView = segue.destination as? CourseTableViewController
             print("StartUpView: prepare: Going to CourseView")
             
             destView?.groups = self.groups

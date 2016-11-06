@@ -32,13 +32,16 @@ class CourseTableViewController: UITableViewController {
             self.title = groups[index].groupName
         }
         
+        self.navigationController?.isNavigationBarHidden = false
+        
         self.tableView.allowsMultipleSelectionDuringEditing = true
         self.tableView.allowsSelectionDuringEditing = true
         self.navigationController?.navigationBar.barStyle = UIBarStyle.black
         self.navigationController?.toolbar.barStyle = UIBarStyle.black
         
         //Add an edit button to the navigation bar
-        navigationItem.leftBarButtonItem = editButtonItem
+//        navigationItem.leftBarButtonItem = editButtonItem
+        self.navigationItem.rightBarButtonItems?.append(self.editButtonItem)
         
         // Add buttons to tool bar
         self.navigationController!.toolbar.isHidden = true
@@ -49,9 +52,9 @@ class CourseTableViewController: UITableViewController {
         self.backButton.layer.cornerRadius = 10
         
         // Adding an edge swipe listener
-        let edgePan = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(screenEdgeSwiped))
-        edgePan.edges = .left
-        view.addGestureRecognizer(edgePan)
+//        let edgePan = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(screenEdgeSwiped))
+//        edgePan.edges = .left
+//        view.addGestureRecognizer(edgePan)
         
         print("CourseTable: viewDidLoad Loading courses")
         
@@ -105,7 +108,7 @@ class CourseTableViewController: UITableViewController {
     
     // preparing for segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
+        print("CourseTable: prepare: current identifier \(segue.identifier)")
         if segue.identifier=="CourseView" {
             print("CourseTable: prepare: Setting courses to courseView")
             let selectedCourse = sender as? CourseTableViewCell
@@ -123,16 +126,20 @@ class CourseTableViewController: UITableViewController {
             destinationViewController?.groups = groups
             destinationViewController?.index = index
         }
+        else if segue.identifier == nil {
+            print("CourseTable: prepare: Back to startUpView")
+            self.navigationController?.setNavigationBarHidden(true, animated: true)
+        }
     }
     
     // A function to detect if the edge of the screen is swiped left
-    func screenEdgeSwiped(_ recognizer: UIScreenEdgePanGestureRecognizer) {
-        if recognizer.state == .recognized {
-            print("CourseTableView: screenEdgeSwiped")
-            save()
-            self.dismiss(animated: true, completion: nil)
-        }
-    }
+//    func screenEdgeSwiped(_ recognizer: UIScreenEdgePanGestureRecognizer) {
+//        if recognizer.state == .recognized {
+//            print("CourseTableView: screenEdgeSwiped")
+//            save()
+//            self.dismiss(animated: true, completion: nil)
+//        }
+//    }
     
     // Go back to the details view
     @IBAction func backToDetailView(_ sender: AnyObject) {
