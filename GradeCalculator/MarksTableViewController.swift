@@ -36,6 +36,10 @@ class MarksTableViewController: UITableViewController {
         
         tableView.setEditing(false, animated: false)
         
+        //Add an edit button to the top right of the nav controller
+        self.navigationItem.rightBarButtonItems?.append(self.editButtonItem)
+        
+        //Setting toolbar and nav bar to black, and setting the toolbar to always be viewable
         self.navigationController?.setToolbarHidden(false, animated: true)
         self.navigationController?.navigationBar.barStyle = UIBarStyle.black
         self.navigationController?.toolbar.barStyle = UIBarStyle.black
@@ -154,17 +158,17 @@ class MarksTableViewController: UITableViewController {
     
     
     // MARK: - Functions
-    @IBAction func editButtonIsClicked(_ sender: UIBarButtonItem) {
-        print("MarksTable: editButtonIsClicked")
-        if (self.tableView.isEditing) {
-            tableView.setEditing(false, animated: true)
-            sender.title = "Edit"
-        }
-        else {
-            tableView.setEditing(true, animated: true)
-            sender.title = "Done"
-        }
-    }
+//    @IBAction func editButtonIsClicked(_ sender: UIBarButtonItem) {
+//        print("MarksTable: editButtonIsClicked")
+//        if (self.tableView.isEditing) {
+//            tableView.setEditing(false, animated: true)
+//            sender.title = "Edit"
+//        }
+//        else {
+//            tableView.setEditing(true, animated: true)
+//            sender.title = "Done"
+//        }
+//    }
     
     
     func updateAttributes() {

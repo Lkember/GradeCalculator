@@ -41,6 +41,7 @@ class NewCoursesViewController: UIViewController, UITextFieldDelegate, UIPickerV
                 self.gradeView.alpha = 0.0
             }, completion: nil)
         }
+        textFieldDidChange(courseName)
     }
     
     
@@ -54,6 +55,9 @@ class NewCoursesViewController: UIViewController, UITextFieldDelegate, UIPickerV
         super.viewDidLoad()
         
         self.courseName.delegate = self
+        self.gradeField.delegate = self
+        self.gradeOutOfField.delegate = self
+        
         self.navigationController?.navigationBar.barStyle = UIBarStyle.black
         self.groupSelection.delegate = self
         self.groupSelection.dataSource = self
@@ -72,6 +76,8 @@ class NewCoursesViewController: UIViewController, UITextFieldDelegate, UIPickerV
         }
         warningLabel.isHidden = true
         courseName.addTarget(self, action: #selector(NewCoursesViewController.textFieldDidChange(_:)), for: UIControlEvents.editingChanged)
+        gradeField.addTarget(self, action: #selector(NewCoursesViewController.textFieldDidChange(_:)), for: UIControlEvents.editingChanged)
+        gradeOutOfField.addTarget(self, action: #selector(NewCoursesViewController.textFieldDidChange(_:)), for: UIControlEvents.editingChanged)
         saveButton.isEnabled = false
         
     }
@@ -96,13 +102,29 @@ class NewCoursesViewController: UIViewController, UITextFieldDelegate, UIPickerV
     }
     
     // Mark: UITextFieldDelegate
-    
     func textFieldDidChange(_ textField: UITextField) {
-        let text = textField.text ?? ""
+        let text = courseName.text ?? ""
+        print("NewCourses: textFieldDidChange: Current text = \(text)")
         if text == "" {
             saveButton.isEnabled = false
+            return
         }
         else {
+            if (courseIsComplete.isOn) {
+                if let _ = Double(gradeField.text!), let _ = Double(gradeOutOfField.text!) {
+                    saveButton.isEnabled = true
+                }
+                else {
+                    saveButton.isEnabled = false
+                    return
+                }
+            }
+            for group in groups {
+                if group.doesCourseNameExist(courseName: textField.text!) {
+                    saveButton.isEnabled = false
+                    return
+                }
+            }
             saveButton.isEnabled = true
         }
     }
@@ -115,18 +137,16 @@ class NewCoursesViewController: UIViewController, UITextFieldDelegate, UIPickerV
     func checkInput() -> Bool {
         var check = false
         let courseInput = self.courseName.text ?? ""
-//        for courseName in self.courses {
         for group in groups {
             check = group.doesCourseNameExist(courseName: courseInput)
-//            if courseName.courseName == courseInput {
             if check {
                 warningLabel.text = "A course with that name already exists."
                 warningLabel.isHidden = false;
                 return false
             }
         }
+        
         course = Course(courseName: courseInput)!
-//        courses.append(course)
         warningLabel.isHidden = true
         return true
     }

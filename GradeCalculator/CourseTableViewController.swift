@@ -339,9 +339,13 @@ class CourseTableViewController: UITableViewController {
             let newIndexPath: IndexPath
             let groupIndex = svc.groupSelection.selectedRow(inComponent: 0)
             
-            // Adding the final mark to the course
-            if (svc.courseIsComplete.isOn && svc.gradeField.text != "" && svc.gradeOutOfField.text != "") {
-                course.addProject("Final Mark", grade: Double(svc.gradeField.text!)!, outOf: Double(svc.gradeOutOfField.text!)!, weight: 100.0)
+            // Adding the final mark to the course if the user entered this information
+            if (svc.courseIsComplete.isOn &&
+                svc.gradeField.text != "" &&
+                svc.gradeOutOfField.text != "") {
+                if let grade = Double(svc.gradeField.text!), let outOf = Double(svc.gradeOutOfField.text!) {
+                    course.addProject("Final Mark", grade: grade, outOf: outOf, weight: 100.0)
+                }
             }
             
             // Adding the course to it's designated group
