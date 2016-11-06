@@ -291,7 +291,6 @@ class GroupsTableViewController: UITableViewController {
         print("GroupsTable: prepare: Entry")
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-        self.navigationController?.setNavigationBarHidden(true, animated: true)
         
         if (segue.identifier == "AddGroupSegue") {
             print("GroupsTable: prepare: AddGroupSegue has started")
@@ -300,19 +299,14 @@ class GroupsTableViewController: UITableViewController {
         }
         else if (segue.identifier == "ShowGroupSegue") {
             print("GroupsTable: prepare: ShowGroupSegue has started")
-            let destView = segue.destination.childViewControllers[0] as! CourseTableViewController
+//            let destView = segue.destination.childViewControllers[0] as! CourseTableViewController
+            let destView = segue.destination as! CourseTableViewController
             let cell = sender as! UITableViewCell
             print("GroupsTable: prepare: Showing \(cell.textLabel?.text)")
-//            destView.dictionaryKey = (cell.textLabel?.text)!
             destView.groups = groups
             destView.index = getGroupIndexWithName(nameOfGroup: cell.textLabel!.text!)
             print("GroupsTable: prepare: destView groups.count=\(destView.groups.count), groups[0].courses.count=\(destView.groups[0].courses.count), destView index = \(destView.index)")
         }
-        else if segue.identifier == nil {
-            print("GroupsTable: prepare: Back to startUpView")
-            self.navigationController?.setNavigationBarHidden(true, animated: true)
-        }
-        print("GroupsTable: prepare: Exit with identifier: \(segue.identifier)")
     }
     
     
