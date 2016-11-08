@@ -228,7 +228,7 @@ class GroupsTableViewController: UITableViewController {
 
     
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        print("GroupsTable: editActionsForRowAt: Setting edit actions")
+        print("GroupsTable: editActionsForRowAt -> Entry: Setting edit actions")
         let deleteRowAction = UITableViewRowAction(style: UITableViewRowActionStyle.destructive, title: "Delete", handler:{action, indexPath in
             
             let ungroupedIndex = self.getGroupIndexWithName(nameOfGroup: "Ungrouped Courses")
@@ -259,8 +259,17 @@ class GroupsTableViewController: UITableViewController {
                 tableView.deleteRows(at: [indexPath], with: .fade)
                 
                 self.groups[ungroupedIndex].courses += tempCourses
-                tableView.insertRows(at: [IndexPath.init(item: 0, section: 0)], with: .fade)
+                
+                if (newIndex != indexPath.row) {
+                    tableView.insertRows(at: [IndexPath.init(row: 0, section: 0)], with: .fade)
+                }
+                else {
+                    tableView.reloadRows(at: [IndexPath.init(row: ungroupedIndex, section: 0)], with: UITableViewRowAnimation.middle)
+                }
             }
+            
+            self.save()
+            print("GroupsTable: editActions -> Exit")
             
         });
         
@@ -271,48 +280,48 @@ class GroupsTableViewController: UITableViewController {
         return[deleteRowAction, editCourseTitle]
     }
     
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        print("GroupsTable: commit editingStyle -> Entry")
-        if editingStyle == .delete {
-            
-            let ungroupedIndex = getGroupIndexWithName(nameOfGroup: "Ungrouped Courses")
-            var newIndex = indexPath.row
-            
-            if groups[ungroupedIndex].courses.count == 0 {
-                print("Ungrouped courses.count = 0, ungroupedIndex = \(ungroupedIndex), indexPath.row=\(indexPath.row)")
-                if (ungroupedIndex <= indexPath.row) {
-                    newIndex += 1
-                    print("newIndex increment \(newIndex)")
-                }
-            }
-            
-            if groups[newIndex].courses.count == 0 {
-                print("GroupsTable: commit editingStyle: \(groups[newIndex].groupName).courses.count == 0")
-                print("Currently looking at group \(groups[newIndex].groupName)")
-                groups.remove(at: newIndex)
-                print(">1")
-                tableView.deleteRows(at: [indexPath], with: .fade)
-                tableView.isEditing = false
-            }
-            else {
-                print("GroupsTable: commit editingStyle: count > 0")
-                print("Currently looking at group \(groups[newIndex].groupName)")
-                let tempCourses = groups[newIndex].courses
-                
-                groups.remove(at: newIndex)
-                tableView.deleteRows(at: [indexPath], with: .fade)
-                
-                groups[ungroupedIndex].courses += tempCourses
-                tableView.insertRows(at: [IndexPath.init(item: 0, section: 0)], with: .fade)
-            }
-            
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }
-        save()
-        print("GroupsTable: commit editingStyle -> Exit")
-    }
+//    // Override to support editing the table view.
+//    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+//        print("GroupsTable: commit editingStyle -> Entry")
+//        if editingStyle == .delete {
+//            
+//            let ungroupedIndex = getGroupIndexWithName(nameOfGroup: "Ungrouped Courses")
+//            var newIndex = indexPath.row
+//            
+//            if groups[ungroupedIndex].courses.count == 0 {
+//                print("Ungrouped courses.count = 0, ungroupedIndex = \(ungroupedIndex), indexPath.row=\(indexPath.row)")
+//                if (ungroupedIndex <= indexPath.row) {
+//                    newIndex += 1
+//                    print("newIndex increment \(newIndex)")
+//                }
+//            }
+//            
+//            if groups[newIndex].courses.count == 0 {
+//                print("GroupsTable: commit editingStyle: \(groups[newIndex].groupName).courses.count == 0")
+//                print("Currently looking at group \(groups[newIndex].groupName)")
+//                groups.remove(at: newIndex)
+//                print(">1")
+//                tableView.deleteRows(at: [indexPath], with: .fade)
+//                tableView.isEditing = false
+//            }
+//            else {
+//                print("GroupsTable: commit editingStyle: count > 0")
+//                print("Currently looking at group \(groups[newIndex].groupName)")
+//                let tempCourses = groups[newIndex].courses
+//                
+//                groups.remove(at: newIndex)
+//                tableView.deleteRows(at: [indexPath], with: .fade)
+//                
+//                groups[ungroupedIndex].courses += tempCourses
+//                tableView.insertRows(at: [IndexPath.init(item: 0, section: 0)], with: .fade)
+//            }
+//            
+//        } else if editingStyle == .insert {
+//            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+//        }
+//        save()
+//        print("GroupsTable: commit editingStyle -> Exit")
+//    }
 
     
     // Override to support rearranging the table view.
