@@ -24,17 +24,10 @@ class GroupsTableViewController: UITableViewController {
 
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         
-//        let plusButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.add, target: self, action: nil)
+        // Adding the edit button to the right bar buttons
         self.navigationItem.rightBarButtonItems?.append(self.editButtonItem)
-//        self.navigationItem.rightBarButtonItems = [plusButton, self.editButtonItem]
         
-        //Adding an edge swipe listener
-//        let edgePan = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(screenEdgeSwiped))
-//        edgePan.edges = .left
-//        view.addGestureRecognizer(edgePan)
-        
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-//        self.navigationItem.leftBarButtonItem = self.editButtonItem
+        // Setting the nav bar style to black
         self.navigationController?.navigationBar.barStyle = UIBarStyle.black
     }
 
@@ -323,6 +316,12 @@ class GroupsTableViewController: UITableViewController {
 //        print("GroupsTable: commit editingStyle -> Exit")
 //    }
 
+    override func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
+        if (proposedDestinationIndexPath.row == 0) {
+            return IndexPath(row: 1, section: 0)
+        }
+        return proposedDestinationIndexPath
+    }
     
     // Override to support rearranging the table view.
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
@@ -333,7 +332,6 @@ class GroupsTableViewController: UITableViewController {
         }
         
         if groups[getGroupIndexWithName(nameOfGroup: "Ungrouped Courses")].courses.count == 0 {
-            // TODO: Add support for rearranging table when ungrouped courses is empty
             let ungroupedIndex = getGroupIndexWithName(nameOfGroup: "UngroupedCourses")
             var fromIndex = fromIndexPath.row
             var toIndex = to.row
@@ -359,6 +357,8 @@ class GroupsTableViewController: UITableViewController {
         for group in groups {
             print(group.groupName)
         }
+        
+        save()
     }
 
 
