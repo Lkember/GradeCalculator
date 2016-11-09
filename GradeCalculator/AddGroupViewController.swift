@@ -115,7 +115,7 @@ class AddGroupViewController: UIViewController, UITableViewDelegate, UITableView
     // MARK: - TextFieldDelegate
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let text: NSString = (textField.text ?? "") as NSString
+        let text = (textField.text ?? "") as NSString
         let resultString = text.replacingCharacters(in: range, with: string)
         
         checkTextFieldInput(input: resultString)

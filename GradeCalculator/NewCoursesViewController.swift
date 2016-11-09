@@ -16,7 +16,6 @@ class NewCoursesViewController: UIViewController, UITextFieldDelegate, UIPickerV
     var index = -1
     var course: Course = Course()
     @IBOutlet weak var courseName: UITextField!
-    @IBOutlet weak var warningLabel: UILabel!
     @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var cancelButton: UIBarButtonItem!
     @IBOutlet weak var groupSelection: UIPickerView!
@@ -25,25 +24,6 @@ class NewCoursesViewController: UIViewController, UITextFieldDelegate, UIPickerV
     @IBOutlet weak var gradeOutOfField: UITextField!
     @IBOutlet weak var gradeView: UIView!
     @IBOutlet weak var scrollView: UIScrollView!
-    
-    // MARK: Actions
-    @IBAction func cancel(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
-    }
-    
-    @IBAction func isComplete(_ sender: UISwitch) {
-        if sender.isOn {
-            UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveEaseOut, animations: {
-                self.gradeView.alpha = 1.0
-            }, completion: nil)
-        }
-        else {
-            UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveEaseOut, animations: {
-                self.gradeView.alpha = 0.0
-            }, completion: nil)
-        }
-        textFieldDidChange(courseName)
-    }
     
     
     // MARK: - Navigation
@@ -76,8 +56,6 @@ class NewCoursesViewController: UIViewController, UITextFieldDelegate, UIPickerV
             groupSelection.selectRow(getIndexForGroup(withName: "Ungrouped Courses"), inComponent: 0, animated: true)
         }
         
-        warningLabel.isHidden = true
-        
         // Adding listeners for when a text field changes
         courseName.addTarget(self, action: #selector(NewCoursesViewController.textFieldDidChange(_:)), for: UIControlEvents.editingChanged)
         gradeField.addTarget(self, action: #selector(NewCoursesViewController.textFieldDidChange(_:)), for: UIControlEvents.editingChanged)
@@ -98,6 +76,27 @@ class NewCoursesViewController: UIViewController, UITextFieldDelegate, UIPickerV
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
+    
+    
+    // MARK: Actions
+    @IBAction func cancel(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func isComplete(_ sender: UISwitch) {
+        if sender.isOn {
+            UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveEaseOut, animations: {
+                self.gradeView.alpha = 1.0
+            }, completion: nil)
+        }
+        else {
+            UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveEaseOut, animations: {
+                self.gradeView.alpha = 0.0
+            }, completion: nil)
+        }
+        textFieldDidChange(courseName)
+    }
+    
     
     // MARK: Functions
     func getIndexForGroup(withName: String) -> Int {
@@ -148,14 +147,11 @@ class NewCoursesViewController: UIViewController, UITextFieldDelegate, UIPickerV
         for group in groups {
             check = group.doesCourseNameExist(courseName: courseInput)
             if check {
-                warningLabel.text = "A course with that name already exists."
-                warningLabel.isHidden = false;
                 return false
             }
         }
         
         course = Course(courseName: courseInput)!
-        warningLabel.isHidden = true
         return true
     }
     
@@ -195,4 +191,5 @@ class NewCoursesViewController: UIViewController, UITextFieldDelegate, UIPickerV
 //    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
 //        textField.resignFirstResponder()
 //    }
+    
 }

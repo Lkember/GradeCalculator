@@ -18,7 +18,7 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var gradeField: UITextField!
     @IBOutlet weak var gradeOutOfField: UITextField!
     @IBOutlet weak var outOfLabel: UILabel!
-    @IBOutlet weak var incorrectInfoLabel: UILabel!
+//    @IBOutlet weak var incorrectInfoLabel: UILabel!
     @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var deleteProjectButton: UIButton!
     @IBOutlet var scrollView: UIScrollView!
@@ -44,9 +44,14 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(AddProjectViewController.keyboardToggle(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(AddProjectViewController.keyboardToggle(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
+        // Adding listener for when any of the text fields are edited
+        projectNameField.addTarget(self, action: #selector(AddProjectViewController.textFieldDidChange(_textField:)), for: UIControlEvents.editingChanged)
+        weightField.addTarget(self, action: #selector(AddProjectViewController.textFieldDidChange(_textField:)), for: UIControlEvents.editingChanged)
+        gradeField.addTarget(self, action: #selector(AddProjectViewController.textFieldDidChange(_textField:)), for: UIControlEvents.editingChanged)
+        gradeOutOfField.addTarget(self, action: #selector(AddProjectViewController.textFieldDidChange(_textField:)), for: UIControlEvents.editingChanged)
+        
         deleteProjectButton.layer.cornerRadius = 10
         
-        incorrectInfoLabel.isHidden = true
         self.navigationController?.navigationBar.barStyle = UIBarStyle.black
         
         // Do any additional setup after loading the view.
@@ -129,7 +134,6 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
     func checkInput() -> Bool {
         print("AddProject: CheckInput Entry")
         if (projectNameField.text == "" || weightField.text == "") {
-            incorrectInfoLabel.isHidden = false
             print("AddProject: CheckInput Exit -> projectName or weight field empty")
             return false
         }
@@ -140,7 +144,6 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
         if (projectIsComplete.isOn) {
             print("AddProject: CheckInput projectIsComplete.isOn -> True")
             if (gradeField.text == "" || gradeOutOfField.text == "" || Double(gradeOutOfField.text!) == 0.0 || !checkMarkInput()) {
-                incorrectInfoLabel.isHidden = false
                 print("AddProject: CheckInput Exit -> Field empty or gradeOutOf set to 0")
                 return false
             }
@@ -151,7 +154,6 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
 
         }
         print("AddProject: CheckInput Exit -> Success")
-        incorrectInfoLabel.isHidden = true
         return true
     }
     
@@ -191,6 +193,14 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
+    func textFieldDidChange(_textField: UITextField) {
+        print("AddProject: textFieldDidChange -> Entry")
+        if (checkInput() && checkMarkInput()) {
+            saveButton.isEnabled = true
+            return
+        }
+        saveButton.isEnabled = false
+    }
     
     // MARK: - Navigation
 
