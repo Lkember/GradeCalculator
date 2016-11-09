@@ -44,6 +44,10 @@ class MarksTableViewController: UITableViewController {
         self.navigationController?.navigationBar.barStyle = UIBarStyle.black
         self.navigationController?.toolbar.barStyle = UIBarStyle.black
         
+        if (self.navigationController?.isToolbarHidden)! {
+            self.navigationController?.setToolbarHidden(false, animated: true)
+        }
+        
         updateLabels()
     }
     
@@ -51,6 +55,10 @@ class MarksTableViewController: UITableViewController {
         print("MarksTable: viewDidAppear -> Entry: courseName=\(courseName)")
         
         tableView.setEditing(false, animated: false)
+        
+        if (self.navigationController?.isToolbarHidden)! {
+            self.navigationController?.setToolbarHidden(false, animated: true)
+        }
         
         updateAttributes()
         updateLabels()
@@ -347,6 +355,8 @@ class MarksTableViewController: UITableViewController {
             courseDVC.navigationItem.title = self.courseName
             courseDVC.saveButton.isEnabled = true
             
+            self.navigationController?.setToolbarHidden(true, animated: true)
+            
             if let selectedCell = sender as? MarksViewCell {
                 let indexPath = tableView.indexPath(for: selectedCell)!
                 let selectedProject = course?.projects[(indexPath as NSIndexPath).row]
@@ -366,6 +376,8 @@ class MarksTableViewController: UITableViewController {
             let courseDVC = segue.destination.childViewControllers[0] as! AddProjectViewController
             courseDVC.saveButton.isEnabled = false
             courseDVC.courseName = self.courseName
+            
+            self.navigationController?.setToolbarHidden(true, animated: true)
         }
     
     }
