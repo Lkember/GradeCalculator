@@ -44,7 +44,7 @@ class NewCoursesViewController: UIViewController, UITextFieldDelegate, UIPickerV
         self.groupSelection.dataSource = self
         self.groupSelection.layer.cornerRadius = 10
         self.groupSelection.layer.borderWidth = 1
-        self.groupSelection.layer.borderColor = UIColor.black.cgColor
+        self.groupSelection.layer.borderColor = UIColor.white.cgColor
         
         self.courseIsComplete.isOn = false
         self.isComplete(courseIsComplete)
@@ -164,8 +164,9 @@ class NewCoursesViewController: UIViewController, UITextFieldDelegate, UIPickerV
         return groups.count
     }
     
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return groups[row].groupName
+    // Returning white text
+    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+        return NSAttributedString(string: groups[row].groupName, attributes: [NSForegroundColorAttributeName : UIColor.white])
     }
     
     // MARK: - Listeners
