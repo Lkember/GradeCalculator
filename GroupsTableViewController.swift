@@ -50,15 +50,6 @@ class GroupsTableViewController: UITableViewController {
         return .lightContent
     }
     
-    // A function to detect if the edge of the screen is swiped left
-//    func screenEdgeSwiped(_ recognizer: UIScreenEdgePanGestureRecognizer) {
-//        if recognizer.state == .recognized {
-//            print("CourseTableView: screenEdgeSwiped")
-//            save()
-//            self.dismiss(animated: true, completion: nil)
-//        }
-//    }
-    
     // MARK: - Functions
     
     func editCourseTitle(indexPath: IndexPath) {
@@ -190,14 +181,6 @@ class GroupsTableViewController: UITableViewController {
     }
     
     
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-    
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         if (tableView.isEditing) {
@@ -219,7 +202,7 @@ class GroupsTableViewController: UITableViewController {
         return false
     }
 
-    
+    // Making the delete and edit button when editing a cell
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         print("GroupsTable: editActionsForRowAt -> Entry: Setting edit actions")
         let deleteRowAction = UITableViewRowAction(style: UITableViewRowActionStyle.destructive, title: "Delete", handler:{action, indexPath in
@@ -273,49 +256,7 @@ class GroupsTableViewController: UITableViewController {
         return[deleteRowAction, editCourseTitle]
     }
     
-//    // Override to support editing the table view.
-//    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-//        print("GroupsTable: commit editingStyle -> Entry")
-//        if editingStyle == .delete {
-//            
-//            let ungroupedIndex = getGroupIndexWithName(nameOfGroup: "Ungrouped Courses")
-//            var newIndex = indexPath.row
-//            
-//            if groups[ungroupedIndex].courses.count == 0 {
-//                print("Ungrouped courses.count = 0, ungroupedIndex = \(ungroupedIndex), indexPath.row=\(indexPath.row)")
-//                if (ungroupedIndex <= indexPath.row) {
-//                    newIndex += 1
-//                    print("newIndex increment \(newIndex)")
-//                }
-//            }
-//            
-//            if groups[newIndex].courses.count == 0 {
-//                print("GroupsTable: commit editingStyle: \(groups[newIndex].groupName).courses.count == 0")
-//                print("Currently looking at group \(groups[newIndex].groupName)")
-//                groups.remove(at: newIndex)
-//                print(">1")
-//                tableView.deleteRows(at: [indexPath], with: .fade)
-//                tableView.isEditing = false
-//            }
-//            else {
-//                print("GroupsTable: commit editingStyle: count > 0")
-//                print("Currently looking at group \(groups[newIndex].groupName)")
-//                let tempCourses = groups[newIndex].courses
-//                
-//                groups.remove(at: newIndex)
-//                tableView.deleteRows(at: [indexPath], with: .fade)
-//                
-//                groups[ungroupedIndex].courses += tempCourses
-//                tableView.insertRows(at: [IndexPath.init(item: 0, section: 0)], with: .fade)
-//            }
-//            
-//        } else if editingStyle == .insert {
-//            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-//        }
-//        save()
-//        print("GroupsTable: commit editingStyle -> Exit")
-//    }
-
+    // This method is used so that the Ungrouped Courses cell can NOT be reordered
     override func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
         if (proposedDestinationIndexPath.row == 0) {
             return IndexPath(row: 1, section: 0)
@@ -405,7 +346,7 @@ class GroupsTableViewController: UITableViewController {
     
     
     // MARK: - NSCoding
-    
+    // saves the current groups
     func save() {
         print("GroupsTable: save: Saving courses and groups.")
         if (!NSKeyedArchiver.archiveRootObject(self.groups, toFile: Group.ArchiveURL.path)) {
@@ -413,6 +354,7 @@ class GroupsTableViewController: UITableViewController {
         }
     }
     
+    // loads any saved groups
     func load() -> [Group]? {
         print("GroupsTable: load: Loading courses.")
         return (NSKeyedUnarchiver.unarchiveObject(withFile: Group.ArchiveURL.path) as! [Group]?)
