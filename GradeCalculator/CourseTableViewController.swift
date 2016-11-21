@@ -485,7 +485,7 @@ class CourseTableViewController: UITableViewController {
             cell.courseDescription.text = "Mark: \(round(10*course.getAverage()*100)/10)%"
         }
         else {
-            cell.courseDescription.text = "Not enough information"
+            cell.courseDescription.text = "Incomplete"
         }
         
         cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
