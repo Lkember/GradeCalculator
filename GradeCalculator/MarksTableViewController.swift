@@ -146,12 +146,6 @@ class MarksTableViewController: UITableViewController {
     
     
     @IBAction func changeGroupAction(_ sender: AnyObject) {
-//        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.dark)
-//        let blurEffectView = UIVisualEffectView(effect: blurEffect)
-////        blurEffectView.alpha = CGFloat.init(0.7)
-//        blurEffectView.frame = view.bounds
-//        view.addSubview(blurEffectView)
-        
         let popOverView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PopUpView") as! PopUpViewController
         self.addChildViewController(popOverView)
         
@@ -165,20 +159,50 @@ class MarksTableViewController: UITableViewController {
     }
     
     
-    // MARK: - Functions
-//    @IBAction func editButtonIsClicked(_ sender: UIBarButtonItem) {
-//        print("MarksTable: editButtonIsClicked")
-//        if (self.tableView.isEditing) {
-//            tableView.setEditing(false, animated: true)
-//            sender.title = "Edit"
-//        }
-//        else {
-//            tableView.setEditing(true, animated: true)
-//            sender.title = "Done"
-//        }
-//    }
+    @IBAction func renameGroupAction(_ sender: UIBarButtonItem) {
+        editCourseTitle()
+    }
     
+    func editCourseTitle() {
+        print("CourseTableView: editActionsForRowAt: User selected edit")
+        var alertController: UIAlertController
+        
+        alertController = UIAlertController(title: "Editing Course: \(self.courseName)", message: "", preferredStyle: UIAlertControllerStyle.alert)
+        
+            let saveAction = UIAlertAction(title: "Save", style: UIAlertActionStyle.default, handler: {
+                (action: UIAlertAction!) -> Void in
+                
+                let courseNameField = alertController.textFields![0] as UITextField
+                
+                if (courseNameField.text! != "") {
+                    self.groups[self.index].courses[self.courseIndex].courseName = courseNameField.text!
+                    self.save()
+                    self.title = courseNameField.text!
+                }
+                
+                self.setEditing(false, animated: true)
+            });
+        
+            let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: {
+                (action: UIAlertAction!) -> Void in
+                self.setEditing(false, animated: true)
+                // do nothing
+            });
+        
+            alertController.addTextField(configurationHandler: { (textField : UITextField!) -> Void in
+
+            textField.text = self.courseName
+            
+        });
+        
+        alertController.addAction(saveAction)
+        alertController.addAction(cancelAction)
+        
+        self.present(alertController, animated: true, completion: nil)
+    }
+
     
+    // A function which updates the index of the current course
     func updateAttributes() {
         if (self.index == -1) {
             print("MarksTable: viewDidLoad: index is -1")
@@ -307,12 +331,13 @@ class MarksTableViewController: UITableViewController {
     
     //Allow the rearranging of cells
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        print("MarksTable: tableView moveRowAt -> Entry")
+        print("MarksTable: tableView moveRowAt -> Entry: \nprojects = \(course?.projects.count)\nprojectMarks = \(course?.projectMarks.count)\nprojectOutOf = \(course?.projectOutOf.count)\nprojectWeight = \(course?.projectWeights.count)")
         var index = sourceIndexPath.row
         let tempProject = course?.projects[index]
         let tempProjectMark = course?.projectMarks[index]
         let tempProjectOutOf = course?.projectOutOf[index]
         let tempProjectWeight = course?.projectWeights[index]
+        
         
         if sourceIndexPath.row < destinationIndexPath.row {
             while (index < destinationIndexPath.row) {
@@ -332,13 +357,14 @@ class MarksTableViewController: UITableViewController {
                 index -= 1
             }
         }
+        
         course!.projects[destinationIndexPath.row] = tempProject!
         course!.projectMarks[destinationIndexPath.row] = tempProjectMark!
         course!.projectOutOf[destinationIndexPath.row] = tempProjectOutOf!
         course!.projectWeights[destinationIndexPath.row] = tempProjectWeight!
         
-        groups[index].courses[courseIndex] = course!
-        
+        print("index=\(index), courseIndex=\(courseIndex)")
+        groups[self.index].courses[courseIndex] = course!
         updateLabels()
         save()
         print("MarksTable: tableView moveRowAt -> Exit")
