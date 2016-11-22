@@ -145,6 +145,19 @@ class CourseTableViewController: UITableViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
+//    override func willMove(toParentViewController parent: UIViewController?) {
+//        super.willMove(toParentViewController: parent)
+//        
+//        if parent == nil {
+//            navigationController?.setNavigationBarHidden(true, animated: true)
+////            navigationController?.navigationBar.isHidden = true
+//        }
+//        else {
+//            navigationController?.setNavigationBarHidden(false, animated: true)
+//        }
+//    }
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
