@@ -129,14 +129,6 @@ class CourseTableViewController: UITableViewController {
         }
     }
     
-    // A function to detect if the edge of the screen is swiped left
-//    func screenEdgeSwiped(_ recognizer: UIScreenEdgePanGestureRecognizer) {
-//        if recognizer.state == .recognized {
-//            print("CourseTableView: screenEdgeSwiped")
-//            save()
-//            self.dismiss(animated: true, completion: nil)
-//        }
-//    }
     
     // Go back to the details view
     @IBAction func backToDetailView(_ sender: AnyObject) {
@@ -402,17 +394,19 @@ class CourseTableViewController: UITableViewController {
             
             let courseNameField = alertController.textFields![0] as UITextField
             
-            if (self.index == -1) {
-                self.groups[indexPath.section].courses[indexPath.row].courseName = courseNameField.text!
-            }
-            else {
-                self.groups[self.index].courses[indexPath.row].courseName = courseNameField.text!
+            if (courseNameField.text! != "") {
+                if (self.index == -1) {
+                    self.groups[indexPath.section].courses[indexPath.row].courseName = courseNameField.text!
+                }
+                else {
+                    self.groups[self.index].courses[indexPath.row].courseName = courseNameField.text!
+                }
             }
             
             self.save()
-            self.tableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.fade)
             self.setEditing(false, animated: true)
             self.navigationController?.setToolbarHidden(true, animated: true)
+            self.tableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.fade)
         });
         
         let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: {
