@@ -11,7 +11,6 @@ import UIKit
 class CourseTableViewController: UITableViewController {
 
     // MARK: Properties
-//    var dictionaryKey: String = ""
     var groups: [Group] = []
     var index = -1
     @IBOutlet weak var overallAverage: UILabel!
@@ -19,6 +18,7 @@ class CourseTableViewController: UITableViewController {
     @IBOutlet weak var deleteButton: UIBarButtonItem!
     @IBOutlet weak var editButton: UIBarButtonItem!
     @IBOutlet weak var addButton: UIBarButtonItem!
+    @IBOutlet weak var informationView: UIView!
     
     // MARK: Views
     override func viewDidLoad() {
@@ -28,6 +28,9 @@ class CourseTableViewController: UITableViewController {
         if (index != -1) {
             print("CourseTable: viewDidLoad: Current Index = \(index)")
             self.title = groups[index].groupName
+            
+//            let currentFrame = self.informationView.frame
+//            self.informationView.frame = CGRect(x: currentFrame.origin.x, y: currentFrame.origin.y, width: currentFrame.width, height: currentFrame.height + 50)
         }
         
         self.navigationController?.setNavigationBarHidden(false, animated: true)

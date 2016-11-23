@@ -32,23 +32,37 @@ class MarksTableViewController: UITableViewController {
         
         updateAttributes()
         
+        print("MarksTable: viewDidLoad -> 1")
+        
         tableView.rowHeight = 60.0
+        
+        print("MarksTable: viewDidLoad -> 2")
         
         tableView.setEditing(false, animated: false)
         
+        print("MarksTable: viewDidLoad -> 3")
+        
         //Add an edit button to the top right of the nav controller
         self.navigationItem.rightBarButtonItems?.append(self.editButtonItem)
+        
+        print("MarksTable: viewDidLoad -> 4")
         
         //Setting toolbar and nav bar to black, and setting the toolbar to always be viewable
         self.navigationController?.setToolbarHidden(false, animated: true)
         self.navigationController?.navigationBar.barStyle = UIBarStyle.black
         self.navigationController?.toolbar.barStyle = UIBarStyle.black
         
+        print("MarksTable: viewDidLoad -> 5")
+        
         if (self.navigationController?.isToolbarHidden)! {
             self.navigationController?.setToolbarHidden(false, animated: true)
         }
         
+        print("MarksTable: viewDidLoad -> 6")
+        
         updateLabels()
+        
+        print("MarksTable: viewDidLoad -> 7")
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -176,8 +190,9 @@ class MarksTableViewController: UITableViewController {
                 
                 if (courseNameField.text! != "") {
                     self.groups[self.index].courses[self.courseIndex].courseName = courseNameField.text!
-                    self.save()
+                    self.courseName = courseNameField.text!
                     self.title = courseNameField.text!
+                    self.save()
                 }
                 
                 self.setEditing(false, animated: true)
@@ -204,8 +219,8 @@ class MarksTableViewController: UITableViewController {
     
     // A function which updates the index of the current course
     func updateAttributes() {
+        print("MarksTable: updateAttributes -> Entry: Value of index=\(self.index): courseName=\(self.courseName)")
         if (self.index == -1) {
-            print("MarksTable: viewDidLoad: index is -1")
             for i in 0..<groups.count {
                 courseIndex = groups[i].findIndexInCourseList(course: courseName)
                 if courseIndex != -1 {
@@ -215,16 +230,17 @@ class MarksTableViewController: UITableViewController {
             }
             
             self.course = groups[index].courses[courseIndex]
-            print("MarksTable: viewDidLoad: Found. User clicked \(groups[index].courses[courseIndex].courseName)")
+            print("MarksTable: updateAttributes: Found. User clicked \(groups[index].courses[courseIndex].courseName)")
         }
         else {
             courseIndex = groups[index].findIndexInCourseList(course: courseName)
+            print("MarksTable: updateAttributes: course index is \(courseIndex)")
             self.course = groups[index].courses[courseIndex]
             self.navigationItem.title = courseName
             
-            print("MarksTable: viewDidLoad: index is \(index), courseIndex is \(courseIndex)")
-            print("MarksTableView: viewDidLoad: Exit")
+            print("MarksTable: updateAttributes: index is \(index), courseIndex is \(courseIndex)")
         }
+        print("MarksTableView: updateAttributes: Exit")
     }
     
     
@@ -277,8 +293,15 @@ class MarksTableViewController: UITableViewController {
         return (course?.projects.count)!
     }
     
+    //Setting the title of the section in the table
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if (section == 0) {
+            return "Mark List"
+        }
+        return ""
+    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        tableView.registerClass(MarksViewCell.self, forCellReuseIdentifier: "MarksViewCell")
         let cellIdentifier = "MarksViewCell"
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! MarksViewCell
         
