@@ -18,11 +18,12 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var gradeField: UITextField!
     @IBOutlet weak var gradeOutOfField: UITextField!
     @IBOutlet weak var outOfLabel: UILabel!
-//    @IBOutlet weak var incorrectInfoLabel: UILabel!
     @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var deleteProjectButton: UIButton!
     @IBOutlet var scrollView: UIScrollView!
+    @IBOutlet weak var deleteButtonBottomConstraint: NSLayoutConstraint!
     
+    var originalConstraintConstant: CGFloat!
     var projectName = ""
     var projectWeight = -1.0
     var projectGrade = -1.0
@@ -53,6 +54,8 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
         deleteProjectButton.layer.cornerRadius = 10
         
         self.navigationController?.navigationBar.barStyle = UIBarStyle.black
+        
+        originalConstraintConstant = self.deleteButtonBottomConstraint.constant
         
         // Do any additional setup after loading the view.
         if (courseName != "") {
@@ -103,14 +106,31 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
     
     // When the user specifies they have a mark, then show grade else hide
     @IBAction func isComplete(_ sender: UISwitch) {
+        let deleteButtonFrame = self.deleteProjectButton.frame
+        let gradeViewFrame = self.gradeView.frame
+        
         if sender.isOn {
             UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveEaseOut, animations: {
                 self.gradeView.alpha = 1.0
+                self.deleteProjectButton.frame = CGRect(x: deleteButtonFrame.origin.x,
+                                                        y: deleteButtonFrame.origin.y + gradeViewFrame.height,
+                                                        width: deleteButtonFrame.width,
+                                                        height: deleteButtonFrame.height)
+                
+                self.deleteButtonBottomConstraint.constant = self.originalConstraintConstant
+                
                 }, completion: nil)
         }
         else {
             UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveEaseOut, animations: {
                 self.gradeView.alpha = 0.0
+                self.deleteProjectButton.frame = CGRect(x: deleteButtonFrame.origin.x,
+                                                        y: deleteButtonFrame.origin.y - gradeViewFrame.height,
+                                                        width: deleteButtonFrame.width,
+                                                        height: deleteButtonFrame.height)
+                
+                self.deleteButtonBottomConstraint.constant = self.originalConstraintConstant - gradeViewFrame.height
+                
                 }, completion: nil)
         }
     }
