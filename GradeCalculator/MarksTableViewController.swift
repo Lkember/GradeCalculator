@@ -30,39 +30,25 @@ class MarksTableViewController: UITableViewController {
         
         print("MarksTable: viewDidLoad -> Entry: courseName=\(courseName)")
         
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+        
         updateAttributes()
-        
-        print("MarksTable: viewDidLoad -> 1")
-        
         tableView.rowHeight = 60.0
-        
-        print("MarksTable: viewDidLoad -> 2")
-        
         tableView.setEditing(false, animated: false)
-        
-        print("MarksTable: viewDidLoad -> 3")
         
         //Add an edit button to the top right of the nav controller
         self.navigationItem.rightBarButtonItems?.append(self.editButtonItem)
-        
-        print("MarksTable: viewDidLoad -> 4")
         
         //Setting toolbar and nav bar to black, and setting the toolbar to always be viewable
         self.navigationController?.setToolbarHidden(false, animated: true)
         self.navigationController?.navigationBar.barStyle = UIBarStyle.black
         self.navigationController?.toolbar.barStyle = UIBarStyle.black
         
-        print("MarksTable: viewDidLoad -> 5")
-        
         if (self.navigationController?.isToolbarHidden)! {
             self.navigationController?.setToolbarHidden(false, animated: true)
         }
         
-        print("MarksTable: viewDidLoad -> 6")
-        
         updateLabels()
-        
-        print("MarksTable: viewDidLoad -> 7")
     }
     
     override func viewDidAppear(_ animated: Bool) {

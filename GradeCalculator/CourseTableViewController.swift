@@ -78,6 +78,18 @@ class CourseTableViewController: UITableViewController {
         print("CourseTable: viewDidAppear -> Exit")
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        let views = self.navigationController!.viewControllers
+        
+        if (views.count > 2 && views[views.count-2] == self.navigationController) {
+            print("CourseTable: viewWillDisappear -> New view controller was pushed onto the stack.")
+        }
+        else if (!views.contains(self) && !(views[views.count-1] is GroupsTableViewController)) {
+            print("CourseTable: viewWillDisappear -> View controller was popped from stack.")
+            self.navigationController?.setNavigationBarHidden(true, animated: true)
+        }
+    }
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }

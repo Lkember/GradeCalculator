@@ -41,6 +41,18 @@ class GroupsTableViewController: UITableViewController {
         tableView.reloadData()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        let views = self.navigationController!.viewControllers
+        
+        if (views.count > 2 && views[views.count-2] == self.navigationController) {
+            print("GroupsTableViewController: viewWillDisappear -> New view controller was pushed onto the stack.")
+        }
+        else if (!views.contains(self)) {
+            print("GroupsTableViewController: viewWillDisappear -> View controller was popped from stack.")
+            self.navigationController?.setNavigationBarHidden(true, animated: true)
+        }
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
