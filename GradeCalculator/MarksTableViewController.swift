@@ -244,7 +244,8 @@ class MarksTableViewController: UITableViewController {
         let weight = course!.getWeightTotal()
         let activeWeight = course!.getActiveWeightTotal()
         
-        if (weight <= 100 && weight >= 0) {
+        if (weight <= 100.0 && weight >= 0.0) {
+            remainingWeight.textColor = UIColor.white
             remainingWeight.text = "\(100.0-weight)%"
 
             if activeWeight >= 100 {
