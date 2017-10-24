@@ -120,7 +120,7 @@ class CourseTableViewController: UITableViewController {
     
     // preparing for segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        print("CourseTable: prepare: current identifier \(segue.identifier)")
+        print("CourseTable: prepare: current identifier \(String(describing: segue.identifier))")
         if segue.identifier=="CourseView" {
             print("CourseTable: prepare: Setting courses to courseView")
             let selectedCourse = sender as? CourseTableViewCell
@@ -129,7 +129,7 @@ class CourseTableViewController: UITableViewController {
             destVC?.groups = self.groups
             destVC?.courseName = (selectedCourse?.courseName.text)!
             destVC?.index = self.index
-            print("CourseTable: prepare: destVC.index=\(destVC?.index)")
+            print("CourseTable: prepare: destVC.index=\(String(describing: destVC?.index))")
         }
             
         else if segue.identifier=="AddItem" {

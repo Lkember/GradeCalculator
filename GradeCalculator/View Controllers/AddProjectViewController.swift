@@ -161,6 +161,7 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
             projectName = projectNameField.text!
             projectWeight = Double(weightField.text!)!
         }
+        
         if (projectIsComplete.isOn) {
             print("AddProject: CheckInput projectIsComplete.isOn -> True")
             if (gradeField.text == "" || gradeOutOfField.text == "" || Double(gradeOutOfField.text!) == 0.0 || !checkMarkInput()) {
@@ -178,32 +179,36 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
     }
     
     func checkMarkInput() -> Bool {
-        print("AddProject: checkMarkInput Entry")
-        let grade = gradeField.text
-        let weight = weightField.text
-        var numDecimals = 0
-        var numDecimals2 = 0
-        
-        for char in (grade?.characters)! {
-            if (char == ".") {
-                numDecimals += 1
+        if (projectIsComplete.isOn) {
+            print("AddProject: checkMarkInput Entry")
+            let grade = gradeField.text
+            let weight = weightField.text
+            var numDecimals = 0
+            var numDecimals2 = 0
+            
+            for char in (grade?.characters)! {
+                if (char == ".") {
+                    numDecimals += 1
+                }
             }
-        }
-        print("AddProject: number of decimals in grade: \(numDecimals)")
-        
-        for char in (weight?.characters)! {
-            if (char == ".") {
-                numDecimals2 += 1
+            print("AddProject: number of decimals in grade: \(numDecimals)")
+            
+            for char in (weight?.characters)! {
+                if (char == ".") {
+                    numDecimals2 += 1
+                }
             }
+            print("AddProject: number of decimals in weight: \(numDecimals2)")
+            
+            if (numDecimals < 2 && numDecimals2 < 2) {
+                print("AddProject: checkMarkInput Exit -> Success")
+                return true
+            }
+            print("AddProject: checkMarkInput Exit -> Incorrect input")
+            return false
         }
-        print("AddProject: number of decimals in weight: \(numDecimals2)")
         
-        if (numDecimals < 2 && numDecimals2 < 2) {
-            print("AddProject: checkMarkInput Exit -> Success")
-            return true
-        }
-        print("AddProject: checkMarkInput Exit -> Incorrect input")
-        return false
+        return true
     }
     
     
@@ -215,7 +220,7 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
     
     func textFieldDidChange(_textField: UITextField) {
         print("AddProject: textFieldDidChange -> Entry")
-        if (checkInput() && checkMarkInput()) {
+        if (checkInput()) {
             saveButton.isEnabled = true
             return
         }
@@ -253,4 +258,12 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    @IBAction func projectIsCompleteToggle(_ sender: UISwitch) {
+        if (checkInput()) {
+            saveButton.isEnabled = true
+            return
+        }
+        
+        saveButton.isEnabled = false
+    }
 }

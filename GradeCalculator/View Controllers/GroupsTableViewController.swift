@@ -349,7 +349,7 @@ class GroupsTableViewController: UITableViewController {
 //            let destView = segue.destination.childViewControllers[0] as! CourseTableViewController
             let destView = segue.destination as! CourseTableViewController
             let cell = sender as! UITableViewCell
-            print("GroupsTable: prepare: Showing \(cell.textLabel?.text)")
+            print("GroupsTable: prepare: Showing \(String(describing: cell.textLabel?.text))")
             destView.groups = groups
             destView.index = getGroupIndexWithName(nameOfGroup: cell.textLabel!.text!)
             print("GroupsTable: prepare: destView groups.count=\(destView.groups.count), groups[0].courses.count=\(destView.groups[0].courses.count), destView index = \(destView.index)")

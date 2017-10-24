@@ -341,7 +341,7 @@ class MarksTableViewController: UITableViewController {
     
     //Allow the rearranging of cells
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        print("MarksTable: tableView moveRowAt -> Entry: \nprojects = \(course?.projects.count)\nprojectMarks = \(course?.projectMarks.count)\nprojectOutOf = \(course?.projectOutOf.count)\nprojectWeight = \(course?.projectWeights.count)")
+        print("MarksTable: tableView moveRowAt -> Entry: \nprojects = \(String(describing: course?.projects.count))\nprojectMarks = \(String(describing: course?.projectMarks.count))\nprojectOutOf = \(String(describing: course?.projectOutOf.count))\nprojectWeight = \(String(describing: course?.projectWeights.count))")
         var index = sourceIndexPath.row
         let tempProject = course?.projects[index]
         let tempProjectMark = course?.projectMarks[index]
@@ -398,7 +398,7 @@ class MarksTableViewController: UITableViewController {
                 let selectedProject = course?.projects[(indexPath as NSIndexPath).row]
                 
                 print("MarksTable: User selected \(selectedProject!)")
-                print("MarksTable: project grade: \(course?.projectMarks[indexPath.row]) out of \(course?.projectOutOf[indexPath.row])")
+                print("MarksTable: project grade: \(String(describing: course?.projectMarks[indexPath.row])) out of \(String(describing: course?.projectOutOf[indexPath.row]))")
                 
                 courseDVC.projectName = selectedProject!
                 courseDVC.projectWeight = (course?.projectWeights[(indexPath as NSIndexPath).row])!

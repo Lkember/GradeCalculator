@@ -278,7 +278,7 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
                 let nameOfGroup = cellLabel?.substring(to: (cellLabel?.index((cellLabel?.endIndex)!, offsetBy: -9))!)
                 
                 destView?.index = getIndexForGroup(nameOfGroup: nameOfGroup!)
-                print("StartUpView: prepare: Sender is a UITableViewCell with groupName=\(nameOfGroup) and index=\(destView?.index)")
+                print("StartUpView: prepare: Sender is a UITableViewCell with groupName=\(String(describing: nameOfGroup)) and index=\(String(describing: destView?.index))")
             }
             else {
                 print("StartupView: prepare: Sender is AllCourses button. Setting destView index to -1.")
