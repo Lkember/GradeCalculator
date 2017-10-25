@@ -11,6 +11,7 @@ import UIKit
 class MarksTableViewController: UITableViewController {
 
     // MARK: Attributes
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     @IBOutlet weak var averageLabel: UILabel!
     @IBOutlet weak var numMarks: UILabel!
     @IBOutlet weak var remainingWeight: UILabel!
@@ -19,7 +20,7 @@ class MarksTableViewController: UITableViewController {
 
     var index = -1
     var courseIndex = -1
-    var groups: [Group] = []
+//    var groups: [Group] = []
     var course = Course(courseName: "")
     var courseName = ""
     
@@ -123,10 +124,10 @@ class MarksTableViewController: UITableViewController {
             }
             
             print("MarksTable: unwindToProjectList: Adding course to group.")
-            groups[index].courses[courseIndex] = course!
+            appDelegate.groups[index].courses[courseIndex] = course!
         }
         
-        save()
+        appDelegate.save()
         updateLabels()
         print("MarksTable: unwindToProjectList -> Exit")
     }
@@ -149,7 +150,7 @@ class MarksTableViewController: UITableViewController {
         let popOverView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PopUpView") as! PopUpViewController
         self.addChildViewController(popOverView)
         
-        popOverView.groups = self.groups
+//        popOverView.groups = self.groups
         popOverView.index = self.index
         popOverView.courseIndex = self.courseIndex
         
@@ -175,10 +176,10 @@ class MarksTableViewController: UITableViewController {
                 let courseNameField = alertController.textFields![0] as UITextField
                 
                 if (courseNameField.text! != "") {
-                    self.groups[self.index].courses[self.courseIndex].courseName = courseNameField.text!
+                    self.appDelegate.groups[self.index].courses[self.courseIndex].courseName = courseNameField.text!
                     self.courseName = courseNameField.text!
                     self.title = courseNameField.text!
-                    self.save()
+                    self.appDelegate.save()
                 }
                 
                 self.setEditing(false, animated: true)
@@ -207,21 +208,21 @@ class MarksTableViewController: UITableViewController {
     func updateAttributes() {
         print("MarksTable: updateAttributes -> Entry: Value of index=\(self.index): courseName=\(self.courseName)")
         if (self.index == -1) {
-            for i in 0..<groups.count {
-                courseIndex = groups[i].findIndexInCourseList(course: courseName)
+            for i in 0..<appDelegate.groups.count {
+                courseIndex = appDelegate.groups[i].findIndexInCourseList(course: courseName)
                 if courseIndex != -1 {
                     index = i
                     break
                 }
             }
             
-            self.course = groups[index].courses[courseIndex]
-            print("MarksTable: updateAttributes: Found. User clicked \(groups[index].courses[courseIndex].courseName)")
+            self.course = appDelegate.groups[index].courses[courseIndex]
+            print("MarksTable: updateAttributes: Found. User clicked \(appDelegate.groups[index].courses[courseIndex].courseName)")
         }
         else {
-            courseIndex = groups[index].findIndexInCourseList(course: courseName)
+            courseIndex = appDelegate.groups[index].findIndexInCourseList(course: courseName)
             print("MarksTable: updateAttributes: course index is \(courseIndex)")
-            self.course = groups[index].courses[courseIndex]
+            self.course = appDelegate.groups[index].courses[courseIndex]
             self.navigationItem.title = courseName
             
             print("MarksTable: updateAttributes: index is \(index), courseIndex is \(courseIndex)")
@@ -325,7 +326,7 @@ class MarksTableViewController: UITableViewController {
         if editingStyle == .delete {
             
             course?.deleteAtRow(row: indexPath.row)
-            groups[index].courses[courseIndex] = course!
+            appDelegate.groups[index].courses[courseIndex] = course!
             
             tableView.deleteRows(at: [indexPath], with: .fade)
             
@@ -334,7 +335,7 @@ class MarksTableViewController: UITableViewController {
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }
-        save()
+        appDelegate.save()
         print("GroupsTable: commit editingStyle -> Exit")
     }
     
@@ -374,9 +375,9 @@ class MarksTableViewController: UITableViewController {
         course!.projectWeights[destinationIndexPath.row] = tempProjectWeight!
         
         print("index=\(index), courseIndex=\(courseIndex)")
-        groups[self.index].courses[courseIndex] = course!
+        appDelegate.groups[self.index].courses[courseIndex] = course!
         updateLabels()
-        save()
+        appDelegate.save()
         print("MarksTable: tableView moveRowAt -> Exit")
     }
     
@@ -416,20 +417,5 @@ class MarksTableViewController: UITableViewController {
             self.navigationController?.setToolbarHidden(true, animated: true)
         }
     
-    }
-    
-    // MARK: NSCoding
-    
-    func save() {
-        print("MarksTabe: save: Saving courses and groups.")
-        if (!NSKeyedArchiver.archiveRootObject(self.groups, toFile: Group.ArchiveURL.path)) {
-            print("CourseTable: save: Failed to save courses and groups.")
-        }
-    }
-    
-    // Load user information
-    func load() -> [Group] {
-        print("MarksTable: Load: Loading courses.")
-        return (NSKeyedUnarchiver.unarchiveObject(withFile: Group.ArchiveURL.path) as! [Group])
     }
 }

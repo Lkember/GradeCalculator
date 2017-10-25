@@ -10,9 +10,10 @@ import UIKit
 
 class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    var groups: [Group] = []
-    var courses: [Course] = []
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    
     @IBOutlet weak var tableView: UITableView!
+    var courses = [Course]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,12 +27,12 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
         tableView.dataSource = self
         tableView.allowsSelection = true
         
-        if let loadedData = load() {
-            groups = loadedData
+        if let loadedData = appDelegate.load() {
+            appDelegate.groups = loadedData
         }
         
-        if groups.count == 0 {
-            groups.append(Group.init(groupName: "Ungrouped Courses", courses: [Course]()))
+        if appDelegate.groups.count == 0 {
+            appDelegate.groups.append(Group.init(groupName: "Ungrouped Courses", courses: [Course]()))
         }
         
         // Used if data is lost from iPhone
@@ -40,10 +41,10 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
 //            courses = courseData
 //        }
 //
-//        print("courses.count = \(courses.count), groups.courses.count = \(groups.courses.count)")
-//        if groups.courses.count < courses.count {
-//            groups.courses = courses
-//            groups.group["Ungrouped Courses"] = courses
+//        print("courses.count = \(courses.count), appDelegate.groups.courses.count = \(appDelegate.groups.courses.count)")
+//        if appDelegate.groups.courses.count < courses.count {
+//            appDelegate.groups.courses = courses
+//            appDelegate.groups.group["Ungrouped Courses"] = courses
 //            save()
 //        }
         
@@ -60,8 +61,8 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.navigationController?.setNavigationBarHidden(true, animated: true)
         self.navigationController?.setToolbarHidden(true, animated: true)
         
-        if let loadedData = load() {
-            groups = loadedData
+        if let loadedData = appDelegate.load() {
+            appDelegate.groups = loadedData
         }
         
 //        updateLabels()
@@ -85,9 +86,9 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
         print("StartUpView: unwindToDetailViewController: -> Entry")
         let sourceVC = storyboard.source as? GroupsTableViewController
         
-        self.groups = (sourceVC?.groups)!
+        self.appDelegate.groups = (sourceVC?.appDelegate.groups)!
         
-        save()
+        appDelegate.save()
     }
 
     
@@ -224,15 +225,15 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func getAllCourses() {
         var tempCourses: [Course] = []
-        for group in groups {
+        for group in appDelegate.groups {
             tempCourses += group.courses
         }
         self.courses = tempCourses
     }
     
     func getIndexForGroup(nameOfGroup: String) -> Int {
-        for i in 0..<groups.count {
-            if groups[i].groupName == nameOfGroup {
+        for i in 0..<appDelegate.groups.count {
+            if appDelegate.groups[i].groupName == nameOfGroup {
                 return i
             }
         }
@@ -264,14 +265,14 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
         if (segue.identifier == "groupViewSegue") {
             print("StartUpView: prepare: going to groupView")
             let destView = segue.destination as? GroupsTableViewController
-            destView?.groups = self.groups
+            destView?.appDelegate.groups = self.appDelegate.groups
         }
         else if (segue.identifier == "allCoursesSegue" || segue.identifier == "ShowGroupSegue") {
 //            let destView = segue.destination.childViewControllers[0] as? CourseTableViewController
             let destView = segue.destination as? CourseTableViewController
             print("StartUpView: prepare: Going to CourseView")
             
-            destView?.groups = self.groups
+            destView?.appDelegate.groups = self.appDelegate.groups
             
             if let cell = sender as? UITableViewCell {
                 let cellLabel = cell.textLabel?.text
@@ -300,12 +301,12 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
             return 6
         }
         else if section == 1 {
-            print("StartUpView: numberOfRowsInSection: Section 1 has \(groups.count) rows")
-            if groups[getIndexForGroup(nameOfGroup: "Ungrouped Courses")].courses.count == 0 {
-                return groups.count-1
+            print("StartUpView: numberOfRowsInSection: Section 1 has \(appDelegate.groups.count) rows")
+            if appDelegate.groups[getIndexForGroup(nameOfGroup: "Ungrouped Courses")].courses.count == 0 {
+                return appDelegate.groups.count-1
             }
             else {
-                return groups.count
+                return appDelegate.groups.count
             }
         }
         print("StartUpView: numberOfRowsInSection: This print statement should never be printed.")
@@ -385,19 +386,19 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
         else {
             print("StartUpView: cellForRowAt: Currently looking at row: \(indexPath.row)")
             var index = 0
-            if (groups[getIndexForGroup(nameOfGroup: "Ungrouped Courses")].courses.count == 0) {
+            if (appDelegate.groups[getIndexForGroup(nameOfGroup: "Ungrouped Courses")].courses.count == 0) {
                 index = indexPath.row + 1
             }
             else {
                 index = indexPath.row
             }
             
-            cell?.textLabel?.text = "\(groups[index].groupName) Average:"
+            cell?.textLabel?.text = "\(appDelegate.groups[index].groupName) Average:"
             cell?.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
             cell?.selectionStyle = UITableViewCellSelectionStyle.blue
             
-//            let groupAverage = round(10*groups.getGroupAverage(key: groups.keys[index])*100)/10
-            let groupAverage = round(10*groups[index].getGroupAverage()*100)/10
+//            let groupAverage = round(10*appDelegate.groups.getGroupAverage(key: appDelegate.groups.keys[index])*100)/10
+            let groupAverage = round(10*appDelegate.groups[index].getGroupAverage()*100)/10
             if groupAverage == -100.0 {
                 cell?.detailTextLabel?.text = "N/A"
             }
@@ -416,23 +417,4 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
             return "Group Details"
         }
     }
-
-    
-    // MARK: - NSCoding
-    func save() {
-        print("StartUpView: save: Saving courses and groups.")
-        if (!NSKeyedArchiver.archiveRootObject(self.groups, toFile: Group.ArchiveURL.path)) {
-            print("StartUpView: save: Failed to save courses and groups.")
-        }
-    }
-    
-    func load() -> [Group]? {
-        print("StartUpViewController: load: Loading groups and courses.")
-        return (NSKeyedUnarchiver.unarchiveObject(withFile: Group.ArchiveURL.path) as! [Group]?)
-    }
-    
-//    func loadCourses() -> [Course]? {
-//        print("GroupsTable: load: Loading courses.")
-//        return (NSKeyedUnarchiver.unarchiveObject(withFile: Course.ArchiveURL.path) as! [Course])
-//    }
 }

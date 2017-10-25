@@ -11,7 +11,8 @@ import UIKit
 class PopUpViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
     //MARK: Attributes
-    var groups: [Group] = []
+//    var groups: [Group] = []
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     var index = -1
     var courseIndex = -1
     @IBOutlet weak var popUpView: UIView!
@@ -50,11 +51,11 @@ class PopUpViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     }
 
     @IBAction func acceptIsClicked(_ sender: UIButton) {
-        if (groups[index].groupName != groups[groupSelector.selectedRow(inComponent: 0)].groupName) {
-            let tempCourse = groups[index].courses.remove(at: courseIndex)
-            groups[groupSelector.selectedRow(inComponent: 0)].courses.append(tempCourse)
+        if (appDelegate.groups[index].groupName != appDelegate.groups[groupSelector.selectedRow(inComponent: 0)].groupName) {
+            let tempCourse = appDelegate.groups[index].courses.remove(at: courseIndex)
+            appDelegate.groups[groupSelector.selectedRow(inComponent: 0)].courses.append(tempCourse)
             index = groupSelector.selectedRow(inComponent: 0)
-            courseIndex = groups[index].courses.count
+            courseIndex = appDelegate.groups[index].courses.count
         }
         
         dismissAnimate()
@@ -93,12 +94,12 @@ class PopUpViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return groups.count
+        return appDelegate.groups.count
     }
     
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return groups[row].groupName
+        return appDelegate.groups[row].groupName
     }
     
     /*

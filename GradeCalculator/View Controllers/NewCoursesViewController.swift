@@ -11,8 +11,11 @@ import UIKit
 class NewCoursesViewController: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     
     // MARK: Properties
-    var groups: [Group] = []
+//    var groups: [Group] = []
 //    var courses = [Course]()
+    
+    // MARK: - Properties
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     var index = -1
     var course: Course = Course()
     @IBOutlet weak var courseName: UITextField!
@@ -100,8 +103,8 @@ class NewCoursesViewController: UIViewController, UITextFieldDelegate, UIPickerV
     
     // MARK: Functions
     func getIndexForGroup(withName: String) -> Int {
-        for i in 0..<groups.count {
-            if groups[i].groupName == withName {
+        for i in 0..<appDelegate.groups.count {
+            if appDelegate.groups[i].groupName == withName {
                 return i
             }
         }
@@ -126,7 +129,7 @@ class NewCoursesViewController: UIViewController, UITextFieldDelegate, UIPickerV
                     return
                 }
             }
-            for group in groups {
+            for group in appDelegate.groups {
                 if group.doesCourseNameExist(courseName: textField.text!) {
                     saveButton.isEnabled = false
                     return
@@ -144,7 +147,7 @@ class NewCoursesViewController: UIViewController, UITextFieldDelegate, UIPickerV
     func checkInput() -> Bool {
         var check = false
         let courseInput = self.courseName.text ?? ""
-        for group in groups {
+        for group in appDelegate.groups {
             check = group.doesCourseNameExist(courseName: courseInput)
             if check {
                 return false
@@ -161,12 +164,12 @@ class NewCoursesViewController: UIViewController, UITextFieldDelegate, UIPickerV
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return groups.count
+        return appDelegate.groups.count
     }
     
     // Returning white text
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-        return NSAttributedString(string: groups[row].groupName, attributes: [NSForegroundColorAttributeName : UIColor.white])
+        return NSAttributedString(string: appDelegate.groups[row].groupName, attributes: [NSForegroundColorAttributeName : UIColor.white])
     }
     
     // MARK: - Listeners
@@ -178,11 +181,11 @@ class NewCoursesViewController: UIViewController, UITextFieldDelegate, UIPickerV
         let navHeight = self.navigationController!.navigationBar.frame.height
         
         if notification.name == NSNotification.Name.UIKeyboardWillHide {
-            scrollView.contentInset = UIEdgeInsets(top: navHeight + 20, left: 0, bottom: 0, right: 0)
-            print("AddProject: Keyboard is hidden.")
+            scrollView.contentInset = UIEdgeInsets(top: navHeight, left: 0, bottom: 0, right: 0)
+            print("NewCourses: Keyboard is hidden.")
         } else {
-            scrollView.contentInset = UIEdgeInsets(top: navHeight + 20, left: 0, bottom: keyboardViewEndFrame.height, right: 0)
-            print("AddProject: Keyboard is showing.")
+            scrollView.contentInset = UIEdgeInsets(top: navHeight, left: 0, bottom: keyboardViewEndFrame.height, right: 0)
+            print("NewCourses: Keyboard is showing.")
         }
     }
     

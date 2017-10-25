@@ -11,7 +11,9 @@ import UIKit
 class AddGroupViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
 
     // MARK: - Attributes
-    var groups: [Group] = []
+//    var groups: [Group] = []
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    
     @IBOutlet weak var groupName: UITextField!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var saveButton: UIBarButtonItem!
@@ -72,7 +74,7 @@ class AddGroupViewController: UIViewController, UITableViewDelegate, UITableView
     
     // Is used to check if a groupName already exists
     func checkEntryHelper(input: String) -> Bool {
-        for group in groups {
+        for group in appDelegate.groups {
             if (input == group.groupName) {
                 return false
             }
@@ -83,8 +85,8 @@ class AddGroupViewController: UIViewController, UITableViewDelegate, UITableView
     
     // Returns the index for a group with a given name
     func getIndexForGroup(withName: String) -> Int {
-        for i in 0..<groups.count {
-            if (groups[i].groupName == withName) {
+        for i in 0..<appDelegate.groups.count {
+            if (appDelegate.groups[i].groupName == withName) {
                 return i
             }
         }
@@ -94,8 +96,8 @@ class AddGroupViewController: UIViewController, UITableViewDelegate, UITableView
     
     // MARK: - TableViewDelegate
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("AddGroupProject: numberOfRowsInSection = \(groups[getIndexForGroup(withName: "Ungrouped Courses")].courses.count)")
-        return groups[getIndexForGroup(withName: "Ungrouped Courses")].courses.count
+        print("AddGroupProject: numberOfRowsInSection = \(appDelegate.groups[getIndexForGroup(withName: "Ungrouped Courses")].courses.count)")
+        return appDelegate.groups[getIndexForGroup(withName: "Ungrouped Courses")].courses.count
     }
     
     
@@ -103,7 +105,7 @@ class AddGroupViewController: UIViewController, UITableViewDelegate, UITableView
         let cellIdentifier = "CoursesCell"
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath as IndexPath)
         
-        cell.textLabel?.text = groups[getIndexForGroup(withName: "Ungrouped Courses")].courses[indexPath.row].courseName
+        cell.textLabel?.text = appDelegate.groups[getIndexForGroup(withName: "Ungrouped Courses")].courses[indexPath.row].courseName
         
         return cell
     }

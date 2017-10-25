@@ -11,7 +11,7 @@ import UIKit
 class CourseTableViewController: UITableViewController {
 
     // MARK: Properties
-    var groups: [Group] = []
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     var index = -1
     @IBOutlet weak var overallAverage: UILabel!
     @IBOutlet weak var numCourses: UILabel!
@@ -27,7 +27,7 @@ class CourseTableViewController: UITableViewController {
         
         if (index != -1) {
             print("CourseTable: viewDidLoad: Current Index = \(index)")
-            self.title = groups[index].groupName
+            self.title = appDelegate.groups[index].groupName
             
 //            let currentFrame = self.informationView.frame
 //            self.informationView.frame = CGRect(x: currentFrame.origin.x, y: currentFrame.origin.y, width: currentFrame.width, height: currentFrame.height + 50)
@@ -56,8 +56,8 @@ class CourseTableViewController: UITableViewController {
         
         print("CourseTable: viewDidLoad Loading courses")
         
-        if let loadedData = load() {
-            groups = loadedData
+        if let loadedData = appDelegate.load() {
+            appDelegate.groups = loadedData
         }
         
 //        if groups.courses.count == 0 {
@@ -74,7 +74,7 @@ class CourseTableViewController: UITableViewController {
         
         tableView.reloadData()
         updateLabels()
-        save()
+        appDelegate.save()
         print("CourseTable: viewDidAppear -> Exit")
     }
     
@@ -126,7 +126,6 @@ class CourseTableViewController: UITableViewController {
             let selectedCourse = sender as? CourseTableViewCell
             let destVC = segue.destination as? MarksTableViewController
             
-            destVC?.groups = self.groups
             destVC?.courseName = (selectedCourse?.courseName.text)!
             destVC?.index = self.index
             print("CourseTable: prepare: destVC.index=\(String(describing: destVC?.index))")
@@ -135,7 +134,7 @@ class CourseTableViewController: UITableViewController {
         else if segue.identifier=="AddItem" {
             print("CourseTable: prepare: Setting courses to view.")
             let destinationViewController = segue.destination.childViewControllers[0] as? NewCoursesViewController
-            destinationViewController?.groups = groups
+//            destinationViewController?.groups = appDelegate.groups
             destinationViewController?.index = index
         }
         else if segue.identifier == nil {
@@ -148,7 +147,7 @@ class CourseTableViewController: UITableViewController {
     // Go back to the details view
     @IBAction func backToDetailView(_ sender: AnyObject) {
         print("CourseTable: backToDetailView: Going back a view")
-        save()
+        appDelegate.save()
         self.dismiss(animated: true, completion: nil)
     }
     
@@ -175,8 +174,8 @@ class CourseTableViewController: UITableViewController {
     
     //Find index for course with courseName
     func findIndexForGroup(groupName: String) -> Int {
-        for i in 0..<groups.count {
-            if groups[i].groupName == groupName {
+        for i in 0..<appDelegate.groups.count {
+            if appDelegate.groups[i].groupName == groupName {
                 return i
             }
         }
@@ -211,9 +210,9 @@ class CourseTableViewController: UITableViewController {
                 var offset = 0
                 
                 if (self.index != -1) {
-                    print("CoursesTable: deleteCourses -> Deleting from group \(self.groups[self.index].groupName)")
+                    print("CoursesTable: deleteCourses -> Deleting from group \(self.appDelegate.groups[self.index].groupName)")
                     for i in 0..<indexPaths!.count {
-                        self.groups[self.index].courses.remove(at: (indexPaths?[i].row)! + offset)
+                        self.appDelegate.groups[self.index].courses.remove(at: (indexPaths?[i].row)! + offset)
                         offset -= 1
                     }
                     
@@ -236,8 +235,8 @@ class CourseTableViewController: UITableViewController {
                             previousSection = indexPaths![i].section
                         }
                         
-                        print("CourseTable: deleteCourses: Removing course: \(self.groups[indexPaths![i].section].courses[indexPaths![i].row + offset].courseName)")
-                        self.groups[indexPaths![i].section].courses.remove(at: (indexPaths![i].row) + offset)
+                        print("CourseTable: deleteCourses: Removing course: \(self.appDelegate.groups[indexPaths![i].section].courses[indexPaths![i].row + offset].courseName)")
+                        self.appDelegate.groups[indexPaths![i].section].courses.remove(at: (indexPaths![i].row) + offset)
                         
                     }
                     
@@ -247,7 +246,7 @@ class CourseTableViewController: UITableViewController {
                 //reload data, update the labels and save changes
                 self.tableView.reloadData()
                 self.updateLabels()
-                self.save()
+                self.appDelegate.save()
                 
                 // Get out of editing mode
                 self.tableView.setEditing(false, animated: true)
@@ -304,9 +303,9 @@ class CourseTableViewController: UITableViewController {
         var totalNumCourses = 0
 
         if (index == -1) {
-            for i in 0..<groups.count {
-                groupMark = groups[i].getGroupAverage()
-                numCourses = groups[i].getNumActiveCourses()
+            for i in 0..<appDelegate.groups.count {
+                groupMark = appDelegate.groups[i].getGroupAverage()
+                numCourses = appDelegate.groups[i].getNumActiveCourses()
                 
                 if groupMark != -1.0 {
                     average += groupMark * Double(numCourses)
@@ -324,8 +323,8 @@ class CourseTableViewController: UITableViewController {
             }
         }
         else {
-            print("CourseTable: getOverallAverage: Getting averages in dictionary: \(groups[index].groupName)")
-            let returnVal = groups[index].getGroupAverage()
+            print("CourseTable: getOverallAverage: Getting averages in dictionary: \(appDelegate.groups[index].groupName)")
+            let returnVal = appDelegate.groups[index].getGroupAverage()
             print("CourseTable: getOverallAverage: Exit: RETURN \(returnVal)")
             return returnVal
         }
@@ -337,13 +336,13 @@ class CourseTableViewController: UITableViewController {
         print("CourseTable: getNumCourses Called")
         if (index == -1) {
             var total = 0
-            for group in groups {
+            for group in appDelegate.groups {
                 total += group.courses.count
             }
             return total
         }
         else {
-            return groups[index].courses.count
+            return appDelegate.groups[index].courses.count
         }
     }
     
@@ -368,25 +367,25 @@ class CourseTableViewController: UITableViewController {
             
             // Adding the course to it's designated group
             if (index == -1) {
-                newIndexPath = IndexPath(row: groups[groupIndex].courses.count, section: groupIndex)
-                groups[groupIndex].courses.append(course)
+                newIndexPath = IndexPath(row: appDelegate.groups[groupIndex].courses.count, section: groupIndex)
+                appDelegate.groups[groupIndex].courses.append(course)
                 tableView.insertRows(at: [newIndexPath], with: .bottom)
                 tableView.reloadRows(at: [newIndexPath], with: .fade)
             }
             else {
                 if (index == groupIndex) {
                     print("CourseTable: unwindToCourseList: index == groupIndex, adding course")
-                    newIndexPath = IndexPath(row: groups[groupIndex].courses.count, section: 0)
-                    groups[groupIndex].courses.append(course)
+                    newIndexPath = IndexPath(row: appDelegate.groups[groupIndex].courses.count, section: 0)
+                    appDelegate.groups[groupIndex].courses.append(course)
                     tableView.insertRows(at: [newIndexPath], with: .bottom)
                     tableView.reloadRows(at: [newIndexPath], with: .fade)
                 }
                 else {
-                    groups[groupIndex].courses.append(course)
+                    appDelegate.groups[groupIndex].courses.append(course)
                 }
             }
             
-            save()
+            appDelegate.save()
         }
         else {
             print("CourseTable: unwindToCourseList: Failed to add course.")
@@ -398,10 +397,10 @@ class CourseTableViewController: UITableViewController {
         print("CourseTableView: editActionsForRowAt: User selected edit")
         var alertController: UIAlertController
         if (index == -1) {
-            alertController = UIAlertController(title: "Editing Course: \(self.groups[indexPath.section].courses[indexPath.row].courseName)", message: "", preferredStyle: UIAlertControllerStyle.alert)
+            alertController = UIAlertController(title: "Editing Course: \(self.appDelegate.groups[indexPath.section].courses[indexPath.row].courseName)", message: "", preferredStyle: UIAlertControllerStyle.alert)
         }
         else {
-            alertController = UIAlertController(title: "Editing Course: \(self.groups[self.index].courses[indexPath.row].courseName)", message: "", preferredStyle: UIAlertControllerStyle.alert)
+            alertController = UIAlertController(title: "Editing Course: \(self.appDelegate.groups[self.index].courses[indexPath.row].courseName)", message: "", preferredStyle: UIAlertControllerStyle.alert)
         }
         
         let saveAction = UIAlertAction(title: "Save", style: UIAlertActionStyle.default, handler: {
@@ -411,14 +410,14 @@ class CourseTableViewController: UITableViewController {
             
             if (courseNameField.text! != "") {
                 if (self.index == -1) {
-                    self.groups[indexPath.section].courses[indexPath.row].courseName = courseNameField.text!
+                    self.appDelegate.groups[indexPath.section].courses[indexPath.row].courseName = courseNameField.text!
                 }
                 else {
-                    self.groups[self.index].courses[indexPath.row].courseName = courseNameField.text!
+                    self.appDelegate.groups[self.index].courses[indexPath.row].courseName = courseNameField.text!
                 }
             }
             
-            self.save()
+            self.appDelegate.save()
             self.setEditing(false, animated: true)
             self.navigationController?.setToolbarHidden(true, animated: true)
             self.tableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.fade)
@@ -434,10 +433,10 @@ class CourseTableViewController: UITableViewController {
         alertController.addTextField(configurationHandler: { (textField : UITextField!) -> Void in
         
             if (self.index == -1) {
-                textField.text = self.groups[indexPath.section].courses[indexPath.row].courseName
+                textField.text = self.appDelegate.groups[indexPath.section].courses[indexPath.row].courseName
             }
             else {
-                textField.text = self.groups[self.index].courses[indexPath.row].courseName
+                textField.text = self.appDelegate.groups[self.index].courses[indexPath.row].courseName
             }
         });
         
@@ -453,8 +452,8 @@ class CourseTableViewController: UITableViewController {
     // Returns the number of sections in the table
     override func numberOfSections(in tableView: UITableView) -> Int {
         if (index == -1) {
-            print("CourseTable: numberOfSections: Returning \(groups.count)")
-            return groups.count
+            print("CourseTable: numberOfSections: Returning \(appDelegate.groups.count)")
+            return appDelegate.groups.count
         }
         else {
             print("CourseTable: numberOfSections: Returning static(1)")
@@ -465,22 +464,22 @@ class CourseTableViewController: UITableViewController {
     // Returns the number of rows per section
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if (index == -1) {
-            print("CourseTable: numberOfRowsInSection \(section): Returning \(groups[section].courses.count) for section \(section)")
-            return groups[section].courses.count
+            print("CourseTable: numberOfRowsInSection \(section): Returning \(appDelegate.groups[section].courses.count) for section \(section)")
+            return appDelegate.groups[section].courses.count
         }
         else {
-            print("CourseTable: numberOfRowsInSection \(section): Returning \(groups[index].courses.count)")
-            return groups[index].courses.count
+            print("CourseTable: numberOfRowsInSection \(section): Returning \(appDelegate.groups[index].courses.count)")
+            return appDelegate.groups[index].courses.count
         }
     }
     
     //Returns the title for the current section
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if index == -1 {
-            if groups[section].groupName == "Ungrouped Courses" && groups[section].courses.count == 0 {
+            if appDelegate.groups[section].groupName == "Ungrouped Courses" && appDelegate.groups[section].courses.count == 0 {
                 return nil
             }
-            return groups[section].groupName
+            return appDelegate.groups[section].groupName
         }
         else {
             return nil
@@ -495,10 +494,10 @@ class CourseTableViewController: UITableViewController {
         var course: Course
         
         if (index == -1) {
-            course = groups[indexPath.section].courses[indexPath.row]
+            course = appDelegate.groups[indexPath.section].courses[indexPath.row]
         }
         else {
-            course = groups[index].courses[indexPath.row]
+            course = appDelegate.groups[index].courses[indexPath.row]
         }
         
         cell.courseName.text = course.courseName
@@ -586,15 +585,15 @@ class CourseTableViewController: UITableViewController {
         let deleteRowAction = UITableViewRowAction(style: UITableViewRowActionStyle.destructive, title: "Delete", handler:{action, indexPath in
             
             if (self.index == -1) {
-                self.groups[indexPath.section].courses.remove(at: indexPath.row)
+                self.appDelegate.groups[indexPath.section].courses.remove(at: indexPath.row)
             }
             else {
-                self.groups[self.index].courses.remove(at: indexPath.row)
+                self.appDelegate.groups[self.index].courses.remove(at: indexPath.row)
             }
             
             self.setEditing(false, animated: true)
             self.navigationController?.setToolbarHidden(true, animated: true)
-            self.save()
+            self.appDelegate.save()
             self.tableView.deleteRows(at: [indexPath], with: .fade)
             self.updateLabels()
         });
@@ -612,32 +611,32 @@ class CourseTableViewController: UITableViewController {
         print("CourseTable: tableView moveRowAt -> Entry")
         
         if index == -1 {
-            let tempCourse = groups[sourceIndexPath.section].courses.remove(at: sourceIndexPath.row)
-            print("CourseTableView: moveRowAt: Moving course: \(tempCourse.courseName) from group \(groups[sourceIndexPath.section].groupName) to group \(groups[destinationIndexPath.section].groupName)")
-            groups[destinationIndexPath.section].courses.insert(tempCourse, at: destinationIndexPath.row)
+            let tempCourse = appDelegate.groups[sourceIndexPath.section].courses.remove(at: sourceIndexPath.row)
+            print("CourseTableView: moveRowAt: Moving course: \(tempCourse.courseName) from group \(appDelegate.groups[sourceIndexPath.section].groupName) to group \(appDelegate.groups[destinationIndexPath.section].groupName)")
+            appDelegate.groups[destinationIndexPath.section].courses.insert(tempCourse, at: destinationIndexPath.row)
         }
         else {
-            let tempCourse = groups[index].courses.remove(at: sourceIndexPath.row)
-            print("CourseTableView: moveRowAt: Moving course: \(tempCourse.courseName) from group \(groups[sourceIndexPath.section].groupName) to group \(groups[destinationIndexPath.section].groupName)")
-            groups[index].courses.insert(tempCourse, at: destinationIndexPath.row)
+            let tempCourse = appDelegate.groups[index].courses.remove(at: sourceIndexPath.row)
+            print("CourseTableView: moveRowAt: Moving course: \(tempCourse.courseName) from group \(appDelegate.groups[sourceIndexPath.section].groupName) to group \(appDelegate.groups[destinationIndexPath.section].groupName)")
+            appDelegate.groups[index].courses.insert(tempCourse, at: destinationIndexPath.row)
         }
         
         //////////// LOGGING START
         if index == -1 {
             print("CourseTable: moveRowAt: New order of courses:")
-            for course in groups[sourceIndexPath.section].courses {
+            for course in appDelegate.groups[sourceIndexPath.section].courses {
                 print(course.courseName)
             }
         }
         else {
             print("CourseTable: moveRowAt: New order of courses:")
-            for course in groups[index].courses {
+            for course in appDelegate.groups[index].courses {
                 print(course.courseName)
             }
         }
         /////////// END LOGGING
         
-        save()
+        appDelegate.save()
         print("CourseTable: moveRowAt -> Exit")
     }
     
@@ -647,23 +646,6 @@ class CourseTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the item to be re-orderable.
         return true
-    }
-
-    
-    // MARK: NSCoding
-    
-    // Save user information
-    func save() {
-        print("CourseTable: save: Saving courses and groups.")
-        if (!NSKeyedArchiver.archiveRootObject(self.groups, toFile: Group.ArchiveURL.path)) {
-            print("CourseTable: save: Failed to save courses and groups.")
-        }
-    }
-    
-    // Load user information
-    func load() -> [Group]? {
-        print("CourseTable: Load: Loading courses.")
-        return (NSKeyedUnarchiver.unarchiveObject(withFile: Group.ArchiveURL.path) as! [Group]?)
     }
     
 }
