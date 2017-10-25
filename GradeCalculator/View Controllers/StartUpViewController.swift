@@ -268,7 +268,7 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
             destView?.appDelegate.groups = self.appDelegate.groups
         }
         else if (segue.identifier == "allCoursesSegue" || segue.identifier == "ShowGroupSegue") {
-//            let destView = segue.destination.childViewControllers[0] as? CourseTableViewController
+            
             let destView = segue.destination as? CourseTableViewController
             print("StartUpView: prepare: Going to CourseView")
             
@@ -314,7 +314,6 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        //TODO
         let identifier = "RightDetailCell"
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier)
         let average = getOverallAverage()
@@ -393,11 +392,17 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
                 index = indexPath.row
             }
             
-            cell?.textLabel?.text = "\(appDelegate.groups[index].groupName) Average:"
+            // If the current cell is for Ungrouped Courses, then only put "Ungrouped Average"
+            if (appDelegate.groups[index].groupName == "Ungrouped Courses") {
+                cell?.textLabel?.text = "Ungrouped Average:"
+            }
+            else {
+                cell?.textLabel?.text = "\(appDelegate.groups[index].groupName) Average:"
+            }
+            
             cell?.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
             cell?.selectionStyle = UITableViewCellSelectionStyle.blue
             
-//            let groupAverage = round(10*appDelegate.groups.getGroupAverage(key: appDelegate.groups.keys[index])*100)/10
             let groupAverage = round(10*appDelegate.groups[index].getGroupAverage()*100)/10
             if groupAverage == -100.0 {
                 cell?.detailTextLabel?.text = "N/A"
