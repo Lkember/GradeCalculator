@@ -65,7 +65,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // Load user information
     func load() -> [Group]? {
         print("MarksTable: Load: Loading courses.")
-        return (NSKeyedUnarchiver.unarchiveObject(withFile: Group.ArchiveURL.path) as! [Group])
+        return (NSKeyedUnarchiver.unarchiveObject(withFile: Group.ArchiveURL.path) as? [Group])
     }
     
 }

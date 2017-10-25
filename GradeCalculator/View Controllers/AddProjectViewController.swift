@@ -23,6 +23,7 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var scrollView: UIScrollView!
     @IBOutlet weak var deleteButtonBottomConstraint: NSLayoutConstraint!
     
+    var activeField: UITextField?
     var originalConstraintConstant: CGFloat!
     var projectName = ""
     var projectWeight = -1.0
@@ -82,6 +83,14 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
             self.deleteProjectButton.isHidden = true
         }
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        
+        // Remove observer for keyboard
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+    }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -243,19 +252,31 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
 
     // MARK: - Listeners
     func keyboardToggle(_ notification: Notification) {
-        let userInfo = (notification as NSNotification).userInfo!
+        self.scrollView.isScrollEnabled = true
+        let userInfo = notification.userInfo!
         
-        let keyboardScreenEndFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
-        let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: scrollView)
-        let navHeight = self.navigationController!.navigationBar.frame.height
+        let keyboardSize = (userInfo[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.size
+        let contentInsets : UIEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, keyboardSize!.height, 0.0)
         
-        if notification.name == NSNotification.Name.UIKeyboardWillHide {
-            scrollView.contentInset = UIEdgeInsets(top: navHeight - 20, left: 0, bottom: 0, right: 0)
-            print("AddProject: Keyboard is hidden.")
-        } else {
-            scrollView.contentInset = UIEdgeInsets(top: navHeight - 20, left: 0, bottom: keyboardViewEndFrame.height, right: 0)
-            print("AddProject: Keyboard is showing.")
+        self.scrollView.contentInset = contentInsets
+        self.scrollView.scrollIndicatorInsets = contentInsets
+        
+        var aRect : CGRect = self.view.frame
+        aRect.size.height -= keyboardSize!.height
+        if let activeField = self.activeField {
+            
+            if (!aRect.contains(activeField.frame.origin)){
+                self.scrollView.scrollRectToVisible(activeField.frame, animated: true)
+            }
         }
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        activeField = textField
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        activeField = nil
     }
     
     @IBAction func projectIsCompleteToggle(_ sender: UISwitch) {

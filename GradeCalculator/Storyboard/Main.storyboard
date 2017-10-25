@@ -159,28 +159,19 @@
                         <viewControllerLayoutGuide type="bottom" id="Hl0-ZG-1Fh"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="lox-3j-gVc">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pgR-S8-gKi">
-                                <rect key="frame" x="0.0" y="-66" width="375" height="669"/>
+                                <rect key="frame" x="0.0" y="-2" width="375" height="669"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Course Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HZq-pD-X6G">
-                                        <rect key="frame" x="8" y="76" width="320" height="29"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="29" id="Jq5-vo-6yD"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Course Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="a6p-QG-Fx3">
-                                        <rect key="frame" x="8" y="113" width="359" height="30"/>
+                                        <rect key="frame" x="8" y="47" width="359" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="yes" spellCheckingType="yes" keyboardAppearance="alert" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" text="Select Group:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kup-iB-3Xt">
-                                        <rect key="frame" x="8" y="151" width="359" height="25"/>
+                                        <rect key="frame" x="8" y="85" width="359" height="25"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="25" id="NuP-sz-4Up"/>
                                         </constraints>
@@ -189,19 +180,19 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <pickerView contentMode="scaleToFill" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="yKR-4K-E2x">
-                                        <rect key="frame" x="8" y="184" width="359" height="134"/>
+                                        <rect key="frame" x="8" y="118" width="359" height="134"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="134" id="aa7-lB-kaE"/>
                                         </constraints>
                                     </pickerView>
                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="opw-Tb-h8d">
-                                        <rect key="frame" x="19" y="326" width="51" height="31"/>
+                                        <rect key="frame" x="19" y="260" width="51" height="31"/>
                                         <connections>
                                             <action selector="isComplete:" destination="aDf-rG-vqE" eventType="valueChanged" id="r5c-Gp-0WN"/>
                                         </connections>
                                     </switch>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Course is complete" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fzU-8Q-WWy">
-                                        <rect key="frame" x="85" y="331" width="282" height="21"/>
+                                        <rect key="frame" x="85" y="265" width="282" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="8tB-5k-0E3"/>
                                         </constraints>
@@ -210,7 +201,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JBs-in-ZBG">
-                                        <rect key="frame" x="8" y="379" width="359" height="66"/>
+                                        <rect key="frame" x="8" y="313" width="359" height="66"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mark: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="azX-7r-cIg">
                                                 <rect key="frame" x="0.0" y="0.0" width="359" height="21"/>
@@ -262,6 +253,15 @@
                                             <constraint firstItem="Tdx-KG-T0z" firstAttribute="leading" secondItem="kfg-hB-2pf" secondAttribute="trailing" constant="8" id="sLh-fy-PNC"/>
                                         </constraints>
                                     </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Course Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HZq-pD-X6G">
+                                        <rect key="frame" x="8" y="10" width="320" height="29"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="29" id="Jq5-vo-6yD"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="JBs-in-ZBG" firstAttribute="trailing" secondItem="yKR-4K-E2x" secondAttribute="trailing" id="15y-VU-oYN"/>
@@ -279,11 +279,11 @@
                                     <constraint firstItem="a6p-QG-Fx3" firstAttribute="trailing" secondItem="pgR-S8-gKi" secondAttribute="trailingMargin" id="a1D-ox-XNE"/>
                                     <constraint firstItem="yKR-4K-E2x" firstAttribute="top" secondItem="Kup-iB-3Xt" secondAttribute="bottom" constant="8" symbolic="YES" id="ae9-zn-j2N"/>
                                     <constraint firstAttribute="trailing" secondItem="HZq-pD-X6G" secondAttribute="trailing" constant="47" id="brH-sL-u4E"/>
+                                    <constraint firstItem="HZq-pD-X6G" firstAttribute="top" secondItem="pgR-S8-gKi" secondAttribute="top" constant="10" id="cap-Ga-q9Y"/>
                                     <constraint firstItem="HZq-pD-X6G" firstAttribute="leading" secondItem="pgR-S8-gKi" secondAttribute="leadingMargin" id="duV-PK-bHp"/>
                                     <constraint firstItem="HZq-pD-X6G" firstAttribute="leading" secondItem="a6p-QG-Fx3" secondAttribute="leading" id="gmM-Lj-Eyg"/>
                                     <constraint firstItem="opw-Tb-h8d" firstAttribute="leading" secondItem="pgR-S8-gKi" secondAttribute="leading" constant="19" id="ouc-2R-lFU"/>
                                     <constraint firstItem="a6p-QG-Fx3" firstAttribute="centerX" secondItem="pgR-S8-gKi" secondAttribute="centerX" id="suL-39-os6"/>
-                                    <constraint firstItem="HZq-pD-X6G" firstAttribute="top" secondItem="pgR-S8-gKi" secondAttribute="top" constant="76" id="u56-NN-PPM"/>
                                     <constraint firstItem="fzU-8Q-WWy" firstAttribute="centerY" secondItem="opw-Tb-h8d" secondAttribute="centerY" id="w5N-tJ-w3W"/>
                                     <constraint firstItem="a6p-QG-Fx3" firstAttribute="trailing" secondItem="Kup-iB-3Xt" secondAttribute="trailing" id="zpK-PR-vLQ"/>
                                 </constraints>
@@ -310,7 +310,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackOpaque"/>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="cancelButton" destination="rt0-Pz-3WJ" id="buE-Kv-4mO"/>
                         <outlet property="courseIsComplete" destination="opw-Tb-h8d" id="YPF-KT-zau"/>
@@ -553,7 +553,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <scrollView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="250" alwaysBounceVertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zAj-Q2-JUW">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" text="Turn this switch on if you already have your mark for this project. Otherwise turn the switch off. " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vte-vA-neA">
                                         <rect key="frame" x="8" y="113" width="359" height="15"/>
@@ -1253,7 +1253,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="kKh-ej-HbN"/>
-        <segue reference="Pnv-Sf-G43"/>
+        <segue reference="883-gk-HxU"/>
         <segue reference="Ogw-IM-3dy"/>
         <segue reference="VlD-FW-XQO"/>
     </inferredMetricsTieBreakers>
