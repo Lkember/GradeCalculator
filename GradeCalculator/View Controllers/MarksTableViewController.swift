@@ -302,7 +302,7 @@ class MarksTableViewController: UITableViewController {
                 cell.markLabel.text = "\(round(10*(mark)*100)/10)%"
             }
             else {
-                cell.markLabel.text = "Incomplete"
+                cell.markLabel.text = "N/A"
             }
             
             cell.weightLabel.text = "\(round(10*course!.projectWeights[(indexPath as NSIndexPath).row])*100/1000)%"
