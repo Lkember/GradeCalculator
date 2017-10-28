@@ -84,6 +84,12 @@ class PopUpViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
                     self.view.removeFromSuperview()
                 }
         });
+        
+        if let currView = self.navigationController?.topViewController as? MarksTableViewController
+        {
+            print("\(type(of: self)) > \(#function): Setting scroll to enabled")
+            currView.tableView.isScrollEnabled = true
+        }
     }
     
     // MARK: - UIPickerViewDataSource

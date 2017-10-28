@@ -17,7 +17,7 @@ class MarksTableViewController: UITableViewController {
     @IBOutlet weak var remainingWeight: UILabel!
     @IBOutlet weak var staticPotentialMark: UILabel!
     @IBOutlet weak var potentialMark: UILabel!
-
+    
     var index = -1
     var courseIndex = -1
 //    var groups: [Group] = []
@@ -55,6 +55,7 @@ class MarksTableViewController: UITableViewController {
     override func viewDidAppear(_ animated: Bool) {
         print("MarksTable: viewDidAppear -> Entry: courseName=\(courseName)")
         
+        tableView.isScrollEnabled = true
         tableView.setEditing(false, animated: false)
         
         if (self.navigationController?.isToolbarHidden)! {
@@ -150,13 +151,14 @@ class MarksTableViewController: UITableViewController {
         let popOverView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PopUpView") as! PopUpViewController
         self.addChildViewController(popOverView)
         
-//        popOverView.groups = self.groups
+        tableView.isScrollEnabled = false
+        
         popOverView.index = self.index
         popOverView.courseIndex = self.courseIndex
         
         popOverView.view.frame = self.view.frame
         self.view.addSubview(popOverView.view)
-        popOverView.didMove(toParentViewController: self)
+//        popOverView.didMove(toParentViewController: self)
     }
     
     
