@@ -137,15 +137,6 @@ class AddGroupViewController: UIViewController, UITableViewDelegate, UITableView
         textField.resignFirstResponder()
         return true
     }
-
-//    func keyboardToggle(_ notification: Notification) {
-//        let userInfo = notification.userInfo!
-//        let keyboardSize = (userInfo[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.size
-//
-//        print("TESTING: \(keyboardSize)")
-//
-//        self.tableView.frame = CGRect.init(x: self.tableView.frame.origin.x, y: self.tableView.frame.origin.y, width: self.tableView.frame.width, height: self.tableView.frame.height - keyboardSize!.height)
-//    }
     
     func keyboardOpened(_ notification: Notification) {
         let userInfo = notification.userInfo!
