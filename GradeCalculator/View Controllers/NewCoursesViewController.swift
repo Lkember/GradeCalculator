@@ -201,8 +201,8 @@ class NewCoursesViewController: UIViewController, UITextFieldDelegate, UIPickerV
         
         var aRect : CGRect = self.view.frame
         aRect.size.height -= keyboardSize!.height
+        
         if let activeField = self.activeField {
-            
             if (!aRect.contains(activeField.frame.origin)){
                 self.scrollView.scrollRectToVisible(activeField.frame, animated: true)
             }

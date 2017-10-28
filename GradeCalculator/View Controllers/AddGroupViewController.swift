@@ -17,7 +17,7 @@ class AddGroupViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var groupName: UITextField!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var saveButton: UIBarButtonItem!
-    
+    var keyboardHeight: CGFloat = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,9 +35,18 @@ class AddGroupViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.isEditing = true
         self.navigationController?.navigationBar.barStyle = UIBarStyle.black
         
-        saveButton.isEnabled = false
+        // Adding listeners for when the keyboard shows or hides
+        NotificationCenter.default.addObserver(self, selector: #selector(AddGroupViewController.keyboardOpened(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(AddGroupViewController.keyboardClosed(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
+        saveButton.isEnabled = false
         tableView.reloadData()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        // Remove observer for keyboard
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
     override func didReceiveMemoryWarning() {
@@ -128,7 +137,33 @@ class AddGroupViewController: UIViewController, UITableViewDelegate, UITableView
         textField.resignFirstResponder()
         return true
     }
+
+//    func keyboardToggle(_ notification: Notification) {
+//        let userInfo = notification.userInfo!
+//        let keyboardSize = (userInfo[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.size
+//
+//        print("TESTING: \(keyboardSize)")
+//
+//        self.tableView.frame = CGRect.init(x: self.tableView.frame.origin.x, y: self.tableView.frame.origin.y, width: self.tableView.frame.width, height: self.tableView.frame.height - keyboardSize!.height)
+//    }
     
+    func keyboardOpened(_ notification: Notification) {
+        let userInfo = notification.userInfo!
+        let keyboardSize = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size
+        print("\(type(of: self)) > \(#function): Keyboard was shown \(String(describing: keyboardSize))")
+
+        let frame = tableView.frame
+        self.tableView.frame = CGRect.init(x: frame.origin.x, y: frame.origin.y, width: frame.width, height: frame.height - keyboardSize!.height)
+    }
+
+    func keyboardClosed(_ notification: Notification) {
+        let userInfo = notification.userInfo!
+        let keyboardSize = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size
+        print("\(type(of: self)) > \(#function): Keyboard was hidden \(String(describing: keyboardSize))")
+
+        let frame = tableView.frame
+        self.tableView.frame = CGRect.init(x: frame.origin.x, y: frame.origin.y, width: frame.width, height: frame.height + keyboardSize!.height)
+    }
     
     // MARK: - Navigation
 
