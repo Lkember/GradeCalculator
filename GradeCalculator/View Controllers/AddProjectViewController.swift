@@ -21,10 +21,14 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var deleteProjectButton: UIButton!
     @IBOutlet var scrollView: UIScrollView!
-    @IBOutlet weak var deleteButtonBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var dueDateView: UIView!
+    @IBOutlet weak var hasDueDateSwitch: UISwitch!
+    @IBOutlet weak var dueDatePicker: UIDatePicker!
+    @IBOutlet weak var projectDueDateLabel: UILabel!
+    @IBOutlet weak var dueDateViewTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var gradeViewTopConstraint: NSLayoutConstraint!
     
     var activeField: UITextField?
-    var originalConstraintConstant: CGFloat!
     var projectName = ""
     var projectWeight = -1.0
     var projectGrade = -1.0
@@ -55,8 +59,6 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
         deleteProjectButton.layer.cornerRadius = 10
         
         self.navigationController?.navigationBar.barStyle = UIBarStyle.black
-        
-        originalConstraintConstant = self.deleteButtonBottomConstraint.constant
         
         // Do any additional setup after loading the view.
         if (courseName != "") {
@@ -114,32 +116,102 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
     
     // When the user specifies they have a mark, then show grade else hide
     @IBAction func isComplete(_ sender: UISwitch) {
-        let deleteButtonFrame = self.deleteProjectButton.frame
-        let gradeViewFrame = self.gradeView.frame
-        
-        if sender.isOn {
-            UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveEaseOut, animations: {
-                self.gradeView.alpha = 1.0
-                self.deleteProjectButton.frame = CGRect(x: deleteButtonFrame.origin.x,
-                                                        y: deleteButtonFrame.origin.y + gradeViewFrame.height,
-                                                        width: deleteButtonFrame.width,
-                                                        height: deleteButtonFrame.height)
-                
-                self.deleteButtonBottomConstraint.constant = self.originalConstraintConstant
-                
+        print("\(type(of: self)) > \(#function)")
+        if sender == self.projectIsComplete {
+            let deleteButtonFrame = self.deleteProjectButton.frame
+            let gradeViewFrame = self.gradeView.frame
+            let dueDateViewFrame = self.dueDateView.frame
+            let dueDateLabelFrame = self.projectDueDateLabel.frame
+            let dueDateSwitchFrame = self.hasDueDateSwitch.frame
+            
+            if sender.isOn {
+                UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveEaseOut, animations: {
+                    self.gradeViewTopConstraint.constant += gradeViewFrame.height
+                    self.gradeView.alpha = 1.0
+                    
+                    self.deleteProjectButton.frame = CGRect(x: deleteButtonFrame.origin.x,
+                                                            y: deleteButtonFrame.origin.y + gradeViewFrame.height,
+                                                            width: deleteButtonFrame.width,
+                                                            height: deleteButtonFrame.height)
+
+                    self.projectDueDateLabel.frame = CGRect(x: dueDateLabelFrame.origin.x,
+                                                            y: dueDateLabelFrame.origin.y + gradeViewFrame.height,
+                                                            width: dueDateLabelFrame.width,
+                                                            height: dueDateLabelFrame.height)
+
+                    self.hasDueDateSwitch.frame = CGRect(x: dueDateSwitchFrame.origin.x,
+                                                         y: dueDateSwitchFrame.origin.y + gradeViewFrame.height,
+                                                         width: dueDateSwitchFrame.width,
+                                                         height: dueDateSwitchFrame.height)
+
+                    self.dueDateView.frame = CGRect(x: dueDateViewFrame.origin.x,
+                                                    y: dueDateViewFrame.origin.y + gradeViewFrame.height,
+                                                    width: dueDateViewFrame.width,
+                                                    height: dueDateViewFrame.height)
+                    
                 }, completion: nil)
+            }
+            else {
+                UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveEaseOut, animations: {
+                    self.gradeView.alpha = 0.0
+                    
+                    self.deleteProjectButton.frame = CGRect(x: deleteButtonFrame.origin.x,
+                                                            y: deleteButtonFrame.origin.y - gradeViewFrame.height,
+                                                            width: deleteButtonFrame.width,
+                                                            height: deleteButtonFrame.height)
+
+                    self.projectDueDateLabel.frame = CGRect(x: dueDateLabelFrame.origin.x,
+                                                            y: dueDateLabelFrame.origin.y - gradeViewFrame.height,
+                                                            width: dueDateLabelFrame.width,
+                                                            height: dueDateLabelFrame.height)
+
+                    self.hasDueDateSwitch.frame = CGRect(x: dueDateSwitchFrame.origin.x,
+                                                         y: dueDateSwitchFrame.origin.y - gradeViewFrame.height,
+                                                         width: dueDateSwitchFrame.width,
+                                                         height: dueDateSwitchFrame.height)
+
+                    self.dueDateView.frame = CGRect(x: dueDateViewFrame.origin.x,
+                                                    y: dueDateViewFrame.origin.y - gradeViewFrame.height,
+                                                    width: dueDateViewFrame.width,
+                                                    height: dueDateViewFrame.height)
+                    
+                }, completion: {(finished: Bool) in
+                    self.gradeViewTopConstraint.constant -= gradeViewFrame.height
+                });
+            }
         }
-        else {
-            UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveEaseOut, animations: {
-                self.gradeView.alpha = 0.0
-                self.deleteProjectButton.frame = CGRect(x: deleteButtonFrame.origin.x,
-                                                        y: deleteButtonFrame.origin.y - gradeViewFrame.height,
-                                                        width: deleteButtonFrame.width,
-                                                        height: deleteButtonFrame.height)
-                
-                self.deleteButtonBottomConstraint.constant = self.originalConstraintConstant - gradeViewFrame.height
-                
+    }
+    
+    @IBAction func hasDueDate(_ sender: UISwitch) {
+        print("\(type(of: self)) > \(#function)")
+        if sender == self.hasDueDateSwitch {
+            let deleteButtonFrame = self.deleteProjectButton.frame
+            let dueDateFrame = self.dueDateView.frame
+            
+            if sender.isOn {
+                UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveEaseOut, animations: {
+                    self.dueDateViewTopConstraint.constant += dueDateFrame.height
+                    self.dueDateView.alpha = 1.0
+                    self.deleteProjectButton.frame = CGRect(x: deleteButtonFrame.origin.x,
+                                                            y: deleteButtonFrame.origin.y + dueDateFrame.height,
+                                                            width: deleteButtonFrame.width,
+                                                            height: deleteButtonFrame.height)
+                    
                 }, completion: nil)
+            }
+            else {
+                
+                UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveEaseOut, animations: {
+                    self.dueDateView.alpha = 0.0
+                    self.deleteProjectButton.frame = CGRect(x: deleteButtonFrame.origin.x,
+                                                            y: deleteButtonFrame.origin.y - dueDateFrame.height,
+                                                            width: deleteButtonFrame.width,
+                                                            height: deleteButtonFrame.height)
+                    
+                }, completion: {(finished : Bool) in
+                    self.dueDateViewTopConstraint.constant -= dueDateFrame.height
+                });
+            }
         }
     }
     
@@ -154,7 +226,6 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
         
         self.present(alertController, animated: true, completion: nil)
     }
-    
 
     // MARK: - Function
     
@@ -251,6 +322,7 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
 
     // MARK: - Listeners
     func keyboardToggle(_ notification: Notification) {
+        print("\(type(of: self)) > \(#function)")
         self.scrollView.isScrollEnabled = true
         let userInfo = notification.userInfo!
         
@@ -263,7 +335,6 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
         var aRect : CGRect = self.view.frame
         aRect.size.height -= keyboardSize!.height
         if let activeField = self.activeField {
-            
             if (!aRect.contains(activeField.frame.origin)){
                 self.scrollView.scrollRectToVisible(activeField.frame, animated: true)
             }
@@ -287,3 +358,5 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
         saveButton.isEnabled = false
     }
 }
+
+

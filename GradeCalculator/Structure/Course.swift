@@ -16,6 +16,7 @@ class Course: NSObject, NSCoding {
     var projectMarks : [Double]
     var projectOutOf : [Double]
     var projectWeights : [Double]
+    var dueDate : [NSDate?]
     
     // MARK: Archiving Paths
     
@@ -31,6 +32,7 @@ class Course: NSObject, NSCoding {
         static let projectMarksKey = "projectMarks"
         static let projectOutOfKey = "projectOutOf"
         static let projectWeightsKey = "projectWeights"
+        static let dueDateKey = "dueDate"
     }
     
     // MARK: Initilization
@@ -41,6 +43,7 @@ class Course: NSObject, NSCoding {
         projectMarks = []
         projectOutOf = []
         projectWeights = []
+        dueDate = []
     }
     
     init?(courseName: String) {
@@ -54,16 +57,18 @@ class Course: NSObject, NSCoding {
         projectMarks = [Double]()
         projectOutOf = [Double]()
         projectWeights = [Double]()
+        dueDate = [NSDate?]()
         
         super.init()
     }
     
-    init?(courseName: String, projects: [String], projectMarks: [Double], projectOutOf: [Double],projectWeights: [Double]) {
+    init?(courseName: String, projects: [String], projectMarks: [Double], projectOutOf: [Double],projectWeights: [Double], dueDate: [NSDate?]) {
         self.courseName = courseName
         self.projects = projects
         self.projectMarks = projectMarks
         self.projectWeights = projectWeights
         self.projectOutOf = projectOutOf
+        self.dueDate = dueDate
         
         super.init()
     }
@@ -178,6 +183,7 @@ class Course: NSObject, NSCoding {
         aCoder.encode(projectMarks, forKey: PropertyKey.projectMarksKey)
         aCoder.encode(projectOutOf, forKey: PropertyKey.projectOutOfKey)
         aCoder.encode(projectWeights, forKey: PropertyKey.projectWeightsKey)
+        aCoder.encode(dueDate, forKey: PropertyKey.dueDateKey)
     }
     
     required convenience init?(coder aDecoder: NSCoder) {
@@ -186,8 +192,14 @@ class Course: NSObject, NSCoding {
         let projectMarks = aDecoder.decodeObject(forKey: PropertyKey.projectMarksKey) as! [Double]
         let projectOutOf = aDecoder.decodeObject(forKey: PropertyKey.projectOutOfKey) as! [Double]
         let projectWeights = aDecoder.decodeObject(forKey: PropertyKey.projectWeightsKey) as! [Double]
-        
-        self.init(courseName: courseName, projects: projects, projectMarks: projectMarks, projectOutOf: projectOutOf, projectWeights: projectWeights)
+        if let dueDate = aDecoder.decodeObject(forKey: PropertyKey.dueDateKey) as? [NSDate?]
+        {
+            self.init(courseName: courseName, projects: projects, projectMarks: projectMarks, projectOutOf: projectOutOf, projectWeights: projectWeights, dueDate: dueDate)
+        }
+        else {
+            let dueDate = [NSDate?].init(repeating: nil, count: projects.count)
+            self.init(courseName: courseName, projects: projects, projectMarks: projectMarks, projectOutOf: projectOutOf, projectWeights: projectWeights, dueDate: dueDate)
+        }
     }
     
 }
