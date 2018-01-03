@@ -81,27 +81,38 @@ class MarksTableViewController: UITableViewController {
         print("MarksTable: unwindToProjectList -> Entry")
         if let svc = sender.source as? AddProjectViewController {
             
+            // Getting the date selected
+            var date: NSDate? = nil
+            if (svc.hasDueDateSwitch.isOn) {
+                date = svc.dueDatePicker.date as NSDate
+            }
+            else {
+                date = nil
+            }
+            
             // If user is editing a row
             if let selectedIndexPath = tableView.indexPathForSelectedRow {
                 
                 print("MarksTable: unwindToProjectList: Editing a row")
                 let i = selectedIndexPath.row
                 
-                if svc.projectIsComplete.isOn == true {
+                if svc.projectIsComplete.isOn {
                 
-                    print("MarksTable: undwindToProjectList: projectName: \(svc.projectName), grade: \(svc.projectGrade), out of: \(svc.projectOutOf), weight: \(svc.projectWeight)")
+                    print("MarksTable: undwindToProjectList: projectName: \(svc.projectName), grade: \(svc.projectGrade), out of: \(svc.projectOutOf), weight: \(svc.projectWeight), date: \(String(describing: date))")
                     course!.projects[i] = svc.projectName
                     course!.projectMarks[i] = svc.projectGrade
                     course!.projectWeights[i] = svc.projectWeight
                     course!.projectOutOf[i] = svc.projectOutOf
+                    course!.dueDate[i] = date
                     tableView.reloadRows(at: [selectedIndexPath], with: .fade)
                 }
                 else {
-                    print("MarksTable: undwindToProjectList: projectName: \(svc.projectName), grade: -1.0, out of: -1.0, weight: \(svc.projectWeight)")
+                    print("MarksTable: undwindToProjectList: projectName: \(svc.projectName), grade: -1.0, out of: -1.0, weight: \(svc.projectWeight), date: \(String(describing: date))")
                     course!.projects[i] = svc.projectName
                     course!.projectMarks[i] = -1.0
                     course!.projectWeights[i] = svc.projectWeight
                     course!.projectOutOf[i] = -1.0
+                    course!.dueDate[i] = date
                     tableView.reloadRows(at: [selectedIndexPath], with: .fade)
                 }
                 
@@ -109,16 +120,15 @@ class MarksTableViewController: UITableViewController {
             // If user is adding a new row
             else {
                 print("MarksTable: undwindToProjectList: Adding a new row")
-                
                 let newIndexPath = IndexPath(row: course!.projects.count, section: 0)
                 
                 if svc.projectGrade == -1.0 {
-                    print("MarksTable: undwindToProjectList: Adding project \(svc.projectName), grade: -1.0, outOf: -1.0, weight: \(svc.projectWeight)")
-                    course?.addProject(svc.projectName, grade: -1.0, outOf: -1.0, weight: svc.projectWeight)
+                    print("MarksTable: unwindToProjectList: Adding project \(svc.projectName), grade: -1.0, outOf: -1.0, weight: \(svc.projectWeight), date: \(String(describing: date))")
+                    course?.addProject(svc.projectName, grade: -1.0, outOf: -1.0, weight: svc.projectWeight, newDueDate: date)
                 }
                 else {
-                    print("MarksTable: undwindToProjectList: Adding project \(svc.projectName), grade \(svc.projectGrade), outOf \(svc.projectOutOf), weight \(svc.projectWeight)")
-                    course?.addProject(svc.projectName, grade: svc.projectGrade, outOf: svc.projectOutOf, weight: svc.projectWeight)
+                    print("MarksTable: undwindToProjectList: Adding project \(svc.projectName), grade \(svc.projectGrade), outOf \(svc.projectOutOf), weight \(svc.projectWeight), date: \(String(describing: date))")
+                    course?.addProject(svc.projectName, grade: svc.projectGrade, outOf: svc.projectOutOf, weight: svc.projectWeight, newDueDate: date)
                 }
                 
                 tableView.insertRows(at: [newIndexPath], with: .bottom)
@@ -407,6 +417,14 @@ class MarksTableViewController: UITableViewController {
                 courseDVC.projectWeight = (course?.projectWeights[(indexPath as NSIndexPath).row])!
                 courseDVC.projectGrade = (course?.projectMarks[(indexPath as NSIndexPath).row])!
                 courseDVC.projectOutOf = (course?.projectOutOf[(indexPath as NSIndexPath).row])!
+                
+                if let projDueDate = course?.dueDate[(indexPath as NSIndexPath).row] {
+                    courseDVC.isDateSet = true
+                    courseDVC.dueDateSelected = projDueDate
+                }
+                else {
+                    courseDVC.isDateSet = false
+                }
             }
             
         } else if (segue.identifier == "AddItem") {

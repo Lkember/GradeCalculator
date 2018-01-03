@@ -35,9 +35,13 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
     var projectOutOf = -1.0
     var editorMode = false
     var courseName = ""
+    var isDateSet = false
+    var dueDateSelected: NSDate? = nil
     
+    // MARK: - Views
     
     override func viewDidLoad() {
+        print("\(type(of: self)) > viewDidLoad > Entry")
         super.viewDidLoad()
         
         // Setting delegates
@@ -56,19 +60,27 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
         gradeField.addTarget(self, action: #selector(AddProjectViewController.textFieldDidChange(_textField:)), for: UIControlEvents.editingChanged)
         gradeOutOfField.addTarget(self, action: #selector(AddProjectViewController.textFieldDidChange(_textField:)), for: UIControlEvents.editingChanged)
         
-        deleteProjectButton.layer.cornerRadius = 10
+        print("\(type(of: self)) > viewDidLoad > Exit")
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        print("\(type(of: self)) > viewWillAppear > Entry")
+        
+        // Updating UI
+        deleteProjectButton.layer.cornerRadius = 10
         self.navigationController?.navigationBar.barStyle = UIBarStyle.black
         
-        // Do any additional setup after loading the view.
         if (courseName != "") {
             self.title = courseName
         }
-            
+        
         if (self.projectWeight != -1.0 || self.projectName != "") {
             editorMode = true
             
             print("AddProject: Updating projectName \(projectName), grade: \(projectGrade), outOf: \(projectOutOf) weight: \(projectWeight)")
+            
             self.projectNameField?.text = "\(self.projectName)"
             self.weightField?.text = "\(self.projectWeight)"
             
@@ -80,10 +92,25 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
                 projectIsComplete.isOn = false
                 isComplete(projectIsComplete)
             }
-        }    
+            
+            // If the date is set then make the picker show that date, otherwise close it
+            if (isDateSet) {
+                hasDueDateSwitch.isOn = true
+                dueDatePicker.date = dueDateSelected as! Date
+            }
+            else {
+                hasDueDateSwitch.isOn = false
+                hasDueDateNoAnimation()
+            }
+        }
         else {
             self.deleteProjectButton.isHidden = true
+            hasDueDateSwitch.isOn = false
+            hasDueDateNoAnimation()
         }
+        self.viewDidLayoutSubviews()
+        
+        print("\(type(of: self)) > viewWillAppear > Exit")
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -182,6 +209,20 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    // Called when the date is not set, it sets the constraints without using an animation
+    func hasDueDateNoAnimation() {
+        let deleteButtonFrame = self.deleteProjectButton.frame
+        let dueDateFrame = self.dueDateView.frame
+        
+        self.dueDateView.alpha = 0.0
+        self.deleteProjectButton.frame = CGRect(x: deleteButtonFrame.origin.x,
+                                                y: deleteButtonFrame.origin.y - dueDateFrame.height,
+                                                width: deleteButtonFrame.width,
+                                                height: deleteButtonFrame.height)
+        self.dueDateViewTopConstraint.constant -= dueDateFrame.height
+    }
+    
+    // Updates the constraints when the dueDate switch is used
     @IBAction func hasDueDate(_ sender: UISwitch) {
         print("\(type(of: self)) > \(#function)")
         if sender == self.hasDueDateSwitch {
@@ -243,7 +284,11 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
         
         if (projectIsComplete.isOn) {
             print("AddProject: CheckInput projectIsComplete.isOn -> True")
-            if (gradeField.text == "" || gradeOutOfField.text == "" || Double(gradeOutOfField.text!) == 0.0 || !checkMarkInput()) {
+            if (gradeField.text == "" ||
+                gradeOutOfField.text == "" ||
+                Double(gradeOutOfField.text!) == 0.0 ||
+                !checkMarkInput())
+            {
                 print("AddProject: CheckInput Exit -> Field empty or gradeOutOf set to 0")
                 return false
             }
@@ -312,13 +357,6 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
         print("AddProject: Checking input... \(checkInput())")
         return checkInput()
     }
-    
-//    // In a storyboard-based application, you will often want to do a little preparation before navigation
-//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-//        // Get the new view controller using segue.destinationViewController.
-//        // Pass the selected object to the new view controller.
-//        print("prepareForSegue")
-//    }
 
     // MARK: - Listeners
     func keyboardToggle(_ notification: Notification) {

@@ -82,6 +82,7 @@ class Course: NSObject, NSCoding {
         projectMarks.remove(at: row)
         projectWeights.remove(at: row)
         projectOutOf.remove(at: row)
+        dueDate.remove(at: row)
     }
     
     // Returns the average of all completed projects
@@ -167,12 +168,13 @@ class Course: NSObject, NSCoding {
     }
     
     // Mark: Actions
-    func addProject(_ projectName: String, grade: Double, outOf: Double, weight: Double) {
+    func addProject(_ projectName: String, grade: Double, outOf: Double, weight: Double, newDueDate: NSDate?) {
         print("courses addProject \(courseName)")
         projects.append(projectName)
         projectMarks.append(grade)
         projectWeights.append(weight)
         projectOutOf.append(outOf)
+        dueDate.append(newDueDate)
     }
     
     // MARK: NSCoding

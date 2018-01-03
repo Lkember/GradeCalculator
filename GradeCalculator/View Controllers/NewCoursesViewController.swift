@@ -10,10 +10,6 @@ import UIKit
 
 class NewCoursesViewController: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     
-    // MARK: Properties
-//    var groups: [Group] = []
-//    var courses = [Course]()
-    
     // MARK: - Properties
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     var index = -1

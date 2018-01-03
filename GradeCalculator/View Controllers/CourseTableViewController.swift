@@ -352,6 +352,7 @@ class CourseTableViewController: UITableViewController {
         print("CourseTable: unwindToCourseList: Adding course to course list.")
         if let svc = sender.source as? NewCoursesViewController {
             let course = svc.course
+            
             print("CourseTable: unwindToCourseList: New course: \(course.courseName)")
             let newIndexPath: IndexPath
             let groupIndex = svc.groupSelection.selectedRow(inComponent: 0)
@@ -361,7 +362,7 @@ class CourseTableViewController: UITableViewController {
                 svc.gradeField.text != "" &&
                 svc.gradeOutOfField.text != "") {
                 if let grade = Double(svc.gradeField.text!), let outOf = Double(svc.gradeOutOfField.text!) {
-                    course.addProject("Final Mark", grade: grade, outOf: outOf, weight: 100.0)
+                    course.addProject("Final Mark", grade: grade, outOf: outOf, weight: 100.0, newDueDate: nil)
                 }
             }
             
