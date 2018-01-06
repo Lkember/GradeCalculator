@@ -10,7 +10,7 @@ import UIKit
 
 class CourseTableViewController: UITableViewController {
 
-    // MARK: Properties
+    // MARK: - Properties
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     var index = -1
     @IBOutlet weak var overallAverage: UILabel!
@@ -20,7 +20,7 @@ class CourseTableViewController: UITableViewController {
     @IBOutlet weak var addButton: UIBarButtonItem!
     @IBOutlet weak var informationView: UIView!
     
-    // MARK: Views
+    // MARK: - Views
     override func viewDidLoad() {
         print("CourseTable: viewDidLoad -> Entry")
         super.viewDidLoad()
@@ -170,8 +170,7 @@ class CourseTableViewController: UITableViewController {
     }
 
     
-    // MARK: Functions
-    
+    // MARK: - Functions
     //Find index for course with courseName
     func findIndexForGroup(groupName: String) -> Int {
         for i in 0..<appDelegate.groups.count {
@@ -449,7 +448,6 @@ class CourseTableViewController: UITableViewController {
     
 
     // MARK: - Table view data source
-    
     // Returns the number of sections in the table
     override func numberOfSections(in tableView: UITableView) -> Int {
         if (index == -1) {
@@ -535,6 +533,7 @@ class CourseTableViewController: UITableViewController {
         return true
     }
     
+    
     // Checks a cell when in edit mode
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if (tableView.isEditing) {
@@ -558,6 +557,7 @@ class CourseTableViewController: UITableViewController {
         }
     }
 
+    
     override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         if (tableView.isEditing) {
             let selectedRows = tableView.indexPathsForSelectedRows
@@ -622,30 +622,14 @@ class CourseTableViewController: UITableViewController {
             appDelegate.groups[index].courses.insert(tempCourse, at: destinationIndexPath.row)
         }
         
-        //////////// LOGGING START
-        if index == -1 {
-            print("CourseTable: moveRowAt: New order of courses:")
-            for course in appDelegate.groups[sourceIndexPath.section].courses {
-                print(course.courseName)
-            }
-        }
-        else {
-            print("CourseTable: moveRowAt: New order of courses:")
-            for course in appDelegate.groups[index].courses {
-                print(course.courseName)
-            }
-        }
-        /////////// END LOGGING
-        
         appDelegate.save()
         print("CourseTable: moveRowAt -> Exit")
     }
     
     
-    
     // Override to support conditional rearranging of the table view.
     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
+        // Always allow rearranging
         return true
     }
     

@@ -150,7 +150,7 @@ class AddGroupViewController: UIViewController, UITableViewDelegate, UITableView
     func keyboardClosed(_ notification: Notification) {
         let userInfo = notification.userInfo!
         let keyboardSize = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size
-        print("\(type(of: self)) > \(#function): Keyboard was hidden \(String(describing: keyboardSize))")
+        print("\(type(of: self)) > \(#function): Keyboard was hidden")
 
         let frame = tableView.frame
         self.tableView.frame = CGRect.init(x: frame.origin.x, y: frame.origin.y, width: frame.width, height: frame.height + keyboardSize!.height)
