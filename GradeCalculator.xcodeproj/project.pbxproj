@@ -11,6 +11,7 @@
 		B24468F01DA7F60B0011C4CC /* GroupsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B24468EF1DA7F60B0011C4CC /* GroupsTableViewController.swift */; };
 		B24468F41DAFFA530011C4CC /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = B24468F31DAFFA530011C4CC /* Group.swift */; };
 		B26FBB561D54D2360024DB9B /* MarksViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FBB551D54D2360024DB9B /* MarksViewCell.swift */; };
+		B27317ED2007D693009B01FF /* CalendarTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27317EC2007D693009B01FF /* CalendarTableViewController.swift */; };
 		B274AE911D46A5B100E732FD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B274AE901D46A5B100E732FD /* AppDelegate.swift */; };
 		B274AE9A1D46A5B100E732FD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B274AE991D46A5B100E732FD /* Assets.xcassets */; };
 		B274AE9D1D46A5B100E732FD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B274AE9B1D46A5B100E732FD /* LaunchScreen.storyboard */; };
@@ -49,6 +50,7 @@
 		B24468EF1DA7F60B0011C4CC /* GroupsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupsTableViewController.swift; sourceTree = "<group>"; };
 		B24468F31DAFFA530011C4CC /* Group.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
 		B26FBB551D54D2360024DB9B /* MarksViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarksViewCell.swift; sourceTree = "<group>"; };
+		B27317EC2007D693009B01FF /* CalendarTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarTableViewController.swift; sourceTree = "<group>"; };
 		B274AE8D1D46A5B100E732FD /* GradeCalculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GradeCalculator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B274AE901D46A5B100E732FD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B274AE991D46A5B100E732FD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -153,6 +155,7 @@
 				B28A7E161D5BA2BE00C2ADEB /* AddProjectViewController.swift */,
 				B2E4E45F1DA8A23200CBF92B /* AddGroupViewController.swift */,
 				B274AEC21D46AEE500E732FD /* CourseTableViewController.swift */,
+				B27317EC2007D693009B01FF /* CalendarTableViewController.swift */,
 				B24468EF1DA7F60B0011C4CC /* GroupsTableViewController.swift */,
 				B28A7E0E1D5A55C800C2ADEB /* MarksTableViewController.swift */,
 				B28FBA631DC04BA7004CEA67 /* PopUpViewController.swift */,
@@ -328,6 +331,7 @@
 				B2E4E4601DA8A23200CBF92B /* AddGroupViewController.swift in Sources */,
 				B28A7E171D5BA2BE00C2ADEB /* AddProjectViewController.swift in Sources */,
 				B24468F01DA7F60B0011C4CC /* GroupsTableViewController.swift in Sources */,
+				B27317ED2007D693009B01FF /* CalendarTableViewController.swift in Sources */,
 				B24468F41DAFFA530011C4CC /* Group.swift in Sources */,
 				B28A7E331D63852600C2ADEB /* NewCoursesViewController.swift in Sources */,
 				B274AEC51D46AFB600E732FD /* Course.swift in Sources */,
