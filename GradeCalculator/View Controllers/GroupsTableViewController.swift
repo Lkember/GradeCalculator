@@ -33,7 +33,7 @@ class GroupsTableViewController: UITableViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         print("GroupsTableViewController: viewDidAppear -> Loading courses and reloading table")
-        self.navigationController?.setNavigationBarHidden(false, animated: true)
+//        self.navigationController?.setNavigationBarHidden(false, animated: true)
         if let loadedData = appDelegate.load() {
             appDelegate.groups = loadedData
         }

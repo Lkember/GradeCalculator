@@ -115,7 +115,7 @@ class NewCoursesViewController: UIViewController, UITextFieldDelegate, UIPickerV
         return -1
     }
     
-    // Mark: UITextFieldDelegate
+    // MARK: UITextFieldDelegate
     func textFieldDidChange(_ textField: UITextField) {
         let text = courseName.text ?? ""
         print("NewCourses: textFieldDidChange: Current text = \(text)")

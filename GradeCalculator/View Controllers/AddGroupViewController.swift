@@ -11,7 +11,6 @@ import UIKit
 class AddGroupViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
 
     // MARK: - Attributes
-//    var groups: [Group] = []
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
     @IBOutlet weak var groupName: UITextField!
@@ -38,6 +37,7 @@ class AddGroupViewController: UIViewController, UITableViewDelegate, UITableView
         // Adding listeners for when the keyboard shows or hides
         NotificationCenter.default.addObserver(self, selector: #selector(AddGroupViewController.keyboardOpened(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(AddGroupViewController.keyboardClosed(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(AddGroupViewController.keyboardFrameChanged(_:)), name: NSNotification.Name.UIKeyboardDidChangeFrame, object: nil)
         
         saveButton.isEnabled = false
         tableView.reloadData()
@@ -154,6 +154,10 @@ class AddGroupViewController: UIViewController, UITableViewDelegate, UITableView
 
         let frame = tableView.frame
         self.tableView.frame = CGRect.init(x: frame.origin.x, y: frame.origin.y, width: frame.width, height: frame.height + keyboardSize!.height)
+    }
+    
+    func keyboardFrameChanged(_ notification: Notification) {
+        print("\(type(of: self)) > \(#function): Keyboard frame changed")
     }
     
     // MARK: - Navigation

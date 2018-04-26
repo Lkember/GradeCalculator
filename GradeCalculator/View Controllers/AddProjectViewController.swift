@@ -36,7 +36,7 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
     var editorMode = false
     var courseName = ""
     var isDateSet = false
-    var dueDateSelected: NSDate? = nil
+    var dueDateSelected: Date? = nil
     
     // MARK: - Views
     
@@ -354,7 +354,6 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
     // MARK: - Navigation
 
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
-        print("AddProject: Checking input... \(checkInput())")
         return checkInput()
     }
 

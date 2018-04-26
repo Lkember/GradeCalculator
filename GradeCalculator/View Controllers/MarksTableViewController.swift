@@ -82,9 +82,9 @@ class MarksTableViewController: UITableViewController {
         if let svc = sender.source as? AddProjectViewController {
             
             // Getting the date selected
-            var date: NSDate? = nil
+            var date: Date? = nil
             if (svc.hasDueDateSwitch.isOn) {
-                date = svc.dueDatePicker.date as NSDate
+                date = svc.dueDatePicker.date
             }
             else {
                 date = nil
