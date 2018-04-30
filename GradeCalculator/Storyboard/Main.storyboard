@@ -549,11 +549,11 @@
                         <viewControllerLayoutGuide type="bottom" id="t5i-0t-Sbc"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="fc8-XJ-l9q">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="724"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <scrollView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="250" alwaysBounceVertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zAj-Q2-JUW">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="729"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="690"/>
                                 <subviews>
                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vib-sA-Kpt">
                                         <rect key="frame" x="310" y="147.33333333333334" width="51" height="31"/>
@@ -595,12 +595,12 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter project weight..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Eot-qH-RlZ">
-                                        <rect key="frame" x="8" y="101.33333333333333" width="340" height="29.999999999999986"/>
+                                        <rect key="frame" x="8" y="101.33333333333334" width="340" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="words" keyboardType="decimalPad" keyboardAppearance="alert"/>
                                     </textField>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aeI-DW-del">
-                                        <rect key="frame" x="0.0" y="186.33333333333334" width="375" height="73.000000000000028"/>
+                                        <rect key="frame" x="0.0" y="186.33333333333331" width="375" height="73"/>
                                         <subviews>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="100" borderStyle="roundedRect" placeholder="Out of" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XVI-cu-Jda">
                                                 <rect key="frame" x="232" y="35" width="136" height="30"/>
@@ -649,7 +649,7 @@
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KSr-OT-QYs">
-                                        <rect key="frame" x="353" y="106.33333333333333" width="14" height="21"/>
+                                        <rect key="frame" x="353" y="106.33333333333334" width="14" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -663,7 +663,7 @@
                                         </connections>
                                     </switch>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z0c-Fv-oWY">
-                                        <rect key="frame" x="8" y="507.33333333333326" width="359" height="30"/>
+                                        <rect key="frame" x="8" y="507.33333333333337" width="359" height="30"/>
                                         <color key="backgroundColor" red="0.79255557832322587" green="0.17111827622224646" blue="0.13417825345803286" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="G9l-NT-pIu"/>
@@ -881,7 +881,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FPr-9d-9f8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1777" y="-362"/>
+            <point key="canvasLocation" x="1777" y="-1065"/>
         </scene>
         <!--Add Group View Controller-->
         <scene sceneID="b1X-ZW-XvF">
@@ -1330,7 +1330,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yEc-gr-pM0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1777" y="-1125"/>
+            <point key="canvasLocation" x="1870" y="-1939"/>
         </scene>
         <!--Upcoming Work-->
         <scene sceneID="h5M-yh-wJa">
@@ -1383,6 +1383,9 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" red="0.0" green="0.5447398671" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <segue destination="RKN-Dz-eSo" kind="show" id="EXQ-cG-bFX"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -1394,7 +1397,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xcW-K6-rrF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1025" y="-853"/>
+            <point key="canvasLocation" x="1777" y="-395"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="eiV-q6-aE8">
@@ -1423,9 +1426,9 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="R1T-uM-ML6"/>
-        <segue reference="kKh-ej-HbN"/>
-        <segue reference="883-gk-HxU"/>
+        <segue reference="B5p-yR-yqY"/>
+        <segue reference="EXQ-cG-bFX"/>
         <segue reference="XHZ-Lz-icb"/>
-        <segue reference="VlD-FW-XQO"/>
+        <segue reference="7L4-Ww-jje"/>
     </inferredMetricsTieBreakers>
 </document>

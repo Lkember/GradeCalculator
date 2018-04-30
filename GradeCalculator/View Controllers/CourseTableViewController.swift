@@ -127,8 +127,8 @@ class CourseTableViewController: UITableViewController {
             let destVC = segue.destination as? MarksTableViewController
             
             destVC?.courseName = (selectedCourse?.courseName.text)!
-            destVC?.index = self.index
-            print("CourseTable: prepare: destVC.index=\(String(describing: destVC?.index))")
+            destVC?.groupIndex = self.index
+            print("CourseTable: prepare: destVC.index=\(String(describing: destVC?.groupIndex))")
         }
             
         else if segue.identifier=="AddItem" {
