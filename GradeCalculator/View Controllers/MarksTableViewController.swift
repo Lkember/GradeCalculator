@@ -18,7 +18,7 @@ class MarksTableViewController: UITableViewController {
     @IBOutlet weak var staticPotentialMark: UILabel!
     @IBOutlet weak var potentialMark: UILabel!
     
-    var index = -1
+    var groupIndex = -1
     var courseIndex = -1
 //    var groups: [Group] = []
     var course = Course(courseName: "")
@@ -135,7 +135,7 @@ class MarksTableViewController: UITableViewController {
             }
             
             print("MarksTable: unwindToProjectList: Adding course to group.")
-            appDelegate.groups[index].courses[courseIndex] = course!
+            appDelegate.groups[groupIndex].courses[courseIndex] = course!
         }
         
         appDelegate.save()
@@ -163,7 +163,7 @@ class MarksTableViewController: UITableViewController {
         
         tableView.isScrollEnabled = false
         
-        popOverView.index = self.index
+        popOverView.index = self.groupIndex
         popOverView.courseIndex = self.courseIndex
         
         popOverView.view.frame = self.view.frame
@@ -188,7 +188,7 @@ class MarksTableViewController: UITableViewController {
                 let courseNameField = alertController.textFields![0] as UITextField
                 
                 if (courseNameField.text! != "") {
-                    self.appDelegate.groups[self.index].courses[self.courseIndex].courseName = courseNameField.text!
+                    self.appDelegate.groups[self.groupIndex].courses[self.courseIndex].courseName = courseNameField.text!
                     self.courseName = courseNameField.text!
                     self.title = courseNameField.text!
                     self.appDelegate.save()
@@ -218,26 +218,26 @@ class MarksTableViewController: UITableViewController {
     
     // A function which updates the index of the current course
     func updateAttributes() {
-        print("MarksTable: updateAttributes -> Entry: Value of index=\(self.index): courseName=\(self.courseName)")
-        if (self.index == -1) {
+        print("MarksTable: updateAttributes -> Entry: Value of index=\(self.groupIndex): courseName=\(self.courseName)")
+        if (self.groupIndex == -1) {
             for i in 0..<appDelegate.groups.count {
                 courseIndex = appDelegate.groups[i].findIndexInCourseList(course: courseName)
                 if courseIndex != -1 {
-                    index = i
+                    groupIndex = i
                     break
                 }
             }
             
-            self.course = appDelegate.groups[index].courses[courseIndex]
-            print("MarksTable: updateAttributes: Found. User clicked \(appDelegate.groups[index].courses[courseIndex].courseName)")
+            self.course = appDelegate.groups[groupIndex].courses[courseIndex]
+            print("MarksTable: updateAttributes: Found. User clicked \(appDelegate.groups[groupIndex].courses[courseIndex].courseName)")
         }
         else {
-            courseIndex = appDelegate.groups[index].findIndexInCourseList(course: courseName)
+            courseIndex = appDelegate.groups[groupIndex].findIndexInCourseList(course: courseName)
             print("MarksTable: updateAttributes: course index is \(courseIndex)")
-            self.course = appDelegate.groups[index].courses[courseIndex]
+            self.course = appDelegate.groups[groupIndex].courses[courseIndex]
             self.navigationItem.title = courseName
             
-            print("MarksTable: updateAttributes: index is \(index), courseIndex is \(courseIndex)")
+            print("MarksTable: updateAttributes: index is \(groupIndex), courseIndex is \(courseIndex)")
         }
         print("MarksTableView: updateAttributes: Exit")
     }
@@ -338,7 +338,7 @@ class MarksTableViewController: UITableViewController {
         if editingStyle == .delete {
             
             course?.deleteAtRow(row: indexPath.row)
-            appDelegate.groups[index].courses[courseIndex] = course!
+            appDelegate.groups[groupIndex].courses[courseIndex] = course!
             
             tableView.deleteRows(at: [indexPath], with: .fade)
             
@@ -387,7 +387,7 @@ class MarksTableViewController: UITableViewController {
         course!.projectWeights[destinationIndexPath.row] = tempProjectWeight!
         
         print("index=\(index), courseIndex=\(courseIndex)")
-        appDelegate.groups[self.index].courses[courseIndex] = course!
+        appDelegate.groups[self.groupIndex].courses[courseIndex] = course!
         updateLabels()
         appDelegate.save()
         print("MarksTable: tableView moveRowAt -> Exit")
@@ -399,7 +399,7 @@ class MarksTableViewController: UITableViewController {
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "EditItem") {
-            print("MarksTable: User selected a cell.")
+            
             let courseDVC = segue.destination as! AddProjectViewController
             courseDVC.navigationItem.title = self.courseName
             courseDVC.saveButton.isEnabled = true
@@ -409,9 +409,6 @@ class MarksTableViewController: UITableViewController {
             if let selectedCell = sender as? MarksViewCell {
                 let indexPath = tableView.indexPath(for: selectedCell)!
                 let selectedProject = course?.projects[(indexPath as NSIndexPath).row]
-                
-                print("MarksTable: User selected \(selectedProject!)")
-                print("MarksTable: project grade: \(String(describing: course?.projectMarks[indexPath.row])) out of \(String(describing: course?.projectOutOf[indexPath.row]))")
                 
                 courseDVC.projectName = selectedProject!
                 courseDVC.projectWeight = (course?.projectWeights[(indexPath as NSIndexPath).row])!
@@ -428,8 +425,6 @@ class MarksTableViewController: UITableViewController {
             }
             
         } else if (segue.identifier == "AddItem") {
-            print("MarksTable: User selected add button.")
-            print("MarksTable: Setting title to \(self.courseName)")
             let courseDVC = segue.destination.childViewControllers[0] as! AddProjectViewController
             courseDVC.saveButton.isEnabled = false
             courseDVC.courseName = self.courseName
