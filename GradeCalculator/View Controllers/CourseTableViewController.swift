@@ -133,7 +133,7 @@ class CourseTableViewController: UITableViewController {
             
         else if segue.identifier=="AddItem" {
             print("CourseTable: prepare: Setting courses to view.")
-            let destinationViewController = segue.destination.childViewControllers[0] as? NewCoursesViewController
+            let destinationViewController = segue.destination.children[0] as? NewCoursesViewController
 //            destinationViewController?.groups = appDelegate.groups
             destinationViewController?.index = index
         }
@@ -190,11 +190,11 @@ class CourseTableViewController: UITableViewController {
             
             
             ///////////////// BEGINNING OF UIALERT
-            let alertController = UIAlertController(title: "Delete Course(s)", message: "Are you sure you want to delete \(indexPaths!.count) course(s)", preferredStyle: UIAlertControllerStyle.alert)
+            let alertController = UIAlertController(title: "Delete Course(s)", message: "Are you sure you want to delete \(indexPaths!.count) course(s)", preferredStyle: UIAlertController.Style.alert)
             
-            alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
+            alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel, handler: nil))
             
-            alertController.addAction(UIAlertAction(title: "Delete", style: UIAlertActionStyle.destructive, handler: { action in
+            alertController.addAction(UIAlertAction(title: "Delete", style: UIAlertAction.Style.destructive, handler: { action in
                 
                 // the indexes must be sorted by row value since you can only delete one course at a time, the size of courses is always changing
                 for i in 0..<indexPaths!.count {
@@ -397,13 +397,13 @@ class CourseTableViewController: UITableViewController {
         print("CourseTableView: editActionsForRowAt: User selected edit")
         var alertController: UIAlertController
         if (index == -1) {
-            alertController = UIAlertController(title: "Editing Course: \(self.appDelegate.groups[indexPath.section].courses[indexPath.row].courseName)", message: "", preferredStyle: UIAlertControllerStyle.alert)
+            alertController = UIAlertController(title: "Editing Course: \(self.appDelegate.groups[indexPath.section].courses[indexPath.row].courseName)", message: "", preferredStyle: UIAlertController.Style.alert)
         }
         else {
-            alertController = UIAlertController(title: "Editing Course: \(self.appDelegate.groups[self.index].courses[indexPath.row].courseName)", message: "", preferredStyle: UIAlertControllerStyle.alert)
+            alertController = UIAlertController(title: "Editing Course: \(self.appDelegate.groups[self.index].courses[indexPath.row].courseName)", message: "", preferredStyle: UIAlertController.Style.alert)
         }
         
-        let saveAction = UIAlertAction(title: "Save", style: UIAlertActionStyle.default, handler: {
+        let saveAction = UIAlertAction(title: "Save", style: UIAlertAction.Style.default, handler: {
             (action: UIAlertAction!) -> Void in
             
             let courseNameField = alertController.textFields![0] as UITextField
@@ -420,10 +420,10 @@ class CourseTableViewController: UITableViewController {
             self.appDelegate.save()
             self.setEditing(false, animated: true)
             self.navigationController?.setToolbarHidden(true, animated: true)
-            self.tableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.fade)
+            self.tableView.reloadRows(at: [indexPath], with: UITableView.RowAnimation.fade)
         });
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: {
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel, handler: {
             (action: UIAlertAction!) -> Void in
             self.setEditing(false, animated: true)
             self.navigationController?.setToolbarHidden(true, animated: true)
@@ -508,7 +508,7 @@ class CourseTableViewController: UITableViewController {
             cell.courseDescription.text = "Incomplete"
         }
         
-        cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
+        cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
         
         return cell
     }
@@ -583,7 +583,7 @@ class CourseTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         print("CourseTable: editActionsForRowAt: Setting buttons")
-        let deleteRowAction = UITableViewRowAction(style: UITableViewRowActionStyle.destructive, title: "Delete", handler:{action, indexPath in
+        let deleteRowAction = UITableViewRowAction(style: UITableViewRowAction.Style.destructive, title: "Delete", handler:{action, indexPath in
             
             if (self.index == -1) {
                 self.appDelegate.groups[indexPath.section].courses.remove(at: indexPath.row)
@@ -599,7 +599,7 @@ class CourseTableViewController: UITableViewController {
             self.updateLabels()
         });
         
-        let editCourseTitle = UITableViewRowAction(style: UITableViewRowActionStyle.normal, title: "Edit", handler: { action, indexPath in
+        let editCourseTitle = UITableViewRowAction(style: UITableViewRowAction.Style.normal, title: "Edit", handler: { action, indexPath in
             self.editCourseTitle(indexPath: indexPath)
         });
         

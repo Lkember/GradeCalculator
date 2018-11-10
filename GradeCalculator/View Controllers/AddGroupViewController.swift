@@ -35,9 +35,9 @@ class AddGroupViewController: UIViewController, UITableViewDelegate, UITableView
         self.navigationController?.navigationBar.barStyle = UIBarStyle.black
         
         // Adding listeners for when the keyboard shows or hides
-        NotificationCenter.default.addObserver(self, selector: #selector(AddGroupViewController.keyboardOpened(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(AddGroupViewController.keyboardClosed(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(AddGroupViewController.keyboardFrameChanged(_:)), name: NSNotification.Name.UIKeyboardDidChangeFrame, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(AddGroupViewController.keyboardOpened(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(AddGroupViewController.keyboardClosed(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(AddGroupViewController.keyboardFrameChanged(_:)), name: UIResponder.keyboardDidChangeFrameNotification, object: nil)
         
         saveButton.isEnabled = false
         tableView.reloadData()
@@ -45,8 +45,8 @@ class AddGroupViewController: UIViewController, UITableViewDelegate, UITableView
     
     override func viewWillDisappear(_ animated: Bool) {
         // Remove observer for keyboard
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     override func didReceiveMemoryWarning() {
@@ -138,25 +138,25 @@ class AddGroupViewController: UIViewController, UITableViewDelegate, UITableView
         return true
     }
     
-    func keyboardOpened(_ notification: Notification) {
+    @objc func keyboardOpened(_ notification: Notification) {
         let userInfo = notification.userInfo!
-        let keyboardSize = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size
+        let keyboardSize = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size
         print("\(type(of: self)) > \(#function): Keyboard was shown \(String(describing: keyboardSize))")
 
         let frame = tableView.frame
         self.tableView.frame = CGRect.init(x: frame.origin.x, y: frame.origin.y, width: frame.width, height: frame.height - keyboardSize!.height)
     }
 
-    func keyboardClosed(_ notification: Notification) {
+    @objc func keyboardClosed(_ notification: Notification) {
         let userInfo = notification.userInfo!
-        let keyboardSize = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size
+        let keyboardSize = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size
         print("\(type(of: self)) > \(#function): Keyboard was hidden")
 
         let frame = tableView.frame
         self.tableView.frame = CGRect.init(x: frame.origin.x, y: frame.origin.y, width: frame.width, height: frame.height + keyboardSize!.height)
     }
     
-    func keyboardFrameChanged(_ notification: Notification) {
+    @objc func keyboardFrameChanged(_ notification: Notification) {
         print("\(type(of: self)) > \(#function): Keyboard frame changed")
     }
     

@@ -51,14 +51,14 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
         self.gradeOutOfField.delegate = self
         
         // Adding listeners for when the keyboard shows or hides
-        NotificationCenter.default.addObserver(self, selector: #selector(AddProjectViewController.keyboardToggle(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(AddProjectViewController.keyboardToggle(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(AddProjectViewController.keyboardToggle(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(AddProjectViewController.keyboardToggle(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
         
         // Adding listener for when any of the text fields are edited
-        projectNameField.addTarget(self, action: #selector(AddProjectViewController.textFieldDidChange(_textField:)), for: UIControlEvents.editingChanged)
-        weightField.addTarget(self, action: #selector(AddProjectViewController.textFieldDidChange(_textField:)), for: UIControlEvents.editingChanged)
-        gradeField.addTarget(self, action: #selector(AddProjectViewController.textFieldDidChange(_textField:)), for: UIControlEvents.editingChanged)
-        gradeOutOfField.addTarget(self, action: #selector(AddProjectViewController.textFieldDidChange(_textField:)), for: UIControlEvents.editingChanged)
+        projectNameField.addTarget(self, action: #selector(AddProjectViewController.textFieldDidChange(_textField:)), for: UIControl.Event.editingChanged)
+        weightField.addTarget(self, action: #selector(AddProjectViewController.textFieldDidChange(_textField:)), for: UIControl.Event.editingChanged)
+        gradeField.addTarget(self, action: #selector(AddProjectViewController.textFieldDidChange(_textField:)), for: UIControl.Event.editingChanged)
+        gradeOutOfField.addTarget(self, action: #selector(AddProjectViewController.textFieldDidChange(_textField:)), for: UIControl.Event.editingChanged)
         
         print("\(type(of: self)) > viewDidLoad > Exit")
         
@@ -115,8 +115,8 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
     
     override func viewWillDisappear(_ animated: Bool) {
         // Remove observer for keyboard
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
 
@@ -152,7 +152,7 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
             let dueDateSwitchFrame = self.hasDueDateSwitch.frame
             
             if sender.isOn {
-                UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveEaseOut, animations: {
+                UIView.animate(withDuration: 0.3, delay: 0.0, options: UIView.AnimationOptions.curveEaseOut, animations: {
                     self.gradeViewTopConstraint.constant += gradeViewFrame.height
                     self.gradeView.alpha = 1.0
                     
@@ -179,7 +179,7 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
                 }, completion: nil)
             }
             else {
-                UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveEaseOut, animations: {
+                UIView.animate(withDuration: 0.3, delay: 0.0, options: UIView.AnimationOptions.curveEaseOut, animations: {
                     self.gradeView.alpha = 0.0
                     
                     self.deleteProjectButton.frame = CGRect(x: deleteButtonFrame.origin.x,
@@ -230,7 +230,7 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
             let dueDateFrame = self.dueDateView.frame
             
             if sender.isOn {
-                UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveEaseOut, animations: {
+                UIView.animate(withDuration: 0.3, delay: 0.0, options: UIView.AnimationOptions.curveEaseOut, animations: {
                     self.dueDateViewTopConstraint.constant += dueDateFrame.height
                     self.dueDateView.alpha = 1.0
                     self.deleteProjectButton.frame = CGRect(x: deleteButtonFrame.origin.x,
@@ -242,7 +242,7 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
             }
             else {
                 
-                UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveEaseOut, animations: {
+                UIView.animate(withDuration: 0.3, delay: 0.0, options: UIView.AnimationOptions.curveEaseOut, animations: {
                     self.dueDateView.alpha = 0.0
                     self.deleteProjectButton.frame = CGRect(x: deleteButtonFrame.origin.x,
                                                             y: deleteButtonFrame.origin.y - dueDateFrame.height,
@@ -257,10 +257,10 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func deleteProject(_ sender: UIButton) {
-        let alertController = UIAlertController(title: "Delete Project", message: "Are you sure you want to delete this project?", preferredStyle: UIAlertControllerStyle.alert)
-        alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
+        let alertController = UIAlertController(title: "Delete Project", message: "Are you sure you want to delete this project?", preferredStyle: UIAlertController.Style.alert)
+        alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel, handler: nil))
         
-        alertController.addAction(UIAlertAction(title: "Delete", style: UIAlertActionStyle.destructive, handler: { action in
+        alertController.addAction(UIAlertAction(title: "Delete", style: UIAlertAction.Style.destructive, handler: { action in
             
             self.performSegue(withIdentifier: "deleteProject", sender: self)
         }))
@@ -342,7 +342,7 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
-    func textFieldDidChange(_textField: UITextField) {
+    @objc func textFieldDidChange(_textField: UITextField) {
         print("AddProject: textFieldDidChange -> Entry")
         if (checkInput()) {
             saveButton.isEnabled = true
@@ -358,13 +358,13 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
     }
 
     // MARK: - Listeners
-    func keyboardToggle(_ notification: Notification) {
+    @objc func keyboardToggle(_ notification: Notification) {
         print("\(type(of: self)) > \(#function)")
         self.scrollView.isScrollEnabled = true
         let userInfo = notification.userInfo!
         
-        let keyboardSize = (userInfo[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.size
-        let contentInsets : UIEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, keyboardSize!.height, 0.0)
+        let keyboardSize = (userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.size
+        let contentInsets : UIEdgeInsets = UIEdgeInsets.init(top: 0.0, left: 0.0, bottom: keyboardSize!.height, right: 0.0)
         
         self.scrollView.contentInset = contentInsets
         self.scrollView.scrollIndicatorInsets = contentInsets

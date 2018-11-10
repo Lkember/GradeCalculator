@@ -74,9 +74,9 @@ class GroupsTableViewController: UITableViewController {
             print("Incrementing index. Now index = \(index) which points to \(appDelegate.groups[index].groupName)")
         }
         
-        let alertController = UIAlertController(title: "Editing Group: \(appDelegate.groups[index].groupName)", message: "", preferredStyle: UIAlertControllerStyle.alert)
+        let alertController = UIAlertController(title: "Editing Group: \(appDelegate.groups[index].groupName)", message: "", preferredStyle: UIAlertController.Style.alert)
         
-        let saveAction = UIAlertAction(title: "Save", style: UIAlertActionStyle.default, handler: {
+        let saveAction = UIAlertAction(title: "Save", style: UIAlertAction.Style.default, handler: {
             (action: UIAlertAction!) -> Void in
             
             let groupNameField = alertController.textFields![0].text ?? ""
@@ -85,14 +85,14 @@ class GroupsTableViewController: UITableViewController {
             if (groupNameField != "" && self.getGroupIndexWithName(nameOfGroup: groupNameField) == -1) {
                 self.appDelegate.groups[index].groupName = groupNameField
                 self.appDelegate.save()
-                self.tableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.fade)
+                self.tableView.reloadRows(at: [indexPath], with: UITableView.RowAnimation.fade)
             }
             
             self.setEditing(false, animated: true)
             self.tableView.setEditing(false, animated: true)
         });
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: { (action: UIAlertAction!) -> Void in
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel, handler: { (action: UIAlertAction!) -> Void in
             self.setEditing(false, animated: true)
             self.tableView.setEditing(false, animated: true)
         });
@@ -183,10 +183,10 @@ class GroupsTableViewController: UITableViewController {
         cell.detailTextLabel?.text = "Number of courses in group: \(appDelegate.groups[tempIndex].courses.count)"
         
         if (!tableView.isEditing) {
-            cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
+            cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
         }
         else {
-            cell.accessoryType = UITableViewCellAccessoryType.none
+            cell.accessoryType = UITableViewCell.AccessoryType.none
         }
         
         return cell
@@ -196,10 +196,10 @@ class GroupsTableViewController: UITableViewController {
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         if (tableView.isEditing) {
-            tableView.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.none
+            tableView.cellForRow(at: indexPath)?.accessoryType = UITableViewCell.AccessoryType.none
         }
         else {
-            tableView.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
+            tableView.cellForRow(at: indexPath)?.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
         }
         if (appDelegate.groups[getGroupIndexWithName(nameOfGroup: "Ungrouped Courses")].courses.count == 0) {
             return true
@@ -217,7 +217,7 @@ class GroupsTableViewController: UITableViewController {
     // Making the delete and edit button when editing a cell
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         print("GroupsTable: editActionsForRowAt -> Entry: Setting edit actions")
-        let deleteRowAction = UITableViewRowAction(style: UITableViewRowActionStyle.destructive, title: "Delete", handler:{action, indexPath in
+        let deleteRowAction = UITableViewRowAction(style: UITableViewRowAction.Style.destructive, title: "Delete", handler:{action, indexPath in
             
             let ungroupedIndex = self.getGroupIndexWithName(nameOfGroup: "Ungrouped Courses")
             var newIndex = indexPath.row
@@ -252,7 +252,7 @@ class GroupsTableViewController: UITableViewController {
                     tableView.insertRows(at: [IndexPath.init(row: 0, section: 0)], with: .fade)
                 }
                 else {
-                    tableView.reloadRows(at: [IndexPath.init(row: ungroupedIndex, section: 0)], with: UITableViewRowAnimation.middle)
+                    tableView.reloadRows(at: [IndexPath.init(row: ungroupedIndex, section: 0)], with: UITableView.RowAnimation.middle)
                 }
             }
             
@@ -261,7 +261,7 @@ class GroupsTableViewController: UITableViewController {
             
         });
         
-        let editCourseTitle = UITableViewRowAction(style: UITableViewRowActionStyle.normal, title: "Edit", handler: { action, indexPath in
+        let editCourseTitle = UITableViewRowAction(style: UITableViewRowAction.Style.normal, title: "Edit", handler: { action, indexPath in
             self.editCourseTitle(indexPath: indexPath)
         });
         
@@ -341,7 +341,7 @@ class GroupsTableViewController: UITableViewController {
         
         if (segue.identifier == "AddGroupSegue") {
             print("GroupsTable: prepare: AddGroupSegue has started")
-            let destView = segue.destination.childViewControllers[0] as! AddGroupViewController
+            let destView = segue.destination.children[0] as! AddGroupViewController
 //            destView.appDelegate.groups = self.appDelegate.groups
         }
         else if (segue.identifier == "ShowGroupSegue") {

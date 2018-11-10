@@ -245,7 +245,7 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
 
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         if let cell = sender as? UITableViewCell {
-            if (cell.selectionStyle == UITableViewCellSelectionStyle.none) {
+            if (cell.selectionStyle == UITableViewCell.SelectionStyle.none) {
                 return false
             }
             else {
@@ -319,7 +319,7 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
         let average = getOverallAverage()
         
         if (indexPath.section == 0) {
-            cell?.selectionStyle = UITableViewCellSelectionStyle.none
+            cell?.selectionStyle = UITableViewCell.SelectionStyle.none
             
             switch indexPath.row {
             case 0:
@@ -400,8 +400,8 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
                 cell?.textLabel?.text = "\(appDelegate.groups[index].groupName) Average:"
             }
             
-            cell?.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
-            cell?.selectionStyle = UITableViewCellSelectionStyle.blue
+            cell?.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
+            cell?.selectionStyle = UITableViewCell.SelectionStyle.blue
             
             let groupAverage = round(10*appDelegate.groups[index].getGroupAverage()*100)/10
             if groupAverage == -100.0 {

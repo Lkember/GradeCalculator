@@ -159,7 +159,7 @@ class MarksTableViewController: UITableViewController {
     
     @IBAction func changeGroupAction(_ sender: AnyObject) {
         let popOverView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PopUpView") as! PopUpViewController
-        self.addChildViewController(popOverView)
+        self.addChild(popOverView)
         
         tableView.isScrollEnabled = false
         
@@ -180,9 +180,9 @@ class MarksTableViewController: UITableViewController {
         print("CourseTableView: editActionsForRowAt: User selected edit")
         var alertController: UIAlertController
         
-        alertController = UIAlertController(title: "Editing Course: \(self.courseName)", message: "", preferredStyle: UIAlertControllerStyle.alert)
+        alertController = UIAlertController(title: "Editing Course: \(self.courseName)", message: "", preferredStyle: UIAlertController.Style.alert)
         
-            let saveAction = UIAlertAction(title: "Save", style: UIAlertActionStyle.default, handler: {
+            let saveAction = UIAlertAction(title: "Save", style: UIAlertAction.Style.default, handler: {
                 (action: UIAlertAction!) -> Void in
                 
                 let courseNameField = alertController.textFields![0] as UITextField
@@ -197,7 +197,7 @@ class MarksTableViewController: UITableViewController {
                 self.setEditing(false, animated: true)
             });
         
-            let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: {
+            let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel, handler: {
                 (action: UIAlertAction!) -> Void in
                 self.setEditing(false, animated: true)
                 // do nothing
@@ -327,13 +327,13 @@ class MarksTableViewController: UITableViewController {
             }
         }
         
-        cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
+        cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
         
         return cell
     }
     
     
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         print("GroupsTable: commit editingStyle -> Entry")
         if editingStyle == .delete {
             
@@ -425,7 +425,7 @@ class MarksTableViewController: UITableViewController {
             }
             
         } else if (segue.identifier == "AddItem") {
-            let courseDVC = segue.destination.childViewControllers[0] as! AddProjectViewController
+            let courseDVC = segue.destination.children[0] as! AddProjectViewController
             courseDVC.saveButton.isEnabled = false
             courseDVC.courseName = self.courseName
             

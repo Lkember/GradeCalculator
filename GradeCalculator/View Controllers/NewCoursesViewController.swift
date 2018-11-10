@@ -58,21 +58,21 @@ class NewCoursesViewController: UIViewController, UITextFieldDelegate, UIPickerV
         }
         
         // Adding listeners for when a text field changes
-        courseName.addTarget(self, action: #selector(NewCoursesViewController.textFieldDidChange(_:)), for: UIControlEvents.editingChanged)
-        gradeField.addTarget(self, action: #selector(NewCoursesViewController.textFieldDidChange(_:)), for: UIControlEvents.editingChanged)
-        gradeOutOfField.addTarget(self, action: #selector(NewCoursesViewController.textFieldDidChange(_:)), for: UIControlEvents.editingChanged)
+        courseName.addTarget(self, action: #selector(NewCoursesViewController.textFieldDidChange(_:)), for: UIControl.Event.editingChanged)
+        gradeField.addTarget(self, action: #selector(NewCoursesViewController.textFieldDidChange(_:)), for: UIControl.Event.editingChanged)
+        gradeOutOfField.addTarget(self, action: #selector(NewCoursesViewController.textFieldDidChange(_:)), for: UIControl.Event.editingChanged)
         saveButton.isEnabled = false
         
         // Adding listeners for when the keyboard shows or hides
-        NotificationCenter.default.addObserver(self, selector: #selector(NewCoursesViewController.keyboardToggle(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(NewCoursesViewController.keyboardToggle(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(NewCoursesViewController.keyboardToggle(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(NewCoursesViewController.keyboardToggle(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
         
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         // Remove observer for keyboard
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     override func didReceiveMemoryWarning() {
@@ -92,12 +92,12 @@ class NewCoursesViewController: UIViewController, UITextFieldDelegate, UIPickerV
     
     @IBAction func isComplete(_ sender: UISwitch) {
         if sender.isOn {
-            UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveEaseOut, animations: {
+            UIView.animate(withDuration: 0.3, delay: 0.0, options: UIView.AnimationOptions.curveEaseOut, animations: {
                 self.gradeView.alpha = 1.0
             }, completion: nil)
         }
         else {
-            UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.curveEaseOut, animations: {
+            UIView.animate(withDuration: 0.3, delay: 0.0, options: UIView.AnimationOptions.curveEaseOut, animations: {
                 self.gradeView.alpha = 0.0
             }, completion: nil)
         }
@@ -116,7 +116,7 @@ class NewCoursesViewController: UIViewController, UITextFieldDelegate, UIPickerV
     }
     
     // MARK: UITextFieldDelegate
-    func textFieldDidChange(_ textField: UITextField) {
+    @objc func textFieldDidChange(_ textField: UITextField) {
         let text = courseName.text ?? ""
         print("NewCourses: textFieldDidChange: Current text = \(text)")
         if text == "" {
@@ -181,16 +181,16 @@ class NewCoursesViewController: UIViewController, UITextFieldDelegate, UIPickerV
     
     // Returning white text
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-        return NSAttributedString(string: appDelegate.groups[row].groupName, attributes: [NSForegroundColorAttributeName : UIColor.white])
+        return NSAttributedString(string: appDelegate.groups[row].groupName, attributes: convertToOptionalNSAttributedStringKeyDictionary([convertFromNSAttributedStringKey(NSAttributedString.Key.foregroundColor) : UIColor.white]))
     }
     
     // MARK: - Listeners
-    func keyboardToggle(_ notification: Notification) {
+    @objc func keyboardToggle(_ notification: Notification) {
         self.scrollView.isScrollEnabled = true
         let userInfo = notification.userInfo!
         
-        let keyboardSize = (userInfo[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.size
-        let contentInsets : UIEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, keyboardSize!.height, 0.0)
+        let keyboardSize = (userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.size
+        let contentInsets : UIEdgeInsets = UIEdgeInsets.init(top: 0.0, left: 0.0, bottom: keyboardSize!.height, right: 0.0)
         
         self.scrollView.contentInset = contentInsets
         self.scrollView.scrollIndicatorInsets = contentInsets
@@ -212,4 +212,15 @@ class NewCoursesViewController: UIViewController, UITextFieldDelegate, UIPickerV
 //        textField.resignFirstResponder()
 //    }
     
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromNSAttributedStringKey(_ input: NSAttributedString.Key) -> String {
+	return input.rawValue
 }
