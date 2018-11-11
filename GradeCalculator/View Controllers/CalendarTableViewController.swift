@@ -65,6 +65,7 @@ class CalendarTableViewController: UITableViewController {
     
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     var upcomingProjectIndexes: UpcomingDates = UpcomingDates.init()
+    var selectedProject: CourseInfo? = nil
     
     // MARK: - View
     
@@ -169,13 +170,70 @@ class CalendarTableViewController: UITableViewController {
 
     
     // MARK: - Navigation
-
+    
+    @IBAction func unwindToProjectList(_ sender: UIStoryboardSegue) {
+        print("\(String(describing: self)): \(#function): Editing a row")
+        if let svc = sender.source as? AddProjectViewController {
+            if selectedProject != nil {
+                
+                let index = self.tableView.indexPathForSelectedRow
+                
+                // Update any data that is required to be set
+                selectedProject!.course.projects[selectedProject!.projectIndex] = svc.projectName
+                selectedProject!.course.projectWeights[selectedProject!.projectIndex] = svc.projectWeight
+                if (svc.hasDueDateSwitch.isOn) {
+                    selectedProject!.course.dueDate[selectedProject!.projectIndex] = svc.dueDatePicker.date
+                }
+                else {
+                    selectedProject!.course.dueDate[selectedProject!.projectIndex] = nil
+                }
+                
+                // If the project is complete
+                if svc.projectIsComplete.isOn {
+                    selectedProject!.course.projectMarks[selectedProject!.projectIndex] = svc.projectGrade
+                    selectedProject!.course.projectOutOf[selectedProject!.projectIndex] = svc.projectOutOf
+                }
+                else {
+                    selectedProject!.course.projectMarks[selectedProject!.projectIndex] = -1.0
+                    selectedProject!.course.projectOutOf[selectedProject!.projectIndex] = -1.0
+                }
+                
+                // Update tableView
+                if (index != nil) {
+                    tableView.reloadRows(at: [index!], with: .fade)
+                }
+                else {
+                    tableView.reloadData()
+                }
+                
+                appDelegate.groups[selectedProject!.groupIndex].courses[selectedProject!.courseIndex] = selectedProject!.course
+                appDelegate.save()
+            }
+        }
+        print("\(String(describing: self)): \(#function): Exit")
+    }
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         
-        
+        if (segue.identifier == "ViewDueProjectSegue") {
+            let destView = segue.destination as! AddProjectViewController
+            let index = self.tableView.indexPath(for: sender as! UITableViewCell)
+            
+            let currDate = upcomingProjectIndexes.sortedKeys[index!.section]
+            selectedProject = upcomingProjectIndexes.dates[currDate]![index!.row]
+            let course = appDelegate.groups[selectedProject!.groupIndex].courses[selectedProject!.courseIndex]
+            
+            destView.courseName = course.courseName
+            destView.projectName = course.projects[selectedProject!.projectIndex]
+            destView.projectWeight = course.projectWeights[selectedProject!.projectIndex]
+            destView.projectGrade = course.projectMarks[selectedProject!.projectIndex]
+            destView.projectOutOf = course.projectOutOf[selectedProject!.projectIndex]
+            destView.dueDateSelected = course.dueDate[selectedProject!.projectIndex]
+            destView.isDateSet = true
+        }
     }
  
 
