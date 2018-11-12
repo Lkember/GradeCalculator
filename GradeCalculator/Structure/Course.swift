@@ -74,6 +74,16 @@ class Course: NSObject, NSCoding {
     
     //MARK: Functions
     
+    func projectIsComplete(index: Int) -> Bool {
+        if (projects.count > index && index >= 0) {
+            if (projectMarks[index] != -1.0) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
     // Deletes a project at the given index
     func deleteAtRow(row: Int) {
         projects.remove(at: row)

@@ -8,6 +8,8 @@
 
 import UIKit
 
+// MARK: - Structures
+
 struct CourseInfo {
     var course : Course
     var groupIndex : Int
@@ -59,13 +61,19 @@ struct UpcomingDates {
 }
 
 
+// MARK: - Class
+
 class CalendarTableViewController: UITableViewController {
 
     // MARK: - Properties
     
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    var allProjects: UpcomingDates = UpcomingDates.init()
     var upcomingProjectIndexes: UpcomingDates = UpcomingDates.init()
     var selectedProject: CourseInfo? = nil
+    var selectedProjectCompletion: Bool = false
+    var showCompletedProjects: Bool = false
+    @IBOutlet weak var toggleCompletedProjectsButton: UIButton!
     
     // MARK: - View
     
@@ -76,6 +84,13 @@ class CalendarTableViewController: UITableViewController {
         self.navigationController?.navigationBar.barStyle = UIBarStyle.black
         
         getUpcomingDueDates()
+        
+        if (allProjects.sortedKeys.count == upcomingProjectIndexes.sortedKeys.count) {
+            toggleCompletedProjectsButton.isEnabled = false
+        }
+        else {
+            toggleCompletedProjectsButton.isEnabled = true
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -117,35 +132,83 @@ class CalendarTableViewController: UITableViewController {
                     if (project.dueDate[projectIndex] != nil) {
                         
                         let courseInfo = CourseInfo.init(course: project, g: groupIndex, c: courseIndex, p: projectIndex)
+                        allProjects.addDate(courseInfo: courseInfo, date: project.dueDate[projectIndex]!)
                         
-                        upcomingProjectIndexes.addDate(courseInfo: courseInfo, date: project.dueDate[projectIndex]!)
+                        // If the course is complete, add it to the upcoming projects
+                        if (!course[courseIndex].projectIsComplete(index: projectIndex)) {
+                            upcomingProjectIndexes.addDate(courseInfo: courseInfo, date: project.dueDate[projectIndex]!)
+                        }
                     }
                 }
             }
         }
         
         upcomingProjectIndexes.sortDates()
+        allProjects.sortDates()
+    }
+    
+    @IBAction func toggleCompletedProjects(_ sender: Any) {
+        if let button = sender as? UIButton {
+            if (showCompletedProjects) {
+                button.setTitle("Show Completed Projects", for: .normal)
+                showCompletedProjects = false
+            }
+            else {
+                button.setTitle("Hide Completed Projects", for: .normal)
+                showCompletedProjects = true
+            }
+            
+            tableView.reloadData()
+        }
     }
     
     // MARK: - Table view data source
 
     // Gets the number of sections in the table
     override func numberOfSections(in tableView: UITableView) -> Int {
+        if (allProjects.sortedKeys.count > upcomingProjectIndexes.sortedKeys.count) {
+            if (showCompletedProjects) {
+                return allProjects.sortedKeys.count
+            }
+        }
+        
         return upcomingProjectIndexes.sortedKeys.count
     }
     
     // Gets the number of cells in a given section
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if (allProjects.sortedKeys.count > upcomingProjectIndexes.sortedKeys.count) {
+            if (showCompletedProjects) {
+                let dates = allProjects.sortedKeys
+                return allProjects.dates[dates[section]]!.count
+            }
+        }
+        
         let dates = upcomingProjectIndexes.sortedKeys
         return upcomingProjectIndexes.dates[dates[section]]!.count
     }
     
     // Gets the cell for the current row
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "UpcomingProjectCell", for: indexPath)
-        
         let section = indexPath.section
         let row = indexPath.row
+        let cell = tableView.dequeueReusableCell(withIdentifier: "UpcomingProjectCell", for: indexPath)
+        
+        if (allProjects.sortedKeys.count > upcomingProjectIndexes.sortedKeys.count) {
+            if (showCompletedProjects) {
+                let currDate = allProjects.sortedKeys[section]
+                let currCourse = allProjects.dates[currDate]![row]
+                
+                let courseName = currCourse.course.courseName
+                let projectName = currCourse.course.projects[currCourse.projectIndex]
+                
+                cell.textLabel!.text = "\(courseName) - \(projectName)"
+                cell.detailTextLabel!.text = "Weight : \(currCourse.course.projectWeights[currCourse.projectIndex])%"
+                
+                // TODO: Set cell transparency to show the project is complete
+                return cell
+            }
+        }
         
         let currDate = upcomingProjectIndexes.sortedKeys[section]
         let currCourse = upcomingProjectIndexes.dates[currDate]![row]
@@ -155,7 +218,7 @@ class CalendarTableViewController: UITableViewController {
         
         cell.textLabel!.text = "\(courseName) - \(projectName)"
         cell.detailTextLabel!.text = "Weight : \(currCourse.course.projectWeights[currCourse.projectIndex])%"
-
+        
         return cell
     }
     
@@ -164,6 +227,12 @@ class CalendarTableViewController: UITableViewController {
         let date = DateFormatter()
         date.dateStyle = .full
         date.timeStyle = .none
+        
+        if (allProjects.sortedKeys.count > upcomingProjectIndexes.sortedKeys.count) {
+            if (showCompletedProjects) {
+                return date.string(from: allProjects.sortedKeys[section])
+            }
+        }
         
         return date.string(from: upcomingProjectIndexes.sortedKeys[section])
     }
@@ -220,12 +289,18 @@ class CalendarTableViewController: UITableViewController {
         
         if (segue.identifier == "ViewDueProjectSegue") {
             let destView = segue.destination as! AddProjectViewController
-            let index = self.tableView.indexPath(for: sender as! UITableViewCell)
+            var index = self.tableView.indexPath(for: sender as! UITableViewCell)
+            var currDate = upcomingProjectIndexes.sortedKeys[index!.section]
             
-            let currDate = upcomingProjectIndexes.sortedKeys[index!.section]
-            selectedProject = upcomingProjectIndexes.dates[currDate]![index!.row]
+            if (allProjects.sortedKeys.count > upcomingProjectIndexes.sortedKeys.count && showCompletedProjects) {
+                currDate = allProjects.sortedKeys[index!.section]
+                selectedProject = allProjects.dates[currDate]![index!.row]
+            }
+            else {
+                selectedProject = upcomingProjectIndexes.dates[currDate]![index!.row]
+            }
+            
             let course = appDelegate.groups[selectedProject!.groupIndex].courses[selectedProject!.courseIndex]
-            
             destView.courseName = course.courseName
             destView.projectName = course.projects[selectedProject!.projectIndex]
             destView.projectWeight = course.projectWeights[selectedProject!.projectIndex]
@@ -235,6 +310,4 @@ class CalendarTableViewController: UITableViewController {
             destView.isDateSet = true
         }
     }
- 
-
 }
