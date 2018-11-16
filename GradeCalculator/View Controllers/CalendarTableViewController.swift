@@ -51,6 +51,11 @@ struct UpcomingDates {
         }
     }
     
+    mutating func resetObject() {
+        sortedKeys = []
+        dates = [:]
+    }
+    
     mutating func sortDates() {
         
         // Sort the keys by their dates
@@ -79,7 +84,28 @@ class CalendarTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        let views = self.navigationController!.viewControllers
         
+        if (!views.contains(self) && !(views[views.count-1] is GroupsTableViewController)) {
+            // If the current view is being removed
+            self.navigationController?.setNavigationBarHidden(true, animated: true)
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        displayData()
+        tableView.reloadData()
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    func displayData() {
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         self.navigationController?.navigationBar.barStyle = UIBarStyle.black
         
@@ -93,27 +119,14 @@ class CalendarTableViewController: UITableViewController {
         }
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        let views = self.navigationController!.viewControllers
-        
-        if (views.count > 2 && views[views.count-2] == self.navigationController) {
-            // Nothing to do
-        }
-        else if (!views.contains(self) && !(views[views.count-1] is GroupsTableViewController)) {
-            // If the current view is being removed
-            self.navigationController?.setNavigationBarHidden(true, animated: true)
-        }
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     // MARK: - Calendar
     
     // Gets all the upcoming due dates and sorts them
     func getUpcomingDueDates() {
+        
+        // Need to reset the objects, otherwise dates will continue to be added on every reload
+        upcomingProjectIndexes.resetObject()
+        allProjects.resetObject()
         
         // Loop through the groups
         let groups = appDelegate.groups
@@ -192,7 +205,6 @@ class CalendarTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let section = indexPath.section
         let row = indexPath.row
-        let cell = tableView.dequeueReusableCell(withIdentifier: "UpcomingProjectCell", for: indexPath)
         
         if (allProjects.sortedKeys.count > upcomingProjectIndexes.sortedKeys.count) {
             if (showCompletedProjects) {
@@ -202,17 +214,29 @@ class CalendarTableViewController: UITableViewController {
                 let courseName = currCourse.course.courseName
                 let projectName = currCourse.course.projects[currCourse.projectIndex]
                 
-                cell.textLabel!.text = "\(courseName) - \(projectName)"
-                cell.detailTextLabel!.text = "Weight : \(currCourse.course.projectWeights[currCourse.projectIndex])%"
-                
-                // TODO: Set cell transparency to show the project is complete
-                return cell
+                if (currCourse.course.projectIsComplete(index: currCourse.projectIndex)) {
+                    let cell = tableView.dequeueReusableCell(withIdentifier: "CompletedProjectCell") as! CompletedProjectTableViewCell
+                    
+                    let mark = currCourse.course.projectMarks[currCourse.projectIndex] / currCourse.course.projectOutOf[currCourse.projectIndex]
+                    let weight = currCourse.course.projectWeights[currCourse.projectIndex]
+                    cell.updateCell(projectName: "\(courseName): \(projectName)", mark: mark, weight: weight)
+                    cell.setDisabled()
+                    
+                    return cell
+                }
+                else {
+                    let cell = tableView.dequeueReusableCell(withIdentifier: "UpcomingProjectCell", for: indexPath)
+                    cell.textLabel!.text = "\(courseName) - \(projectName)"
+                    cell.detailTextLabel!.text = "Weight : \(currCourse.course.projectWeights[currCourse.projectIndex])%"
+                    
+                    return cell
+                }
             }
         }
         
+        let cell = tableView.dequeueReusableCell(withIdentifier: "UpcomingProjectCell", for: indexPath)
         let currDate = upcomingProjectIndexes.sortedKeys[section]
         let currCourse = upcomingProjectIndexes.dates[currDate]![row]
-        
         let courseName = currCourse.course.courseName
         let projectName = currCourse.course.projects[currCourse.projectIndex]
         
@@ -287,16 +311,18 @@ class CalendarTableViewController: UITableViewController {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         
-        if (segue.identifier == "ViewDueProjectSegue") {
+        if (segue.identifier == "ViewDueProjectSegue" || segue.identifier == "ViewCompletedProjectSegue") {
+            
             let destView = segue.destination as! AddProjectViewController
             var index = self.tableView.indexPath(for: sender as! UITableViewCell)
-            var currDate = upcomingProjectIndexes.sortedKeys[index!.section]
+            var currDate: Date
             
             if (allProjects.sortedKeys.count > upcomingProjectIndexes.sortedKeys.count && showCompletedProjects) {
                 currDate = allProjects.sortedKeys[index!.section]
                 selectedProject = allProjects.dates[currDate]![index!.row]
             }
             else {
+                currDate = upcomingProjectIndexes.sortedKeys[index!.section]
                 selectedProject = upcomingProjectIndexes.dates[currDate]![index!.row]
             }
             

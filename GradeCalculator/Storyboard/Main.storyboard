@@ -547,11 +547,11 @@
                         <viewControllerLayoutGuide type="bottom" id="t5i-0t-Sbc"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="fc8-XJ-l9q">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="724"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <scrollView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="250" alwaysBounceVertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zAj-Q2-JUW">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="778"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="690"/>
                                 <subviews>
                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vib-sA-Kpt">
                                         <rect key="frame" x="310" y="147.33333333333334" width="51" height="31"/>
@@ -593,12 +593,12 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter project weight..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Eot-qH-RlZ">
-                                        <rect key="frame" x="8" y="101.33333333333333" width="340" height="29.999999999999986"/>
+                                        <rect key="frame" x="8" y="101.33333333333334" width="340" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="words" keyboardType="decimalPad" keyboardAppearance="alert"/>
                                     </textField>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aeI-DW-del">
-                                        <rect key="frame" x="0.0" y="186.33333333333334" width="375" height="73.000000000000028"/>
+                                        <rect key="frame" x="0.0" y="186.33333333333331" width="375" height="73"/>
                                         <subviews>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="100" borderStyle="roundedRect" placeholder="Out of" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XVI-cu-Jda">
                                                 <rect key="frame" x="231.66666666666663" y="35" width="136.33333333333337" height="30"/>
@@ -647,7 +647,7 @@
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KSr-OT-QYs">
-                                        <rect key="frame" x="353" y="106.33333333333333" width="14" height="21"/>
+                                        <rect key="frame" x="353" y="106.33333333333334" width="14" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -661,7 +661,7 @@
                                         </connections>
                                     </switch>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z0c-Fv-oWY">
-                                        <rect key="frame" x="8" y="507.33333333333326" width="359" height="30"/>
+                                        <rect key="frame" x="8" y="507.33333333333337" width="359" height="30"/>
                                         <color key="backgroundColor" red="0.79255557832322587" green="0.17111827622224646" blue="0.13417825345803286" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="G9l-NT-pIu"/>
@@ -1334,8 +1334,8 @@
         <scene sceneID="h5M-yh-wJa">
             <objects>
                 <tableViewController id="hrg-vd-f8Z" customClass="CalendarTableViewController" customModule="GradeCalculator" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="60" sectionHeaderHeight="28" sectionFooterHeight="28" id="Xuk-nG-oOH">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="78" sectionHeaderHeight="28" sectionFooterHeight="28" id="Xuk-nG-oOH">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="724"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.0" green="0.5447398671" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="9NZ-fE-iQ7">
@@ -1395,6 +1395,55 @@
                                     <segue destination="RKN-Dz-eSo" kind="show" identifier="ViewDueProjectSegue" id="EXQ-cG-bFX"/>
                                 </connections>
                             </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CompletedProjectCell" rowHeight="78" id="cDc-CA-Ydt" customClass="CompletedProjectTableViewCell" customModule="GradeCalculator" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="192" width="375" height="78"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cDc-CA-Ydt" id="s6K-oX-eSJ">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="78"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Project Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fee-pc-aOY">
+                                            <rect key="frame" x="16" y="11" width="343" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mark: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kbQ-g6-JVc">
+                                            <rect key="frame" x="16" y="34" width="343" height="17"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weight:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8BI-0A-0Gj">
+                                            <rect key="frame" x="16" y="53" width="343" height="17"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="kbQ-g6-JVc" firstAttribute="trailing" secondItem="s6K-oX-eSJ" secondAttribute="trailingMargin" id="3Ce-jM-nQj"/>
+                                        <constraint firstItem="kbQ-g6-JVc" firstAttribute="top" secondItem="Fee-pc-aOY" secondAttribute="bottom" constant="2" id="F7H-WL-wkX"/>
+                                        <constraint firstItem="Fee-pc-aOY" firstAttribute="top" secondItem="s6K-oX-eSJ" secondAttribute="topMargin" id="Su2-aj-ZPN"/>
+                                        <constraint firstItem="Fee-pc-aOY" firstAttribute="trailing" secondItem="s6K-oX-eSJ" secondAttribute="trailingMargin" id="YiJ-kU-RMW"/>
+                                        <constraint firstItem="8BI-0A-0Gj" firstAttribute="trailing" secondItem="s6K-oX-eSJ" secondAttribute="trailingMargin" id="aJ3-R3-cwA"/>
+                                        <constraint firstAttribute="bottom" secondItem="8BI-0A-0Gj" secondAttribute="bottom" constant="8" id="bbA-nN-4S4"/>
+                                        <constraint firstItem="kbQ-g6-JVc" firstAttribute="leading" secondItem="s6K-oX-eSJ" secondAttribute="leadingMargin" id="bd1-4T-dZQ"/>
+                                        <constraint firstItem="8BI-0A-0Gj" firstAttribute="leading" secondItem="s6K-oX-eSJ" secondAttribute="leadingMargin" id="eHr-G3-WNa"/>
+                                        <constraint firstItem="Fee-pc-aOY" firstAttribute="leading" secondItem="s6K-oX-eSJ" secondAttribute="leadingMargin" id="f4g-5b-mIy"/>
+                                        <constraint firstItem="kbQ-g6-JVc" firstAttribute="top" secondItem="Fee-pc-aOY" secondAttribute="bottom" constant="2" id="fbY-a2-gFh"/>
+                                        <constraint firstItem="8BI-0A-0Gj" firstAttribute="top" secondItem="kbQ-g6-JVc" secondAttribute="bottom" constant="2" id="qMG-mV-PI4"/>
+                                        <constraint firstItem="8BI-0A-0Gj" firstAttribute="top" secondItem="kbQ-g6-JVc" secondAttribute="bottom" constant="2" id="vIK-EC-U4L"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <color key="backgroundColor" red="0.0" green="0.5447398671" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <outlet property="projectMarkLabel" destination="kbQ-g6-JVc" id="LCj-0b-ORk"/>
+                                    <outlet property="projectNameLabel" destination="Fee-pc-aOY" id="ehk-ip-Isk"/>
+                                    <outlet property="projectWeightLabel" destination="8BI-0A-0Gj" id="rM1-EV-sk2"/>
+                                    <segue destination="RKN-Dz-eSo" kind="show" identifier="ViewCompletedProjectSegue" id="981-4H-2lc"/>
+                                </connections>
+                            </tableViewCell>
                         </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="hrg-vd-f8Z" id="H4C-g1-4lw"/>
@@ -1436,9 +1485,9 @@
         <image name="calendar" width="46.080001831054688" height="46.080001831054688"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="th6-ri-m98"/>
+        <segue reference="R1T-uM-ML6"/>
         <segue reference="kKh-ej-HbN"/>
-        <segue reference="EXQ-cG-bFX"/>
+        <segue reference="981-4H-2lc"/>
         <segue reference="XHZ-Lz-icb"/>
         <segue reference="7L4-Ww-jje"/>
     </inferredMetricsTieBreakers>
