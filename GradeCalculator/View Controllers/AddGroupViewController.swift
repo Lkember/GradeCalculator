@@ -116,6 +116,10 @@ class AddGroupViewController: UIViewController, UITableViewDelegate, UITableView
         
         cell.textLabel?.text = appDelegate.groups[getIndexForGroup(withName: "Ungrouped Courses")].courses[indexPath.row].courseName
         
+        let view = UIView()
+        view.backgroundColor = UIColor.init(red: 0, green: 139/255, blue: 1, alpha: 1)
+        cell.selectedBackgroundView = view
+        
         return cell
     }
     

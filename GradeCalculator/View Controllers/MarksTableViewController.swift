@@ -329,6 +329,10 @@ class MarksTableViewController: UITableViewController {
         
         cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
         
+        let view = UIView()
+        view.backgroundColor = UIColor.init(red: 0, green: 139/255, blue: 1, alpha: 1)
+        cell.selectedBackgroundView = view
+        
         return cell
     }
     

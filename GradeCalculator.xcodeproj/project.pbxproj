@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B21A84231D9D5721004C33ED /* StartUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B21A84221D9D5721004C33ED /* StartUpViewController.swift */; };
+		B2383DB4219DBE6F00A30815 /* CompletedProjectTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2383DB3219DBE6F00A30815 /* CompletedProjectTableViewCell.swift */; };
 		B24468F01DA7F60B0011C4CC /* GroupsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B24468EF1DA7F60B0011C4CC /* GroupsTableViewController.swift */; };
 		B24468F41DAFFA530011C4CC /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = B24468F31DAFFA530011C4CC /* Group.swift */; };
 		B26FBB561D54D2360024DB9B /* MarksViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FBB551D54D2360024DB9B /* MarksViewCell.swift */; };
@@ -47,6 +48,7 @@
 
 /* Begin PBXFileReference section */
 		B21A84221D9D5721004C33ED /* StartUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartUpViewController.swift; sourceTree = "<group>"; };
+		B2383DB3219DBE6F00A30815 /* CompletedProjectTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CompletedProjectTableViewCell.swift; path = "GradeCalculator/View Cells/CompletedProjectTableViewCell.swift"; sourceTree = SOURCE_ROOT; };
 		B24468EF1DA7F60B0011C4CC /* GroupsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupsTableViewController.swift; sourceTree = "<group>"; };
 		B24468F31DAFFA530011C4CC /* Group.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
 		B26FBB551D54D2360024DB9B /* MarksViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarksViewCell.swift; sourceTree = "<group>"; };
@@ -168,6 +170,7 @@
 		B2E70E9E1F9EEE85005E5D23 /* View Cells */ = {
 			isa = PBXGroup;
 			children = (
+				B2383DB3219DBE6F00A30815 /* CompletedProjectTableViewCell.swift */,
 				B274AEC01D46A9ED00E732FD /* CourseTableViewCell.swift */,
 				B26FBB551D54D2360024DB9B /* MarksViewCell.swift */,
 			);
@@ -339,6 +342,7 @@
 				B28FBA641DC04BA7004CEA67 /* PopUpViewController.swift in Sources */,
 				B21A84231D9D5721004C33ED /* StartUpViewController.swift in Sources */,
 				B26FBB561D54D2360024DB9B /* MarksViewCell.swift in Sources */,
+				B2383DB4219DBE6F00A30815 /* CompletedProjectTableViewCell.swift in Sources */,
 				B28A7E0F1D5A55C800C2ADEB /* MarksTableViewController.swift in Sources */,
 				B274AEC11D46A9ED00E732FD /* CourseTableViewCell.swift in Sources */,
 				B274AE911D46A5B100E732FD /* AppDelegate.swift in Sources */,

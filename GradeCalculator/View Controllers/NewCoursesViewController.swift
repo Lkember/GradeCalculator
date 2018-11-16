@@ -46,6 +46,7 @@ class NewCoursesViewController: UIViewController, UITextFieldDelegate, UIPickerV
         self.groupSelection.layer.cornerRadius = 10
         self.groupSelection.layer.borderWidth = 1
         self.groupSelection.layer.borderColor = UIColor.white.cgColor
+        self.groupSelection.setValue(UIColor.white, forKeyPath: "textColor")
         
         self.courseIsComplete.isOn = false
         self.isComplete(courseIsComplete)
@@ -67,6 +68,7 @@ class NewCoursesViewController: UIViewController, UITextFieldDelegate, UIPickerV
         NotificationCenter.default.addObserver(self, selector: #selector(NewCoursesViewController.keyboardToggle(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(NewCoursesViewController.keyboardToggle(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
         
+        self.scrollView.indicatorStyle = .white
     }
     
     override func viewWillDisappear(_ animated: Bool) {

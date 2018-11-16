@@ -55,7 +55,7 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
         tableView.reloadData()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         print("StartUpView: viewDidAppear: reloading courses.")
         
         self.navigationController?.setNavigationBarHidden(true, animated: true)
@@ -410,7 +410,12 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
             else {
                 cell?.detailTextLabel?.text = "\(groupAverage)%"
             }
+            
+            let view = UIView()
+            view.backgroundColor = UIColor.init(red: 0, green: 139/255, blue: 1, alpha: 1)
+            cell?.selectedBackgroundView = view
         }
+        
         return cell!
     }
     

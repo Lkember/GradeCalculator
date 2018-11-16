@@ -29,13 +29,13 @@ class PopUpViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         self.navigationController?.setNavigationBarHidden(true, animated: true)
         
         self.groupSelector.selectRow(index, inComponent: 0, animated: false)
+        self.groupSelector.setValue(UIColor.white, forKeyPath: "textColor")
         
         self.popUpView.layer.cornerRadius = 10
         self.popUpView.layer.borderColor = UIColor.white.cgColor
         self.popUpView.layer.borderWidth = 2
         
         self.animate()
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {

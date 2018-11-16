@@ -60,6 +60,10 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
         gradeField.addTarget(self, action: #selector(AddProjectViewController.textFieldDidChange(_textField:)), for: UIControl.Event.editingChanged)
         gradeOutOfField.addTarget(self, action: #selector(AddProjectViewController.textFieldDidChange(_textField:)), for: UIControl.Event.editingChanged)
         
+        // Used since there is a black background
+        self.scrollView.indicatorStyle = .white
+        dueDatePicker.setValue(UIColor.white, forKeyPath: "textColor")
+        
         print("\(type(of: self)) > viewDidLoad > Exit")
         
     }

@@ -222,12 +222,20 @@ class CalendarTableViewController: UITableViewController {
                     cell.updateCell(projectName: "\(courseName): \(projectName)", mark: mark, weight: weight)
                     cell.setDisabled()
                     
+                    let view = UIView()
+                    view.backgroundColor = UIColor.init(red: 0, green: 139/255, blue: 1, alpha: 1)
+                    cell.selectedBackgroundView = view
+                    
                     return cell
                 }
                 else {
                     let cell = tableView.dequeueReusableCell(withIdentifier: "UpcomingProjectCell", for: indexPath)
                     cell.textLabel!.text = "\(courseName) - \(projectName)"
                     cell.detailTextLabel!.text = "Weight : \(currCourse.course.projectWeights[currCourse.projectIndex])%"
+                    
+                    let view = UIView()
+                    view.backgroundColor = UIColor.init(red: 0, green: 139/255, blue: 1, alpha: 1)
+                    cell.selectedBackgroundView = view
                     
                     return cell
                 }
@@ -242,6 +250,10 @@ class CalendarTableViewController: UITableViewController {
         
         cell.textLabel!.text = "\(courseName) - \(projectName)"
         cell.detailTextLabel!.text = "Weight : \(currCourse.course.projectWeights[currCourse.projectIndex])%"
+        
+        let view = UIView()
+        view.backgroundColor = UIColor.init(red: 0, green: 139/255, blue: 1, alpha: 1)
+        cell.selectedBackgroundView = view
         
         return cell
     }
