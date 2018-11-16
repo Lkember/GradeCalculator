@@ -78,7 +78,7 @@ class CalendarTableViewController: UITableViewController {
     var selectedProject: CourseInfo? = nil
     var selectedProjectCompletion: Bool = false
     var showCompletedProjects: Bool = false
-    @IBOutlet weak var toggleCompletedProjectsButton: UIButton!
+    @IBOutlet weak var toggleCompletedProjectsButton: UIBarButtonItem!
     
     // MARK: - View
     
@@ -112,10 +112,12 @@ class CalendarTableViewController: UITableViewController {
         getUpcomingDueDates()
         
         if (allProjects.sortedKeys.count == upcomingProjectIndexes.sortedKeys.count) {
+            self.navigationController?.setToolbarHidden(true, animated: true)
             toggleCompletedProjectsButton.isEnabled = false
         }
         else {
             toggleCompletedProjectsButton.isEnabled = true
+            self.navigationController?.setToolbarHidden(false, animated: true)
         }
     }
     
@@ -161,13 +163,13 @@ class CalendarTableViewController: UITableViewController {
     }
     
     @IBAction func toggleCompletedProjects(_ sender: Any) {
-        if let button = sender as? UIButton {
+        if let button = sender as? UIBarButtonItem {
             if (showCompletedProjects) {
-                button.setTitle("Show Completed Projects", for: .normal)
+                button.title = "Show Completed Projects"
                 showCompletedProjects = false
             }
             else {
-                button.setTitle("Hide Completed Projects", for: .normal)
+                button.title = "Hide Completed Projects"
                 showCompletedProjects = true
             }
             
