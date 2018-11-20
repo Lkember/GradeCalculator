@@ -97,22 +97,21 @@ class MarksTableViewController: UITableViewController {
                 let i = selectedIndexPath.row
                 
                 if svc.projectIsComplete.isOn {
-                
-                    print("MarksTable: undwindToProjectList: projectName: \(svc.projectName), grade: \(svc.projectGrade), out of: \(svc.projectOutOf), weight: \(svc.projectWeight), date: \(String(describing: date))")
-                    course!.projects[i] = svc.projectName
-                    course!.projectMarks[i] = svc.projectGrade
-                    course!.projectWeights[i] = svc.projectWeight
-                    course!.projectOutOf[i] = svc.projectOutOf
-                    course!.dueDate[i] = date
+                    course!.setProjectName(index: i, value: svc.project.name)
+                    course!.setProjectMark(index: i, value: svc.project.mark)
+                    course!.setProjectWeight(index: i, value: svc.project.weight)
+                    course!.setProjectOutOf(index: i, value: svc.project.outOf)
+                    course!.setProjectDueDate(index: i, value: date)
+                    
                     tableView.reloadRows(at: [selectedIndexPath], with: .fade)
                 }
                 else {
-                    print("MarksTable: undwindToProjectList: projectName: \(svc.projectName), grade: -1.0, out of: -1.0, weight: \(svc.projectWeight), date: \(String(describing: date))")
-                    course!.projects[i] = svc.projectName
-                    course!.projectMarks[i] = -1.0
-                    course!.projectWeights[i] = svc.projectWeight
-                    course!.projectOutOf[i] = -1.0
-                    course!.dueDate[i] = date
+                    course!.setProjectName(index: i, value: svc.project.name)
+                    course!.setProjectMark(index: i, value: -1.0)
+                    course!.setProjectWeight(index: i, value: svc.project.weight)
+                    course!.setProjectOutOf(index: i, value: -1.0)
+                    course!.setProjectDueDate(index: i, value: date)
+                    
                     tableView.reloadRows(at: [selectedIndexPath], with: .fade)
                 }
                 
@@ -122,13 +121,11 @@ class MarksTableViewController: UITableViewController {
                 print("MarksTable: undwindToProjectList: Adding a new row")
                 let newIndexPath = IndexPath(row: course!.projects.count, section: 0)
                 
-                if svc.projectGrade == -1.0 {
-                    print("MarksTable: unwindToProjectList: Adding project \(svc.projectName), grade: -1.0, outOf: -1.0, weight: \(svc.projectWeight), date: \(String(describing: date))")
-                    course?.addProject(svc.projectName, grade: -1.0, outOf: -1.0, weight: svc.projectWeight, newDueDate: date)
+                if svc.project.mark == -1.0 {
+                    course?.addProject(svc.project.name, grade: -1.0, outOf: -1.0, weight: svc.project.weight, newDueDate: date)
                 }
                 else {
-                    print("MarksTable: undwindToProjectList: Adding project \(svc.projectName), grade \(svc.projectGrade), outOf \(svc.projectOutOf), weight \(svc.projectWeight), date: \(String(describing: date))")
-                    course?.addProject(svc.projectName, grade: svc.projectGrade, outOf: svc.projectOutOf, weight: svc.projectWeight, newDueDate: date)
+                    course?.addProject(svc.project.name, grade: svc.project.mark, outOf: svc.project.outOf, weight: svc.project.weight, newDueDate: date)
                 }
                 
                 tableView.insertRows(at: [newIndexPath], with: .bottom)
@@ -148,8 +145,6 @@ class MarksTableViewController: UITableViewController {
         if let selectedIndexPath = tableView.indexPathForSelectedRow {
             print("MarksTable: deleteFromProjectList: deleting \(course!.projects[(selectedIndexPath as NSIndexPath).row])")
             course!.projects.remove(at: (selectedIndexPath as NSIndexPath).row)
-            course!.projectWeights.remove(at: (selectedIndexPath as NSIndexPath).row)
-            course!.projectMarks.remove(at: (selectedIndexPath as NSIndexPath).row)
         }
         tableView.reloadData()
         updateLabels()
@@ -245,8 +240,8 @@ class MarksTableViewController: UITableViewController {
     
     func updateLabels() {
         print("MarksTable: updateLabels: Updating Labels")
-        let average = (round(10*course!.getAverage()*100)/10)
-        if (average != -100.0) {
+        let average = (course!.getAverage())
+        if (average != -1.0) {
             averageLabel.text = "\(average)%"
         }
         else {
@@ -272,7 +267,7 @@ class MarksTableViewController: UITableViewController {
                 }
             else {
                 let potential = course?.getPotentialMark()
-                potentialMark.text = "\((round(10*potential!*100)/10))%"
+                potentialMark.text = "\(potential!)%"
                 potentialMark.isHidden = false
                 staticPotentialMark.isHidden = false
             }
@@ -307,17 +302,17 @@ class MarksTableViewController: UITableViewController {
         
         if (course?.projects.count != 0) {
             
-            cell.projectNameLabel.text = course?.projects[(indexPath as NSIndexPath).row]
+            cell.projectNameLabel.text = course?.projects[(indexPath as NSIndexPath).row].name
             
-            if (course!.projectMarks[(indexPath as NSIndexPath).row] != -1.0) {
-                let mark = course!.projectMarks[(indexPath as NSIndexPath).row]/course!.projectOutOf[(indexPath as NSIndexPath).row]
-                cell.markLabel.text = "\(round(10*(mark)*100)/10)%"
+            if (course!.getProjectMark(index: indexPath.row) != -1.0) {
+                let mark = course!.getProjectMark(index: indexPath.row)
+                cell.markLabel.text = "\(mark)%"
             }
             else {
                 cell.markLabel.text = "N/A"
             }
             
-            cell.weightLabel.text = "\(round(10*course!.projectWeights[(indexPath as NSIndexPath).row])*100/1000)%"
+            cell.weightLabel.text = "\(course!.getProjectWeight(index: indexPath.row))%"
             
             if (cell.markLabel.isHidden) {
                 cell.markLabel.isHidden = false
@@ -358,39 +353,25 @@ class MarksTableViewController: UITableViewController {
     
     //Allow the rearranging of cells
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        print("MarksTable: tableView moveRowAt -> Entry: \nprojects = \(String(describing: course?.projects.count))\nprojectMarks = \(String(describing: course?.projectMarks.count))\nprojectOutOf = \(String(describing: course?.projectOutOf.count))\nprojectWeight = \(String(describing: course?.projectWeights.count))")
+        print("MarksTable: tableView moveRowAt -> Entry: \nprojects = \(String(describing: course?.projects.count))")
         var index = sourceIndexPath.row
-        let tempProject = course?.projects[index]
-        let tempProjectMark = course?.projectMarks[index]
-        let tempProjectOutOf = course?.projectOutOf[index]
-        let tempProjectWeight = course?.projectWeights[index]
-        
+        let tempProject = course!.projects[index]
         
         if sourceIndexPath.row < destinationIndexPath.row {
             while (index < destinationIndexPath.row) {
                 course!.projects[index] = course!.projects[index+1]
-                course!.projectMarks[index] = course!.projectMarks[index+1]
-                course!.projectOutOf[index] = course!.projectOutOf[index+1]
-                course!.projectWeights[index] = course!.projectWeights[index+1]
                 index += 1
             }
         }
         else {
             while (index > destinationIndexPath.row) {
                 course!.projects[index] = course!.projects[index-1]
-                course!.projectMarks[index] = course!.projectMarks[index-1]
-                course!.projectOutOf[index] = course!.projectOutOf[index-1]
-                course!.projectWeights[index] = course!.projectWeights[index-1]
                 index -= 1
             }
         }
         
-        course!.projects[destinationIndexPath.row] = tempProject!
-        course!.projectMarks[destinationIndexPath.row] = tempProjectMark!
-        course!.projectOutOf[destinationIndexPath.row] = tempProjectOutOf!
-        course!.projectWeights[destinationIndexPath.row] = tempProjectWeight!
+        course!.projects[destinationIndexPath.row] = tempProject
         
-        print("index=\(index), courseIndex=\(courseIndex)")
         appDelegate.groups[self.groupIndex].courses[courseIndex] = course!
         updateLabels()
         appDelegate.save()
@@ -414,18 +395,7 @@ class MarksTableViewController: UITableViewController {
                 let indexPath = tableView.indexPath(for: selectedCell)!
                 let selectedProject = course?.projects[(indexPath as NSIndexPath).row]
                 
-                courseDVC.projectName = selectedProject!
-                courseDVC.projectWeight = (course?.projectWeights[(indexPath as NSIndexPath).row])!
-                courseDVC.projectGrade = (course?.projectMarks[(indexPath as NSIndexPath).row])!
-                courseDVC.projectOutOf = (course?.projectOutOf[(indexPath as NSIndexPath).row])!
-                
-                if let projDueDate = course?.dueDate[(indexPath as NSIndexPath).row] {
-                    courseDVC.isDateSet = true
-                    courseDVC.dueDateSelected = projDueDate
-                }
-                else {
-                    courseDVC.isDateSet = false
-                }
+                courseDVC.project = selectedProject!
             }
             
         } else if (segue.identifier == "AddItem") {

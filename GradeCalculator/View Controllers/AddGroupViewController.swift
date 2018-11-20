@@ -173,14 +173,5 @@ class AddGroupViewController: UIViewController, UITableViewDelegate, UITableView
 //        print("AddGroup: prepare: Preparing for Segue")
 //        save()
 //    }
-
-    
-    // MARK: - NSCoding
-//    func save() {
-//        print("AddGroupView: save: Saving courses and groups.")
-//        if (!NSKeyedArchiver.archiveRootObject(self.groups, toFile: Group.ArchiveURL.path)) {
-//            print("AddGroupView: save: Failed to save courses and groups.")
-//        }
-//    }
     
 }

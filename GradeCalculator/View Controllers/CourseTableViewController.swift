@@ -284,7 +284,7 @@ class CourseTableViewController: UITableViewController {
         print("CourseTable: updateLabels: updating labels. Average = \(average), # courses = \(num)")
         
         if (average != -1.0) {
-            overallAverage.text = "\(round(10*average*100)/10)%"
+            overallAverage.text = "\(average)%"
         }
         else {
             overallAverage.text = "N/A"
@@ -500,9 +500,10 @@ class CourseTableViewController: UITableViewController {
         }
         
         cell.courseName.text = course.courseName
-            
-        if course.getAverage() != -1.0 {
-            cell.courseDescription.text = "Mark: \(round(10*course.getAverage()*100)/10)%"
+        
+        let average = course.getAverage()
+        if average != -1.0 {
+            cell.courseDescription.text = "Mark: \(average)%"
         }
         else {
             cell.courseDescription.text = "Incomplete"

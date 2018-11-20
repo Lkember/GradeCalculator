@@ -29,14 +29,9 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var gradeViewTopConstraint: NSLayoutConstraint!
     
     var activeField: UITextField?
-    var projectName = ""
-    var projectWeight = -1.0
-    var projectGrade = -1.0
-    var projectOutOf = -1.0
+    var project: Project = Project.init()
     var editorMode = false
     var courseName = ""
-    var isDateSet = false
-    var dueDateSelected: Date? = nil
     
     // MARK: - Views
     
@@ -80,17 +75,17 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
             self.title = courseName
         }
         
-        if (self.projectWeight != -1.0 || self.projectName != "") {
+        if (self.project.weight != -1.0 || self.project.name != "") {
             editorMode = true
             
-            print("AddProject: Updating projectName \(projectName), grade: \(projectGrade), outOf: \(projectOutOf) weight: \(projectWeight)")
+            print("AddProject: Updating projectName \(project.name), grade: \(project.mark), outOf: \(project.outOf) weight: \(project.weight)")
             
-            self.projectNameField?.text = "\(self.projectName)"
-            self.weightField?.text = "\(self.projectWeight)"
+            self.projectNameField?.text = "\(self.project.name)"
+            self.weightField?.text = "\(self.project.weight)"
             
-            if (projectGrade != -1.0) {
-                self.gradeField?.text = "\(self.projectGrade)"
-                self.gradeOutOfField?.text = "\(self.projectOutOf)"
+            if (project.mark != -1.0) {
+                self.gradeField?.text = "\(self.project.mark)"
+                self.gradeOutOfField?.text = "\(self.project.outOf)"
             }
             else {
                 projectIsComplete.isOn = false
@@ -98,9 +93,9 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
             }
             
             // If the date is set then make the picker show that date, otherwise close it
-            if (isDateSet) {
+            if (project.dueDate != nil) {
                 hasDueDateSwitch.isOn = true
-                dueDatePicker.date = dueDateSelected as! Date
+                dueDatePicker.date = project.dueDate!
             }
             else {
                 hasDueDateSwitch.isOn = false
@@ -282,8 +277,8 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
             return false
         }
         else {
-            projectName = projectNameField.text!
-            projectWeight = Double(weightField.text!)!
+            project.name = projectNameField.text!
+            project.weight = Double(weightField.text!)!
         }
         
         if (projectIsComplete.isOn) {
@@ -297,8 +292,8 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
                 return false
             }
             else {
-                projectGrade = Double(gradeField.text!)!
-                projectOutOf = Double(gradeOutOfField.text!)!
+                project.mark = Double(gradeField.text!)!
+                project.outOf = Double(gradeOutOfField.text!)!
             }
 
         }

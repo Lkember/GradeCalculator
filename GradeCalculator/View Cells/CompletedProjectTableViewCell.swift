@@ -33,7 +33,7 @@ class CompletedProjectTableViewCell: UITableViewCell {
     
     func updateCell(projectName: String, mark: Double, weight: Double) {
         self.projectNameLabel.text = projectName
-        self.projectMarkLabel.text = "Mark: \(round(mark*1000)/10)%"
+        self.projectMarkLabel.text = "Mark: \(mark)%"
         self.projectWeightLabel.text = "Weight: \(weight)%"
     }
 }

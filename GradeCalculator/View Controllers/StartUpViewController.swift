@@ -331,7 +331,7 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
                 cell?.textLabel?.text = "Average:"
                 
                 if (average != -1.0) {
-                    cell?.detailTextLabel?.text = "\(round(10*average*100)/10)%"
+                    cell?.detailTextLabel?.text = "\(average)%"
                 }
                 else {
                     cell?.detailTextLabel?.text = "N/A"
@@ -341,7 +341,7 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
                 cell?.textLabel?.text = "Median:"
                 
                 if (average != -1.0) {
-                    cell?.detailTextLabel?.text = "\(round(10*getMedian()*100)/10)%"
+                    cell?.detailTextLabel?.text = "\(getMedian())%"
                 }
                 else {
                     cell?.detailTextLabel?.text = "N/A"
@@ -351,7 +351,7 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
                 cell?.textLabel?.text = "GPA (Approximate):"
                 
                 if (average != -1.0) {
-                    cell?.detailTextLabel?.text = "\(getGPA(average: average*100))"
+                    cell?.detailTextLabel?.text = "\(getGPA(average: average))"
                 }
                 else {
                     cell?.detailTextLabel?.text = "N/A"
@@ -365,7 +365,7 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
                 }
                 
                 let bestAndWorst = getBestAndWorstMarks()
-                cell?.detailTextLabel?.text = "\(round(10*bestAndWorst[0].getAverage()*100)/10)%"
+                cell?.detailTextLabel?.text = "\(bestAndWorst[0].getAverage())%"
                 
             case 5:
                 cell?.textLabel?.text = "Worst Mark:"
@@ -376,7 +376,7 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
                 }
                 
                 let bestAndWorst = getBestAndWorstMarks()
-                cell?.detailTextLabel?.text = "\(round(10*bestAndWorst[1].getAverage()*100)/10)%"
+                cell?.detailTextLabel?.text = "\(bestAndWorst[1].getAverage())%"
                 
             default:
                 break
@@ -403,8 +403,8 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
             cell?.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
             cell?.selectionStyle = UITableViewCell.SelectionStyle.blue
             
-            let groupAverage = round(10*appDelegate.groups[index].getGroupAverage()*100)/10
-            if groupAverage == -100.0 {
+            let groupAverage = appDelegate.groups[index].getGroupAverage()
+            if groupAverage == -1.0 {
                 cell?.detailTextLabel?.text = "N/A"
             }
             else {

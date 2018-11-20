@@ -136,22 +136,22 @@ class CalendarTableViewController: UITableViewController {
         for groupIndex in 0..<groups.count {
 
             // Loop through the courses within the group
-            let course = groups[groupIndex].courses
-            for courseIndex in 0..<course.count {
+            let courses = groups[groupIndex].courses
+            for courseIndex in 0..<courses.count {
 
                 // Loop through the projects within the course
-                let project = course[courseIndex]
-                for projectIndex in 0..<project.projects.count {
+                let course = courses[courseIndex]
+                for projectIndex in 0..<course.projects.count {
 
                     // If the project has a given due date, add it to the list
-                    if (project.dueDate[projectIndex] != nil) {
+                    if (course.projects[projectIndex].dueDate != nil) {
                         
-                        let courseInfo = CourseInfo.init(course: project, g: groupIndex, c: courseIndex, p: projectIndex)
-                        allProjects.addDate(courseInfo: courseInfo, date: project.dueDate[projectIndex]!)
+                        let courseInfo = CourseInfo.init(course: course, g: groupIndex, c: courseIndex, p: projectIndex)
+                        allProjects.addDate(courseInfo: courseInfo, date: course.projects[projectIndex].dueDate!)
                         
                         // If the course is complete, add it to the upcoming projects
-                        if (!course[courseIndex].projectIsComplete(index: projectIndex)) {
-                            upcomingProjectIndexes.addDate(courseInfo: courseInfo, date: project.dueDate[projectIndex]!)
+                        if (!course.projectIsComplete(index: projectIndex)) {
+                            upcomingProjectIndexes.addDate(courseInfo: courseInfo, date: course.projects[projectIndex].dueDate!)
                         }
                     }
                 }
@@ -214,13 +214,13 @@ class CalendarTableViewController: UITableViewController {
                 let currCourse = allProjects.dates[currDate]![row]
                 
                 let courseName = currCourse.course.courseName
-                let projectName = currCourse.course.projects[currCourse.projectIndex]
+                let projectName = currCourse.course.projects[currCourse.projectIndex].name
                 
                 if (currCourse.course.projectIsComplete(index: currCourse.projectIndex)) {
                     let cell = tableView.dequeueReusableCell(withIdentifier: "CompletedProjectCell") as! CompletedProjectTableViewCell
                     
-                    let mark = currCourse.course.projectMarks[currCourse.projectIndex] / currCourse.course.projectOutOf[currCourse.projectIndex]
-                    let weight = currCourse.course.projectWeights[currCourse.projectIndex]
+                    let mark = currCourse.course.getProjectMark(index: currCourse.projectIndex)
+                    let weight = currCourse.course.projects[currCourse.projectIndex].weight
                     cell.updateCell(projectName: "\(courseName): \(projectName)", mark: mark, weight: weight)
                     cell.setDisabled()
                     
@@ -233,7 +233,7 @@ class CalendarTableViewController: UITableViewController {
                 else {
                     let cell = tableView.dequeueReusableCell(withIdentifier: "UpcomingProjectCell", for: indexPath)
                     cell.textLabel!.text = "\(courseName) - \(projectName)"
-                    cell.detailTextLabel!.text = "Weight : \(currCourse.course.projectWeights[currCourse.projectIndex])%"
+                    cell.detailTextLabel!.text = "Weight : \(currCourse.course.getProjectWeight(index: currCourse.projectIndex))%"
                     
                     let view = UIView()
                     view.backgroundColor = UIColor.init(red: 0, green: 139/255, blue: 1, alpha: 1)
@@ -248,10 +248,10 @@ class CalendarTableViewController: UITableViewController {
         let currDate = upcomingProjectIndexes.sortedKeys[section]
         let currCourse = upcomingProjectIndexes.dates[currDate]![row]
         let courseName = currCourse.course.courseName
-        let projectName = currCourse.course.projects[currCourse.projectIndex]
+        let projectName = currCourse.course.projects[currCourse.projectIndex].name
         
         cell.textLabel!.text = "\(courseName) - \(projectName)"
-        cell.detailTextLabel!.text = "Weight : \(currCourse.course.projectWeights[currCourse.projectIndex])%"
+        cell.detailTextLabel!.text = "Weight : \(currCourse.course.getProjectWeight(index: currCourse.projectIndex))%"
         
         let view = UIView()
         view.backgroundColor = UIColor.init(red: 0, green: 139/255, blue: 1, alpha: 1)
@@ -286,23 +286,24 @@ class CalendarTableViewController: UITableViewController {
                 let index = self.tableView.indexPathForSelectedRow
                 
                 // Update any data that is required to be set
-                selectedProject!.course.projects[selectedProject!.projectIndex] = svc.projectName
-                selectedProject!.course.projectWeights[selectedProject!.projectIndex] = svc.projectWeight
+                selectedProject!.course.setProjectName(index: selectedProject!.projectIndex, value: svc.project.name)
+                selectedProject!.course.setProjectWeight(index: selectedProject!.projectIndex, value: svc.project.weight)
+                
                 if (svc.hasDueDateSwitch.isOn) {
-                    selectedProject!.course.dueDate[selectedProject!.projectIndex] = svc.dueDatePicker.date
+                    selectedProject!.course.setProjectDueDate(index: selectedProject!.projectIndex, value: svc.dueDatePicker.date)
                 }
                 else {
-                    selectedProject!.course.dueDate[selectedProject!.projectIndex] = nil
+                    selectedProject!.course.setProjectDueDate(index: selectedProject!.projectIndex, value: nil)
                 }
                 
                 // If the project is complete
                 if svc.projectIsComplete.isOn {
-                    selectedProject!.course.projectMarks[selectedProject!.projectIndex] = svc.projectGrade
-                    selectedProject!.course.projectOutOf[selectedProject!.projectIndex] = svc.projectOutOf
+                    selectedProject!.course.setProjectMark(index: selectedProject!.projectIndex, value: svc.project.mark)
+                    selectedProject!.course.setProjectOutOf(index: selectedProject!.projectIndex, value: svc.project.outOf)
                 }
                 else {
-                    selectedProject!.course.projectMarks[selectedProject!.projectIndex] = -1.0
-                    selectedProject!.course.projectOutOf[selectedProject!.projectIndex] = -1.0
+                    selectedProject!.course.setProjectMark(index: selectedProject!.projectIndex, value: -1.0)
+                    selectedProject!.course.setProjectOutOf(index: selectedProject!.projectIndex, value: -1.0)
                 }
                 
                 // Update tableView
@@ -342,12 +343,7 @@ class CalendarTableViewController: UITableViewController {
             
             let course = appDelegate.groups[selectedProject!.groupIndex].courses[selectedProject!.courseIndex]
             destView.courseName = course.courseName
-            destView.projectName = course.projects[selectedProject!.projectIndex]
-            destView.projectWeight = course.projectWeights[selectedProject!.projectIndex]
-            destView.projectGrade = course.projectMarks[selectedProject!.projectIndex]
-            destView.projectOutOf = course.projectOutOf[selectedProject!.projectIndex]
-            destView.dueDateSelected = course.dueDate[selectedProject!.projectIndex]
-            destView.isDateSet = true
+            destView.project = course.projects[selectedProject!.projectIndex]
         }
     }
 }

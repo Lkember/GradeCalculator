@@ -17,7 +17,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="724"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.11734941710000001" green="0.11734941710000001" blue="0.11734941710000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                        <view key="tableHeaderView" contentMode="scaleToFill" id="mji-K4-efy">
+                        <view key="tableHeaderView" contentMode="scaleToFill" misplaced="YES" id="mji-K4-efy">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="110"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
@@ -1504,7 +1504,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="th6-ri-m98"/>
-        <segue reference="kKh-ej-HbN"/>
+        <segue reference="B5p-yR-yqY"/>
         <segue reference="981-4H-2lc"/>
         <segue reference="XHZ-Lz-icb"/>
         <segue reference="7L4-Ww-jje"/>
