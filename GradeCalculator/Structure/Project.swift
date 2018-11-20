@@ -32,9 +32,9 @@ class Project: NSObject, NSCoding {
     // MARK: - Constructors
     override init() {
         name = ""
-        mark = -1
-        outOf = -1
-        weight = 0
+        mark = empty
+        outOf = empty
+        weight = empty
         dueDate = nil
     }
     
@@ -72,6 +72,10 @@ class Project: NSObject, NSCoding {
     }
     
     func getWeight() -> Double {
+        if (weight == empty) {
+            return empty
+        }
+        
         return round(1000*weight)/1000
     }
     

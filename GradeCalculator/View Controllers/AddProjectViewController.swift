@@ -75,7 +75,7 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
             self.title = courseName
         }
         
-        if (self.project.weight != -1.0 || self.project.name != "") {
+        if (self.project.getWeight() != -1.0 || self.project.name != "") {
             editorMode = true
             
             print("AddProject: Updating projectName \(project.name), grade: \(project.mark), outOf: \(project.outOf) weight: \(project.weight)")
@@ -135,7 +135,7 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
             dismiss(animated: true, completion: nil)
         }
         else {
-            _ = self.navigationController?.popViewController(animated: true)
+             _ = self.navigationController?.popViewController(animated: true)
         }
     }
     
