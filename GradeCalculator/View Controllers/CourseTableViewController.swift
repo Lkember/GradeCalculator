@@ -300,7 +300,8 @@ class CourseTableViewController: UITableViewController {
         var groupMark = 0.0
         var numCourses = 0
         var totalNumCourses = 0
-
+        
+        var returnVal: Double = 0.0
         if (index == -1) {
             for i in 0..<appDelegate.groups.count {
                 groupMark = appDelegate.groups[i].getGroupAverage()
@@ -313,22 +314,18 @@ class CourseTableViewController: UITableViewController {
             }
             
             if totalNumCourses != 0 {
-                print("CourseTable: getOverallAverage -> Exit: RETURN \(average) with number of courses in calculation: \(numCourses)")
-                return average/Double(totalNumCourses)
+                returnVal = average/Double(totalNumCourses)
             }
             else {
-                print("CourseTable: getOverallAverage -> Exit RETURN -1.0 due to no totalNumCourses is 0")
                 return -1.0
             }
         }
         else {
-            print("CourseTable: getOverallAverage: Getting averages in dictionary: \(appDelegate.groups[index].groupName)")
-            let returnVal = appDelegate.groups[index].getGroupAverage()
-            print("CourseTable: getOverallAverage: Exit: RETURN \(returnVal)")
-            return returnVal
+            returnVal = appDelegate.groups[index].getGroupAverage()
         }
+        
+        return Helper.roundOneDecimalPlace(value: returnVal)
     }
-    
     
     //Gets the total number of courses
     func getNumCourses() -> Int {
@@ -501,7 +498,9 @@ class CourseTableViewController: UITableViewController {
         
         cell.courseName.text = course.courseName
         
-        let average = course.getAverage()
+        var average = course.getAverage()
+        average = Helper.roundOneDecimalPlace(value: average)
+        
         if average != -1.0 {
             cell.courseDescription.text = "Mark: \(average)%"
         }

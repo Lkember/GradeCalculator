@@ -68,7 +68,7 @@ class Project: NSObject, NSCoding {
             return empty
         }
         
-        return round(1000*mark/outOf)/10
+        return Helper.roundOneDecimalPlace(value: 10*mark/outOf)
     }
     
     func getWeight() -> Double {

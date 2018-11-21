@@ -91,7 +91,7 @@ class Group: NSObject, NSCoding {
             return -1.0
         }
         print("Group: getGroupAverage -> Exit")
-        return totalAverage/Double(counter)
+        return Helper.roundOneDecimalPlace(value: totalAverage/Double(counter))
     }
     
     // A function that gets the total number of courses with marks
@@ -105,7 +105,6 @@ class Group: NSObject, NSCoding {
         }
         return numCourses
     }
-    
     
     //MARK: - NSCoding
     static let DocumentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!

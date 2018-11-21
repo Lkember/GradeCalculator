@@ -80,7 +80,7 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     
-    // MARK: Functions
+    // MARK: - Functions
     
     @IBAction func unwindToDetailViewController(storyboard: UIStoryboardSegue) {
         print("StartUpView: unwindToDetailViewController: -> Entry")
@@ -216,7 +216,7 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
         print("CourseTable: getOverallAverage RETURN \(average) with number of courses in calculation: \(numCourses)")
         print("CourseTable: getOverallAverage -> Exit")
         if (average <= 100.0) {
-            return average
+            return Helper.roundOneDecimalPlace(value: average)
         }
         else {
             return 1
@@ -239,7 +239,6 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
         return -1
     }
-    
     
     // MARK: - Navigation
 
