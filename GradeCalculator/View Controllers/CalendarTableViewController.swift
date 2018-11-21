@@ -207,11 +207,12 @@ class CalendarTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let section = indexPath.section
         let row = indexPath.row
+        let currDate = Date.init(timeIntervalSinceNow: 0)
         
         if (allProjects.sortedKeys.count > upcomingProjectIndexes.sortedKeys.count) {
             if (showCompletedProjects) {
-                let currDate = allProjects.sortedKeys[section]
-                let currCourse = allProjects.dates[currDate]![row]
+                let projectDueDate = allProjects.sortedKeys[section]
+                let currCourse = allProjects.dates[projectDueDate]![row]
                 
                 let courseName = currCourse.course.courseName
                 let projectName = currCourse.course.projects[currCourse.projectIndex].name
@@ -239,14 +240,24 @@ class CalendarTableViewController: UITableViewController {
                     view.backgroundColor = UIColor.init(red: 0, green: 139/255, blue: 1, alpha: 1)
                     cell.selectedBackgroundView = view
                     
+                    // Setting text colour to red
+                    var isOverdue = false
+                    if (projectDueDate < currDate) {
+                        isOverdue = true
+                    }
+                    if (isOverdue && !currCourse.course.projectIsComplete(index: currCourse.projectIndex)) {
+                        cell.textLabel?.textColor = UIColor.red
+                        cell.detailTextLabel?.textColor = UIColor.red
+                    }
+                    
                     return cell
                 }
             }
         }
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "UpcomingProjectCell", for: indexPath)
-        let currDate = upcomingProjectIndexes.sortedKeys[section]
-        let currCourse = upcomingProjectIndexes.dates[currDate]![row]
+        let projectDueDate = upcomingProjectIndexes.sortedKeys[section]
+        let currCourse = upcomingProjectIndexes.dates[projectDueDate]![row]
         let courseName = currCourse.course.courseName
         let projectName = currCourse.course.projects[currCourse.projectIndex].name
         
@@ -256,6 +267,16 @@ class CalendarTableViewController: UITableViewController {
         let view = UIView()
         view.backgroundColor = UIColor.init(red: 0, green: 139/255, blue: 1, alpha: 1)
         cell.selectedBackgroundView = view
+        
+        // Setting text colour to red
+        var isOverdue = false
+        if (projectDueDate < currDate) {
+            isOverdue = true
+        }
+        if (isOverdue && !currCourse.course.projectIsComplete(index: currCourse.projectIndex)) {
+            cell.textLabel?.textColor = UIColor.red
+            cell.detailTextLabel?.textColor = UIColor.red
+        }
         
         return cell
     }
