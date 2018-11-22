@@ -137,7 +137,7 @@ class Course: NSObject, NSCoding {
                 return -1.0
             }
             
-            return mark
+            return Helper.roundOneDecimalPlace(value: mark)
         }
         
         print("Courses: getAverage() -> \(courseName) = -1.0")
@@ -195,7 +195,7 @@ class Course: NSObject, NSCoding {
         let remainingWeight = 100.0 - activeWeight
         let potential = ((average/100)*(activeWeight/100) + remainingWeight/100)*100
         print("Courses: getPotentialMark -> Exit Return \(courseName) potential = \(potential)")
-        return potential
+        return Helper.roundOneDecimalPlace(value: potential)
     }
     
     // MARK: Actions

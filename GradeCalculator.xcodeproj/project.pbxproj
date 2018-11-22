@@ -160,15 +160,15 @@
 		B2E70E9D1F9EEE62005E5D23 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				B21A84221D9D5721004C33ED /* StartUpViewController.swift */,
 				B28A7E161D5BA2BE00C2ADEB /* AddProjectViewController.swift */,
 				B2E4E45F1DA8A23200CBF92B /* AddGroupViewController.swift */,
-				B274AEC21D46AEE500E732FD /* CourseTableViewController.swift */,
-				B27317EC2007D693009B01FF /* CalendarTableViewController.swift */,
-				B24468EF1DA7F60B0011C4CC /* GroupsTableViewController.swift */,
-				B28A7E0E1D5A55C800C2ADEB /* MarksTableViewController.swift */,
-				B28FBA631DC04BA7004CEA67 /* PopUpViewController.swift */,
 				B28A7E321D63852600C2ADEB /* NewCoursesViewController.swift */,
-				B21A84221D9D5721004C33ED /* StartUpViewController.swift */,
+				B24468EF1DA7F60B0011C4CC /* GroupsTableViewController.swift */,
+				B274AEC21D46AEE500E732FD /* CourseTableViewController.swift */,
+				B28A7E0E1D5A55C800C2ADEB /* MarksTableViewController.swift */,
+				B27317EC2007D693009B01FF /* CalendarTableViewController.swift */,
+				B28FBA631DC04BA7004CEA67 /* PopUpViewController.swift */,
 				B21C9B6321A6285500CA8790 /* InformationMessageViewController.swift */,
 			);
 			path = "View Controllers";
