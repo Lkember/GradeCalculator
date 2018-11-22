@@ -1295,6 +1295,52 @@
             </objects>
             <point key="canvasLocation" x="4225" y="522"/>
         </scene>
+        <!--Information Message View Controller-->
+        <scene sceneID="STz-KP-v3I">
+            <objects>
+                <viewController storyboardIdentifier="InformationView" id="0Yh-Il-9Ig" customClass="InformationMessageViewController" customModule="GradeCalculator" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="A9R-bi-Ez6"/>
+                        <viewControllerLayoutGuide type="bottom" id="fwz-Ws-ohn"/>
+                    </layoutGuides>
+                    <view key="view" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="Y7K-0D-2Lu">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kuH-BZ-J7O">
+                                <rect key="frame" x="8" y="341" width="359" height="130"/>
+                                <color key="backgroundColor" red="0.11734941710000001" green="0.11734941710000001" blue="0.11734941710000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="130" id="7Ji-rP-iCp"/>
+                                </constraints>
+                            </view>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Message Here" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Zdc-gJ-4SA">
+                                <rect key="frame" x="16" y="391.66666666666669" width="343" height="29"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <constraints>
+                            <constraint firstItem="Zdc-gJ-4SA" firstAttribute="leading" secondItem="Y7K-0D-2Lu" secondAttribute="leadingMargin" id="Jxi-f2-P2g"/>
+                            <constraint firstItem="kuH-BZ-J7O" firstAttribute="centerY" secondItem="Y7K-0D-2Lu" secondAttribute="centerY" id="Q6b-ZJ-MCL"/>
+                            <constraint firstItem="kuH-BZ-J7O" firstAttribute="leading" secondItem="Y7K-0D-2Lu" secondAttribute="leading" constant="8" id="WZg-Tp-a71"/>
+                            <constraint firstItem="Zdc-gJ-4SA" firstAttribute="trailing" secondItem="Y7K-0D-2Lu" secondAttribute="trailingMargin" id="gk9-e9-MeQ"/>
+                            <constraint firstItem="Zdc-gJ-4SA" firstAttribute="centerY" secondItem="Y7K-0D-2Lu" secondAttribute="centerY" id="hy4-dP-Fa1"/>
+                            <constraint firstAttribute="trailing" secondItem="kuH-BZ-J7O" secondAttribute="trailing" constant="8" id="zhZ-YG-qkw"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="informationalMessageText" destination="Zdc-gJ-4SA" id="9mI-RW-Om7"/>
+                        <outlet property="informationalMessageView" destination="kuH-BZ-J7O" id="LQj-cC-7Zd"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UHM-4o-oSD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4944.8000000000002" y="521.67487684729065"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="WBz-j4-C5g">
             <objects>
@@ -1348,7 +1394,7 @@
             </objects>
             <point key="canvasLocation" x="1870" y="-1939"/>
         </scene>
-        <!--Upcoming Work-->
+        <!--Upcoming Projects-->
         <scene sceneID="h5M-yh-wJa">
             <objects>
                 <tableViewController id="hrg-vd-f8Z" customClass="CalendarTableViewController" customModule="GradeCalculator" customModuleProvider="target" sceneMemberID="viewController">
@@ -1360,7 +1406,7 @@
                             <rect key="frame" x="0.0" y="0.0" width="375" height="78"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Upcoming Work" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y7J-hB-KUz">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Upcoming Projects" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y7J-hB-KUz">
                                     <rect key="frame" x="8" y="22" width="359" height="36"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1467,7 +1513,7 @@
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="Qda-Tk-kP2"/>
                     </toolbarItems>
-                    <navigationItem key="navigationItem" title="Upcoming Work" id="MSi-Dg-iJz"/>
+                    <navigationItem key="navigationItem" title="Upcoming Projects" id="MSi-Dg-iJz"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="toggleCompletedProjectsButton" destination="s5h-3g-BoK" id="Rho-cX-LoK"/>

@@ -79,6 +79,7 @@ class CalendarTableViewController: UITableViewController {
     var selectedProjectCompletion: Bool = false
     var showCompletedProjects: Bool = false
     @IBOutlet weak var toggleCompletedProjectsButton: UIBarButtonItem!
+    let infoView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "InformationView") as! InformationMessageViewController
     
     // MARK: - View
     
@@ -119,6 +120,34 @@ class CalendarTableViewController: UITableViewController {
             toggleCompletedProjectsButton.isEnabled = true
             self.navigationController?.setToolbarHidden(false, animated: true)
         }
+    }
+    
+    func showInfoView() {
+        self.infoView.view.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
+        self.infoView.view.alpha = 0.0;
+        
+        addChild(infoView)
+        self.view.addSubview(infoView.view)
+        infoView.setMessage(value: "No projects due")
+        
+        UIView.animate(withDuration: 0.25, animations: {
+            self.infoView.view.alpha = 1.0
+            self.infoView.view.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        });
+    }
+    
+    func hideInfoView() {
+        
+        UIView.animate(withDuration: 0.25, animations: {
+            self.infoView.view.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
+            self.infoView.view.alpha = 0.0;
+        }, completion:{(finished : Bool)  in
+            if (finished)
+            {
+                self.infoView.view.removeFromSuperview()
+                self.infoView.removeFromParent()
+            }
+        });
     }
     
     // MARK: - Calendar
@@ -181,13 +210,26 @@ class CalendarTableViewController: UITableViewController {
 
     // Gets the number of sections in the table
     override func numberOfSections(in tableView: UITableView) -> Int {
+        var returnVal = 0
+        
         if (allProjects.sortedKeys.count > upcomingProjectIndexes.sortedKeys.count) {
             if (showCompletedProjects) {
-                return allProjects.sortedKeys.count
+                returnVal = allProjects.sortedKeys.count
             }
         }
+        else {
+            returnVal = upcomingProjectIndexes.sortedKeys.count
+        }
         
-        return upcomingProjectIndexes.sortedKeys.count
+        // Check whether to show info view or not
+        if (returnVal == 0) {
+            showInfoView()
+        }
+        else {
+            hideInfoView()
+        }
+        
+        return returnVal
     }
     
     // Gets the number of cells in a given section
