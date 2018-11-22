@@ -130,6 +130,8 @@ class CalendarTableViewController: UITableViewController {
         self.view.addSubview(infoView.view)
         infoView.setMessage(value: "No projects due")
         
+        self.tableView.isScrollEnabled = false
+        
         UIView.animate(withDuration: 0.25, animations: {
             self.infoView.view.alpha = 1.0
             self.infoView.view.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
@@ -137,6 +139,7 @@ class CalendarTableViewController: UITableViewController {
     }
     
     func hideInfoView() {
+        self.tableView.isScrollEnabled = true
         
         UIView.animate(withDuration: 0.25, animations: {
             self.infoView.view.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)

@@ -14,7 +14,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="courseView" id="2px-Qq-uIr" customClass="CourseTableViewController" customModule="GradeCalculator" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="60" sectionHeaderHeight="28" sectionFooterHeight="28" id="bv3-Dh-JK0">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="724"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.11734941710000001" green="0.11734941710000001" blue="0.11734941710000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" misplaced="YES" id="mji-K4-efy">
@@ -134,7 +134,6 @@
                         </barButtonItem>
                     </navigationItem>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackOpaque"/>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
                     <connections>
                         <outlet property="addButton" destination="wv1-Bq-N1c" id="bCC-kI-HNQ"/>
                         <outlet property="deleteButton" destination="LGn-kk-AtD" id="527-AY-Gi2"/>
@@ -529,8 +528,6 @@
                         </barButtonItem>
                     </navigationItem>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="averageLabel" destination="30o-GC-dpm" id="fD4-oy-V1r"/>
                         <outlet property="numMarks" destination="kMn-mu-eWq" id="fLd-cd-JtN"/>
@@ -1308,10 +1305,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kuH-BZ-J7O">
-                                <rect key="frame" x="8" y="341" width="359" height="130"/>
-                                <color key="backgroundColor" red="0.11734941710000001" green="0.11734941710000001" blue="0.11734941710000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <rect key="frame" x="16" y="356" width="343" height="100"/>
+                                <color key="backgroundColor" red="0.0" green="0.5447398671" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="130" id="7Ji-rP-iCp"/>
+                                    <constraint firstAttribute="height" constant="100" id="7Ji-rP-iCp"/>
                                 </constraints>
                             </view>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Message Here" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Zdc-gJ-4SA">
@@ -1326,10 +1323,10 @@
                         <constraints>
                             <constraint firstItem="Zdc-gJ-4SA" firstAttribute="leading" secondItem="Y7K-0D-2Lu" secondAttribute="leadingMargin" id="Jxi-f2-P2g"/>
                             <constraint firstItem="kuH-BZ-J7O" firstAttribute="centerY" secondItem="Y7K-0D-2Lu" secondAttribute="centerY" id="Q6b-ZJ-MCL"/>
-                            <constraint firstItem="kuH-BZ-J7O" firstAttribute="leading" secondItem="Y7K-0D-2Lu" secondAttribute="leading" constant="8" id="WZg-Tp-a71"/>
+                            <constraint firstItem="kuH-BZ-J7O" firstAttribute="leading" secondItem="Y7K-0D-2Lu" secondAttribute="leading" constant="16" id="WZg-Tp-a71"/>
                             <constraint firstItem="Zdc-gJ-4SA" firstAttribute="trailing" secondItem="Y7K-0D-2Lu" secondAttribute="trailingMargin" id="gk9-e9-MeQ"/>
                             <constraint firstItem="Zdc-gJ-4SA" firstAttribute="centerY" secondItem="Y7K-0D-2Lu" secondAttribute="centerY" id="hy4-dP-Fa1"/>
-                            <constraint firstAttribute="trailing" secondItem="kuH-BZ-J7O" secondAttribute="trailing" constant="8" id="zhZ-YG-qkw"/>
+                            <constraint firstAttribute="trailing" secondItem="kuH-BZ-J7O" secondAttribute="trailing" constant="16" id="zhZ-YG-qkw"/>
                         </constraints>
                     </view>
                     <connections>
@@ -1514,7 +1511,6 @@
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="Qda-Tk-kP2"/>
                     </toolbarItems>
                     <navigationItem key="navigationItem" title="Upcoming Projects" id="MSi-Dg-iJz"/>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="toggleCompletedProjectsButton" destination="s5h-3g-BoK" id="Rho-cX-LoK"/>
                     </connections>
@@ -1526,14 +1522,15 @@
         <!--Navigation Controller-->
         <scene sceneID="eiV-q6-aE8">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Ie9-Fr-BPa" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" toolbarHidden="NO" id="Ie9-Fr-BPa" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="X5I-vE-mRb">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="X5I-vE-mRb">
                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
-                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="6Qn-bq-wDX">
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="6Qn-bq-wDX">
+                        <rect key="frame" x="0.0" y="729" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </toolbar>
                     <connections>
@@ -1549,10 +1546,10 @@
         <image name="calendar" width="46.080001831054688" height="46.080001831054688"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="th6-ri-m98"/>
+        <segue reference="R1T-uM-ML6"/>
         <segue reference="B5p-yR-yqY"/>
         <segue reference="981-4H-2lc"/>
         <segue reference="XHZ-Lz-icb"/>
-        <segue reference="7L4-Ww-jje"/>
+        <segue reference="WtP-sj-wW2"/>
     </inferredMetricsTieBreakers>
 </document>
