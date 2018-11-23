@@ -164,7 +164,7 @@ class Course: NSObject, NSCoding {
             weight += projects[i].weight
         }
         print("courses getWeightTotal -> exit RETURN \(courseName) = \(weight)")
-        return weight
+        return Helper.roundOneDecimalPlace(value: weight)
     }
     
     func getActiveWeightTotal() -> Double {
@@ -176,7 +176,7 @@ class Course: NSObject, NSCoding {
             }
         }
         print("courses getActiveWeightTotal -> exit RETURN \(courseName) = \(weight)")
-        return weight
+        return Helper.roundOneDecimalPlace(value: weight)
     }
     
     func getPotentialMark() -> Double {
