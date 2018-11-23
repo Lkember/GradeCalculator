@@ -43,18 +43,6 @@ class Course: NSObject, NSCoding {
         super.init()
     }
     
-    init?(courseName: String, projects: [String], projectMarks: [Double], projectOutOf: [Double],projectWeights: [Double], dueDate: [Date?]) {
-        self.courseName = courseName
-        self.projects = []
-        
-        for i in 0..<projects.count {
-            let proj = Project.init(name: projects[i], mark: projectMarks[i], outOf: projectOutOf[i], weight: projectWeights[i], dueDate: dueDate[i])
-            self.projects.append(proj)
-        }
-        
-        super.init()
-    }
-    
     init?(courseName: String, projects: [Project]) {
         self.courseName = courseName
         self.projects = projects
@@ -97,11 +85,15 @@ class Course: NSObject, NSCoding {
         projects[index].dueDate = value
     }
     
+    func setIsComplete(index: Int, value: Bool) {
+        projects[index].isComplete = value
+    }
+    
     //MARK: - Functions
     
     func projectIsComplete(index: Int) -> Bool {
         if (projects.count > index && index >= 0) {
-            if (projects[index].getMark() != -1.0) {
+            if (projects[index].getMark() != -1.0 || projects[index].isComplete) {
                 return true;
             }
         }
@@ -199,9 +191,9 @@ class Course: NSObject, NSCoding {
     }
     
     // MARK: Actions
-    func addProject(_ projectName: String, grade: Double, outOf: Double, weight: Double, newDueDate: Date?) {
+    func addProject(_ projectName: String, grade: Double, outOf: Double, weight: Double, newDueDate: Date?, isComplete: Bool) {
         print("courses addProject \(courseName)")
-        let proj: Project = Project.init(name: projectName, mark: grade, outOf: outOf, weight: weight, dueDate: newDueDate)
+        let proj: Project = Project.init(name: projectName, mark: grade, outOf: outOf, weight: weight, dueDate: newDueDate, isComplete: isComplete)
         projects.append(proj)
     }
     
@@ -214,25 +206,9 @@ class Course: NSObject, NSCoding {
     
     required convenience init?(coder aDecoder: NSCoder) {
         let courseName = aDecoder.decodeObject(forKey: PropertyKey.courseNameKey) as! String
+        let projects = aDecoder.decodeObject(forKey: PropertyKey.projectsKey) as! [Project]
         
-        if let projects = aDecoder.decodeObject(forKey: PropertyKey.projectsKey) as? [Project] {
-            self.init(courseName: courseName, projects: projects)
-        }
-        else {
-            let projects = aDecoder.decodeObject(forKey: PropertyKey.oldProjectsKey) as! [String]
-            let projectMarks = aDecoder.decodeObject(forKey: PropertyKey.projectMarksKey) as! [Double]
-            let projectOutOf = aDecoder.decodeObject(forKey: PropertyKey.projectOutOfKey) as! [Double]
-            let projectWeights = aDecoder.decodeObject(forKey: PropertyKey.projectWeightsKey) as! [Double]
-                
-            if let dueDate = aDecoder.decodeObject(forKey: PropertyKey.dueDateKey) as? [Date?]
-            {
-                self.init(courseName: courseName, projects: projects, projectMarks: projectMarks, projectOutOf: projectOutOf, projectWeights: projectWeights, dueDate: dueDate)
-            }
-            else {
-                let dueDate = [Date?].init(repeating: nil, count: projects.count)
-                self.init(courseName: courseName, projects: projects, projectMarks: projectMarks, projectOutOf: projectOutOf, projectWeights: projectWeights, dueDate: dueDate)
-            }
-        }
+        self.init(courseName: courseName, projects: projects)
     }
     
 }

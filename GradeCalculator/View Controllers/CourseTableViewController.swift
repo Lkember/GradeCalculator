@@ -358,7 +358,7 @@ class CourseTableViewController: UITableViewController {
                 svc.gradeField.text != "" &&
                 svc.gradeOutOfField.text != "") {
                 if let grade = Double(svc.gradeField.text!), let outOf = Double(svc.gradeOutOfField.text!) {
-                    course.addProject("Final Mark", grade: grade, outOf: outOf, weight: 100.0, newDueDate: nil)
+                    course.addProject("Final Mark", grade: grade, outOf: outOf, weight: 100.0, newDueDate: nil, isComplete: true)
                 }
             }
             

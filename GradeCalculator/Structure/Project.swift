@@ -16,6 +16,7 @@ class Project: NSObject, NSCoding {
     var outOf: Double
     var weight: Double
     var dueDate: Date?
+    var isComplete: Bool
     
     var empty: Double = -1
     
@@ -27,6 +28,7 @@ class Project: NSObject, NSCoding {
         static let outOfKey = "projectOutOfKey"
         static let weightKey = "projectWeightKey"
         static let dueDateKey = "projectDueDateKey"
+        static let isCompleteKey = "projectIsComplete"
     }
     
     // MARK: - Constructors
@@ -36,14 +38,16 @@ class Project: NSObject, NSCoding {
         outOf = empty
         weight = empty
         dueDate = nil
+        isComplete = false
     }
     
-    init(name: String, mark: Double, outOf: Double, weight: Double, dueDate: Date?) {
+    init(name: String, mark: Double, outOf: Double, weight: Double, dueDate: Date?, isComplete: Bool) {
         self.name = name
         self.mark = mark
         self.outOf = outOf
         self.weight = weight
         self.dueDate = dueDate
+        self.isComplete = isComplete
         
         super.init()
     }
@@ -86,6 +90,7 @@ class Project: NSObject, NSCoding {
         aCoder.encode(outOf, forKey: PropertyKey.outOfKey)
         aCoder.encode(weight, forKey: PropertyKey.weightKey)
         aCoder.encode(dueDate, forKey: PropertyKey.dueDateKey)
+        aCoder.encode(isComplete, forKey: PropertyKey.isCompleteKey)
     }
     
     required convenience init?(coder aDecoder: NSCoder) {
@@ -95,8 +100,20 @@ class Project: NSObject, NSCoding {
             let outOf = aDecoder.decodeDouble(forKey: PropertyKey.outOfKey)
             let weight = aDecoder.decodeDouble(forKey: PropertyKey.weightKey)
             let dueDate = aDecoder.decodeObject(forKey: PropertyKey.dueDateKey) as? Date
-            
-            self.init(name: name, mark: mark, outOf: outOf, weight: weight, dueDate: dueDate)
+            if var isComplete = aDecoder.decodeBool(forKey: PropertyKey.isCompleteKey) as Bool? {
+                if (isComplete == false && (outOf != -1.0 && mark != -1.0)) {
+                    isComplete = true
+                }
+                self.init(name: name, mark: mark, outOf: outOf, weight: weight, dueDate: dueDate, isComplete: isComplete)
+            }
+            else {
+                if (mark != -1.0 && outOf != -1.0) {
+                    self.init(name: name, mark: mark, outOf: outOf, weight: weight, dueDate: dueDate, isComplete: true)
+                }
+                else {
+                    self.init(name: name, mark: mark, outOf: outOf, weight: weight, dueDate: dueDate, isComplete: false)
+                }
+            }
         }
         else {
             return nil

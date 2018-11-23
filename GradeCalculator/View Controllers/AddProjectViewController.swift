@@ -78,14 +78,25 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
         if (self.project.getWeight() != -1.0 || self.project.name != "") {
             editorMode = true
             
-            print("AddProject: Updating projectName \(project.name), grade: \(project.mark), outOf: \(project.outOf) weight: \(project.weight)")
-            
             self.projectNameField?.text = "\(self.project.name)"
             self.weightField?.text = "\(self.project.weight)"
             
-            if (project.mark != -1.0) {
-                self.gradeField?.text = "\(self.project.mark)"
-                self.gradeOutOfField?.text = "\(self.project.outOf)"
+            if (project.isComplete) {
+                if (project.mark == -1.0) {
+                    self.gradeField?.text = ""
+                }
+                else {
+                    self.gradeField?.text = "\(self.project.mark)"
+                }
+                
+                if (project.outOf == -1.0) {
+                    self.gradeOutOfField.text = "100"
+                }
+                else {
+                    self.gradeOutOfField?.text = "\(self.project.outOf)"
+                }
+                
+                projectIsComplete.isOn = true
             }
             else {
                 projectIsComplete.isOn = false
@@ -271,9 +282,7 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
     
     // Function which checks the to make sure all fields are completed
     func checkInput() -> Bool {
-        print("AddProject: CheckInput Entry")
         if (projectNameField.text == "" || weightField.text == "") {
-            print("AddProject: CheckInput Exit -> projectName or weight field empty")
             return false
         }
         else {
@@ -282,22 +291,32 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
         }
         
         if (projectIsComplete.isOn) {
-            print("AddProject: CheckInput projectIsComplete.isOn -> True")
-            if (gradeField.text == "" ||
-                gradeOutOfField.text == "" ||
-                Double(gradeOutOfField.text!) == 0.0 ||
-                !checkMarkInput())
+            project.isComplete = true
+            
+            if (Double(gradeOutOfField.text!) == 0.0 || !checkMarkInput())
             {
-                print("AddProject: CheckInput Exit -> Field empty or gradeOutOf set to 0")
                 return false
             }
             else {
-                project.mark = Double(gradeField.text!)!
-                project.outOf = Double(gradeOutOfField.text!)!
+                if (gradeField.text != "") {
+                    project.mark = Double(gradeField.text!)!
+                }
+                else {
+                    project.mark = -1.0
+                }
+                
+                if (gradeOutOfField.text != "") {
+                    project.outOf = Double(gradeOutOfField.text!)!
+                }
+                else {
+                    project.outOf = -1.0
+                }
             }
 
         }
-        print("AddProject: CheckInput Exit -> Success")
+        else {
+            project.isComplete = false
+        }
         return true
     }
     
@@ -309,19 +328,19 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
             var numDecimals = 0
             var numDecimals2 = 0
             
+            // Number of decimal places in the mark field
             for char in (grade?.characters)! {
                 if (char == ".") {
                     numDecimals += 1
                 }
             }
-            print("AddProject: number of decimals in grade: \(numDecimals)")
             
+            // Number of decimals in the weight field
             for char in (weight?.characters)! {
                 if (char == ".") {
                     numDecimals2 += 1
                 }
             }
-            print("AddProject: number of decimals in weight: \(numDecimals2)")
             
             if (numDecimals < 2 && numDecimals2 < 2) {
                 print("AddProject: checkMarkInput Exit -> Success")

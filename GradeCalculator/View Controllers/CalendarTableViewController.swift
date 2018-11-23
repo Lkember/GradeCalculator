@@ -164,7 +164,6 @@ class CalendarTableViewController: UITableViewController {
         
         // Loop through the groups
         let groups = appDelegate.groups
-        
         for groupIndex in 0..<groups.count {
 
             // Loop through the courses within the group
@@ -218,6 +217,9 @@ class CalendarTableViewController: UITableViewController {
         if (allProjects.sortedKeys.count > upcomingProjectIndexes.sortedKeys.count) {
             if (showCompletedProjects) {
                 returnVal = allProjects.sortedKeys.count
+            }
+            else {
+                returnVal = upcomingProjectIndexes.sortedKeys.count
             }
         }
         else {

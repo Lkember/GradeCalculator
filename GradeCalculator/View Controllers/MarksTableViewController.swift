@@ -102,6 +102,7 @@ class MarksTableViewController: UITableViewController {
                     course!.setProjectWeight(index: i, value: svc.project.weight)
                     course!.setProjectOutOf(index: i, value: svc.project.outOf)
                     course!.setProjectDueDate(index: i, value: date)
+                    course!.setIsComplete(index: i, value: true)
                     
                     tableView.reloadRows(at: [selectedIndexPath], with: .fade)
                 }
@@ -111,6 +112,7 @@ class MarksTableViewController: UITableViewController {
                     course!.setProjectWeight(index: i, value: svc.project.weight)
                     course!.setProjectOutOf(index: i, value: -1.0)
                     course!.setProjectDueDate(index: i, value: date)
+                    course!.setIsComplete(index: i, value: false)
                     
                     tableView.reloadRows(at: [selectedIndexPath], with: .fade)
                 }
@@ -118,14 +120,13 @@ class MarksTableViewController: UITableViewController {
             }
             // If user is adding a new row
             else {
-                print("MarksTable: undwindToProjectList: Adding a new row")
                 let newIndexPath = IndexPath(row: course!.projects.count, section: 0)
                 
                 if svc.project.mark == -1.0 {
-                    course?.addProject(svc.project.name, grade: -1.0, outOf: -1.0, weight: svc.project.weight, newDueDate: date)
+                    course?.addProject(svc.project.name, grade: -1.0, outOf: -1.0, weight: svc.project.weight, newDueDate: date, isComplete: svc.projectIsComplete.isOn)
                 }
                 else {
-                    course?.addProject(svc.project.name, grade: svc.project.mark, outOf: svc.project.outOf, weight: svc.project.weight, newDueDate: date)
+                    course?.addProject(svc.project.name, grade: svc.project.mark, outOf: svc.project.outOf, weight: svc.project.weight, newDueDate: date, isComplete: svc.projectIsComplete.isOn)
                 }
                 
                 tableView.insertRows(at: [newIndexPath], with: .bottom)
