@@ -103,9 +103,11 @@ class PopUpViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         return appDelegate.groups.count
     }
     
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return appDelegate.groups[row].groupName
+    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+        let rowTitle = appDelegate.groups[row].groupName
+        let myTitle = NSAttributedString(string: rowTitle, attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
+        
+        return myTitle
     }
     
     /*

@@ -183,7 +183,10 @@ class NewCoursesViewController: UIViewController, UITextFieldDelegate, UIPickerV
     
     // Returning white text
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-        return NSAttributedString(string: appDelegate.groups[row].groupName, attributes: convertToOptionalNSAttributedStringKeyDictionary([convertFromNSAttributedStringKey(NSAttributedString.Key.foregroundColor) : UIColor.white]))
+        let rowTitle = appDelegate.groups[row].groupName
+        let myTitle = NSAttributedString(string: rowTitle, attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
+        
+        return myTitle
     }
     
     // MARK: - Listeners
