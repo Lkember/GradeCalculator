@@ -282,24 +282,34 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
     
     // Function which checks the to make sure all fields are completed
     func checkInput() -> Bool {
-        if (projectNameField.text == "" || weightField.text == "") {
+        if (projectNameField.text == "" || weightField.text == "" || !checkMarkAndWeightInput()) {
             return false
         }
         else {
             project.name = projectNameField.text!
-            project.weight = Double(weightField.text!)!
+            if let weight = Double(weightField.text!) {
+                project.weight = weight
+            }
+            else {
+                return false
+            }
         }
         
         if (projectIsComplete.isOn) {
             project.isComplete = true
             
-            if (Double(gradeOutOfField.text!) == 0.0 || !checkMarkInput())
+            if (Double(gradeOutOfField.text!) == 0.0 || !checkMarkAndWeightInput())
             {
                 return false
             }
             else {
                 if (gradeField.text != "") {
-                    project.mark = Double(gradeField.text!)!
+                    if let grade = Double(gradeField.text!) {
+                        project.mark = grade
+                    }
+                    else {
+                        return false
+                    }
                 }
                 else {
                     project.mark = -1.0
@@ -320,7 +330,7 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
-    func checkMarkInput() -> Bool {
+    func checkMarkAndWeightInput() -> Bool {
         if (projectIsComplete.isOn) {
             print("AddProject: checkMarkInput Entry")
             let grade = gradeField.text
@@ -329,16 +339,20 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
             var numDecimals2 = 0
             
             // Number of decimal places in the mark field
-            for char in (grade?.characters)! {
-                if (char == ".") {
-                    numDecimals += 1
+            if (grade != nil) {
+                for char in grade! {
+                    if (char == ".") {
+                        numDecimals += 1
+                    }
                 }
             }
             
             // Number of decimals in the weight field
-            for char in (weight?.characters)! {
-                if (char == ".") {
-                    numDecimals2 += 1
+            if (weight != nil) {
+                for char in weight! {
+                    if (char == ".") {
+                        numDecimals2 += 1
+                    }
                 }
             }
             
