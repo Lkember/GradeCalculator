@@ -370,8 +370,8 @@ class CalendarTableViewController: UITableViewController {
                     selectedProject!.course.setProjectOutOf(index: selectedProject!.projectIndex, value: svc.project.outOf)
                 }
                 else {
-                    selectedProject!.course.setProjectMark(index: selectedProject!.projectIndex, value: -1.0)
-                    selectedProject!.course.setProjectOutOf(index: selectedProject!.projectIndex, value: -1.0)
+                    selectedProject!.course.setProjectMark(index: selectedProject!.projectIndex, value: Helper.empty)
+                    selectedProject!.course.setProjectOutOf(index: selectedProject!.projectIndex, value: Helper.empty)
                 }
                 
                 // Update tableView

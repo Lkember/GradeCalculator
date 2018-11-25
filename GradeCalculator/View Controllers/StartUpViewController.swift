@@ -145,8 +145,8 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         var worst: Course = courses[0]
         var best: Course = courses[0]
-        var worstGrade = 9999999.0
-        var bestGrade = -1.0
+        var worstGrade = Double.greatestFiniteMagnitude
+        var bestGrade = Helper.empty
         
         for course in courses {
             let average = course.getAverage()
@@ -168,14 +168,14 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
         var marks: [Double] = []
         for i in 0..<courses.count {
             let currMark = courses[i].getAverage()
-            if (currMark != -1.0) {
+            if (currMark != Helper.empty) {
                 marks.append(courses[i].getAverage())
             }
         }
         
         if marks.count == 0 {
             print("StartUpViewController: getMedian -> Exit marks.count=0")
-            return -1.0
+            return Helper.empty
         }
         
         marks.sort()
@@ -202,7 +202,7 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         for course in courses {
             courseMark = course.getAverage()
-            if courseMark != -1.0 {
+            if courseMark != Helper.empty {
                 average += courseMark
                 numCourses += 1
             }
@@ -211,7 +211,7 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
             average = (average/Double(numCourses))
         }
         else {
-            average = -1.0
+            average = Helper.empty
         }
         print("CourseTable: getOverallAverage RETURN \(average) with number of courses in calculation: \(numCourses)")
         print("CourseTable: getOverallAverage -> Exit")
@@ -329,7 +329,7 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
             case 1:
                 cell?.textLabel?.text = "Average:"
                 
-                if (average != -1.0) {
+                if (average != Helper.empty) {
                     cell?.detailTextLabel?.text = "\(average)%"
                 }
                 else {
@@ -339,7 +339,7 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
             case 2:
                 cell?.textLabel?.text = "Median:"
                 
-                if (average != -1.0) {
+                if (average != Helper.empty) {
                     cell?.detailTextLabel?.text = "\(getMedian())%"
                 }
                 else {
@@ -349,7 +349,7 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
             case 3:
                 cell?.textLabel?.text = "GPA (Approximate):"
                 
-                if (average != -1.0) {
+                if (average != Helper.empty) {
                     cell?.detailTextLabel?.text = "\(getGPA(average: average))"
                 }
                 else {
@@ -358,7 +358,7 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
                 
             case 4:
                 cell?.textLabel?.text = "Best Mark:"
-                if (average == -1.0) {
+                if (average == Helper.empty) {
                     cell?.detailTextLabel?.text = "N/A"
                     break
                 }
@@ -369,7 +369,7 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
             case 5:
                 cell?.textLabel?.text = "Worst Mark:"
                 
-                if (average == -1.0) {
+                if (average == Helper.empty) {
                     cell?.detailTextLabel?.text = "N/A"
                     break
                 }
@@ -403,7 +403,7 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
             cell?.selectionStyle = UITableViewCell.SelectionStyle.blue
             
             let groupAverage = appDelegate.groups[index].getGroupAverage()
-            if groupAverage == -1.0 {
+            if groupAverage == Helper.empty {
                 cell?.detailTextLabel?.text = "N/A"
             }
             else {

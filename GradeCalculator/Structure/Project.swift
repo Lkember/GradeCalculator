@@ -101,13 +101,13 @@ class Project: NSObject, NSCoding {
             let weight = aDecoder.decodeDouble(forKey: PropertyKey.weightKey)
             let dueDate = aDecoder.decodeObject(forKey: PropertyKey.dueDateKey) as? Date
             if var isComplete = aDecoder.decodeBool(forKey: PropertyKey.isCompleteKey) as Bool? {
-                if (isComplete == false && (outOf != -1.0 && mark != -1.0)) {
+                if (isComplete == false && (outOf != Helper.empty && mark != Helper.empty)) {
                     isComplete = true
                 }
                 self.init(name: name, mark: mark, outOf: outOf, weight: weight, dueDate: dueDate, isComplete: isComplete)
             }
             else {
-                if (mark != -1.0 && outOf != -1.0) {
+                if (mark != Helper.empty && outOf != Helper.empty) {
                     self.init(name: name, mark: mark, outOf: outOf, weight: weight, dueDate: dueDate, isComplete: true)
                 }
                 else {

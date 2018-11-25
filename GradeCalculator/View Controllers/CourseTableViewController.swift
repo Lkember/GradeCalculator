@@ -283,7 +283,7 @@ class CourseTableViewController: UITableViewController {
         
         print("CourseTable: updateLabels: updating labels. Average = \(average), # courses = \(num)")
         
-        if (average != -1.0) {
+        if (average != Helper.empty) {
             overallAverage.text = "\(average)%"
         }
         else {
@@ -307,7 +307,7 @@ class CourseTableViewController: UITableViewController {
                 groupMark = appDelegate.groups[i].getGroupAverage()
                 numCourses = appDelegate.groups[i].getNumActiveCourses()
                 
-                if groupMark != -1.0 {
+                if groupMark != Helper.empty {
                     average += groupMark * Double(numCourses)
                     totalNumCourses += numCourses
                 }
@@ -317,7 +317,7 @@ class CourseTableViewController: UITableViewController {
                 returnVal = average/Double(totalNumCourses)
             }
             else {
-                return -1.0
+                return Helper.empty
             }
         }
         else {
@@ -501,7 +501,7 @@ class CourseTableViewController: UITableViewController {
         var average = course.getAverage()
         average = Helper.roundOneDecimalPlace(value: average)
         
-        if average != -1.0 {
+        if average != Helper.empty {
             cell.courseDescription.text = "Mark: \(average)%"
         }
         else {

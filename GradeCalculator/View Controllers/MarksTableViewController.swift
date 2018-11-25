@@ -108,9 +108,9 @@ class MarksTableViewController: UITableViewController {
                 }
                 else {
                     course!.setProjectName(index: i, value: svc.project.name)
-                    course!.setProjectMark(index: i, value: -1.0)
+                    course!.setProjectMark(index: i, value: Helper.empty)
                     course!.setProjectWeight(index: i, value: svc.project.weight)
-                    course!.setProjectOutOf(index: i, value: -1.0)
+                    course!.setProjectOutOf(index: i, value: Helper.empty)
                     course!.setProjectDueDate(index: i, value: date)
                     course!.setIsComplete(index: i, value: false)
                     
@@ -122,8 +122,8 @@ class MarksTableViewController: UITableViewController {
             else {
                 let newIndexPath = IndexPath(row: course!.projects.count, section: 0)
                 
-                if svc.project.mark == -1.0 {
-                    course?.addProject(svc.project.name, grade: -1.0, outOf: -1.0, weight: svc.project.weight, newDueDate: date, isComplete: svc.projectIsComplete.isOn)
+                if svc.project.mark == Helper.empty {
+                    course?.addProject(svc.project.name, grade: Helper.empty, outOf: Helper.empty, weight: svc.project.weight, newDueDate: date, isComplete: svc.projectIsComplete.isOn)
                 }
                 else {
                     course?.addProject(svc.project.name, grade: svc.project.mark, outOf: svc.project.outOf, weight: svc.project.weight, newDueDate: date, isComplete: svc.projectIsComplete.isOn)
@@ -242,7 +242,7 @@ class MarksTableViewController: UITableViewController {
     func updateLabels() {
         print("MarksTable: updateLabels: Updating Labels")
         let average = (course!.getAverage())
-        if (average != -1.0) {
+        if (average != Helper.empty) {
             averageLabel.text = "\(average)%"
         }
         else {
@@ -305,7 +305,7 @@ class MarksTableViewController: UITableViewController {
             
             cell.projectNameLabel.text = course?.projects[(indexPath as NSIndexPath).row].name
             
-            if (course!.getProjectMark(index: indexPath.row) != -1.0) {
+            if (course!.getProjectMark(index: indexPath.row) != Helper.empty) {
                 let mark = course!.getProjectMark(index: indexPath.row)
                 cell.markLabel.text = "\(mark)%"
             }

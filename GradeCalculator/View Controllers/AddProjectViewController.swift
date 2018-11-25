@@ -75,21 +75,21 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
             self.title = courseName
         }
         
-        if (self.project.getWeight() != -1.0 || self.project.name != "") {
+        if (self.project.getWeight() != Helper.empty || self.project.name != "") {
             editorMode = true
             
             self.projectNameField?.text = "\(self.project.name)"
             self.weightField?.text = "\(self.project.weight)"
             
             if (project.isComplete) {
-                if (project.mark == -1.0) {
+                if (project.mark == Helper.empty) {
                     self.gradeField?.text = ""
                 }
                 else {
                     self.gradeField?.text = "\(self.project.mark)"
                 }
                 
-                if (project.outOf == -1.0) {
+                if (project.outOf == Helper.empty) {
                     self.gradeOutOfField.text = "100"
                 }
                 else {
@@ -312,14 +312,14 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
                     }
                 }
                 else {
-                    project.mark = -1.0
+                    project.mark = Helper.empty
                 }
                 
                 if (gradeOutOfField.text != "") {
                     project.outOf = Double(gradeOutOfField.text!)!
                 }
                 else {
-                    project.outOf = -1.0
+                    project.outOf = Helper.empty
                 }
             }
 

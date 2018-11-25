@@ -93,7 +93,7 @@ class Course: NSObject, NSCoding {
     
     func projectIsComplete(index: Int) -> Bool {
         if (projects.count > index && index >= 0) {
-            if (projects[index].getMark() != -1.0 || projects[index].isComplete) {
+            if (projects[index].getMark() != Helper.empty || projects[index].isComplete) {
                 return true;
             }
         }
@@ -115,7 +115,7 @@ class Course: NSObject, NSCoding {
             
             for i in 0..<projects.count {
                 let currMark = projects[i].getMark()
-                if (currMark != -1.0) {
+                if (currMark != Helper.empty) {
                     mark += (currMark * projects[i].weight)
                     weightSum += projects[i].weight
                 }
@@ -126,21 +126,21 @@ class Course: NSObject, NSCoding {
             
             mark = mark/weightSum
             if (incomplete == projects.count) {
-                return -1.0
+                return Helper.empty
             }
             
             return Helper.roundOneDecimalPlace(value: mark)
         }
         
-        print("Courses: getAverage() -> \(courseName) = -1.0")
-        return -1.0
+        print("Courses: getAverage() -> \(courseName) = Helper.empty")
+        return Helper.empty
     }
     
     // Returns the number of grades that have been inputted
     func getNumMarks() -> Int {
         var markCount = 0
         for i in 0..<projects.count {
-            if (projects[i].mark != -1.0) {
+            if (projects[i].mark != Helper.empty) {
                 markCount+=1
             }
         }
@@ -163,7 +163,7 @@ class Course: NSObject, NSCoding {
         print("courses getActiveWeightTotal entry")
         var weight = 0.0
         for i in 0..<projects.count {
-            if (projects[i].mark != -1.0) {
+            if (projects[i].mark != Helper.empty) {
                 weight += projects[i].weight
             }
         }
@@ -179,7 +179,7 @@ class Course: NSObject, NSCoding {
         print("Courses: getPotentialMark -> Entry: \(courseName) average \(average)")
         
         for i in 0..<projects.count {
-            if projects[i].mark != -1.0 {
+            if projects[i].mark != Helper.empty {
                 activeWeight += projects[i].weight
             }
         }

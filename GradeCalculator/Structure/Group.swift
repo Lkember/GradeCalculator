@@ -81,14 +81,14 @@ class Group: NSObject, NSCoding {
         
         for course in courses {
             currAverage = course.getAverage()
-            if currAverage != -1.0 {
+            if currAverage != Helper.empty {
                 totalAverage += currAverage
                 counter += 1
             }
         }
         if counter == 0 {
-            print("Group: getGroupAverage -> Exit Return -1.0 due to no course averages")
-            return -1.0
+            print("Group: getGroupAverage -> Exit Return Helper.empty due to no course averages")
+            return Helper.empty
         }
         print("Group: getGroupAverage -> Exit")
         return Helper.roundOneDecimalPlace(value: totalAverage/Double(counter))

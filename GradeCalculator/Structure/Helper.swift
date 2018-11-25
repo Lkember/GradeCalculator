@@ -10,6 +10,8 @@ import UIKit
 
 class Helper {
     
+    static let empty: Double = -1.0
+    
     // MARK: Rounding
     // Rounds a value to one decimal places
     static func roundOneDecimalPlace(value: Double) -> Double {
