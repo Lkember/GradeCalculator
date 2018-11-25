@@ -288,7 +288,12 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
         else {
             project.name = projectNameField.text!
             if let weight = Double(weightField.text!) {
-                project.weight = weight
+                if (weight >= 0) {
+                    project.weight = weight
+                }
+                else {
+                    return false
+                }
             }
             else {
                 return false
@@ -305,7 +310,12 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
             else {
                 if (gradeField.text != "") {
                     if let grade = Double(gradeField.text!) {
-                        project.mark = grade
+                        if (grade >= 0.0 && grade < 100.0) {
+                            project.mark = grade
+                        }
+                        else {
+                            return false
+                        }
                     }
                     else {
                         return false
@@ -316,7 +326,17 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
                 }
                 
                 if (gradeOutOfField.text != "") {
-                    project.outOf = Double(gradeOutOfField.text!)!
+                    if let outOf = Double(gradeOutOfField.text!) {
+                        if (outOf > 0) {
+                            project.outOf = outOf
+                        }
+                        else {
+                            return false
+                        }
+                    }
+                    else {
+                        return false
+                    }
                 }
                 else {
                     project.outOf = Helper.empty
