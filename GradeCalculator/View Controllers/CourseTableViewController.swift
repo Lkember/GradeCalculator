@@ -241,12 +241,13 @@ class CourseTableViewController: UITableViewController {
     
     
     @IBAction func editCourse(_ sender: AnyObject) {
-        let indexPaths = tableView.indexPathsForSelectedRows
-        if (indexPaths!.count != 1) {
-            print("CourseTable: editCourse: The user has \(indexPaths!.count) and clicked the edit button. This cannot happen.")
-        }
-        else {
-            editCourseTitle(indexPath: indexPaths![0])
+        if let indexPaths = tableView.indexPathsForSelectedRows {
+            if (indexPaths.count != 1) {
+                print("CourseTable: editCourse: The user has \(indexPaths.count) and clicked the edit button. This cannot happen.")
+            }
+            else {
+                editCourseTitle(indexPath: indexPaths[0])
+            }
         }
     }
     
@@ -490,24 +491,26 @@ class CourseTableViewController: UITableViewController {
         
         return cell
     }
-
     
-    // Override to support conditional editing of the table view.
-    // Sets all cells to be editable and when editing it brings up the toolbar
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        print("CourseTable: canEditRowAt -> Entry")
-        if (tableView.isEditing) {
-            print("CourseTable: canEditRowAt -> setToolBarHidden = false")
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        // Toggles the edit button state
+        super.setEditing(editing, animated: animated)
+        // Toggles the actual editing actions appearing on a table view
+        tableView.setEditing(editing, animated: true)
+        
+        if (editing && self.navigationController!.isToolbarHidden) {
             self.navigationController?.setToolbarHidden(false, animated: true)
             addButton.isEnabled = false
         }
-        else {
-            print("CourseTable: canEditRowAt -> setToolBarHidden = true")
+        else if (!editing && !self.navigationController!.isToolbarHidden) {
             self.navigationController?.setToolbarHidden(true, animated: true)
             addButton.isEnabled = true
         }
-        print("CourseTable: canEditRowAt -> Exit")
+    }
+    
+    // Override to support conditional editing of the table view.
+    // Sets all cells to be editable
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
     
