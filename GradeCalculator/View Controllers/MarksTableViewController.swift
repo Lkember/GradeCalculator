@@ -154,6 +154,7 @@ class MarksTableViewController: UITableViewController {
     
     
     @IBAction func changeGroupAction(_ sender: AnyObject) {
+        
         let popOverView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PopUpView") as! PopUpViewController
         self.addChild(popOverView)
         
@@ -164,7 +165,8 @@ class MarksTableViewController: UITableViewController {
         
         popOverView.view.frame = self.view.frame
         self.view.addSubview(popOverView.view)
-//        popOverView.didMove(toParentViewController: self)
+        
+        UIView.animate(withDuration: 0.2, animations: { self.tableView.contentOffset = CGPoint.init(x: 0, y: 0) })
     }
     
     
