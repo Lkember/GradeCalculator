@@ -16,7 +16,7 @@ class AddGroupViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var groupName: UITextField!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var saveButton: UIBarButtonItem!
-    var keyboardHeight: CGFloat = 0
+    @IBOutlet weak var tableViewBottomConstraint: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,7 +37,6 @@ class AddGroupViewController: UIViewController, UITableViewDelegate, UITableView
         // Adding listeners for when the keyboard shows or hides
         NotificationCenter.default.addObserver(self, selector: #selector(AddGroupViewController.keyboardOpened(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(AddGroupViewController.keyboardClosed(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(AddGroupViewController.keyboardFrameChanged(_:)), name: UIResponder.keyboardDidChangeFrameNotification, object: nil)
         
         saveButton.isEnabled = false
         tableView.reloadData()
@@ -65,18 +64,13 @@ class AddGroupViewController: UIViewController, UITableViewDelegate, UITableView
     }
 
     func checkTextFieldInput(input: String) {
-        print("AddGroupView: checkInput -> Entry \(input)")
-        
         if (input == "") {
-            print("checkInput -> False: input is empty")
             saveButton.isEnabled = false
         }
         else if (!checkEntryHelper(input: input)) {
-            print("AddGroupView: checkInput -> False a group with that name already exists")
             saveButton.isEnabled = false
         }
         else {
-            print("AddGroupView: checkInput -> True")
             saveButton.isEnabled = true
         }
     }
@@ -105,7 +99,6 @@ class AddGroupViewController: UIViewController, UITableViewDelegate, UITableView
     
     // MARK: - TableViewDelegate
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("AddGroupProject: numberOfRowsInSection = \(appDelegate.groups[getIndexForGroup(withName: "Ungrouped Courses")].courses.count)")
         return appDelegate.groups[getIndexForGroup(withName: "Ungrouped Courses")].courses.count
     }
     
@@ -143,35 +136,21 @@ class AddGroupViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     @objc func keyboardOpened(_ notification: Notification) {
-        let userInfo = notification.userInfo!
-        let keyboardSize = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size
-        print("\(type(of: self)) > \(#function): Keyboard was shown \(String(describing: keyboardSize))")
-
-        let frame = tableView.frame
-        self.tableView.frame = CGRect.init(x: frame.origin.x, y: frame.origin.y, width: frame.width, height: frame.height - keyboardSize!.height)
+        let info = notification.userInfo!
+        let keyboardSize = (info[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue.height
+        tableViewBottomConstraint.constant = keyboardSize + 8
+        
+        let duration: TimeInterval = (info[UIResponder.keyboardAnimationDurationUserInfoKey] as! NSNumber).doubleValue
+        
+        UIView.animate(withDuration: duration) { self.view.layoutIfNeeded() }
     }
 
     @objc func keyboardClosed(_ notification: Notification) {
-        let userInfo = notification.userInfo!
-        let keyboardSize = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size
-        print("\(type(of: self)) > \(#function): Keyboard was hidden")
-
-        let frame = tableView.frame
-        self.tableView.frame = CGRect.init(x: frame.origin.x, y: frame.origin.y, width: frame.width, height: frame.height + keyboardSize!.height)
+        let info = notification.userInfo!
+        let duration: TimeInterval = (info[UIResponder.keyboardAnimationDurationUserInfoKey] as! NSNumber).doubleValue
+        tableViewBottomConstraint.constant = 8
+        
+        UIView.animate(withDuration: duration) { self.view.layoutIfNeeded() }
     }
-    
-    @objc func keyboardFrameChanged(_ notification: Notification) {
-        print("\(type(of: self)) > \(#function): Keyboard frame changed")
-    }
-    
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        // Get the new view controller using segue.destinationViewController.
-//        // Pass the selected object to the new view controller.
-//        print("AddGroup: prepare: Preparing for Segue")
-//        save()
-//    }
     
 }

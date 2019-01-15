@@ -989,6 +989,7 @@
                         <outlet property="groupName" destination="CIb-we-rTd" id="xMS-bX-FH8"/>
                         <outlet property="saveButton" destination="7kT-mU-Esi" id="b3u-Vf-qjz"/>
                         <outlet property="tableView" destination="fvQ-M5-hkJ" id="wk5-8F-TZN"/>
+                        <outlet property="tableViewBottomConstraint" destination="6sc-Xe-dfW" id="ONr-Xq-QFk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1DZ-ac-EMh" userLabel="First Responder" sceneMemberID="firstResponder"/>
