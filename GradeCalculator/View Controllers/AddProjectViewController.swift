@@ -127,6 +127,8 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
         // Remove observer for keyboard
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+        view.endEditing(true)
     }
     
 

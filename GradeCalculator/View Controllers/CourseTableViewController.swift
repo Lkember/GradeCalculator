@@ -28,9 +28,6 @@ class CourseTableViewController: UITableViewController {
         if (index != -1) {
             print("CourseTable: viewDidLoad: Current Index = \(index)")
             self.title = appDelegate.groups[index].groupName
-            
-//            let currentFrame = self.informationView.frame
-//            self.informationView.frame = CGRect(x: currentFrame.origin.x, y: currentFrame.origin.y, width: currentFrame.width, height: currentFrame.height + 50)
         }
         
         self.navigationController?.setNavigationBarHidden(false, animated: true)
@@ -41,7 +38,6 @@ class CourseTableViewController: UITableViewController {
         self.navigationController?.toolbar.barStyle = UIBarStyle.black
         
         //Add an edit button to the navigation bar
-//        navigationItem.leftBarButtonItem = editButtonItem
         self.navigationItem.rightBarButtonItems?.append(self.editButtonItem)
         
         // Add buttons to tool bar
@@ -49,20 +45,11 @@ class CourseTableViewController: UITableViewController {
         self.deleteButton.isEnabled = false
         self.editButton.isEnabled = false
         
-        // Adding an edge swipe listener
-//        let edgePan = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(screenEdgeSwiped))
-//        edgePan.edges = .left
-//        view.addGestureRecognizer(edgePan)
-        
         print("CourseTable: viewDidLoad Loading courses")
         
         if let loadedData = appDelegate.load() {
             appDelegate.groups = loadedData
         }
-        
-//        if groups.courses.count == 0 {
-//            loadSampleCourses()
-//        }
         
         updateLabels()
     }
@@ -134,7 +121,6 @@ class CourseTableViewController: UITableViewController {
         else if segue.identifier=="AddItem" {
             print("CourseTable: prepare: Setting courses to view.")
             let destinationViewController = segue.destination.children[0] as? NewCoursesViewController
-//            destinationViewController?.groups = appDelegate.groups
             destinationViewController?.index = index
         }
         else if segue.identifier == nil {
@@ -150,18 +136,6 @@ class CourseTableViewController: UITableViewController {
         appDelegate.save()
         self.dismiss(animated: true, completion: nil)
     }
-    
-//    override func willMove(toParentViewController parent: UIViewController?) {
-//        super.willMove(toParentViewController: parent)
-//        
-//        if parent == nil {
-//            navigationController?.setNavigationBarHidden(true, animated: true)
-////            navigationController?.navigationBar.isHidden = true
-//        }
-//        else {
-//            navigationController?.setNavigationBarHidden(false, animated: true)
-//        }
-//    }
     
     
     override func didReceiveMemoryWarning() {

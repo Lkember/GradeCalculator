@@ -35,23 +35,8 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
             appDelegate.groups.append(Group.init(groupName: "Ungrouped Courses", courses: [Course]()))
         }
         
-        // Used if data is lost from iPhone
-        // Can be removed when ready for release
-//        if let courseData = loadCourses() {
-//            courses = courseData
-//        }
-//
-//        print("courses.count = \(courses.count), appDelegate.groups.courses.count = \(appDelegate.groups.courses.count)")
-//        if appDelegate.groups.courses.count < courses.count {
-//            appDelegate.groups.courses = courses
-//            appDelegate.groups.group["Ungrouped Courses"] = courses
-//            save()
-//        }
-        
         getAllCourses()
         print("StartUpView: viewDidLoad: Number of courses \(courses.count)")
-        
-//        updateLabels()
         tableView.reloadData()
     }
     
@@ -65,7 +50,6 @@ class StartUpViewController: UIViewController, UITableViewDelegate, UITableViewD
             appDelegate.groups = loadedData
         }
         
-//        updateLabels()
         getAllCourses()
         tableView.reloadData()
     }
