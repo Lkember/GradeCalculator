@@ -71,6 +71,9 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
         deleteProjectButton.layer.cornerRadius = 10
         self.navigationController?.navigationBar.barStyle = UIBarStyle.black
         
+        // Allowing the keyboard to be swiped away
+        scrollView.keyboardDismissMode = .interactive
+        
         if (courseName != "") {
             self.title = courseName
         }

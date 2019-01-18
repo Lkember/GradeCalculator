@@ -43,6 +43,7 @@ class NewCoursesViewController: UIViewController, UITextFieldDelegate, UIPickerV
         self.navigationController?.navigationBar.barStyle = UIBarStyle.black
         self.groupSelection.delegate = self
         self.groupSelection.dataSource = self
+        
         self.groupSelection.layer.cornerRadius = 10
         self.groupSelection.layer.borderWidth = 1
         self.groupSelection.layer.borderColor = UIColor.white.cgColor
@@ -58,6 +59,13 @@ class NewCoursesViewController: UIViewController, UITextFieldDelegate, UIPickerV
             groupSelection.selectRow(getIndexForGroup(withName: "Ungrouped Courses"), inComponent: 0, animated: true)
         }
         
+        self.scrollView.indicatorStyle = .white
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        // Allowing the keyboard to be swiped away
+        scrollView.keyboardDismissMode = .interactive
+        
         // Adding listeners for when a text field changes
         courseName.addTarget(self, action: #selector(NewCoursesViewController.textFieldDidChange(_:)), for: UIControl.Event.editingChanged)
         gradeField.addTarget(self, action: #selector(NewCoursesViewController.textFieldDidChange(_:)), for: UIControl.Event.editingChanged)
@@ -67,8 +75,6 @@ class NewCoursesViewController: UIViewController, UITextFieldDelegate, UIPickerV
         // Adding listeners for when the keyboard shows or hides
         NotificationCenter.default.addObserver(self, selector: #selector(NewCoursesViewController.keyboardToggle(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(NewCoursesViewController.keyboardToggle(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-        
-        self.scrollView.indicatorStyle = .white
     }
     
     override func viewWillDisappear(_ animated: Bool) {
