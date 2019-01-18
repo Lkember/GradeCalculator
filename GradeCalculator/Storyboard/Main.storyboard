@@ -553,7 +553,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <scrollView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="250" alwaysBounceVertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zAj-Q2-JUW">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="729"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="778"/>
                                 <subviews>
                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vib-sA-Kpt">
                                         <rect key="frame" x="310" y="147.33333333333334" width="51" height="31"/>
@@ -1550,10 +1550,10 @@
         <image name="calendar" width="46.080001831054688" height="46.080001831054688"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="R1T-uM-ML6"/>
-        <segue reference="B5p-yR-yqY"/>
-        <segue reference="883-gk-HxU"/>
+        <segue reference="th6-ri-m98"/>
+        <segue reference="kKh-ej-HbN"/>
+        <segue reference="EXQ-cG-bFX"/>
         <segue reference="XHZ-Lz-icb"/>
-        <segue reference="WtP-sj-wW2"/>
+        <segue reference="Jbt-N3-r7X"/>
     </inferredMetricsTieBreakers>
 </document>

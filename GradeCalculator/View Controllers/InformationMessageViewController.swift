@@ -24,7 +24,7 @@ class InformationMessageViewController: UIViewController {
     }
     
 
-    func setMessage(value: String) {
+    func setMessage(_ value: String) {
         informationalMessageText.text = value
     }
     

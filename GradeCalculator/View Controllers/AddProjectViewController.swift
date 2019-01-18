@@ -70,6 +70,7 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
         // Updating UI
         deleteProjectButton.layer.cornerRadius = 10
         self.navigationController?.navigationBar.barStyle = UIBarStyle.black
+        self.scrollView.isScrollEnabled = true
         
         // Allowing the keyboard to be swiped away
         scrollView.keyboardDismissMode = .interactive
@@ -417,7 +418,6 @@ class AddProjectViewController: UIViewController, UITextFieldDelegate {
     // MARK: - Listeners
     @objc func keyboardToggle(_ notification: Notification) {
         print("\(type(of: self)) > \(#function)")
-        self.scrollView.isScrollEnabled = true
         let userInfo = notification.userInfo!
         
         let keyboardSize = (userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.size

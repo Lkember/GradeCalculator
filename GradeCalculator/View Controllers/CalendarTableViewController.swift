@@ -9,7 +9,6 @@
 import UIKit
 
 // MARK: - Structures
-
 struct CourseInfo {
     var course : Course
     var groupIndex : Int
@@ -78,6 +77,7 @@ class CalendarTableViewController: UITableViewController {
     var selectedProject: CourseInfo? = nil
     var selectedProjectCompletion: Bool = false
     var showCompletedProjects: Bool = false
+    var hasDueDates = true
     @IBOutlet weak var toggleCompletedProjectsButton: UIBarButtonItem!
     let infoView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "InformationView") as! InformationMessageViewController
     
@@ -98,9 +98,12 @@ class CalendarTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         displayData()
-        tableView.reloadData()
     }
-
+    
+    override func viewDidAppear(_ animated: Bool) {
+        addOrRemoveInfoView()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -123,12 +126,16 @@ class CalendarTableViewController: UITableViewController {
     }
     
     func showInfoView() {
+        if (children.contains(infoView)) {
+            return
+        }
+        
         self.infoView.view.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
         self.infoView.view.alpha = 0.0;
         
         addChild(infoView)
         self.view.addSubview(infoView.view)
-        infoView.setMessage(value: "No projects due")
+        infoView.setMessage("No projects due")
         
         self.tableView.isScrollEnabled = false
         
@@ -153,8 +160,16 @@ class CalendarTableViewController: UITableViewController {
         });
     }
     
-    // MARK: - Calendar
+    func addOrRemoveInfoView() {
+        if (hasDueDates) {
+            hideInfoView()
+        }
+        else {
+            showInfoView()
+        }
+    }
     
+    // MARK: - Calendar
     // Gets all the upcoming due dates and sorts them
     func getUpcomingDueDates() {
         
@@ -205,6 +220,7 @@ class CalendarTableViewController: UITableViewController {
             }
             
             tableView.reloadData()
+            addOrRemoveInfoView()
         }
     }
     
@@ -228,10 +244,10 @@ class CalendarTableViewController: UITableViewController {
         
         // Check whether to show info view or not
         if (returnVal == 0) {
-            showInfoView()
+            self.hasDueDates = false
         }
         else {
-            hideInfoView()
+            self.hasDueDates = true
         }
         
         return returnVal

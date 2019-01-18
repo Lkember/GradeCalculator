@@ -65,6 +65,7 @@ class NewCoursesViewController: UIViewController, UITextFieldDelegate, UIPickerV
     override func viewWillAppear(_ animated: Bool) {
         // Allowing the keyboard to be swiped away
         scrollView.keyboardDismissMode = .interactive
+        scrollView.isScrollEnabled = true
         
         // Adding listeners for when a text field changes
         courseName.addTarget(self, action: #selector(NewCoursesViewController.textFieldDidChange(_:)), for: UIControl.Event.editingChanged)
@@ -199,7 +200,6 @@ class NewCoursesViewController: UIViewController, UITextFieldDelegate, UIPickerV
     
     // MARK: - Listeners
     @objc func keyboardToggle(_ notification: Notification) {
-        self.scrollView.isScrollEnabled = true
         let userInfo = notification.userInfo!
         
         let keyboardSize = (userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.size
